@@ -12,5 +12,5 @@
       "debug": true
     }]
   ],
-  "plugins": []
+  "plugins": ["transform-runtime"]
 }

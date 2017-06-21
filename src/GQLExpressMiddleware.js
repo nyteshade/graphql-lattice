@@ -2,7 +2,7 @@ import { SyntaxTree } from './SyntaxTree'
 import graphqlHTTP from 'express-graphql'
 import { parse, print, buildSchema } from 'graphql'
 
-class GQLMiddleware
+export class GQLExpressMiddleware
 {
   constructor(handlers) {
     this.handlers = handlers;
@@ -46,4 +46,4 @@ class GQLMiddleware
   
 }
 
-module.exports = GQLMiddleware;
+export default GQLExpressMiddleware;
