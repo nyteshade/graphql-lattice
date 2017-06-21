@@ -1,0 +1,12 @@
+type People {
+  name: String 
+}
+
+type Query {
+  person(name: String): People 
+  people: [People]!
+}
+
+type Mutation {
+  createPerson(name: String): People
+}
