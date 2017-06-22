@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SyntaxTree</title>
+
+
+
+
+
+    <link type="text/css" rel="stylesheet" href="github.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <script src="scripts/highlight.js"></script>
+    <script src="scripts/linenumber.js"></script>
+    
+
+    <script>hljs && hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+<label for="nav-trigger" class="overlay"></label>
+
+<div class="page">
+  <header class="page-header">
+    <h1 class="project-name">
+  <a href="/">graphql-lattice</a>
+
+</h1>
+<h2 class="project-tagline">
+  OO Underpinnings for ease of GraphQL Implementation
+</h2>
+
+<h2 class="project-version">
+  1.0.0
+</h2>
+
+  </header>
+  <div class="page-contents">
+    <nav class="sidebar">
+        <h2 class="home"><a href="index.html">Home</a></h2><h3 data-name="Classes">Classes</h3><ul><li><a href="GQLBase.html">GQLBase</a><ul class='methods'><li data-type='method'><a href="GQLBase.html#.IDLFilePath">IDLFilePath</a></li><li data-type='method'><a href="GQLBase.html#.MUTATORSget">MUTATORS </a></li><li data-type='method'><a href="GQLBase.html#.RESOLVERSget">RESOLVERS </a></li><li data-type='method'><a href="GQLBase.html#.SCHEMAget">SCHEMA </a></li><li data-type='method'><a href="GQLBase.html#constructor">constructor</a></li><li data-type='method'><a href="GQLBase.html#requestDataget">requestData </a></li><li data-type='method'><a href="GQLBase.html#requestDataset">requestData </a></li></ul></li><li><a href="GQLExpressMiddleware.html">GQLExpressMiddleware</a><ul class='methods'><li data-type='method'><a href="GQLExpressMiddleware.html#constructor">constructor</a></li><li data-type='method'><a href="GQLExpressMiddleware.html#makeRoot">makeRoot</a></li><li data-type='method'><a href="GQLExpressMiddleware.html#makeSchema">makeSchema</a></li><li data-type='method'><a href="GQLExpressMiddleware.html#middleware">middleware</a></li></ul></li><li><a href="IDLFileHandler.html">IDLFileHandler</a><ul class='methods'><li data-type='method'><a href="IDLFileHandler.html#constructor">constructor</a></li><li data-type='method'><a href="IDLFileHandler.html#getFile">getFile</a></li><li data-type='method'><a href="IDLFileHandler.html#getSchema">getSchema</a></li><li data-type='method'><a href="IDLFileHandler.html#getSyntaxTree">getSyntaxTree</a></li></ul></li><li><a href="SyntaxTree.html">SyntaxTree</a><ul class='methods'><li data-type='method'><a href="SyntaxTree.html#.EmptyDocument">EmptyDocument</a></li><li data-type='method'><a href="SyntaxTree.html#.EmptyMutation">EmptyMutation</a></li><li data-type='method'><a href="SyntaxTree.html#.EmptyQuery">EmptyQuery</a></li><li data-type='method'><a href="SyntaxTree.html#.from">from</a></li><li data-type='method'><a href="SyntaxTree.html#.fromAST">fromAST</a></li><li data-type='method'><a href="SyntaxTree.html#.fromSchema">fromSchema</a></li><li data-type='method'><a href="SyntaxTree.html#.MUTATION">MUTATION</a></li><li data-type='method'><a href="SyntaxTree.html#.QUERY">QUERY</a></li><li data-type='method'><a href="SyntaxTree.html#.QUERY">QUERY</a></li><li data-type='method'><a href="SyntaxTree.html#appendDefinitions">appendDefinitions</a></li><li data-type='method'><a href="SyntaxTree.html#ast">ast</a></li><li data-type='method'><a href="SyntaxTree.html#ast">ast</a></li><li data-type='method'><a href="SyntaxTree.html#constructor">constructor</a></li><li data-type='method'><a href="SyntaxTree.html#consumeDefinition">consumeDefinition</a></li><li data-type='method'><a href="SyntaxTree.html#find">find</a></li><li data-type='method'><a href="SyntaxTree.html#setAST">setAST</a></li><li data-type='method'><a href="SyntaxTree.html#toString">toString</a></li><li data-type='method'><a href="SyntaxTree.html#updateAST">updateAST</a></li></ul></li><li><a href="utils.Deferred.html">Deferred</a></li></ul>
+    </nav>
+
+    <div id="main">
+        
+        <h1 class="page-title">SyntaxTree</h1>
+        
+
+        
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        SyntaxTree
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="SyntaxTree"><a class="anchor" href="#SyntaxTree"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>new SyntaxTree<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A parser and processor of GraphQL IDL Abstract Syntax Trees. Used to combine<br>a set of <a href="GQLBase.html"><code>GQLBase</code></a> class instances.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line61">line 61</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".EmptyDocument"><a class="anchor" href="#EmptyDocument"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>EmptyDocument<span class="signature">(schemaOrASTOrST)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>The starting point for a SyntaxTree that will be built up programmatically.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schemaOrASTOrST</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>any valid type taken by<br>SyntaxTree.from() used to further populate the new empty document</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>an instance of SyntaxTree with no definitions and a<br>kind set to 'Document'</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line626">line 626</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".EmptyMutation"><a class="anchor" href="#EmptyMutation"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>EmptyMutation<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Mutation types in GraphQL are an ObjectTypeDefinition of importance for<br>placement on the root object. There is utility in creating an empty<br>one that can be injected with the fields of other GraphQL object mutation<br>entries.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>an instance of SyntaxTree with a base AST generated<br>by parsing the graph query, &quot;type Mutation {}&quot;</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line606">line 606</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".EmptyQuery"><a class="anchor" href="#EmptyQuery"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>EmptyQuery<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Query types in GraphQL are an ObjectTypeDefinition of importance for<br>placement on the root object. There is utility in creating an empty<br>one that can be injected with the fields of other GraphQL object query<br>entries.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>an instance of SyntaxTree with a base AST generated<br>by parsing the graph query, &quot;type Query {}&quot;</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line586">line 586</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".from"><a class="anchor" href="#from"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>from<span class="signature">(mixed)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Given one of, a valid GraphQL IDL schema string, a valid GraphQL AST or<br>an instance of SyntaxTree, the static from() method will create a new<br>instance of the SyntaxTree with the values you provide.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mixed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an instance of one of the valid<br>types specified above. Everything else will result in a null value.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a newly created and populated instance of SyntaxTree<br>or null if an invalid type was supplied for mixed.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line493">line 493</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".fromAST"><a class="anchor" href="#fromAST"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>fromAST<span class="signature">(ast)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL<br>schema. This method does not perform try/catch validation and if an<br>invalid GraphQL schema is supplied an error will be thrown.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ast</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a valid GraphQL AST object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a new instance of SyntaxTree initialized with a<br>supplied abstract syntax tree generated by require('graphql').parse() or<br>other compatible method.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line562">line 562</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".fromSchema"><a class="anchor" href="#fromSchema"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>fromSchema<span class="signature">(schema)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL<br>schema. This method does not perform try/catch validation and if an<br>invalid GraphQL schema is supplied an error will be thrown.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a valid GraphQL IDL schema string.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a new instance of SyntaxTree initialized with a<br>parsed response from require('graphql').parse().</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line539">line 539</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".MUTATION"><a class="anchor" href="#MUTATION"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>MUTATION<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A runtime constant denoting a mutation type.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line666">line 666</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".QUERY"><a class="anchor" href="#QUERY"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>QUERY<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Ensures that the object type reported by Object.prototype.toString()<br>for SyntaxTree objects returns as [object SyntaxTree]. Used by<br><code>utils#typeOf</code></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line682">line 682</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".QUERY"><a class="anchor" href="#QUERY"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>QUERY<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A runtime constant denoting a query type.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line458">line 458</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="appendDefinitions"><a class="anchor" href="#appendDefinitions"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>appendDefinitions<span class="signature">(schemaOrASTOrST)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Appends all definitions from another AST to this one. The method will<br>actually create a copy using SyntaxTree.from() so the input types can<br>be any one of a valid GraphQL IDL schema string, a GraphQL IDL AST or<br>another SyntaxTree object instance.</p>
+<p>Definitions of the same name but different kinds will be replaced by the<br>new copy. Those of the same kind and name will be merged (TODO handle more<br>than ObjectTypeDefinition kinds when merging; currently other types are<br>overwritten).</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schemaOrASTOrST</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an instance of one of<br>the valid types for SyntaxTree.from() that can be used to create or<br>duplicate the source from which to copy definitions.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>this for inlining</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line194">line 194</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="ast"><a class="anchor" href="#ast"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>ast<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Getter that retrieves the abstract syntax tree created by <code>graphql.parse</code><br>when it is presented with a valid string of IDL.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">Object</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a GraphQL AST object</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line94">line 94</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="ast"><a class="anchor" href="#ast"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>ast<span class="signature">(value)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Setter that assigns the abstract syntax tree, typically created by<br><code>graphql.parse</code> when given a valid string of IDL.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a valid AST object. Other operations will act<br>in an undefined manner should this object not be a valid AST</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line474">line 474</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="constructor"><a class="anchor" href="#constructor"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>constructor<span class="signature">(schemaOrASTOrST)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Constructs a new <code>SyntaxTree</code> object. If a string schema is supplied or<br>an already parsed AST object, either of which is valid GraphQL IDL, then<br>its parsed AST will be the internals of this object.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schemaOrASTOrST</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>if supplied the tree<br>will be constructed with the contents of the data. If a string of IDL is<br>given, it will be parsed. If an AST is given, it will be verified. If a<br>SyntaxTree is supplied, it will be copied.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line69">line 69</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="consumeDefinition"><a class="anchor" href="#consumeDefinition"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>consumeDefinition<span class="signature">(astOrSyntaxTree, definitionType)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This method finds the Query type definitions in the supplied AST or<br>SyntaxTree objects, takes its defined fields and adds it to the current<br>instances. If this instance does not have a Query type defined but the<br>supplied object does, then the supplied one is moved over. If neither<br>has a query handler, then nothing happens.</p>
+<p>NOTE this <em>removes</em> the Query type definition from the supplied AST or<br>SyntaxTree object.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>astOrSyntaxTree</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+|
+
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a valid GraphQL IDL AST or<br>an instance of SyntaxTree that represents one.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>definitionType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">RegExp</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a valid search input as would be<br>accepted for the #find() method of this object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>returns this for inlining</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line288">line 288</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="find"><a class="anchor" href="#find"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>find<span class="signature">(definitionName)</span><span class="type-signature"> &rarr; {Object|null}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Iterate through the definitions of the AST if there are any. For each<br>definition the name property's value field is compared to the supplied<br>definitionName. The definitionName can be a string or a regular<br>expression if finer granularity is desired.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>definitionName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">RegExp</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a string or regular expression used<br>to match against the definition name field in a given AST.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">null</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a reference to the internal definition field or<br>null if one with a matching name could not be found.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line407">line 407</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setAST"><a class="anchor" href="#setAST"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>setAST<span class="signature">(schemaOrAST)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Sets the underlying AST object with either schema which will be parsed<br>into a valid AST or an existing AST. Previous ast values will be erased.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schemaOrAST</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a valid GraphQL IDL schema or a<br>previosuly parsed or compatible GraphQL IDL AST object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>this for inlining.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line110">line 110</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toString"><a class="anchor" href="#toString"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>toString<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>SyntaxTree instances that are toString()'ed will have the graphql method<br>print() called on them to convert their internal structures back to a<br>GraphQL IDL schema syntax. If the object is in an invalid state, it WILL<br>throw an error.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">string</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>the AST for the tree parsed back into a string</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line439">line 439</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateAST"><a class="anchor" href="#updateAST"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>updateAST<span class="signature">(ast)</span><span class="type-signature"> &rarr; {<a href="SyntaxTree.html">SyntaxTree</a>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>As passthru update method that works on the internal AST object. If<br>an error occurs, the update is skipped. An error can occur if adding the<br>changes would make the AST invalid. In such a case, the error is logged<br>to the error console.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ast</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an existing GraphQL IDL AST object that will be<br>merged on top of the existing tree using Object.assign()</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type"><a href="SyntaxTree.html">SyntaxTree</a></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>this for inlining.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line159">line 159</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<br class="clear">
+<footer>
+    <span>graphql-lattice</span> docs generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Thu Jun 22 2017 using the <a href="https://github.com/mere/kitsune">Kitsune</a> theme.
+</footer>
+
+
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 // @flow
+// @module GQLBase
 
 import Path from 'path'
 import fs from 'fs'
@@ -6,13 +7,22 @@ import fs from 'fs'
 import { typeOf, Deferred } from './utils'
 import { SyntaxTree } from './SyntaxTree'
 
-/** REQ_DATA_KEY a key used for storing requestData */ 
+/** 
+ * A `Symbol` used as a key to store the request data for an instance of the 
+ * GQLBase object in question.
+ * 
+ * @type {Symbol}
+ * @prop REQ_DATA_KEY
+ * @memberof GQLBase
+ */
 export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
 
 /**
  * All GraphQL Type objects used in this system are assumed to have extended
  * from this class. An instance of this class can be used to wrap an existing
  * structure if you have one.
+ *
+ * @class GQLBase
  */
 export class GQLBase {
   /**
@@ -33,8 +43,11 @@ export class GQLBase {
    *   • gql is the graphQLParams object in the format of
    *     { query, variables, operationName, raw }
    *     See https://github.com/graphql/express-graphql for more info
-   * 
+   *
+   * @instance
+   * @memberof GQLBase
    * @method constructor
+   * 
    * @param {Object} requestData see description above
    */
   constructor(requestData: Object, classModule: Object | undefined) {
@@ -45,12 +58,30 @@ export class GQLBase {
     this.fileHandler = new IDLFileHandler(this);    
   }
   
-  /** @return {Object} an object, typically matching { req, res, gql } */
+  /**
+   * A getter that retrieves the inner request data object. When used with 
+   * GQLExpressMiddleware, this is an object matching {req, res, gql}.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method requestData (get)
+   * 
+   * @return {Object} an object, usually matching { req, res, gql }
+   */
   get requestData(): Object {
     return this[REQ_DATA_KEY];
   }
   
-  /** @param {Object} value an object, typically matching {req, res, gql} */
+  /**
+   * A setter that assigns a value to the inner request data object. When 
+   * used with GQLExpressMiddleware, this is an object matching {req, res, gql}.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method requestData (set)
+   * 
+   * @param {Object} value an object, usually matching { req, res, gql }
+   */
   set requestData(value: Object): void {    
     this[REQ_DATA_KEY] = value;
   }
@@ -60,16 +91,18 @@ export class GQLBase {
    * detailing the full IDL schema of a GraphQL handler or one of two
    * types of Symbols. 
    * 
-   * The first Symbol type is the constant ADJACENT_FILE. If this Symbol is
+   * The first Symbol type is the constant `ADJACENT_FILE`. If this Symbol is
    * returned, the system assumes that next to the source file in question is
    * a file of the same name with a .graphql extension. This file should be
    * made of the GraphQL IDL schema definitions for the object types being 
    * created. 
    *
    * Example:
+   * ```js
    *   static get SCHEMA(): String | Symbol {
    *     return GQLBase.ADJACENT_FILE
    *   }
+   * ```
    *   
    * The primary advantage of this approach is allowing an outside editor that
    * provides syntax highlighting rather than returning a string from the 
@@ -81,17 +114,28 @@ export class GQLBase {
    * method.
    *
    * Example:
+   * ```js
    *   static get SCHEMA(): String | Symbol {
    *     return GQLBase.IDLFilePath('/path/to/file', '.idl')
    *   }
+   * ```
    *
    * NOTE - Important!
    * When not returning a direct string based IDL schema, the call to super() 
    * from a child class must include `module` as the second parameter or an 
    * error will be thrown upon object creation.
    *
+   * @instance
+   * @memberof GQLBase 
+   * @method SCHEMA (get)
+   * @readonly
+   * @static 
+   * 
    * @return {string|Symbol} a valid IDL string or one of the Symbols 
    * described above.
+   *
+   * @see {@link GQLBase#ADJACENT_FILE}
+   * @see {@link GQLBase#IDLFilePath}
    */
   static get SCHEMA(): string | Symbol {
     // define in base class
@@ -100,9 +144,13 @@ export class GQLBase {
   /**
    * This method should return a promise that resolves to an object of 
    * functions matching the names of the mutation operations. These are to be
-   * injected into the root object when used by GQLExpressMiddleware.
-   * 
-   * @method MUTATORS
+   * injected into the root object when used by `GQLExpressMiddleware`.
+   *
+   * @instance 
+   * @memberof GQLBase 
+   * @method MUTATORS (get)
+   * @readonly
+   * @static 
    * 
    * @param {Object} requestData typically an object containing three 
    * properties; {req, res, gql}
@@ -117,9 +165,13 @@ export class GQLBase {
   /**
    * This method should return a promise that resolves to an object of 
    * functions matching the names of the query operations. These are to be
-   * injected into the root object when used by GQLExpressMiddleware.
+   * injected into the root object when used by `GQLExpressMiddleware`.
    * 
-   * @method RESOLVERS
+   * @instance 
+   * @memberof GQLBase 
+   * @method RESOLVERS (get)
+   * @readonly
+   * @static 
    * 
    * @param {Object} requestData typically an object containing three 
    * properties; {req, res, gql}
@@ -132,7 +184,7 @@ export class GQLBase {
   }
   
   /**
-   * @see get SCHEMA()
+   * @see {@link GQLBase#SCHEMA}
    * 
    * @return {Symbol} the Symbol, when returned from SCHEMA, causes
    * the logic to load an IDL Schema from an associated file with a .graphql 
@@ -145,7 +197,9 @@ export class GQLBase {
   /**
    * Creates an appropriate Symbol crafted with the right data for use by
    * the IDLFileHandler class below.
-   * 
+   *
+   * @static
+   * @memberof GQLBase
    * @method IDLFilePath
    * 
    * @param {string} path a path to the IDL containing file
@@ -154,7 +208,7 @@ export class GQLBase {
    * already exist.
    * @return Symbol 
    * 
-   * @see get SCHEMA()
+   * @see {@link GQLBase#SCHEMA}
    */
   static IDLFilePath(path: string, extension: string = '.graphql'): Symbol {
     return Symbol.for(`Path ${path} Extension ${extension}`);
@@ -165,6 +219,8 @@ export class GQLBase {
  * The handler, an instance of which is created for every instance of GQLBase.
  * The handler manages the fetching and decoding of files bearing the IDL 
  * schema associated with the class represented by this instance of GQLBase.
+ *
+ * @class IDLFileHandler
  */
 export class IDLFileHandler {
   /**
@@ -174,7 +230,10 @@ export class IDLFileHandler {
    * provide various means of using its contents; i.e. as a Buffer, a String 
    * or wrapped in a SyntaxTree instance.
    * 
+   * @instance
+   * @memberof IDLFileHandler
    * @method constructor
+   * 
    * @param {GQLBase} instance an extended instance or child class of GQLBase
    */
   constructor(instance: GQLBase) {
@@ -232,6 +291,10 @@ export class IDLFileHandler {
    * Loads the calculated file determined by the decoding of the meaning of 
    * the Symbol returned by the SCHEMA property of the instance supplied to 
    * the IDLFileHandler upon creation.
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method getFile
    * 
    * @return {Buffer|null} returns the Buffer containing the file base IDL 
    * schema or null if none was found or a direct string schema is returned 
@@ -245,6 +308,10 @@ export class IDLFileHandler {
    * If getFile() returns a Buffer, this is the string representation of the
    * underlying file contents. As a means of validating the contents of the 
    * file, the string contents are parsed into an AST and back to a string.
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method getSchema
    * 
    * @return {string|null} the string contents of the Buffer containing the
    * file based IDL schema.
@@ -260,6 +327,10 @@ export class IDLFileHandler {
   /**
    * If getFile() returns a Buffer, the string contents are passed to a new
    * instance of SyntaxTree which parses this into an AST for manipulation. 
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method getSyntaxTree
    * 
    * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL 
    * schema contents loaded from disk. Null is returned if a calculated path 

@@ -1,37 +1,82 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Global</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
 </head>
 
 <body>
 
-<div id="main">
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#appendDefinitions">appendDefinitions</a></li><li><a href="global.html#constructor">constructor</a></li><li><a href="global.html#consumeDefinition">consumeDefinition</a></li><li><a href="global.html#Deferred">Deferred</a></li><li><a href="global.html#EmptyDocument">EmptyDocument</a></li><li><a href="global.html#EmptyMutation">EmptyMutation</a></li><li><a href="global.html#EmptyQuery">EmptyQuery</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#from">from</a></li><li><a href="global.html#fromAST">fromAST</a></li><li><a href="global.html#fromSchema">fromSchema</a></li><li><a href="global.html#GQLBase">GQLBase</a></li><li><a href="global.html#GQLExpressMiddleware">GQLExpressMiddleware</a></li><li><a href="global.html#IDLFileHandler">IDLFileHandler</a></li><li><a href="global.html#IDLFilePath">IDLFilePath</a></li><li><a href="global.html#makeRoot">makeRoot</a></li><li><a href="global.html#makeSchema">makeSchema</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#MUTATORS">MUTATORS</a></li><li><a href="global.html#pending">pending</a></li><li><a href="global.html#REQ_DATA_KEY">REQ_DATA_KEY</a></li><li><a href="global.html#RESOLVERS">RESOLVERS</a></li><li><a href="global.html#setAST">setAST</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#typeOf">typeOf</a></li><li><a href="global.html#updateAST">updateAST</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
 
-    <h1 class="page-title">Global</h1>
-
-    
-
+</div>
+</div>
 
 
+<div class="container" id="toc-content">
+<div class="row">
 
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Global</h1>
 <section>
 
 <header>
     
-        <h2></h2>
+        <h2>
+        
+        </h2>
         
     
 </header>
+
 
 <article>
     <div class="container-overview">
@@ -39,9 +84,14 @@
         
 
         
-
-
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -51,29 +101,25 @@
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
@@ -87,33 +133,41 @@
 
     
 
-     
+    
 
     
 
     
         <h3 class="subsection-title">Members</h3>
 
-        
+        <dl>
             
-<h4 class="name" id="Deferred"><span class="type-signature"></span>Deferred<span class="type-signature"></span></h4>
+<hr>
+<dt class="name" id="Deferred">
+    <h4 id="Deferred"><span class="type-signature"></span>Deferred<span class="type-signature"></span></h4>
 
-
-
-
-<div class="description">
-    <p>Deferred is modeled after jQuery's deferred object. It inverts a promise 
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Deferred is modeled after jQuery's deferred object. It inverts a promise 
 such that its resolve and reject methods can be invoked without wrapping 
 all of the related code within a Promise's function.</p>
-</div>
+    </div>
+    
 
+    
 
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -123,61 +177,59 @@ all of the related code within a Promise's function.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line56">line 56</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
-
-
-
+    
+</dd>
 
         
             
-<h4 class="name" id="GQLBase"><span class="type-signature"></span>GQLBase<span class="type-signature"></span></h4>
+<hr>
+<dt class="name" id="GQLBase">
+    <h4 id="GQLBase"><span class="type-signature"></span>GQLBase<span class="type-signature"></span></h4>
 
-
-
-
-<div class="description">
-    <p>All GraphQL Type objects used in this system are assumed to have extended
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>All GraphQL Type objects used in this system are assumed to have extended
 from this class. An instance of this class can be used to wrap an existing
 structure if you have one.</p>
-</div>
+    </div>
+    
 
+    
 
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -187,62 +239,60 @@ structure if you have one.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line59">line 59</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
-
-
-
+    
+</dd>
 
         
             
-<h4 class="name" id="GQLExpressMiddleware"><span class="type-signature"></span>GQLExpressMiddleware<span class="type-signature"></span></h4>
+<hr>
+<dt class="name" id="GQLExpressMiddleware">
+    <h4 id="GQLExpressMiddleware"><span class="type-signature"></span>GQLExpressMiddleware<span class="type-signature"></span></h4>
 
-
-
-
-<div class="description">
-    <p>A handler that exposes an express middleware function that mounts a 
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>A handler that exposes an express middleware function that mounts a 
 GraphQL I/O endpoint. Typical usage follows:</p>
 <p>const app = express();
 app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</p>
-</div>
+    </div>
+    
 
+    
 
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -252,61 +302,59 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLExpressMiddleware.js.html">GQLExpressMiddleware.js</a>, <a href="GQLExpressMiddleware.js.html#line49">line 49</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
-
-
-
+    
+</dd>
 
         
             
-<h4 class="name" id="IDLFileHandler"><span class="type-signature"></span>IDLFileHandler<span class="type-signature"></span></h4>
+<hr>
+<dt class="name" id="IDLFileHandler">
+    <h4 id="IDLFileHandler"><span class="type-signature"></span>IDLFileHandler<span class="type-signature"></span></h4>
 
-
-
-
-<div class="description">
-    <p>The handler, an instance of which is created for every instance of GQLBase.
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The handler, an instance of which is created for every instance of GQLBase.
 The handler manages the fetching and decoding of files bearing the IDL 
 schema associated with the class represented by this instance of GQLBase.</p>
-</div>
+    </div>
+    
 
+    
 
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -316,59 +364,57 @@ schema associated with the class represented by this instance of GQLBase.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line275">line 275</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
-
-
-
+    
+</dd>
 
         
             
-<h4 class="name" id="REQ_DATA_KEY"><span class="type-signature"></span>REQ_DATA_KEY<span class="type-signature"></span></h4>
+<hr>
+<dt class="name" id="REQ_DATA_KEY">
+    <h4 id="REQ_DATA_KEY"><span class="type-signature"></span>REQ_DATA_KEY<span class="type-signature"></span></h4>
 
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>REQ_DATA_KEY a key used for storing requestData</p>
+    </div>
+    
 
+    
 
-
-<div class="description">
-    <p>REQ_DATA_KEY a key used for storing requestData</p>
-</div>
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -378,60 +424,50 @@ schema associated with the class represented by this instance of GQLBase.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line51">line 51</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
+</dd>
 
-
-
-
-        
+        </dl>
     
 
     
         <h3 class="subsection-title">Methods</h3>
 
-        
+        <dl>
             
+<hr>
+<dt>
+    <h4 class="name" id="appendDefinitions"><span class="type-signature"></span>appendDefinitions(schemaOrASTOrST)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="appendDefinitions"><span class="type-signature"></span>appendDefinitions<span class="signature">(schemaOrASTOrST)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Appends all definitions from another AST to this one. The method will 
+    <div class="description">
+        <p>Appends all definitions from another AST to this one. The method will 
 actually create a copy using SyntaxTree.from() so the input types can
 be any one of a valid GraphQL IDL schema string, a GraphQL IDL AST or 
 another SyntaxTree object instance.</p>
@@ -439,20 +475,19 @@ another SyntaxTree object instance.</p>
 new copy. Those of the same kind and name will be merged (TODO handle more
 than ObjectTypeDefinition kinds when merging; currently other types are 
 overwritten).</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -487,6 +522,7 @@ overwritten).</p>
 |
 
 <span class="param-type">SyntaxTree</span>
+
 
 
             
@@ -505,12 +541,17 @@ duplicate the source from which to copy definitions.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -520,51 +561,42 @@ duplicate the source from which to copy definitions.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line165">line 165</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>this for inlining</p>
 </div>
@@ -580,42 +612,44 @@ duplicate the source from which to copy definitions.</p></td>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor(schemaOrASTOrST)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor<span class="signature">(schemaOrASTOrST)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Constructs a new SyntaxTree object. If a string schema is supplied or
+    <div class="description">
+        <p>Constructs a new SyntaxTree object. If a string schema is supplied or
 an already parsed AST object, either of which is valid GraphQL IDL, then
 its parsed AST will be the internals of this object.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -650,6 +684,7 @@ its parsed AST will be the internals of this object.</p>
 |
 
 <span class="param-type">SyntaxTree</span>
+
 
 
             
@@ -669,12 +704,17 @@ SyntaxTree is supplied, it will be copied.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -684,64 +724,56 @@ SyntaxTree is supplied, it will be copied.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line58">line 58</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor(requestData)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor<span class="signature">(requestData)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Request data is passed to this object when constructed. Typically these
+    <div class="description">
+        <p>Request data is passed to this object when constructed. Typically these
 objects, and their children, are instantiated by its own static MUTATORS 
 and RESOLVERS. They should contain request specific state if any is to 
 be shared. </p>
@@ -756,20 +788,19 @@ the HTTP/S request data and the graphQLParams is provided as the object
   • gql is the graphQLParams object in the format of
     { query, variables, operationName, raw }
     See https://github.com/graphql/express-graphql for more info</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -800,6 +831,7 @@ the HTTP/S request data and the graphQLParams is provided as the object
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -814,12 +846,17 @@ the HTTP/S request data and the graphQLParams is provided as the object
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -829,64 +866,56 @@ the HTTP/S request data and the graphQLParams is provided as the object
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line60">line 60</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor(resolveWith, rejectWith)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor<span class="signature">(resolveWith, rejectWith)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Creates an object with four properties of note; promise, resolve, reject 
+    <div class="description">
+        <p>Creates an object with four properties of note; promise, resolve, reject 
 and a flag complete that will be set once either resolve or reject have 
 been called. A Deferred is considered to be pending while complete is set
 to false.</p>
@@ -894,20 +923,19 @@ to false.</p>
 the promise is completed. The promise property is the promise resolved 
 or rejected by the associated properties and can be used with other 
 async/await or Promise based code.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -938,6 +966,7 @@ async/await or Promise based code.</p>
 <span class="param-type">any</span>
 
 
+
             
             </td>
 
@@ -961,6 +990,7 @@ async/await or Promise based code.</p>
 <span class="param-type">any</span>
 
 
+
             
             </td>
 
@@ -975,12 +1005,17 @@ async/await or Promise based code.</p>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -990,82 +1025,73 @@ async/await or Promise based code.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line57">line 57</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor(instance)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="constructor"><span class="type-signature"></span>constructor<span class="signature">(instance)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>The IDLFileHandler checks the SCHEMA value returned by the class type 
+    <div class="description">
+        <p>The IDLFileHandler checks the SCHEMA value returned by the class type 
 of the supplied instance. If the resulting value is a Symbol, then the 
 handler's responsibility is to find the file, load it from disk and 
 provide various means of using its contents; i.e. as a Buffer, a String 
 or wrapped in a SyntaxTree instance.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1096,6 +1122,7 @@ or wrapped in a SyntaxTree instance.</p>
 <span class="param-type"><a href="global.html#GQLBase">GQLBase</a></span>
 
 
+
             
             </td>
 
@@ -1110,12 +1137,17 @@ or wrapped in a SyntaxTree instance.</p>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1125,84 +1157,75 @@ or wrapped in a SyntaxTree instance.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line276">line 276</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-
+    
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="consumeDefinition"><span class="type-signature"></span>consumeDefinition(astOrSyntaxTree, definitionType)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="consumeDefinition"><span class="type-signature"></span>consumeDefinition<span class="signature">(astOrSyntaxTree, definitionType)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>This method finds the Query type definitions in the supplied AST or
+    <div class="description">
+        <p>This method finds the Query type definitions in the supplied AST or
 SyntaxTree objects, takes its defined fields and adds it to the current
 instances. If this instance does not have a Query type defined but the
 supplied object does, then the supplied one is moved over. If neither
 has a query handler, then nothing happens.</p>
 <p>NOTE this <em>removes</em> the Query type definition from the supplied AST or 
 SyntaxTree object.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1236,6 +1259,7 @@ SyntaxTree object.</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
             
             </td>
 
@@ -1263,6 +1287,7 @@ an instance of SyntaxTree that represents one.</p></td>
 <span class="param-type">RegExp</span>
 
 
+
             
             </td>
 
@@ -1278,12 +1303,17 @@ accepted for the #find() method of this object.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1293,51 +1323,42 @@ accepted for the #find() method of this object.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line256">line 256</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>returns this for inlining</p>
 </div>
@@ -1353,40 +1374,42 @@ accepted for the #find() method of this object.</p></td>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="EmptyDocument"><span class="type-signature"></span>EmptyDocument(schemaOrASTOrST)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>The starting point for a SyntaxTree that will be built up programmatically.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="EmptyDocument"><span class="type-signature"></span>EmptyDocument<span class="signature">(schemaOrASTOrST)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
     
 
-
-
-<div class="description">
-    <p>The starting point for a SyntaxTree that will be built up programmatically.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
     
+    
+        <h5>Parameters:</h5>
+        
 
-<table class="params">
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1423,6 +1446,7 @@ accepted for the #find() method of this object.</p></td>
 <span class="param-type">SyntaxTree</span>
 
 
+
             
             </td>
 
@@ -1438,12 +1462,17 @@ SyntaxTree.from() used to further populate the new empty document</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1453,51 +1482,42 @@ SyntaxTree.from() used to further populate the new empty document</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line548">line 548</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>an instance of SyntaxTree with no definitions and a
 kind set to 'Document'</p>
@@ -1514,44 +1534,51 @@ kind set to 'Document'</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="EmptyMutation"><span class="type-signature"></span>EmptyMutation()</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="EmptyMutation"><span class="type-signature"></span>EmptyMutation<span class="signature">()</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Mutation types in GraphQL are an ObjectTypeDefinition of importance for 
+    <div class="description">
+        <p>Mutation types in GraphQL are an ObjectTypeDefinition of importance for 
 placement on the root object. There is utility in creating an empty 
 one that can be injected with the fields of other GraphQL object mutation 
 entries.</p>
-</div>
+    </div>
+    
 
+    
 
+    
 
+    
+    
 
-
-
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1561,51 +1588,42 @@ entries.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line531">line 531</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>an instance of SyntaxTree with a base AST generated 
 by parsing the graph query, &quot;type Mutation {}&quot;</p>
@@ -1622,44 +1640,51 @@ by parsing the graph query, &quot;type Mutation {}&quot;</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="EmptyQuery"><span class="type-signature"></span>EmptyQuery()</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="EmptyQuery"><span class="type-signature"></span>EmptyQuery<span class="signature">()</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Query types in GraphQL are an ObjectTypeDefinition of importance for 
+    <div class="description">
+        <p>Query types in GraphQL are an ObjectTypeDefinition of importance for 
 placement on the root object. There is utility in creating an empty 
 one that can be injected with the fields of other GraphQL object query 
 entries.</p>
-</div>
+    </div>
+    
 
+    
 
+    
 
+    
+    
 
-
-
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1669,51 +1694,42 @@ entries.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line514">line 514</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>an instance of SyntaxTree with a base AST generated 
 by parsing the graph query, &quot;type Query {}&quot;</p>
@@ -1730,43 +1746,45 @@ by parsing the graph query, &quot;type Query {}&quot;</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="find"><span class="type-signature"></span>find(definitionName)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="find"><span class="type-signature"></span>find<span class="signature">(definitionName)</span><span class="type-signature"> &rarr; {Object|null}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Iterate through the definitions of the AST if there are any. For each
+    <div class="description">
+        <p>Iterate through the definitions of the AST if there are any. For each
 definition the name property's value field is compared to the supplied 
 definitionName. The definitionName can be a string or a regular
 expression if finer granularity is desired.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1800,6 +1818,7 @@ expression if finer granularity is desired.</p>
 <span class="param-type">RegExp</span>
 
 
+
             
             </td>
 
@@ -1815,12 +1834,17 @@ to match against the definition name field in a given AST.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1830,51 +1854,42 @@ to match against the definition name field in a given AST.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line368">line 368</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a reference to the internal definition field or 
 null if one with a matching name could not be found.</p>
@@ -1894,42 +1909,44 @@ null if one with a matching name could not be found.</p>
 <span class="param-type">null</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="from"><span class="type-signature"></span>from(mixed)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="from"><span class="type-signature"></span>from<span class="signature">(mixed)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Given one of, a valid GraphQL IDL schema string, a valid GraphQL AST or
+    <div class="description">
+        <p>Given one of, a valid GraphQL IDL schema string, a valid GraphQL AST or
 an instance of SyntaxTree, the static from() method will create a new 
 instance of the SyntaxTree with the values you provide.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -1966,6 +1983,7 @@ instance of the SyntaxTree with the values you provide.</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
             
             </td>
 
@@ -1981,12 +1999,17 @@ types specified above. Everything else will result in a null value.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -1996,51 +2019,42 @@ types specified above. Everything else will result in a null value.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line430">line 430</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a newly created and populated instance of SyntaxTree
 or null if an invalid type was supplied for mixed.</p>
@@ -2057,42 +2071,44 @@ or null if an invalid type was supplied for mixed.</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="fromAST"><span class="type-signature"></span>fromAST(ast)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="fromAST"><span class="type-signature"></span>fromAST<span class="signature">(ast)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL 
+    <div class="description">
+        <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL 
 schema. This method does not perform try/catch validation and if an
 invalid GraphQL schema is supplied an error will be thrown.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -2123,6 +2139,7 @@ invalid GraphQL schema is supplied an error will be thrown.</p>
 <span class="param-type">object</span>
 
 
+
             
             </td>
 
@@ -2137,12 +2154,17 @@ invalid GraphQL schema is supplied an error will be thrown.</p>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -2152,51 +2174,42 @@ invalid GraphQL schema is supplied an error will be thrown.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line493">line 493</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a new instance of SyntaxTree initialized with a 
 supplied abstract syntax tree generated by require('graphql').parse() or
@@ -2214,42 +2227,44 @@ other compatible method.</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="fromSchema"><span class="type-signature"></span>fromSchema(schema)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="fromSchema"><span class="type-signature"></span>fromSchema<span class="signature">(schema)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL 
+    <div class="description">
+        <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL 
 schema. This method does not perform try/catch validation and if an
 invalid GraphQL schema is supplied an error will be thrown.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -2280,6 +2295,7 @@ invalid GraphQL schema is supplied an error will be thrown.</p>
 <span class="param-type">string</span>
 
 
+
             
             </td>
 
@@ -2294,12 +2310,17 @@ invalid GraphQL schema is supplied an error will be thrown.</p>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -2309,51 +2330,42 @@ invalid GraphQL schema is supplied an error will be thrown.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line473">line 473</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a new instance of SyntaxTree initialized with a 
 parsed response from require('graphql').parse().</p>
@@ -2370,41 +2382,43 @@ parsed response from require('graphql').parse().</p>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="IDLFilePath"><span class="type-signature"></span>IDLFilePath(path [, extension])</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="IDLFilePath"><span class="type-signature"></span>IDLFilePath<span class="signature">(path, extension<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Creates an appropriate Symbol crafted with the right data for use by
+    <div class="description">
+        <p>Creates an appropriate Symbol crafted with the right data for use by
 the IDLFileHandler class below.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -2414,7 +2428,7 @@ the IDLFileHandler class below.</p>
         <th>Type</th>
 
         
-        <th>Attributes</th>
+        <th>Argument</th>
         
 
         
@@ -2437,6 +2451,7 @@ the IDLFileHandler class below.</p>
             
                 
 <span class="param-type">string</span>
+
 
 
             
@@ -2474,6 +2489,7 @@ the IDLFileHandler class below.</p>
 <span class="param-type">String</span>
 
 
+
             
             </td>
 
@@ -2506,12 +2522,17 @@ already exist.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -2521,97 +2542,89 @@ already exist.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line235">line 235</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
+	<dt class="tag-see method-doc-label method-doc-details-label">See:</dt>
+	<dd class="tag-see">
+		<ul>
+			<li>get SCHEMA()</li>
+			</ul>
+	</dd>
+	
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>get SCHEMA()</li>
-        </ul>
-    </dd>
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>Symbol</p>
 </div>
 
 
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="makeRoot"><span class="type-signature"></span>makeRoot(req, res, gql)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="makeRoot"><span class="type-signature"></span>makeRoot<span class="signature">(req, res, gql)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>An asynchronous function used to parse the supplied classes for each 
+    <div class="description">
+        <p>An asynchronous function used to parse the supplied classes for each 
 ones resolvers and mutators. These are all combined into a single root 
 object passed to express-graphql.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -2642,6 +2655,7 @@ object passed to express-graphql.</p>
 <span class="param-type">Request</span>
 
 
+
             
             </td>
 
@@ -2663,6 +2677,7 @@ object passed to express-graphql.</p>
             
                 
 <span class="param-type">Response</span>
+
 
 
             
@@ -2688,6 +2703,7 @@ object passed to express-graphql.</p>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -2704,12 +2720,17 @@ described here: https://github.com/graphql/express-graphql</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -2719,51 +2740,42 @@ described here: https://github.com/graphql/express-graphql</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLExpressMiddleware.js.html">GQLExpressMiddleware.js</a>, <a href="GQLExpressMiddleware.js.html#line63">line 63</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a Promise resolving to an Object containing all
 the functions described in both Query and Mutation types.</p>
@@ -2780,42 +2792,49 @@ the functions described in both Query and Mutation types.</p>
 <span class="param-type">Promise.&lt;Object></span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="makeSchema"><span class="type-signature"></span>makeSchema()</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="makeSchema"><span class="type-signature"></span>makeSchema<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>A function that combines the IDL schemas of all the supplied classes and 
+    <div class="description">
+        <p>A function that combines the IDL schemas of all the supplied classes and 
 returns that value to the middleware getter.</p>
-</div>
+    </div>
+    
 
+    
 
+    
 
+    
+    
 
-
-
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -2825,51 +2844,42 @@ returns that value to the middleware getter.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLExpressMiddleware.js.html">GQLExpressMiddleware.js</a>, <a href="GQLExpressMiddleware.js.html#line176">line 176</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a dynamically generated GraphQL IDL schema string</p>
 </div>
@@ -2885,42 +2895,49 @@ returns that value to the middleware getter.</p>
 <span class="param-type">string</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="middleware"><span class="type-signature"></span>middleware()</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="middleware"><span class="type-signature"></span>middleware<span class="signature">()</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Using the express-graphql module, it returns an Express 4.x middleware 
+    <div class="description">
+        <p>Using the express-graphql module, it returns an Express 4.x middleware 
 function.</p>
-</div>
+    </div>
+    
 
+    
 
+    
 
+    
+    
 
-
-
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -2930,51 +2947,42 @@ function.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLExpressMiddleware.js.html">GQLExpressMiddleware.js</a>, <a href="GQLExpressMiddleware.js.html#line219">line 219</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a function that expects request, response and next 
 parameters as all Express middleware functions.</p>
@@ -2991,42 +2999,44 @@ parameters as all Express middleware functions.</p>
 <span class="param-type">function</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="MUTATORS"><span class="type-signature"></span>MUTATORS(requestData)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="MUTATORS"><span class="type-signature"></span>MUTATORS<span class="signature">(requestData)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>This method should return a promise that resolves to an object of 
+    <div class="description">
+        <p>This method should return a promise that resolves to an object of 
 functions matching the names of the mutation operations. These are to be
 injected into the root object when used by GQLExpressMiddleware.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -3057,6 +3067,7 @@ injected into the root object when used by GQLExpressMiddleware.</p>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -3072,12 +3083,17 @@ properties; {req, res, gql}</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3087,51 +3103,42 @@ properties; {req, res, gql}</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line150">line 150</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a promise that resolves to an object; see above for more
 information.</p>
@@ -3148,41 +3155,48 @@ information.</p>
 <span class="param-type">Promise</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="pending"><span class="type-signature"></span>pending()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Shorthand getter that denotes true if the deferred is not yet complete.</p>
+    </div>
+    
 
     
 
-    <h4 class="name" id="pending"><span class="type-signature"></span>pending<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
     
 
+    
+    
 
-
-<div class="description">
-    <p>Shorthand getter that denotes true if the deferred is not yet complete.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3192,51 +3206,42 @@ information.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line99">line 99</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>true if the promise is not yet complete; false otherwise</p>
 </div>
@@ -3252,42 +3257,44 @@ information.</p>
 <span class="param-type">boolean</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="RESOLVERS"><span class="type-signature"></span>RESOLVERS(requestData)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="RESOLVERS"><span class="type-signature"></span>RESOLVERS<span class="signature">(requestData)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>This method should return a promise that resolves to an object of 
+    <div class="description">
+        <p>This method should return a promise that resolves to an object of 
 functions matching the names of the query operations. These are to be
 injected into the root object when used by GQLExpressMiddleware.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -3318,6 +3325,7 @@ injected into the root object when used by GQLExpressMiddleware.</p>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -3333,12 +3341,17 @@ properties; {req, res, gql}</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3348,51 +3361,42 @@ properties; {req, res, gql}</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line185">line 185</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>a promise that resolves to an object; see above for more
 information.</p>
@@ -3409,41 +3413,43 @@ information.</p>
 <span class="param-type">Promise</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="setAST"><span class="type-signature"></span>setAST(schemaOrAST)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="setAST"><span class="type-signature"></span>setAST<span class="signature">(schemaOrAST)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Sets the underlying AST object with either schema which will be parsed
+    <div class="description">
+        <p>Sets the underlying AST object with either schema which will be parsed
 into a valid AST or an existing AST. Previous ast values will be erased.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -3477,6 +3483,7 @@ into a valid AST or an existing AST. Previous ast values will be erased.</p>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -3492,12 +3499,17 @@ previosuly parsed or compatible GraphQL IDL AST object.</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3507,51 +3519,42 @@ previosuly parsed or compatible GraphQL IDL AST object.</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line87">line 87</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>this for inlining.</p>
 </div>
@@ -3567,44 +3570,51 @@ previosuly parsed or compatible GraphQL IDL AST object.</p></td>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="toString"><span class="type-signature"></span>toString()</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>SyntaxTree instances that are toString()'ed will have the graphql method
+    <div class="description">
+        <p>SyntaxTree instances that are toString()'ed will have the graphql method
 print() called on them to convert their internal structures back to a
 GraphQL IDL schema syntax. If the object is in an invalid state, it WILL
 throw an error.</p>
-</div>
+    </div>
+    
 
+    
 
+    
 
+    
+    
 
-
-
-
-
-
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3614,51 +3624,42 @@ throw an error.</p>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line397">line 397</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>the AST for the tree parsed back into a string</p>
 </div>
@@ -3674,26 +3675,29 @@ throw an error.</p>
 <span class="param-type">string</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="typeOf"><span class="type-signature"></span>typeOf(object)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="typeOf"><span class="type-signature"></span>typeOf<span class="signature">(object)</span><span class="type-signature"> &rarr; {string}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>One common way to determine the type of class that you are working with, 
+    <div class="description">
+        <p>One common way to determine the type of class that you are working with, 
 in a fairly compatible manner, is to use .call or .apply on the function 
 toString of the Object.prototype.</p>
 <p>Calling Object.prototype.toString.call('hello') will yield &quot;[object String]&quot;
@@ -3704,20 +3708,19 @@ string; so &quot;String&quot; from &quot;[object String]&quot; and so forth. </p
 name comparisons, such as typeOf(&quot;asdfas&quot;) === String.name. The new 
 Symbol.toStringTag allows you to define custom values that are reflected in
 this manner.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -3748,6 +3751,7 @@ this manner.</p>
 <span class="param-type">any</span>
 
 
+
             
             </td>
 
@@ -3763,12 +3767,17 @@ undefined</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3778,51 +3787,42 @@ undefined</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>for objects of type [object String] the value &quot;String&quot;
 will be returned.</p>
@@ -3839,43 +3839,45 @@ will be returned.</p>
 <span class="param-type">string</span>
 
 
+
     </dd>
 </dl>
 
+
+        
+
     
-
-
+</dd>
 
         
             
+<hr>
+<dt>
+    <h4 class="name" id="updateAST"><span class="type-signature"></span>updateAST(ast)</h4>
+    
+    
+</dt>
+<dd>
 
     
-
-    <h4 class="name" id="updateAST"><span class="type-signature"></span>updateAST<span class="signature">(ast)</span><span class="type-signature"> &rarr; {SyntaxTree}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>As passthru update method that works on the internal AST object. If 
+    <div class="description">
+        <p>As passthru update method that works on the internal AST object. If 
 an error occurs, the update is skipped. An error can occur if adding the
 changes would make the AST invalid. In such a case, the error is logged
 to the error console.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+    </div>
     
 
-<table class="params">
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
     <thead>
     <tr>
         
@@ -3906,6 +3908,7 @@ to the error console.</p>
 <span class="param-type">Object</span>
 
 
+
             
             </td>
 
@@ -3921,12 +3924,17 @@ merged on top of the existing tree using Object.assign()</p></td>
     </tbody>
 </table>
 
+    
 
-
-
-
-
+    
 <dl class="details">
+    
+
+	
+
+	
+
+	
 
     
 
@@ -3936,51 +3944,42 @@ merged on top of the existing tree using Object.assign()</p></td>
 
     
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
+	
 
-    
 
-    
 
-    
+	
 
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SyntaxTree.js.html">SyntaxTree.js</a>, <a href="SyntaxTree.js.html#line133">line 133</a>
-    </li></ul></dd>
-    
+	
 
-    
+	
 
-    
-
-    
+	
 </dl>
 
 
+    
 
+    
 
+    
 
+    
 
+    
 
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
+    
+    <h5>Returns:</h5>
+    
+            
 <div class="param-desc">
     <p>this for inlining.</p>
 </div>
@@ -3996,14 +3995,17 @@ merged on top of the existing tree using Object.assign()</p></td>
 <span class="param-type">SyntaxTree</span>
 
 
+
     </dd>
 </dl>
 
-    
-
-
 
         
+
+    
+</dd>
+
+        </dl>
     
 
     
@@ -4016,19 +4018,132 @@ merged on top of the existing tree using Object.assign()</p></td>
 
 
 
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
 </div>
 
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#appendDefinitions">appendDefinitions</a></li><li><a href="global.html#constructor">constructor</a></li><li><a href="global.html#consumeDefinition">consumeDefinition</a></li><li><a href="global.html#Deferred">Deferred</a></li><li><a href="global.html#EmptyDocument">EmptyDocument</a></li><li><a href="global.html#EmptyMutation">EmptyMutation</a></li><li><a href="global.html#EmptyQuery">EmptyQuery</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#from">from</a></li><li><a href="global.html#fromAST">fromAST</a></li><li><a href="global.html#fromSchema">fromSchema</a></li><li><a href="global.html#GQLBase">GQLBase</a></li><li><a href="global.html#GQLExpressMiddleware">GQLExpressMiddleware</a></li><li><a href="global.html#IDLFileHandler">IDLFileHandler</a></li><li><a href="global.html#IDLFilePath">IDLFilePath</a></li><li><a href="global.html#makeRoot">makeRoot</a></li><li><a href="global.html#makeSchema">makeSchema</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#MUTATORS">MUTATORS</a></li><li><a href="global.html#pending">pending</a></li><li><a href="global.html#REQ_DATA_KEY">REQ_DATA_KEY</a></li><li><a href="global.html#RESOLVERS">RESOLVERS</a></li><li><a href="global.html#setAST">setAST</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#typeOf">typeOf</a></li><li><a href="global.html#updateAST">updateAST</a></li></ul>
-</nav>
 
-<br class="clear">
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Jun 21 2017 21:20:09 GMT-0700 (PDT)
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
+	
+		on 2017-06-22T12:46:23-07:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
 </footer>
 
-<script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
 </body>
 </html>

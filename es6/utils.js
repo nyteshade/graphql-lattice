@@ -1,21 +1,25 @@
 // @flow
+// @module utils
+// @namespace utils
 
 /**
  * One common way to determine the type of class that you are working with, 
  * in a fairly compatible manner, is to use .call or .apply on the function 
  * toString of the Object.prototype.
  *
- * Calling Object.prototype.toString.call('hello') will yield "[object String]"
- * as an answer. This technique is fairly sound but is also fairly verbose to
- * use often. This function extracts the detected value name from the above 
- * string; so "String" from "[object String]" and so forth. 
+ * Calling `Object.prototype.toString.call('hello')` will yield 
+ * `"[object String]"` as an answer. This technique is fairly sound but is 
+ * also fairly verbose to use often. This function extracts the detected value 
+ * name from the above string; so "String" from "[object String]" and so forth. 
  *
  * The added advantage of using this method is that it works well with direct 
- * name comparisons, such as typeOf("asdfas") === String.name. The new 
- * Symbol.toStringTag allows you to define custom values that are reflected in
- * this manner.
+ * name comparisons, such as `typeOf("asdfas") === String.name`. The new 
+ * `Symbol.toStringTag` allows you to define custom values that are 
+ * reflected in this manner.
  * 
  * @method typeOf
+ * @memberof utils
+ * 
  * @param {any} object any value is acceptable here, including null and 
  * undefined
  * @return {string} for objects of type [object String] the value "String"
@@ -29,6 +33,9 @@ export function typeOf(object: any): string {
  * Deferred is modeled after jQuery's deferred object. It inverts a promise 
  * such that its resolve and reject methods can be invoked without wrapping 
  * all of the related code within a Promise's function. 
+ *
+ * @class Deferred
+ * @memberof utils
  */
 export class Deferred {
   /**
@@ -42,7 +49,10 @@ export class Deferred {
    * or rejected by the associated properties and can be used with other 
    * async/await or Promise based code.
    *
+   * @instance
+   * @memberof Deferred
    * @method constructor
+   * 
    * @param {any} resolveWith a deferred resolved as Promise.resolve() might do
    * @param {any} rejectWith a deferred rejected as Promise.reject() might do
    */
@@ -67,8 +77,11 @@ export class Deferred {
   
   /**
    * Shorthand getter that denotes true if the deferred is not yet complete. 
-   * 
+   *
+   * @instance
+   * @memberof Deferred
    * @method pending
+   * 
    * @return {boolean} true if the promise is not yet complete; false otherwise
    */
   get pending(): boolean { return !this.complete }

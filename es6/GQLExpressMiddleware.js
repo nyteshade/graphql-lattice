@@ -1,4 +1,5 @@
 // @flow
+// @module GQLExpressMiddleware
 
 import { SyntaxTree } from './SyntaxTree'
 import graphqlHTTP from 'express-graphql'
@@ -8,8 +9,12 @@ import { parse, print, buildSchema } from 'graphql'
  * A handler that exposes an express middleware function that mounts a 
  * GraphQL I/O endpoint. Typical usage follows:
  *
+ * ```js
  * const app = express();
  * app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);
+ * ```
+ *
+ * @class GQLExpressMiddleware
  */
 export class GQLExpressMiddleware
 {
@@ -17,6 +22,10 @@ export class GQLExpressMiddleware
    * For now, takes an Array of classes extending from GQLBase. These are 
    * parsed and a combined schema of all their individual schemas is generated 
    * via the use of ASTs. This is passed off to express-graphql.
+   *
+   * @instance
+   * @memberof GQLExpressMiddleware
+   * @method constructor
    * 
    * @param {Array<GQLBase>} handlers an array of GQLBase extended classes
    */
@@ -28,14 +37,16 @@ export class GQLExpressMiddleware
    * An asynchronous function used to parse the supplied classes for each 
    * ones resolvers and mutators. These are all combined into a single root 
    * object passed to express-graphql.
-   * 
+   *
+   * @instance 
+   * @memberof GQLExpressMiddleware
    * @method makeRoot
    * 
    * @param {Request} req an Express 4.x request object
    * @param {Response} res an Express 4.x response object
    * @param {Object} gql an object containing information about the graphql 
-   * request. It has the format of { query, variables, operationName, raw } as
-   * described here: https://github.com/graphql/express-graphql
+   * request. It has the format of `{ query, variables, operationName, raw }` 
+   * as described here: https://github.com/graphql/express-graphql
    * @return {Promise<Object>} a Promise resolving to an Object containing all
    * the functions described in both Query and Mutation types.
    */
@@ -56,8 +67,11 @@ export class GQLExpressMiddleware
   /**
    * A function that combines the IDL schemas of all the supplied classes and 
    * returns that value to the middleware getter.
-   * 
+   *
+   * @instance
+   * @memberof GQLExpressMiddleware
    * @method makeSchema
+   * 
    * @return {string} a dynamically generated GraphQL IDL schema string 
    */
   makeSchema(): string {
@@ -75,8 +89,11 @@ export class GQLExpressMiddleware
   /**
    * Using the express-graphql module, it returns an Express 4.x middleware 
    * function. 
-   * 
+   *
+   * @instance
+   * @memberof GQLExpressMiddleware
    * @method middleware
+   * 
    * @return {Function} a function that expects request, response and next 
    * parameters as all Express middleware functions.
    */
