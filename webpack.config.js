@@ -10,7 +10,7 @@ module.exports = {
   devtool: 'source-map',
   output: {
     libraryTarget: 'commonjs',
-    filename: 'lattice.min.js',    
+    filename: 'lattice.min.js',
     path: path.resolve(path.join(__dirname, 'dist'))
   },
   target: 'node',
@@ -23,6 +23,10 @@ module.exports = {
         query: babelrc
       }
     ]
+  },
+  externals: {
+    "graphql": { commonjs: "graphql", commonjs2: "graphql" },
+    "express-graphql": { commonjs: "express-graphql", commonjs2: "express-graphql" }
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
