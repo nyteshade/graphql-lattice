@@ -1,0 +1,35 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/jsdoc-babel"        
+    ],
+    "babel": {
+        "extensions": ["js", "es6", "jsx"],
+        "presets": [
+          "es2015",
+          "es2016",
+          "es2017",
+          "stage-1",
+          "flow",
+          ["env", {
+            "targets": { "node": "current" },
+            "modules": "commonjs",
+            "useBuiltIns": true,
+            "debug": true
+          }]
+        ],
+        "plugins": ["transform-runtime", "transform-flow-strip-types"]
+    },    
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}

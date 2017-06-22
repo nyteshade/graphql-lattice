@@ -1,4 +1,32 @@
-// @flow
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: SyntaxTree.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: SyntaxTree.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// @flow
 
 import { typeOf } from './utils'
 import { print, parse } from 'graphql'
@@ -141,11 +169,11 @@ export class SyntaxTree
       set.add(definition.name.value);
     })
     
-    if (source && source.ast.definitions && this.ast.definitions) {
+    if (source &amp;&amp; source.ast.definitions &amp;&amp; this.ast.definitions) {
       for (let theirs of source) {
         let name = theirs.name.value;
         let ours = this.find(name);
-        let index = ours && this.ast.definitions.indexOf(ours) || -1;
+        let index = ours &amp;&amp; this.ast.definitions.indexOf(ours) || -1;
         
         // We don't yet have one with that name
         if (!set.has(name)) {
@@ -231,13 +259,13 @@ export class SyntaxTree
     // graphql code someplace
     switch(left.kind) {
       case 'ObjectTypeDefinition':
-        if (left.interfaces && right.interfaces) {
+        if (left.interfaces &amp;&amp; right.interfaces) {
           left.interfaces = [].concat(left.interfaces, right.interfaces);
         }
-        if (left.directives && right.directives) {
+        if (left.directives &amp;&amp; right.directives) {
           left.directives = [].concat(left.directives, right.directives);
         }
-        if (left.fields && right.fields) {
+        if (left.fields &amp;&amp; right.fields) {
           console.log('Left fields before', left.fields);
           console.log('Right fields', right.fields);
           left.fields = [].concat(left.fields, right.fields);
@@ -451,4 +479,26 @@ export class SyntaxTree
 export default SyntaxTree;
 
 // repl testing
-// require('./bootstrap'); let typeOf = require('./lib/utils').typeOf, GQL=require('graphql'), ST = require('./lib/GraphQL/SyntaxTree').SyntaxTree, schema = `input MessageInput { content: String author: String } type Message { id: ID! content: String author: String } type Query { getMessage(id: ID!): Message } type Mutation { createMessage(input: MessageInput): Message updateMessage(id: ID!, input: MessageInput): Message }`, ast = GQL.parse(schema), st = ST.fromSchema(schema), query = ST.EmptyQuery(), mutation = ST.EmptyMutation()
+// require('./bootstrap'); let typeOf = require('./lib/utils').typeOf, GQL=require('graphql'), ST = require('./lib/GraphQL/SyntaxTree').SyntaxTree, schema = `input MessageInput { content: String author: String } type Message { id: ID! content: String author: String } type Query { getMessage(id: ID!): Message } type Mutation { createMessage(input: MessageInput): Message updateMessage(id: ID!, input: MessageInput): Message }`, ast = GQL.parse(schema), st = ST.fromSchema(schema), query = ST.EmptyQuery(), mutation = ST.EmptyMutation()</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#appendDefinitions">appendDefinitions</a></li><li><a href="global.html#constructor">constructor</a></li><li><a href="global.html#consumeDefinition">consumeDefinition</a></li><li><a href="global.html#Deferred">Deferred</a></li><li><a href="global.html#EmptyDocument">EmptyDocument</a></li><li><a href="global.html#EmptyMutation">EmptyMutation</a></li><li><a href="global.html#EmptyQuery">EmptyQuery</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#from">from</a></li><li><a href="global.html#fromAST">fromAST</a></li><li><a href="global.html#fromSchema">fromSchema</a></li><li><a href="global.html#GQLBase">GQLBase</a></li><li><a href="global.html#GQLExpressMiddleware">GQLExpressMiddleware</a></li><li><a href="global.html#IDLFileHandler">IDLFileHandler</a></li><li><a href="global.html#IDLFilePath">IDLFilePath</a></li><li><a href="global.html#makeRoot">makeRoot</a></li><li><a href="global.html#makeSchema">makeSchema</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#MUTATORS">MUTATORS</a></li><li><a href="global.html#pending">pending</a></li><li><a href="global.html#REQ_DATA_KEY">REQ_DATA_KEY</a></li><li><a href="global.html#RESOLVERS">RESOLVERS</a></li><li><a href="global.html#setAST">setAST</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#typeOf">typeOf</a></li><li><a href="global.html#updateAST">updateAST</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Jun 21 2017 21:20:09 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

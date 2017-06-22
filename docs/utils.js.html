@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// @flow
+
+/**
+ * One common way to determine the type of class that you are working with, 
+ * in a fairly compatible manner, is to use .call or .apply on the function 
+ * toString of the Object.prototype.
+ *
+ * Calling Object.prototype.toString.call('hello') will yield "[object String]"
+ * as an answer. This technique is fairly sound but is also fairly verbose to
+ * use often. This function extracts the detected value name from the above 
+ * string; so "String" from "[object String]" and so forth. 
+ *
+ * The added advantage of using this method is that it works well with direct 
+ * name comparisons, such as typeOf("asdfas") === String.name. The new 
+ * Symbol.toStringTag allows you to define custom values that are reflected in
+ * this manner.
+ * 
+ * @method typeOf
+ * @param {any} object any value is acceptable here, including null and 
+ * undefined
+ * @return {string} for objects of type [object String] the value "String"
+ * will be returned.
+ */
+export function typeOf(object: any): string { 
+  return /(\b\w+\b)\]/.exec(Object.prototype.toString.call(object))[1];
+}
+
+/**
+ * Deferred is modeled after jQuery's deferred object. It inverts a promise 
+ * such that its resolve and reject methods can be invoked without wrapping 
+ * all of the related code within a Promise's function. 
+ */
+export class Deferred {
+  /**
+   * Creates an object with four properties of note; promise, resolve, reject 
+   * and a flag complete that will be set once either resolve or reject have 
+   * been called. A Deferred is considered to be pending while complete is set
+   * to false.
+   *
+   * Once constructed, resolve and reject can be called later, at which point, 
+   * the promise is completed. The promise property is the promise resolved 
+   * or rejected by the associated properties and can be used with other 
+   * async/await or Promise based code.
+   *
+   * @method constructor
+   * @param {any} resolveWith a deferred resolved as Promise.resolve() might do
+   * @param {any} rejectWith a deferred rejected as Promise.reject() might do
+   */
+  constructor(resolveWith: any, rejectWith: any) {
+    this.promise = new Promise((resolve, reject) => {
+      this.complete = false;
+      
+      this.resolve = (...args) => { 
+        this.complete = true; 
+        return resolve(...args); 
+      };
+      
+      this.reject = (...args) => {
+        this.complete = true;
+        return reject(...args);
+      };
+      
+      if (resolveWith &amp;&amp; !rejectWith) { this.resolve(resolveWith) }
+      if (rejectWith &amp;&amp; !resolveWith) { this.reject(rejectWith) }
+    });
+  }
+  
+  /**
+   * Shorthand getter that denotes true if the deferred is not yet complete. 
+   * 
+   * @method pending
+   * @return {boolean} true if the promise is not yet complete; false otherwise
+   */
+  get pending(): boolean { return !this.complete }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#appendDefinitions">appendDefinitions</a></li><li><a href="global.html#constructor">constructor</a></li><li><a href="global.html#consumeDefinition">consumeDefinition</a></li><li><a href="global.html#Deferred">Deferred</a></li><li><a href="global.html#EmptyDocument">EmptyDocument</a></li><li><a href="global.html#EmptyMutation">EmptyMutation</a></li><li><a href="global.html#EmptyQuery">EmptyQuery</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#from">from</a></li><li><a href="global.html#fromAST">fromAST</a></li><li><a href="global.html#fromSchema">fromSchema</a></li><li><a href="global.html#GQLBase">GQLBase</a></li><li><a href="global.html#GQLExpressMiddleware">GQLExpressMiddleware</a></li><li><a href="global.html#IDLFileHandler">IDLFileHandler</a></li><li><a href="global.html#IDLFilePath">IDLFilePath</a></li><li><a href="global.html#makeRoot">makeRoot</a></li><li><a href="global.html#makeSchema">makeSchema</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#MUTATORS">MUTATORS</a></li><li><a href="global.html#pending">pending</a></li><li><a href="global.html#REQ_DATA_KEY">REQ_DATA_KEY</a></li><li><a href="global.html#RESOLVERS">RESOLVERS</a></li><li><a href="global.html#setAST">setAST</a></li><li><a href="global.html#toString">toString</a></li><li><a href="global.html#typeOf">typeOf</a></li><li><a href="global.html#updateAST">updateAST</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Jun 21 2017 21:20:09 GMT-0700 (PDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

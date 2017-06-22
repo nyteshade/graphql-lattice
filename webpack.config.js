@@ -7,6 +7,7 @@ var UnminifiedWebpackPlugin = require('unminified-webpack-plugin')
 
 module.exports = {
   entry: './es6/lattice.js',
+  devtool: 'source-map',
   output: {
     libraryTarget: 'commonjs',
     filename: 'lattice.min.js',    
@@ -25,10 +26,12 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
+      compress: { warnings: false },
+      comments: false,
+      sourceMap: true,
+      minimize: false
     }),
-    new UnminifiedWebpackPlugin()
+    new UnminifiedWebpackPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin()
   ]
 };
