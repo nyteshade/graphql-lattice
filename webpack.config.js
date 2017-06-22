@@ -6,9 +6,10 @@ var webpack = require('webpack')
 var UnminifiedWebpackPlugin = require('unminified-webpack-plugin')
 
 module.exports = {
-  entry: './src/lattice.js',
+  entry: './es6/lattice.js',
   output: {
-    filename: 'lattice.min.js',
+    libraryTarget: 'commonjs',
+    filename: 'lattice.min.js',    
     path: path.resolve(path.join(__dirname, 'dist'))
   },
   target: 'node',

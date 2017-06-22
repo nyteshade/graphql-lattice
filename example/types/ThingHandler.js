@@ -1,5 +1,5 @@
 const fakeDatabase = require('../fakeDatabase')
-const { GQLBase } = require('../GraphQL/GQLBase')
+const { GQLBase } = require('graphql-lattice')
 
 class ThingHandler extends GQLBase {
   constructor(reqData, name) {
