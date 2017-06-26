@@ -1,4 +1,4 @@
-# graphql-lattice
+# graphql-lattice ([www.graphql-lattice.com](https://www.graphql-lattice.com))
 ![GraphQL Logo](http://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png)
 
 ## About
