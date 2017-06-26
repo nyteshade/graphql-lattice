@@ -1,5 +1,5 @@
 # graphql-lattice
-![GraphQL-Lattice Logo](https://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png)
+![GraphQL Logo](http://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png)
 
 ## About
 Lattice for GraphQL is a lightweight implementation pattern/framework that is meant to provide a basis for your applications to fetch exactly the data that your needs demand; be they web, native mobile or desktop applications.
