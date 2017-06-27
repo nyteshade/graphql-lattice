@@ -33,7 +33,8 @@ module.exports = {
       compress: { warnings: false },
       comments: false,
       sourceMap: true,
-      minimize: false
+      minimize: false,
+      mangle: false
     }),
     new UnminifiedWebpackPlugin(),
     new webpack.optimize.AggressiveMergingPlugin()

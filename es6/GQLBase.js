@@ -7,6 +7,8 @@ import fs from 'fs'
 import { typeOf, Deferred } from './utils'
 import { SyntaxTree } from './SyntaxTree'
 
+const GQLBaseModule = module;
+
 /** 
  * A `Symbol` used as a key to store the request data for an instance of the 
  * GQLBase object in question.
@@ -50,12 +52,11 @@ export class GQLBase {
    * 
    * @param {Object} requestData see description above
    */
-  constructor(requestData: Object, classModule: Object | undefined) {
+  constructor(requestData: Object) {
     const Class = this.constructor;
     
     this.requestData = requestData;
-    this.classModule = classModule;
-    this.fileHandler = new IDLFileHandler(this);    
+    this.fileHandler = new IDLFileHandler(this.constructor);    
   }
   
   /**
@@ -213,6 +214,46 @@ export class GQLBase {
   static IDLFilePath(path: string, extension: string = '.graphql'): Symbol {
     return Symbol.for(`Path ${path} Extension ${extension}`);
   }    
+  
+  /**
+   * A file handler for fetching the IDL schema string from the file system 
+   * for those `GQLBase` extended classes that have indicated to do so by
+   * returning a `Symbol` for their `SCHEMA` property.
+   * 
+   * @static
+   * @memberof GQLBase
+   * @method handler
+   *
+   * @return {IDLFileHandler} instance of IDLFileHandler, created if one does 
+   * not already exist, for fetching the contents from disk.
+   */
+  static get handler(): IDLFileHandler {
+    const key = Symbol.for(`${IDLFileHandler.name}.${this.name}`);
+    
+    if (!this[key]) {
+      this[key] = new IDLFileHandler(this);
+    }
+    
+    return this[key];
+  }
+  
+  /**
+   * Returns the module object where your class is created. This needs to be
+   * defined on your class, as a static getter, in the FILE where you are 
+   * defining your Class definition.
+   *
+   * @static
+   * @memberof GQLBase
+   * @method module
+   * 
+   * @return {Object} the reference to the module object defined and injected 
+   * by node.js' module loading system. 
+   *
+   * @see https://nodejs.org/api/modules.html
+   */
+  static get module(): Object {
+    return GQLBaseModule;
+  }
 }
 
 /**
@@ -234,52 +275,60 @@ export class IDLFileHandler {
    * @memberof IDLFileHandler
    * @method constructor
    * 
-   * @param {GQLBase} instance an extended instance or child class of GQLBase
+   * @param {Function} Class a function or class definition that presumably
+   * extends from GQLBase were it an instance.
    */
-  constructor(instance: GQLBase) {
-    const Class = instance.constructor;
-    const symbol = typeOf(Class.SCHEMA) === Symbol.name && Class.SCHEMA || null;
+  constructor(Class: Function) {
+    const symbol = typeof Class.SCHEMA === 'symbol' && Class.SCHEMA || null;
     const pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
-    
-    this.instance = instance;
-    
+        
     if (symbol) {  
       let symbolString = symbol.toString();
           
-      if (symbol === Class.ADJACENT_FILE) {      
-        if (!classModule) {
+      if (symbol === Class.ADJACENT_FILE) {   
+        if (Class.module === GQLBaseModule) {
           throw new Error(`
-            The call to super from ${Class.name} must be invoked with 
-            module as the second parameter if you wish to use an ADJACENT_FILE
-            schema. If requestData is your first parameter, adjust your
-            call to super() to look like this: super(requestData, module);
+            The a static getter for 'module' on ${Class.name} must be present 
+            that returns the module object where the Class is defined. Try the 
+            following:
+            
+            // your ${Class.name}.js file
+            import { GQLBase } from 'graphql-lattice'
+            
+            const ${Class.name}Module = module;
+            
+            class ${Class.name} extends GQLBase {
+              ...
+              
+              static get module() {
+                return ${Class.name}Module;
+              }
+            }
+                        
           `);
         }
+                
+        const filename = Class.module.filename;
+        const extension = Path.extname(filename)
+        const dir = Path.dirname(filename)
+        const filefixed = Path.basename(filename, extension)
+        const build = Path.resolve(Path.join(dir, `${filefixed}.graphql`))
         
-        file = this.classModule.filename;
+        this.path = build;
         this.extension = '.graphql';
-        this.path = Path.resolve(Path.join(
-          Path.dirname(file),
-          Path.basename(file, Path.extname(file)),
-          this.extension
-        ));
       }
       else if (pattern.test(symbolString)) {
-        let parsed = pattern.exec(symbolString);
-        this.extension = parsed[2];
-        this.path = parsed[1];
+        const parsed = pattern.exec(symbolString);
+        const extension = parsed[2] || '.graphql'
+        const dir = Path.dirname(parsed[1])
+        const file = Path.basename(parsed[1], extension)
+        const build = Path.resolve(Path.join(dir, `${file}${extension}`))
         
-        // Make sure the resolved filename actually has the extension on it
-        // depending on how people setup the data
-        if (this.path === Path.basename(this.path, this.extension)) {
-          let name = this.path;
-          let ext = this.extension;
-          
-          this.path = Path.format({ name, ext });
-        }
+        this.path = build;
+        this.extension = extension;
         
-        // Resolve the absolute path to the file in question
-        this.path = Path.resolve(this.path);
+        console.log(`Path ${this.path} Ext ${this.extension}`)
+        console.log(`Resolved ${Path.resolve(this.path)}`)
       }
     }
     else {

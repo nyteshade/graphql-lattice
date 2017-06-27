@@ -4,6 +4,8 @@
 import { SyntaxTree } from './SyntaxTree'
 import graphqlHTTP from 'express-graphql'
 import { parse, print, buildSchema } from 'graphql'
+import { GQLBase } from './GQLBase'
+import { typeOf } from './utils'
 
 /**
  * A handler that exposes an express middleware function that mounts a 
@@ -77,8 +79,20 @@ export class GQLExpressMiddleware
   makeSchema(): string {
     let schema = SyntaxTree.EmptyDocument();
     
-    for (let object of this.handlers) {
-      schema.appendDefinitions(object.SCHEMA);
+    for (let Class of this.handlers) {
+      let classSchema = Class.SCHEMA;
+            
+      if (typeOf(classSchema) === 'Symbol') {
+        let handler = Class.handler;
+        
+        console.log(handler);
+        console.log(handler.path,'\n',handler.extension)
+        console.log(handler.getFile())
+        classSchema = handler.getSchema();
+        console.log('Loaded schema\n%s\n', classSchema)
+      }
+      
+      schema.appendDefinitions(classSchema);
     }
     
     console.log('\nGenerated GraphQL Schema\n----------------\n%s', schema);
