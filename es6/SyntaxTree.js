@@ -1,7 +1,7 @@
 // @flow
 // @module SyntaxTree
 
-import { typeOf } from './utils'
+import { typeOf } from './types'
 import { print, parse } from 'graphql'
 
 // Shorthand for the key storing the internal AST 

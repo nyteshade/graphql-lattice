@@ -1,13 +1,25 @@
 // @flow
-// @module GQLBase
+// @module GQLBaseEnv
 
 import Path from 'path'
 import fs from 'fs'
 
-import { typeOf, Deferred } from './utils'
+import { Deferred } from './utils'
+import { typeOf } from './types'
 import { SyntaxTree } from './SyntaxTree'
 
+/** Reference to the module this code is defined in and exported to. */
 const GQLBaseModule = module;
+
+/** 
+ * A `Symbol` used as a key to store the backing model data. Designed as a 
+ * way to separate model data and GraphQL property accessors into logical bits.
+ * 
+ * @type {Symbol}
+ * @prop MODEL_KEY
+ * @memberof GQLBaseEnv
+ */
+export const MODEL_KEY = Symbol.for('data-model-contents-key');
 
 /** 
  * A `Symbol` used as a key to store the request data for an instance of the 
@@ -15,7 +27,7 @@ const GQLBaseModule = module;
  * 
  * @type {Symbol}
  * @prop REQ_DATA_KEY
- * @memberof GQLBase
+ * @memberof GQLBaseEnv
  */
 export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
 
@@ -52,11 +64,42 @@ export class GQLBase {
    * 
    * @param {Object} requestData see description above
    */
-  constructor(requestData: Object) {
+  constructor(requestData: Object, modelData: Object = {}) {
     const Class = this.constructor;
     
+    this.model = modelData;
     this.requestData = requestData;
     this.fileHandler = new IDLFileHandler(this.constructor);    
+  }
+  
+  /**
+   * Getter for the internally stored model data. The contents of this 
+   * object are abstracted away behind a `Symbol` key to prevent collision
+   * between the underlying model and any GraphQL Object Definition properties.
+   *
+   * @instance
+   * @memberof GQLBase 
+   * @method model-get
+   * 
+   * @param {Object} value any object you wish to use as a data store
+   */
+  get model() {
+    return this[MODEL_KEY];
+  }
+
+  /**
+   * Setter for the internally stored model data. The contents of this 
+   * object are abstracted away behind a `Symbol` key to prevent collision
+   * between the underlying model and any GraphQL Object Definition properties.
+   *
+   * @instance
+   * @memberof GQLBase 
+   * @method model-set
+   * 
+   * @param {Object} value any object you wish to use as a data store
+   */
+  set model(value: Object) {
+    this[MODEL_KEY] = value;
   }
   
   /**

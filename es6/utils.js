@@ -3,33 +3,6 @@
 // @namespace utils
 
 /**
- * One common way to determine the type of class that you are working with, 
- * in a fairly compatible manner, is to use .call or .apply on the function 
- * toString of the Object.prototype.
- *
- * Calling `Object.prototype.toString.call('hello')` will yield 
- * `"[object String]"` as an answer. This technique is fairly sound but is 
- * also fairly verbose to use often. This function extracts the detected value 
- * name from the above string; so "String" from "[object String]" and so forth. 
- *
- * The added advantage of using this method is that it works well with direct 
- * name comparisons, such as `typeOf("asdfas") === String.name`. The new 
- * `Symbol.toStringTag` allows you to define custom values that are 
- * reflected in this manner.
- * 
- * @method typeOf
- * @memberof utils
- * 
- * @param {any} object any value is acceptable here, including null and 
- * undefined
- * @return {string} for objects of type [object String] the value "String"
- * will be returned.
- */
-export function typeOf(object: any): string { 
-  return /(\b\w+\b)\]/.exec(Object.prototype.toString.call(object))[1];
-}
-
-/**
  * Deferred is modeled after jQuery's deferred object. It inverts a promise 
  * such that its resolve and reject methods can be invoked without wrapping 
  * all of the related code within a Promise's function. 

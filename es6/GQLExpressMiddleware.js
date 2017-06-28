@@ -5,7 +5,7 @@ import { SyntaxTree } from './SyntaxTree'
 import graphqlHTTP from 'express-graphql'
 import { parse, print, buildSchema } from 'graphql'
 import { GQLBase } from './GQLBase'
-import { typeOf } from './utils'
+import { typeOf } from './types'
 
 /**
  * A handler that exposes an express middleware function that mounts a 
