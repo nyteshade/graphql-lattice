@@ -3100,7 +3100,7 @@ module.exports = require("graphql");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.types = exports.typeOf = exports.Deferred = exports.SyntaxTree = exports.GQLExpressMiddleware = exports.GQLBase = undefined;
+exports.typeOf = exports.types = exports.Deferred = exports.SyntaxTree = exports.GQLExpressMiddleware = exports.GQLBase = undefined;
 
 var _GQLBase = __webpack_require__(51);
 
@@ -3112,20 +3112,21 @@ var _utils = __webpack_require__(67);
 
 var _types = __webpack_require__(29);
 
-var _types2 = _interopRequireDefault(_types);
+var types = _interopRequireWildcard(_types);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var typeOf = _types2.default.typeOf;
+var typeOf = types.typeOf;
 
 /* Create a friendly bundle to export all at once */
+
 var defaultPackage = {
   GQLBase: _GQLBase.GQLBase,
   GQLExpressMiddleware: _GQLExpressMiddleware.GQLExpressMiddleware,
   SyntaxTree: _SyntaxTree.SyntaxTree,
   Deferred: _utils.Deferred,
-  types: _types2.default,
-  typeOf: typeOf
+  typeOf: typeOf,
+  types: types
 };
 
 /* Also export each of the constructs individually */
@@ -3133,8 +3134,8 @@ exports.GQLBase = _GQLBase.GQLBase;
 exports.GQLExpressMiddleware = _GQLExpressMiddleware.GQLExpressMiddleware;
 exports.SyntaxTree = _SyntaxTree.SyntaxTree;
 exports.Deferred = _utils.Deferred;
+exports.types = types;
 exports.typeOf = typeOf;
-exports.types = _types2.default;
 exports.default = defaultPackage;
 
 /***/ }),

@@ -2,9 +2,9 @@ import { GQLBase } from './GQLBase'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { SyntaxTree } from './SyntaxTree'
 import { Deferred } from './utils'
-import types from './types'
+import * as types from './types'
 
-const typeOf = types.typeOf
+const { typeOf } = types;
 
 /* Create a friendly bundle to export all at once */
 const defaultPackage = {
@@ -12,8 +12,8 @@ const defaultPackage = {
   GQLExpressMiddleware,
   SyntaxTree,
   Deferred,
-  types,
-  typeOf
+  typeOf,
+  types
 };
 
 /* Also export each of the constructs individually */
@@ -21,6 +21,6 @@ export {GQLBase}
 export {GQLExpressMiddleware}
 export {SyntaxTree}
 export {Deferred}
-export {typeOf}
 export {types}
+export {typeOf}
 export default defaultPackage

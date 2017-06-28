@@ -9,9 +9,9 @@ const fakeDatabase = {
     },
 
     'Yuki': {
-      first: 'Yuki',
-      middle: 'Enari',
-      last: 'Harrison',
+      first: 'Yuko',
+      middle: 'Nani',
+      last: 'MoNai',
       gender: 'Female',
       job: 'Student'
     },
