@@ -505,7 +505,7 @@ exports.default = function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isClass = exports.isOfType = exports.isValue = exports.isRegExp = exports.isNumber = exports.isString = exports.isObject = exports.isDate = exports.isArray = exports.isFunction = undefined;
+exports.NULL = exports.UNDEFINED = exports.isClass = exports.isOfType = exports.isValue = exports.isUndefined = exports.isNull = exports.isRegExp = exports.isNumber = exports.isString = exports.isObject = exports.isDate = exports.isArray = exports.isFunction = undefined;
 
 var _getPrototypeOf = __webpack_require__(106);
 
@@ -646,6 +646,34 @@ var isNumber = exports.isNumber = function isNumber(obj) {
  */
 var isRegExp = exports.isRegExp = function isRegExp(obj) {
   return typeOf(obj) === RegExp.name;
+};
+
+/**
+ * Returns true if the type supplied evaluates to `[object Null]`
+ * 
+ * @method isNull 
+ * @memberof types
+ * @inner
+ * 
+ * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @return {Boolean} true if it passes the test, false otherwise
+ */
+var isNull = exports.isNull = function isNull(obj) {
+  return typeOf(obj) === NULL;
+};
+
+/**
+ * Returns true if the type supplied evaluates to `[object Undefined]`
+ * 
+ * @method isUndefined 
+ * @memberof types
+ * @inner
+ * 
+ * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @return {Boolean} true if it passes the test, false otherwise
+ */
+var isUndefined = exports.isUndefined = function isUndefined(obj) {
+  return typeOf(obj) === UNDEFINED;
 };
 
 /**
@@ -820,6 +848,26 @@ function extendsFrom(TestedClass, RootClass) {
 
   return false;
 }
+
+/**
+ * Programmatic constant defintion of the result of a call to 
+ * `typeOf(undefined)`.
+ *
+ * @memberof types
+ * @type {string}
+ * @const 
+ */
+var UNDEFINED = exports.UNDEFINED = typeOf(undefined);
+
+/**
+ * Programmatic constant defintion of the result of a call to 
+ * `typeOf(null)`.
+ *
+ * @memberof types
+ * @type {string}
+ * @const 
+ */
+var NULL = exports.NULL = typeOf(null);
 
 /***/ }),
 /* 30 */

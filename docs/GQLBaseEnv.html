@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>utils.js</title>
+  <title>GQLBaseEnv</title>
 
 
 
@@ -47,81 +47,252 @@
 
     <div id="main">
         
-        <h1 class="page-title">utils.js</h1>
+        <h1 class="page-title">GQLBaseEnv</h1>
         
 
         
 
 
+
+
+<section>
+
+<header>
+    
+        <h2>
+        GQLBaseEnv
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
 
     
-    <section>
-        <article>
-            <pre class="source linenums"><code class="hljs js">// @flow
 
-/**
- * Deferred is modeled after jQuery's deferred object. It inverts a promise 
- * such that its resolve and reject methods can be invoked without wrapping 
- * all of the related code within a Promise's function. 
- *
- * @class Deferred
- */
-export class Deferred {
-  /**
-   * Creates an object with four properties of note; promise, resolve, reject 
-   * and a flag complete that will be set once either resolve or reject have 
-   * been called. A Deferred is considered to be pending while complete is set
-   * to false.
-   *
-   * Once constructed, resolve and reject can be called later, at which point, 
-   * the promise is completed. The promise property is the promise resolved 
-   * or rejected by the associated properties and can be used with other 
-   * async/await or Promise based code.
-   *
-   * @instance
-   * @memberof Deferred
-   * @method ⎆⠀constructor
-   * 
-   * @param {any} resolveWith a deferred resolved as Promise.resolve() might do
-   * @param {any} rejectWith a deferred rejected as Promise.reject() might do
-   */
-  constructor(resolveWith: any, rejectWith: any) {
-    this.promise = new Promise((resolve, reject) => {
-      this.complete = false;
-      
-      this.resolve = (...args) => { 
-        this.complete = true; 
-        return resolve(...args); 
-      };
-      
-      this.reject = (...args) => {
-        this.complete = true;
-        return reject(...args);
-      };
-      
-      if (resolveWith &amp;&amp; !rejectWith) { this.resolve(resolveWith) }
-      if (rejectWith &amp;&amp; !resolveWith) { this.reject(rejectWith) }
-    });
-  }
-  
-  /**
-   * Shorthand getter that denotes true if the deferred is not yet complete. 
-   *
-   * @instance
-   * @memberof Deferred
-   * @method ⬇︎⠀pending
-   * 
-   * @return {boolean} true if the promise is not yet complete; false otherwise
-   */
-  get pending(): boolean { return !this.complete }
-}
-</code></pre>
-        </article>
-    </section>
-    <script type="text/javascript">
-      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
-    </script>
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line69">line 69</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".GQLBaseModule">
+  <a class="anchor" href="#GQLBaseModule"></a>
+  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>GQLBaseModule<span class="type-signature"> :Object</span></span></h4>
+
+
+
+
+<div class="description">
+    <p>Constant referring to the nodejs module in which this code is defined.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line59">line 59</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~REQ_DATA_KEY">
+  <a class="anchor" href="#REQ_DATA_KEY"></a>
+  <span class="type-name"><span class="type-signature type-attrib">(inner, constant) </span>REQ_DATA_KEY<span class="type-signature"> :Symbol</span></span></h4>
+
+
+
+
+<div class="description">
+    <p>A <code>Symbol</code> used as a key to store the request data for an instance of the<br>GQLBase object in question.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Symbol</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line83">line 83</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

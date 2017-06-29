@@ -1,6 +1,4 @@
 // @flow
-// @module utils
-// @namespace utils
 
 /**
  * Deferred is modeled after jQuery's deferred object. It inverts a promise 
@@ -8,7 +6,6 @@
  * all of the related code within a Promise's function. 
  *
  * @class Deferred
- * @memberof utils
  */
 export class Deferred {
   /**
@@ -24,7 +21,7 @@ export class Deferred {
    *
    * @instance
    * @memberof Deferred
-   * @method constructor
+   * @method ⎆⠀constructor
    * 
    * @param {any} resolveWith a deferred resolved as Promise.resolve() might do
    * @param {any} rejectWith a deferred rejected as Promise.reject() might do
@@ -53,7 +50,7 @@ export class Deferred {
    *
    * @instance
    * @memberof Deferred
-   * @method pending
+   * @method ⬇︎⠀pending
    * 
    * @return {boolean} true if the promise is not yet complete; false otherwise
    */

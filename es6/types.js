@@ -16,7 +16,7 @@
  * `Symbol.toStringTag` allows you to define custom values that are 
  * reflected in this manner.
  * 
- * @method typeOf
+ * @method ⌾⠀typeOf
  * @memberof types
  * @inner
  * 
@@ -32,7 +32,7 @@ export function typeOf(object: any): string {
 /**
  * Returns true if the type supplied evaluates to `[object Function]`
  * 
- * @method isFunction 
+ * @method ⌾⠀isFunction 
  * @memberof types
  * @inner
  * 
@@ -44,7 +44,7 @@ export const isFunction = (obj) => typeOf(obj) === Function.name
 /**
  * Returns true if the type supplied evaluates to `[object Array]`
  * 
- * @method isArray 
+ * @method ⌾⠀isArray 
  * @memberof types
  * @inner
  * 
@@ -56,7 +56,7 @@ export const isArray = (obj) => typeOf(obj) === Array.name
 /**
  * Returns true if the type supplied evaluates to `[object Date]`
  * 
- * @method isDate 
+ * @method ⌾⠀isDate 
  * @memberof types
  * @inner
  * 
@@ -68,7 +68,7 @@ export const isDate = (obj) => typeOf(obj) === Date.name
 /**
  * Returns true if the type supplied evaluates to `[object Object]`
  * 
- * @method isObject 
+ * @method ⌾⠀isObject 
  * @memberof types
  * @inner
  * 
@@ -80,7 +80,7 @@ export const isObject = (obj) => typeOf(obj) === Object.name
 /**
  * Returns true if the type supplied evaluates to `[object String]`
  * 
- * @method isString 
+ * @method ⌾⠀isString 
  * @memberof types
  * @inner
  * 
@@ -92,7 +92,7 @@ export const isString = (obj) => typeOf(obj) === String.name
 /**
  * Returns true if the type supplied evaluates to `[object Number]`
  * 
- * @method isNumber 
+ * @method ⌾⠀isNumber 
  * @memberof types
  * @inner
  * 
@@ -104,7 +104,7 @@ export const isNumber = (obj) => typeOf(obj) === isNumber.name
 /**
  * Returns true if the type supplied evaluates to `[object RegExp]`
  * 
- * @method isRegExp 
+ * @method ⌾⠀isRegExp 
  * @memberof types
  * @inner
  * 
@@ -114,10 +114,34 @@ export const isNumber = (obj) => typeOf(obj) === isNumber.name
 export const isRegExp = (obj) => typeOf(obj) === RegExp.name
 
 /**
+ * Returns true if the type supplied evaluates to `[object Null]`
+ * 
+ * @method ⌾⠀isNull 
+ * @memberof types
+ * @inner
+ * 
+ * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @return {Boolean} true if it passes the test, false otherwise
+ */
+export const isNull = (obj) => typeOf(obj) === NULL
+
+/**
+ * Returns true if the type supplied evaluates to `[object Undefined]`
+ * 
+ * @method ⌾⠀isUndefined 
+ * @memberof types
+ * @inner
+ * 
+ * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @return {Boolean} true if it passes the test, false otherwise
+ */
+export const isUndefined = (obj) => typeOf(obj) === UNDEFINED
+
+/**
  * Returns true if the type supplied evaluates to neither `[object Object]`
  * nor `[object Array]`. 
  * 
- * @method isValue 
+ * @method ⌾⠀isValue 
  * @memberof types
  * @inner
  * 
@@ -131,7 +155,7 @@ export const isValue = (obj) => !isObject(obj) && !isArray(obj)
  * string or Function/Class. Realistically, this checks typeOf(obj) to both 
  * T and T.name. If either are true, then true is returned; false otherwise.
  * 
- * @method isOfType 
+ * @method ⌾⠀isOfType 
  * @memberof types
  * @inner
  * 
@@ -150,7 +174,7 @@ export const isOfType = (obj, T) => typeOf(obj) === T || typeOf(obj) === T.name
  * can cause some problems down the line, especially if the code wraps a class 
  * instance like react-jss or other similar use cases. Use at your own peril.
  *
- * @method isClass
+ * @method ⌾⠀isClass
  * @memberof types
  * @inner
  *
@@ -171,7 +195,7 @@ export const isClass = (obj) => (
  *
  * @see  https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645
  * 
- * @method isNativeClassByProps
+ * @method ⌾⠀isNativeClassByProps
  * @memberof types
  * @inner
  * 
@@ -192,7 +216,7 @@ export function isNativeClassByProps(thing: mixed): boolean {
  *
  * @see  https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645
  * 
- * @method isNativeClassByString
+ * @method ⌾⠀isNativeClassByString
  * @memberof types
  * @inner
  * 
@@ -242,7 +266,7 @@ export function isNativeClassByString(value: mixed):boolean {
  * extendsFrom(B, null); // false
  * ```
  * 
- * @method extendsFrom
+ * @method ⌾⠀extendsFrom
  * @memberof types
  * @inner
  * 
@@ -295,3 +319,23 @@ export function extendsFrom(
   
   return false;
 }
+
+/**
+ * Programmatic constant defintion of the result of a call to 
+ * `typeOf(undefined)`.
+ *
+ * @memberof types
+ * @type {string}
+ * @const 
+ */
+export const UNDEFINED: string = typeOf(undefined);
+
+/**
+ * Programmatic constant defintion of the result of a call to 
+ * `typeOf(null)`.
+ *
+ * @memberof types
+ * @type {string}
+ * @const 
+ */
+export const NULL: string = typeOf(null);

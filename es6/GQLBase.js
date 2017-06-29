@@ -1,5 +1,5 @@
+/** @namespace GQLBaseEnv */
 // @flow
-// @module GQLBaseEnv
 
 import Path from 'path'
 import fs from 'fs'
@@ -8,7 +8,13 @@ import { Deferred } from './utils'
 import { typeOf } from './types'
 import { SyntaxTree } from './SyntaxTree'
 
-/** Reference to the module this code is defined in and exported to. */
+/** 
+ * Constant referring to the nodejs module in which this code is defined.
+ *
+ * @memberof GQLBaseEnv
+ * @type {Object} 
+ * @const
+ */
 const GQLBaseModule = module;
 
 /** 
@@ -16,8 +22,8 @@ const GQLBaseModule = module;
  * way to separate model data and GraphQL property accessors into logical bits.
  * 
  * @type {Symbol}
- * @prop MODEL_KEY
  * @memberof GQLBaseEnv
+ * @const
  */
 export const MODEL_KEY = Symbol.for('data-model-contents-key');
 
@@ -26,7 +32,8 @@ export const MODEL_KEY = Symbol.for('data-model-contents-key');
  * GQLBase object in question.
  * 
  * @type {Symbol}
- * @prop REQ_DATA_KEY
+ * @const
+ * @inner
  * @memberof GQLBaseEnv
  */
 export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
@@ -60,7 +67,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method constructor
+   * @method ⎆⠀constructor
    * 
    * @param {Object} requestData see description above
    */
@@ -79,7 +86,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase 
-   * @method model-get
+   * @method ⬇︎⠀model
    * 
    * @param {Object} value any object you wish to use as a data store
    */
@@ -94,7 +101,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase 
-   * @method model-set
+   * @method ⬆︎⠀model
    * 
    * @param {Object} value any object you wish to use as a data store
    */
@@ -108,7 +115,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method requestData (get)
+   * @method ⬇︎⠀requestData
    * 
    * @return {Object} an object, usually matching { req, res, gql }
    */
@@ -122,7 +129,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method requestData (set)
+   * @method ⬆︎⠀requestData
    * 
    * @param {Object} value an object, usually matching { req, res, gql }
    */
@@ -171,7 +178,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase 
-   * @method SCHEMA (get)
+   * @method ⬇︎⠀SCHEMA
    * @readonly
    * @static 
    * 
@@ -192,7 +199,7 @@ export class GQLBase {
    *
    * @instance 
    * @memberof GQLBase 
-   * @method MUTATORS (get)
+   * @method ⬇︎⠀MUTATORS
    * @readonly
    * @static 
    * 
@@ -213,7 +220,7 @@ export class GQLBase {
    * 
    * @instance 
    * @memberof GQLBase 
-   * @method RESOLVERS (get)
+   * @method ⬇︎⠀RESOLVERS
    * @readonly
    * @static 
    * 
@@ -230,6 +237,11 @@ export class GQLBase {
   /**
    * @see {@link GQLBase#SCHEMA}
    * 
+   * @memberof GQLBase
+   * @method ⬇︎⠀ADJACENT_FILE
+   * @static
+   * @const 
+   * 
    * @return {Symbol} the Symbol, when returned from SCHEMA, causes
    * the logic to load an IDL Schema from an associated file with a .graphql 
    * extension and bearing the same name.
@@ -244,7 +256,7 @@ export class GQLBase {
    *
    * @static
    * @memberof GQLBase
-   * @method IDLFilePath
+   * @method ⌾⠀IDLFilePath
    * 
    * @param {string} path a path to the IDL containing file
    * @param {String} [extension='.graphql'] an extension, including the 
@@ -265,7 +277,7 @@ export class GQLBase {
    * 
    * @static
    * @memberof GQLBase
-   * @method handler
+   * @method ⬇︎⠀handler 
    *
    * @return {IDLFileHandler} instance of IDLFileHandler, created if one does 
    * not already exist, for fetching the contents from disk.
@@ -287,7 +299,8 @@ export class GQLBase {
    *
    * @static
    * @memberof GQLBase
-   * @method module
+   * @method ⬇︎⠀module
+   * @const
    * 
    * @return {Object} the reference to the module object defined and injected 
    * by node.js' module loading system. 
@@ -316,7 +329,7 @@ export class IDLFileHandler {
    * 
    * @instance
    * @memberof IDLFileHandler
-   * @method constructor
+   * @method ⎆⠀constructor
    * 
    * @param {Function} Class a function or class definition that presumably
    * extends from GQLBase were it an instance.
@@ -386,7 +399,7 @@ export class IDLFileHandler {
    *
    * @instance
    * @memberof IDLFileHandler
-   * @method getFile
+   * @method ⌾⠀getFile
    * 
    * @return {Buffer|null} returns the Buffer containing the file base IDL 
    * schema or null if none was found or a direct string schema is returned 
@@ -403,7 +416,7 @@ export class IDLFileHandler {
    *
    * @instance
    * @memberof IDLFileHandler
-   * @method getSchema
+   * @method ⌾⠀getSchema
    * 
    * @return {string|null} the string contents of the Buffer containing the
    * file based IDL schema.
@@ -422,7 +435,7 @@ export class IDLFileHandler {
    *
    * @instance
    * @memberof IDLFileHandler
-   * @method getSyntaxTree
+   * @method ⌾⠀getSyntaxTree
    * 
    * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL 
    * schema contents loaded from disk. Null is returned if a calculated path 

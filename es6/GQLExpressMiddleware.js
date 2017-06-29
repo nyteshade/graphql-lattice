@@ -27,7 +27,7 @@ export class GQLExpressMiddleware
    *
    * @instance
    * @memberof GQLExpressMiddleware
-   * @method constructor
+   * @method ⎆⠀constructor
    * 
    * @param {Array<GQLBase>} handlers an array of GQLBase extended classes
    */
@@ -42,7 +42,7 @@ export class GQLExpressMiddleware
    *
    * @instance 
    * @memberof GQLExpressMiddleware
-   * @method makeRoot
+   * @method ⌾⠀makeRoot
    * 
    * @param {Request} req an Express 4.x request object
    * @param {Response} res an Express 4.x response object
@@ -72,7 +72,7 @@ export class GQLExpressMiddleware
    *
    * @instance
    * @memberof GQLExpressMiddleware
-   * @method makeSchema
+   * @method ⌾⠀makeSchema
    * 
    * @return {string} a dynamically generated GraphQL IDL schema string 
    */
@@ -106,7 +106,7 @@ export class GQLExpressMiddleware
    *
    * @instance
    * @memberof GQLExpressMiddleware
-   * @method middleware
+   * @method ⬇︎⠀middleware
    * 
    * @return {Function} a function that expects request, response and next 
    * parameters as all Express middleware functions.

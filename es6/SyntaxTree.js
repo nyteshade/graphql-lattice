@@ -23,7 +23,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method constructor
+   * @method ⎆⠀constructor
    * 
    * @param {string|Object|SyntaxTree} schemaOrASTOrST if supplied the tree 
    * will be constructed with the contents of the data. If a string of IDL is
@@ -45,7 +45,7 @@ export class SyntaxTree
    * 
    * @instance
    * @memberof SyntaxTree
-   * @method ast 
+   * @method ⬇︎⠀ast 
    *
    * @return {Object} a GraphQL AST object
    */
@@ -59,7 +59,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method ast
+   * @method ⬆︎⠀ast
    * 
    * @param {Object} value a valid AST object. Other operations will act
    * in an undefined manner should this object not be a valid AST
@@ -74,7 +74,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method setAST
+   * @method ⌾⠀setAST
    * 
    * @param {string|Object} schemaOrAST a valid GraphQL IDL schema or a
    * previosuly parsed or compatible GraphQL IDL AST object.
@@ -127,7 +127,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method updateAST
+   * @method ⌾⠀updateAST
    * 
    * @param {Object} ast an existing GraphQL IDL AST object that will be 
    * merged on top of the existing tree using Object.assign()
@@ -165,7 +165,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method appendDefinitions
+   * @method ⌾⠀appendDefinitions
    * 
    * @param {string|Object|SyntaxTree} schemaOrASTOrST an instance of one of 
    * the valid types for SyntaxTree.from() that can be used to create or 
@@ -234,7 +234,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method consumeDefinition
+   * @method ⌾⠀consumeDefinition
    * 
    * @param {Object|SyntaxTree} astOrSyntaxTree a valid GraphQL IDL AST or
    * an instance of SyntaxTree that represents one.
@@ -322,7 +322,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method find
+   * @method ⌾⠀find
    * 
    * @param {string|RegExp} definitionName a string or regular expression used
    * to match against the definition name field in a given AST. 
@@ -353,7 +353,7 @@ export class SyntaxTree
    *
    * @instance
    * @memberof SyntaxTree
-   * @method toString
+   * @method ⌾⠀toString
    * 
    * @return {string} the AST for the tree parsed back into a string
    */
@@ -367,8 +367,9 @@ export class SyntaxTree
    * @type {string}
    * @static 
    * @memberof SyntaxTree
-   * @method QUERY
+   * @method ⬇︎⠀QUERY
    * @readonly
+   * @const
    */
   static get QUERY(): string { return 'Query' }
   
@@ -378,8 +379,9 @@ export class SyntaxTree
    * @type {string}
    * @static 
    * @memberof SyntaxTree
-   * @method MUTATION
+   * @method ⬇︎⠀MUTATION
    * @readonly
+   * @const
    */
   static get MUTATION(): string { return 'Mutation' }
 
@@ -391,8 +393,9 @@ export class SyntaxTree
    * @type {string}
    * @static 
    * @memberof SyntaxTree
-   * @method QUERY
+   * @method ⬇︎⠀QUERY
    * @readonly
+   * @const
    */  
   static get [Symbol.toStringTag](): string { return SyntaxTree.name; }
   
@@ -403,7 +406,7 @@ export class SyntaxTree
    *
    * @static 
    * @memberof SyntaxTree
-   * @method from
+   * @method ⌾⠀from
    * 
    * @param {String|Object|SyntaxTree} mixed an instance of one of the valid
    * types specified above. Everything else will result in a null value.
@@ -441,7 +444,7 @@ export class SyntaxTree
    *
    * @static 
    * @memberof SyntaxTree
-   * @method fromSchema
+   * @method ⌾⠀fromSchema
    * 
    * @param {string} schema a valid GraphQL IDL schema string.
    * @return {SyntaxTree} a new instance of SyntaxTree initialized with a 
@@ -461,7 +464,7 @@ export class SyntaxTree
    *
    * @static
    * @memberof SyntaxTree
-   * @method fromAST
+   * @method ⌾⠀fromAST
    * 
    * @param {object} ast a valid GraphQL AST object.
    * @return {SyntaxTree} a new instance of SyntaxTree initialized with a 
@@ -483,7 +486,7 @@ export class SyntaxTree
    *
    * @static 
    * @memberof SyntaxTree
-   * @method EmptyQuery
+   * @method ⌾⠀EmptyQuery
    * 
    * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated 
    * by parsing the graph query, "type Query {}"
@@ -500,7 +503,7 @@ export class SyntaxTree
    *
    * @static 
    * @memberof SyntaxTree
-   * @method EmptyMutation
+   * @method ⌾⠀EmptyMutation
    * 
    * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated 
    * by parsing the graph query, "type Mutation {}"
@@ -514,7 +517,7 @@ export class SyntaxTree
    *
    * @static 
    * @memberof SyntaxTree
-   * @method EmptyDocument
+   * @method ⌾⠀EmptyDocument
    * 
    * @param {string|Object|SyntaxTree} schemaOrASTOrST any valid type taken by
    * SyntaxTree.from() used to further populate the new empty document
