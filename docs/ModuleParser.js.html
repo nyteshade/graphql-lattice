@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Deferred</title>
+  <title>ModuleParser.js</title>
 
 
 
@@ -47,398 +47,155 @@
 
     <div id="main">
         
-        <h1 class="page-title">Deferred</h1>
+        <h1 class="page-title">ModuleParser.js</h1>
         
 
         
 
 
 
-
-<section>
-
-<header>
-    
-        <h2>
-        Deferred
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-
-    <h4 class="name" id="Deferred"><a class="anchor" href="#Deferred"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>new Deferred<span class="signature">()</span><span class="type-signature"></span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Deferred is modeled after jQuery's deferred object. It inverts a promise<br>such that its resolve and reject methods can be invoked without wrapping<br>all of the related code within a Promise's function.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line22">line 22</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="%E2%8E%86%E2%A0%80constructor"><a class="anchor" href="#⎆⠀constructor"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>⎆⠀constructor<span class="signature">(resolveWith, rejectWith)</span><span class="type-signature"></span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Creates an object with four properties of note; promise, resolve, reject<br>and a flag complete that will be set once either resolve or reject have<br>been called. A Deferred is considered to be pending while complete is set<br>to false.</p>
-<p>Once constructed, resolve and reject can be called later, at which point,<br>the promise is completed. The promise property is the promise resolved<br>or rejected by the associated properties and can be used with other<br>async/await or Promise based code.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>resolveWith</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>a deferred resolved as Promise.resolve() might do</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>rejectWith</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>a deferred rejected as Promise.reject() might do</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line30">line 30</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="%E2%AC%87%EF%B8%8E%E2%A0%80pending"><a class="anchor" href="#⬇︎⠀pending"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>⬇︎⠀pending<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Shorthand getter that denotes true if the deferred is not yet complete.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if the promise is not yet complete; false otherwise</p></span>
-
-
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line75">line 75</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
     
-</article>
+    <section>
+        <article>
+            <pre class="source linenums"><code class="hljs js">// @flow
+// @module ModuleParser
+
+import * as types from './types'
+
+const { 
+  isString,
+  isOfType,
+  isPrimitive,
+  isArray,
+  isObject
+} = types;
+
+/**
+ * The ModuleParser is a utility class designed to loop through and iterate 
+ * on a directory and pull out of each .js file found, any classes or exports 
+ * that extend from GQLBase or a child of GQLBase. 
+ * 
+ * @class ModuleParser
+ */
+export class ModuleParser {
+  /**
+   * The constructor 
+   *
+   * @constructor 
+   * @method ⎆⠀constructor
+   * @memberof ModuleParser
+   * @inner
+   * 
+   * @param {string|mixed} moduleNameOrModule [description]
+   */
+  constuctor(moduleNameOrModule: string|mixed):ModuleParser {
+    let moduleName, moduleContents;
+    
+    if (isString(moduleNameOrModule)) {
+      try { moduleContents = require(moduleNameOrModule); } catch(ignore) { }
+      if (!moduleContents) {
+        throw new Error(`
+          Unable to require()'${moduleNameOrModule}'). Please check this file 
+          to make sure it should be part of the load process.
+        `);
+      }
+    }
+    else {
+      moduleContents = moduleNameOrModule;
+    }
+    
+    if (!moduleContents) {
+      throw new Error(`
+        Inspite of being passed ${moduleNameOrModule}, it was determined that
+        the value passed in was null or falsey. Please provide a module name 
+        or an Object that can be iterated over for potential GQLBase classes.
+      `);
+    }
+    
+    this.initWith(moduleContents);
+  }
+  
+  /**
+   * Given an object, typically the result of a `require()` or `import` 
+   * command, iterate over its contents and find any `GQLBase` derived 
+   * exports. Continually, and recursively, build this list of classes out 
+   * so that we can add them to a `GQLExpressMiddleware`.
+   * 
+   * @method ⌾⠀initWith
+   * @memberof ModuleParser
+   * @inner
+   * 
+   * @param {mixed} contents the object to parse for properties extending 
+   * from `GQLBase`
+   * @param {Array&lt;GQLBase>} gqlDefinitions the results, allowed as a second 
+   * parameter during recursion as a means to save state between calls
+   * @return {Set&lt;mixed>} a unique set of values that are currently being 
+   * iterated over. Passed in as a third parameter to save state between calls 
+   * during recursion.
+   */
+  initWith(
+    contents: mixed, 
+    gqlDefinitions: Array&lt;GQLBase> = [],
+    stack: Set&lt;mixed> = new Set()
+  ): void {
+    // In order to prevent infinite object recursion, we should add the 
+    // object being iterated over to our Set. At each new recursive level 
+    // add the item being iterated over to the set and only recurse into
+    // if the item does not already exist in the stack itself.
+    stack.add(contents)
+    
+    for (let key in contents) {
+      let value = contents[key];
+      
+      if (isPrimitive(value)) { continue }
+      
+      if (extendsFrom(value, GQLBase)) {
+        gqlDefinitions.push(value);
+      }
+      
+      if ((isObject(value) || isArray(value)) &amp;&amp; !stack.has(value)) {
+        gqlDefinitions = this.initWith(value, gqlDefinitions, stack);
+      }
+    }
+
+    // We remove the current iterable from our set as we leave this current 
+    // recursive iteration.
+    stack.delete(contents)
+    
+    return gqlDefinitions
+  }
+  
+  /**
+   * Returns the `constructor` name. If invoked as the context, or `this`, 
+   * object of the `toString` method of `Object`'s `prototype`, the resulting 
+   * value will be `[object ModuleParser]`
+   * 
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof ModuleParser
+   *
+   * @return {string} the name of the class this is an instance of
+   */
+  [Symbol.toStringTag]() { return this.constructor.name }
+  
+  /**
+   * Applies the same logic as {@link ModuleParser#[Symbol.toStringTag]} but on a
+   * static scale. So, if you perform `Object.prototype.toString.call(ModuleParser)`
+   * the result would be `[object ModuleParser]`.
+   * 
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof ModuleParser
+   * @static
+   *
+   * @return {string} the name of this class 
+   */
+  static [Symbol.toStringTag]() { return this.name }
+}</code></pre>
+        </article>
+    </section>
+    <script type="text/javascript">
+      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
+    </script>
 
-</section>
 
 
 

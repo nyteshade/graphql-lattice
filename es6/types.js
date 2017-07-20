@@ -138,6 +138,20 @@ export const isNull = (obj) => typeOf(obj) === NULL
 export const isUndefined = (obj) => typeOf(obj) === UNDEFINED
 
 /**
+ * Determines if the resulting type is one of the six types of primitives
+ * (according to MDN; https://goo.gl/USmkUU). If it is, true will be returned;
+ * otherwise false.
+ *
+ * @method ⌾⠀isPrimitive
+ * @memberof types
+ * @inner
+ * 
+ * @return {Boolean} true if not one of Boolean, Null, Undefined, Number, 
+ * String or Symbol. 
+ */
+export const isPrimitive = (obj) => PRIMITIVES.has(obj)
+
+/**
  * Returns true if the type supplied evaluates to neither `[object Object]`
  * nor `[object Array]`. 
  * 
@@ -339,3 +353,41 @@ export const UNDEFINED: string = typeOf(undefined);
  * @const 
  */
 export const NULL: string = typeOf(null);
+
+/**
+ * Create a base set containing the typeOf representations for each of the 
+ * known primitive types. 
+ */
+const PRIMITIVES: Set<string> = new Set([
+  NULL, UNDEFINED, Boolean.name, Number.name, String.name, Symbol.name
+]);
+
+/** Store the original has() method and bind it to PRIMITIVES */
+PRIMITIVES[Symbol.for('original_has')] = PRIMITIVES.has.bind(PRIMITIVES)
+
+/**
+ * Modify the PRIMITIVES `has()` method to invoke `typeOf()` on the argument 
+ * before passing it to the underlying has() method originally passed down from 
+ * the Set.prototype. 
+ * 
+ * @method has
+ * @param {mixed} o any value to test to see if it qualifies as a primitive
+ * @return {Boolean} true if the supplied value is a primitive, false otherwise
+ */
+PRIMITIVES.has = (o) => PRIMITIVES[Symbol.for('original_has')](typeOf(o))
+
+/**
+ * When testing if a type is a primitive, it is often easier to simply verify 
+ * that with a list of known types. To make this dead simple, a modified `Set`
+ * containing the `typeOf` results for each of the six known JavaScript 
+ * primitive types is exported.
+ *
+ * The modifications are such that a call to `has()`, on this Set only, first 
+ * converts the supplied values to their resulting `typeOf()` representations.
+ * So, `PRIMITIVES.has(4)` would be the same as `PRIMITIVES.has('Number')`.
+ *
+ * @memberof types
+ * @type {Set<string>}
+ * @const 
+ */
+export { PRIMITIVES };

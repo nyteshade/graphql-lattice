@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Deferred</title>
+  <title>global</title>
 
 
 
@@ -47,7 +47,7 @@
 
     <div id="main">
         
-        <h1 class="page-title">Deferred</h1>
+        <h1 class="page-title">global</h1>
         
 
         
@@ -60,7 +60,7 @@
 <header>
     
         <h2>
-        Deferred
+        
         </h2>
         
     
@@ -71,26 +71,74 @@
     
         
 
+        
+
+
+<dl class="details">
+
     
 
-    <h4 class="name" id="Deferred"><a class="anchor" href="#Deferred"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>new Deferred<span class="signature">()</span><span class="type-signature"></span></span></h4>
+    
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="PRIMITIVES">
+  <a class="anchor" href="#PRIMITIVES"></a>
+  <span class="type-name"><span class="type-signature type-attrib"></span>PRIMITIVES<span class="type-signature"></span></span></h4>
+
 
 
 
 <div class="description">
-    <p>Deferred is modeled after jQuery's deferred object. It inverts a promise<br>such that its resolve and reject methods can be invoked without wrapping<br>all of the related code within a Promise's function.</p>
+    <p>Create a base set containing the typeOf representations for each of the<br>known primitive types.</p>
 </div>
-
-
-
-
-
-
-
-
 
 
 
@@ -127,7 +175,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line22">line 22</a>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line402">line 402</a>
     </dd>
     
 
@@ -144,6 +192,18 @@
 
 
 
+        
+            
+<h4 class="name" id="PRIMITIVES%5Bundefined%5D">
+  <a class="anchor" href="#PRIMITIVES[undefined]"></a>
+  <span class="type-name"><span class="type-signature type-attrib"></span>PRIMITIVES[undefined]<span class="type-signature"></span></span></h4>
+
+
+
+
+<div class="description">
+    <p>Store the original has() method and bind it to PRIMITIVES</p>
+</div>
 
 
 
@@ -151,10 +211,9 @@
 
 
 
-
+<dl class="details">
 
     
-    </div>
 
     
 
@@ -162,10 +221,43 @@
 
     
 
-     
+    
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line405">line 405</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+        
     
 
     
@@ -176,16 +268,15 @@
 
     
 
-    <h4 class="name" id="%E2%8E%86%E2%A0%80constructor"><a class="anchor" href="#⎆⠀constructor"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>⎆⠀constructor<span class="signature">(resolveWith, rejectWith)</span><span class="type-signature"></span></span></h4>
+    <h4 class="name" id="has"><a class="anchor" href="#has"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>has<span class="signature">(o)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Creates an object with four properties of note; promise, resolve, reject<br>and a flag complete that will be set once either resolve or reject have<br>been called. A Deferred is considered to be pending while complete is set<br>to false.</p>
-<p>Once constructed, resolve and reject can be called later, at which point,<br>the promise is completed. The promise property is the promise resolved<br>or rejected by the associated properties and can be used with other<br>async/await or Promise based code.</p>
+    <p>Modify the PRIMITIVES <code>has()</code> method to invoke <code>typeOf()</code> on the argument<br>before passing it to the underlying has() method originally passed down from<br>the Set.prototype.</p>
 </div>
 
 
@@ -221,13 +312,13 @@
 
         <tr>
             
-                <td class="name"><code>resolveWith</code></td>
+                <td class="name"><code>o</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">any</span>
+<span class="param-type">mixed</span>
 
 
             
@@ -237,120 +328,12 @@
 
             
 
-            <td class="description last"><p>a deferred resolved as Promise.resolve() might do</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>rejectWith</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>a deferred rejected as Promise.reject() might do</p></td>
+            <td class="description last"><p>any value to test to see if it qualifies as a primitive</p></td>
         </tr>
 
     
     </tbody>
 </table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line30">line 30</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="%E2%AC%87%EF%B8%8E%E2%A0%80pending"><a class="anchor" href="#⬇︎⠀pending"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>⬇︎⠀pending<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Shorthand getter that denotes true if the deferred is not yet complete.</p>
-</div>
-
-
-
-
-
-
-
 
 
 
@@ -361,13 +344,13 @@
 
 
 <div class="returns-type"><code>(
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 )</code></div>
 
 
 
-<span class="returns-description"><p>true if the promise is not yet complete; false otherwise</p></span>
+<span class="returns-description"><p>true if the supplied value is a primitive, false otherwise</p></span>
 
 
     
@@ -404,7 +387,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line75">line 75</a>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line407">line 407</a>
     </dd>
     
 
