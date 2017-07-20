@@ -1,6 +1,6 @@
 {
   "name": "graphql-lattice",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "OO Underpinnings for ease of GraphQL Implementation",
   "main": "dist/lattice.min.js",
   "scripts": {
