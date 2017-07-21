@@ -112,13 +112,71 @@ export class GQLExpressMiddleware
    * parameters as all Express middleware functions.
    */
   get middleware(): Function {
-    const schema = this.makeSchema();
-    
-    return graphqlHTTP(async (req, res, gql) => ({    
-      schema: buildSchema(schema),
-      rootValue: await this.makeRoot(req, res, gql),
-      graphiql: true
-    }));        
+    return this.customMiddleware();     
+  }
+  
+  /**
+   * Using the express-graphql module, it returns an Express 4.x middleware 
+   * function. This version however, has graphiql disabled. Otherwise it is
+   * identical to the `middleware` property
+   *
+   * @instance
+   * @memberof GQLExpressMiddleware
+   * @method ⬇︎⠀middlewareWithoutGraphiQL
+   * 
+   * @return {Function} a function that expects request, response and next 
+   * parameters as all Express middleware functions.
+   */
+  get middlewareWithoutGraphiQL(): Function {
+    return this.customMiddleware({graphiql: false});
+  }
+  
+  /**
+   * If your needs require you to specify different values to `graphqlHTTP`,
+   * part of the `express-graphql` package, you can use the `customMiddleware`
+   * function to do so.
+   *
+   * The first parameter is an object that should contain valid `graphqlHTTP` 
+   * options. See https://github.com/graphql/express-graphql#options for more 
+   * details. Validation is NOT performed.
+   *
+   * The second parameter is a function that will be called after any options 
+   * have been applied from the first parameter and the rest of the middleware 
+   * has been performed. This, if not modified, will be the final options
+   * passed into `graphqlHTTP`. In your callback, it is expected that the
+   * supplied object is to be modified and THEN RETURNED. Whatever is returned 
+   * will be used or passed on. If nothing is returned, the options supplied 
+   * to the function will be used instead.
+   * 
+   * @method ⌾⠀customMiddleware
+   * @memberof GQLExpressMiddleware
+   * @instance 
+   * 
+   * @param {Object} [graphqlHttpOptions={graphiql: true}] standard set of 
+   * `express-graphql` options. See above. 
+   * @param {Function} patchFinalOpts see above
+   
+   * @return {Function} a middleware function compatible with Express
+   */
+  customMiddleware(
+    graphqlHttpOptions = {graphiql: true},
+    patchFinalOpts: Function = null
+  ): Function {
+    const schema = buildSchema(this.makeSchema());
+        
+    return graphqlHTTP(async (req, res, gql) => {      
+      const opts = {
+        schema,
+        rootValue: await this.makeRoot(req, res, gql)
+      };
+      
+      Object.assign(opts, graphqlHttpOptions);
+      if (patchFinalOpts) {
+        Object.assign(opts, patchFinalOpts(opts) || opts);
+      }
+      
+      return opts;
+    });
   }
 }
 

@@ -5662,31 +5662,71 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
      */
 
   }, {
-    key: 'middleware',
-    get: function get() {
+    key: 'customMiddleware',
+
+
+    /**
+     * If your needs require you to specify different values to `graphqlHTTP`,
+     * part of the `express-graphql` package, you can use the `customMiddleware`
+     * function to do so.
+     *
+     * The first parameter is an object that should contain valid `graphqlHTTP` 
+     * options. See https://github.com/graphql/express-graphql#options for more 
+     * details. Validation is NOT performed.
+     *
+     * The second parameter is a function that will be called after any options 
+     * have been applied from the first parameter and the rest of the middleware 
+     * has been performed. This, if not modified, will be the final options
+     * passed into `graphqlHTTP`. In your callback, it is expected that the
+     * supplied object is to be modified and THEN RETURNED. Whatever is returned 
+     * will be used or passed on. If nothing is returned, the options supplied 
+     * to the function will be used instead.
+     * 
+     * @method ⌾⠀customMiddleware
+     * @memberof GQLExpressMiddleware
+     * @instance 
+     * 
+     * @param {Object} [graphqlHttpOptions={graphiql: true}] standard set of 
+     * `express-graphql` options. See above. 
+     * @param {Function} patchFinalOpts see above
+     
+     * @return {Function} a middleware function compatible with Express
+     */
+    value: function customMiddleware() {
       var _this = this;
 
-      var schema = this.makeSchema();
+      var graphqlHttpOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { graphiql: true };
+      var patchFinalOpts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      var schema = (0, _graphql.buildSchema)(this.makeSchema());
 
       return (0, _expressGraphql2.default)(function () {
         var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, gql) {
+          var opts;
           return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  _context2.t0 = (0, _graphql.buildSchema)(schema);
+                  _context2.t0 = schema;
                   _context2.next = 3;
                   return _this.makeRoot(req, res, gql);
 
                 case 3:
                   _context2.t1 = _context2.sent;
-                  return _context2.abrupt('return', {
+                  opts = {
                     schema: _context2.t0,
-                    rootValue: _context2.t1,
-                    graphiql: true
-                  });
+                    rootValue: _context2.t1
+                  };
 
-                case 5:
+
+                  (0, _assign2.default)(opts, graphqlHttpOptions);
+                  if (patchFinalOpts) {
+                    (0, _assign2.default)(opts, patchFinalOpts(opts) || opts);
+                  }
+
+                  return _context2.abrupt('return', opts);
+
+                case 8:
                 case 'end':
                   return _context2.stop();
               }
@@ -5694,10 +5734,34 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
           }, _callee2, _this);
         }));
 
-        return function (_x4, _x5, _x6) {
+        return function (_x6, _x7, _x8) {
           return _ref2.apply(this, arguments);
         };
       }());
+    }
+  }, {
+    key: 'middleware',
+    get: function get() {
+      return this.customMiddleware();
+    }
+
+    /**
+     * Using the express-graphql module, it returns an Express 4.x middleware 
+     * function. This version however, has graphiql disabled. Otherwise it is
+     * identical to the `middleware` property
+     *
+     * @instance
+     * @memberof GQLExpressMiddleware
+     * @method ⬇︎⠀middlewareWithoutGraphiQL
+     * 
+     * @return {Function} a function that expects request, response and next 
+     * parameters as all Express middleware functions.
+     */
+
+  }, {
+    key: 'middlewareWithoutGraphiQL',
+    get: function get() {
+      return this.customMiddleware({ graphiql: false });
     }
   }]);
   return GQLExpressMiddleware;
