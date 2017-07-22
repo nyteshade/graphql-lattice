@@ -2086,19 +2086,19 @@ var _SyntaxTree = __webpack_require__(51);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** 
+/**
  * Constant referring to the nodejs module in which this code is defined.
  *
  * @memberof GQLBaseEnv
- * @type {Object} 
+ * @type {Object}
  * @const
  */
 var GQLBaseModule = module;
 
-/** 
- * A `Symbol` used as a key to store the backing model data. Designed as a 
+/**
+ * A `Symbol` used as a key to store the backing model data. Designed as a
  * way to separate model data and GraphQL property accessors into logical bits.
- * 
+ *
  * @type {Symbol}
  * @memberof GQLBaseEnv
  * @const
@@ -2108,10 +2108,10 @@ var GQLBaseModule = module;
 
 var MODEL_KEY = exports.MODEL_KEY = (0, _for2.default)('data-model-contents-key');
 
-/** 
- * A `Symbol` used as a key to store the request data for an instance of the 
+/**
+ * A `Symbol` used as a key to store the request data for an instance of the
  * GQLBase object in question.
- * 
+ *
  * @type {Symbol}
  * @const
  * @inner
@@ -2130,19 +2130,19 @@ var REQ_DATA_KEY = exports.REQ_DATA_KEY = (0, _for2.default)('request-data-objec
 var GQLBase = exports.GQLBase = function () {
   /**
    * Request data is passed to this object when constructed. Typically these
-   * objects, and their children, are instantiated by its own static MUTATORS 
-   * and RESOLVERS. They should contain request specific state if any is to 
-   * be shared. 
+   * objects, and their children, are instantiated by its own static MUTATORS
+   * and RESOLVERS. They should contain request specific state if any is to
+   * be shared.
    *
    * These can be considered request specific controllers for the object in
    * question. The base class takes a single object which should contain all
-   * the HTTP/S request data and the graphQLParams is provided as the object 
+   * the HTTP/S request data and the graphQLParams is provided as the object
    * { query, variables, operationName, raw }.
    *
    * When used with express-graphql, the requestData object has the format
-   * { req, res, gql } where 
+   * { req, res, gql } where
    *   • req is an Express 4.x request object
-   *   • res is an Express 4.x response object 
+   *   • res is an Express 4.x response object
    *   • gql is the graphQLParams object in the format of
    *     { query, variables, operationName, raw }
    *     See https://github.com/graphql/express-graphql for more info
@@ -2150,11 +2150,16 @@ var GQLBase = exports.GQLBase = function () {
    * @instance
    * @memberof GQLBase
    * @method ⎆⠀constructor
-   * 
+   * @constructor
+   *
+   * @param {mixed} modelData this, typically an object, although anything
+   * really is supported, represents the model data for our GraphQL object
+   * instance.
    * @param {Object} requestData see description above
    */
-  function GQLBase(requestData) {
-    var modelData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  function GQLBase() {
+    var modelData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var requestData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     (0, _classCallCheck3.default)(this, GQLBase);
 
     var Class = this.constructor;
@@ -2165,14 +2170,14 @@ var GQLBase = exports.GQLBase = function () {
   }
 
   /**
-   * Getter for the internally stored model data. The contents of this 
+   * Getter for the internally stored model data. The contents of this
    * object are abstracted away behind a `Symbol` key to prevent collision
    * between the underlying model and any GraphQL Object Definition properties.
    *
    * @instance
-   * @memberof GQLBase 
+   * @memberof GQLBase
    * @method ⬇︎⠀model
-   * 
+   *
    * @param {Object} value any object you wish to use as a data store
    */
 
@@ -2184,14 +2189,14 @@ var GQLBase = exports.GQLBase = function () {
     }
 
     /**
-     * Setter for the internally stored model data. The contents of this 
+     * Setter for the internally stored model data. The contents of this
      * object are abstracted away behind a `Symbol` key to prevent collision
      * between the underlying model and any GraphQL Object Definition properties.
      *
      * @instance
-     * @memberof GQLBase 
+     * @memberof GQLBase
      * @method ⬆︎⠀model
-     * 
+     *
      * @param {Object} value any object you wish to use as a data store
      */
     ,
@@ -2200,13 +2205,13 @@ var GQLBase = exports.GQLBase = function () {
     }
 
     /**
-     * A getter that retrieves the inner request data object. When used with 
+     * A getter that retrieves the inner request data object. When used with
      * GQLExpressMiddleware, this is an object matching {req, res, gql}.
      *
      * @instance
      * @memberof GQLBase
      * @method ⬇︎⠀requestData
-     * 
+     *
      * @return {Object} an object, usually matching { req, res, gql }
      */
 
@@ -2217,13 +2222,13 @@ var GQLBase = exports.GQLBase = function () {
     }
 
     /**
-     * A setter that assigns a value to the inner request data object. When 
+     * A setter that assigns a value to the inner request data object. When
      * used with GQLExpressMiddleware, this is an object matching {req, res, gql}.
      *
      * @instance
      * @memberof GQLBase
      * @method ⬆︎⠀requestData
-     * 
+     *
      * @param {Object} value an object, usually matching { req, res, gql }
      */
     ,
@@ -2232,15 +2237,15 @@ var GQLBase = exports.GQLBase = function () {
     }
 
     /**
-     * Defined in a base class, this getter should return either a String 
+     * Defined in a base class, this getter should return either a String
      * detailing the full IDL schema of a GraphQL handler or one of two
-     * types of Symbols. 
-     * 
+     * types of Symbols.
+     *
      * The first Symbol type is the constant `ADJACENT_FILE`. If this Symbol is
      * returned, the system assumes that next to the source file in question is
      * a file of the same name with a .graphql extension. This file should be
-     * made of the GraphQL IDL schema definitions for the object types being 
-     * created. 
+     * made of the GraphQL IDL schema definitions for the object types being
+     * created.
      *
      * Example:
      * ```js
@@ -2248,13 +2253,13 @@ var GQLBase = exports.GQLBase = function () {
      *     return GQLBase.ADJACENT_FILE
      *   }
      * ```
-     *   
+     *
      * The primary advantage of this approach is allowing an outside editor that
-     * provides syntax highlighting rather than returning a string from the 
+     * provides syntax highlighting rather than returning a string from the
      * SCHEMA getter.
      *
      * Alternatively, the static method IDLFilePath can be used to point to an
-     * alternate location where the GraphQL IDL file resides. The extension can 
+     * alternate location where the GraphQL IDL file resides. The extension can
      * also be changed from .graphql to something else if need be using this
      * method.
      *
@@ -2266,17 +2271,17 @@ var GQLBase = exports.GQLBase = function () {
      * ```
      *
      * NOTE - Important!
-     * When not returning a direct string based IDL schema, the call to super() 
-     * from a child class must include `module` as the second parameter or an 
+     * When not returning a direct string based IDL schema, the call to super()
+     * from a child class must include `module` as the second parameter or an
      * error will be thrown upon object creation.
      *
      * @instance
-     * @memberof GQLBase 
+     * @memberof GQLBase
      * @method ⬇︎⠀SCHEMA
      * @readonly
-     * @static 
-     * 
-     * @return {string|Symbol} a valid IDL string or one of the Symbols 
+     * @static
+     *
+     * @return {string|Symbol} a valid IDL string or one of the Symbols
      * described above.
      *
      * @see {@link GQLBase#ADJACENT_FILE}
@@ -2288,17 +2293,17 @@ var GQLBase = exports.GQLBase = function () {
 
 
     /**
-     * This method should return a promise that resolves to an object of 
+     * This method should return a promise that resolves to an object of
      * functions matching the names of the mutation operations. These are to be
      * injected into the root object when used by `GQLExpressMiddleware`.
      *
-     * @instance 
-     * @memberof GQLBase 
+     * @instance
+     * @memberof GQLBase
      * @method ⬇︎⠀MUTATORS
      * @readonly
-     * @static 
-     * 
-     * @param {Object} requestData typically an object containing three 
+     * @static
+     *
+     * @param {Object} requestData typically an object containing three
      * properties; {req, res, gql}
      * @return {Promise} a promise that resolves to an object; see above for more
      * information.
@@ -2319,7 +2324,7 @@ var GQLBase = exports.GQLBase = function () {
         }, _callee, this);
       }));
 
-      function MUTATORS(_x2) {
+      function MUTATORS(_x3) {
         return _ref.apply(this, arguments);
       }
 
@@ -2327,17 +2332,17 @@ var GQLBase = exports.GQLBase = function () {
     }()
 
     /**
-     * This method should return a promise that resolves to an object of 
+     * This method should return a promise that resolves to an object of
      * functions matching the names of the query operations. These are to be
      * injected into the root object when used by `GQLExpressMiddleware`.
-     * 
-     * @instance 
-     * @memberof GQLBase 
+     *
+     * @instance
+     * @memberof GQLBase
      * @method ⬇︎⠀RESOLVERS
      * @readonly
-     * @static 
-     * 
-     * @param {Object} requestData typically an object containing three 
+     * @static
+     *
+     * @param {Object} requestData typically an object containing three
      * properties; {req, res, gql}
      * @return {Promise} a promise that resolves to an object; see above for more
      * information.
@@ -2361,7 +2366,7 @@ var GQLBase = exports.GQLBase = function () {
         }, _callee2, this);
       }));
 
-      function RESOLVERS(_x3) {
+      function RESOLVERS(_x4) {
         return _ref2.apply(this, arguments);
       }
 
@@ -2370,14 +2375,14 @@ var GQLBase = exports.GQLBase = function () {
 
     /**
      * @see {@link GQLBase#SCHEMA}
-     * 
+     *
      * @memberof GQLBase
      * @method ⬇︎⠀ADJACENT_FILE
      * @static
-     * @const 
-     * 
+     * @const
+     *
      * @return {Symbol} the Symbol, when returned from SCHEMA, causes
-     * the logic to load an IDL Schema from an associated file with a .graphql 
+     * the logic to load an IDL Schema from an associated file with a .graphql
      * extension and bearing the same name.
      */
 
@@ -2392,13 +2397,13 @@ var GQLBase = exports.GQLBase = function () {
      * @static
      * @memberof GQLBase
      * @method ⌾⠀IDLFilePath
-     * 
+     *
      * @param {string} path a path to the IDL containing file
-     * @param {String} [extension='.graphql'] an extension, including the 
-     * prefixed period, that will be added to the supplied path should it not 
+     * @param {String} [extension='.graphql'] an extension, including the
+     * prefixed period, that will be added to the supplied path should it not
      * already exist.
-     * @return Symbol 
-     * 
+     * @return Symbol
+     *
      * @see {@link GQLBase#SCHEMA}
      */
     value: function IDLFilePath(path) {
@@ -2408,15 +2413,15 @@ var GQLBase = exports.GQLBase = function () {
     }
 
     /**
-     * A file handler for fetching the IDL schema string from the file system 
+     * A file handler for fetching the IDL schema string from the file system
      * for those `GQLBase` extended classes that have indicated to do so by
      * returning a `Symbol` for their `SCHEMA` property.
-     * 
+     *
      * @static
      * @memberof GQLBase
-     * @method ⬇︎⠀handler 
+     * @method ⬇︎⠀handler
      *
-     * @return {IDLFileHandler} instance of IDLFileHandler, created if one does 
+     * @return {IDLFileHandler} instance of IDLFileHandler, created if one does
      * not already exist, for fetching the contents from disk.
      */
 
@@ -2444,16 +2449,16 @@ var GQLBase = exports.GQLBase = function () {
 
     /**
      * Returns the module object where your class is created. This needs to be
-     * defined on your class, as a static getter, in the FILE where you are 
+     * defined on your class, as a static getter, in the FILE where you are
      * defining your Class definition.
      *
      * @static
      * @memberof GQLBase
      * @method ⬇︎⠀module
      * @const
-     * 
-     * @return {Object} the reference to the module object defined and injected 
-     * by node.js' module loading system. 
+     *
+     * @return {Object} the reference to the module object defined and injected
+     * by node.js' module loading system.
      *
      * @see https://nodejs.org/api/modules.html
      */
@@ -2469,7 +2474,7 @@ var GQLBase = exports.GQLBase = function () {
 
 /**
  * The handler, an instance of which is created for every instance of GQLBase.
- * The handler manages the fetching and decoding of files bearing the IDL 
+ * The handler manages the fetching and decoding of files bearing the IDL
  * schema associated with the class represented by this instance of GQLBase.
  *
  * @class IDLFileHandler
@@ -2478,16 +2483,16 @@ var GQLBase = exports.GQLBase = function () {
 
 var IDLFileHandler = exports.IDLFileHandler = function () {
   /**
-   * The IDLFileHandler checks the SCHEMA value returned by the class type 
-   * of the supplied instance. If the resulting value is a Symbol, then the 
-   * handler's responsibility is to find the file, load it from disk and 
-   * provide various means of using its contents; i.e. as a Buffer, a String 
+   * The IDLFileHandler checks the SCHEMA value returned by the class type
+   * of the supplied instance. If the resulting value is a Symbol, then the
+   * handler's responsibility is to find the file, load it from disk and
+   * provide various means of using its contents; i.e. as a Buffer, a String
    * or wrapped in a SyntaxTree instance.
-   * 
+   *
    * @instance
    * @memberof IDLFileHandler
    * @method ⎆⠀constructor
-   * 
+   *
    * @param {Function} Class a function or class definition that presumably
    * extends from GQLBase were it an instance.
    */
@@ -2502,7 +2507,7 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
 
       if (symbol === Class.ADJACENT_FILE) {
         if (Class.module === GQLBaseModule) {
-          throw new Error('\n            The a static getter for \'module\' on ' + Class.name + ' must be present \n            that returns the module object where the Class is defined. Try the \n            following:\n            \n            // your ' + Class.name + '.js file\n            import { GQLBase } from \'graphql-lattice\'\n            \n            const ' + Class.name + 'Module = module;\n            \n            class ' + Class.name + ' extends GQLBase {\n              ...\n              \n              static get module() {\n                return ' + Class.name + 'Module;\n              }\n            }\n                        \n          ');
+          throw new Error('\n            The a static getter for \'module\' on ' + Class.name + ' must be present\n            that returns the module object where the Class is defined. Try the\n            following:\n\n            // your ' + Class.name + '.js file\n            import { GQLBase } from \'graphql-lattice\'\n\n            const ' + Class.name + 'Module = module;\n\n            class ' + Class.name + ' extends GQLBase {\n              ...\n\n              static get module() {\n                return ' + Class.name + 'Module;\n              }\n            }\n\n          ');
         }
 
         var filename = Class.module.filename;
@@ -2532,17 +2537,17 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
   }
 
   /**
-   * Loads the calculated file determined by the decoding of the meaning of 
-   * the Symbol returned by the SCHEMA property of the instance supplied to 
+   * Loads the calculated file determined by the decoding of the meaning of
+   * the Symbol returned by the SCHEMA property of the instance supplied to
    * the IDLFileHandler upon creation.
    *
    * @instance
    * @memberof IDLFileHandler
    * @method ⌾⠀getFile
-   * 
-   * @return {Buffer|null} returns the Buffer containing the file base IDL 
-   * schema or null if none was found or a direct string schema is returned 
-   * by the SCHEMA property 
+   *
+   * @return {Buffer|null} returns the Buffer containing the file base IDL
+   * schema or null if none was found or a direct string schema is returned
+   * by the SCHEMA property
    */
 
 
@@ -2554,13 +2559,13 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
 
     /**
      * If getFile() returns a Buffer, this is the string representation of the
-     * underlying file contents. As a means of validating the contents of the 
+     * underlying file contents. As a means of validating the contents of the
      * file, the string contents are parsed into an AST and back to a string.
      *
      * @instance
      * @memberof IDLFileHandler
      * @method ⌾⠀getSchema
-     * 
+     *
      * @return {string|null} the string contents of the Buffer containing the
      * file based IDL schema.
      */
@@ -2579,15 +2584,15 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
 
     /**
      * If getFile() returns a Buffer, the string contents are passed to a new
-     * instance of SyntaxTree which parses this into an AST for manipulation. 
+     * instance of SyntaxTree which parses this into an AST for manipulation.
      *
      * @instance
      * @memberof IDLFileHandler
      * @method ⌾⠀getSyntaxTree
-     * 
-     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL 
-     * schema contents loaded from disk. Null is returned if a calculated path 
-     * cannot be found; always occurs when SCHEMA returns a string. 
+     *
+     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
+     * schema contents loaded from disk. Null is returned if a calculated path
+     * cannot be found; always occurs when SCHEMA returns a string.
      */
 
   }, {
