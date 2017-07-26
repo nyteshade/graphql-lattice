@@ -65,7 +65,6 @@ export class GQLBase {
    *     { query, variables, operationName, raw }
    *     See https://github.com/graphql/express-graphql for more info
    *
-   * @instance
    * @memberof GQLBase
    * @method ⎆⠀constructor
    * @constructor
@@ -331,9 +330,9 @@ export class IDLFileHandler {
    * provide various means of using its contents; i.e. as a Buffer, a String
    * or wrapped in a SyntaxTree instance.
    *
-   * @instance
    * @memberof IDLFileHandler
    * @method ⎆⠀constructor
+   * @constructor
    *
    * @param {Function} Class a function or class definition that presumably
    * extends from GQLBase were it an instance.

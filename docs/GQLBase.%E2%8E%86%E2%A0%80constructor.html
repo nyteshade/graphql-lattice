@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>global</title>
+  <title>⎆⠀constructor</title>
 
 
 
@@ -47,7 +47,7 @@
 
     <div id="main">
         
-        <h1 class="page-title">global</h1>
+        <h1 class="page-title">⎆⠀constructor</h1>
         
 
         
@@ -60,7 +60,9 @@
 <header>
     
         <h2>
+            <span class="ancestors"><a href="GQLBase.html">GQLBase</a>.</span>
         
+        ⎆⠀constructor
         </h2>
         
     
@@ -71,212 +73,19 @@
     
         
 
-        
-
-
-<dl class="details">
-
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="PRIMITIVES">
-  <a class="anchor" href="#PRIMITIVES"></a>
-  <span class="type-name"><span class="type-signature type-attrib"></span>PRIMITIVES<span class="type-signature"></span></span></h4>
-
-
-
-
-<div class="description">
-    <p>Create a base set containing the typeOf representations for each of the<br>known primitive types.</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line402">line 402</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="PRIMITIVES%5Bundefined%5D">
-  <a class="anchor" href="#PRIMITIVES[undefined]"></a>
-  <span class="type-name"><span class="type-signature type-attrib"></span>PRIMITIVES[undefined]<span class="type-signature"></span></span></h4>
-
-
-
-
-<div class="description">
-    <p>Store the original has() method and bind it to PRIMITIVES</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line405">line 405</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="has"><a class="anchor" href="#has"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>has<span class="signature">(o)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="⎆⠀constructor"><a class="anchor" href="#⎆⠀constructor"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>new ⎆⠀constructor<span class="signature">(modelData, requestData)</span><span class="type-signature"></span></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Modify the PRIMITIVES <code>has()</code> method to invoke <code>typeOf()</code> on the argument<br>before passing it to the underlying has() method originally passed down from<br>the Set.prototype.</p>
+    <p>Request data is passed to this object when constructed. Typically these<br>objects, and their children, are instantiated by its own static MUTATORS<br>and RESOLVERS. They should contain request specific state if any is to<br>be shared.</p>
+<p>These can be considered request specific controllers for the object in<br>question. The base class takes a single object which should contain all<br>the HTTP/S request data and the graphQLParams is provided as the object<br>{ query, variables, operationName, raw }.</p>
+<p>When used with express-graphql, the requestData object has the format<br>{ req, res, gql } where<br>  • req is an Express 4.x request object<br>  • res is an Express 4.x response object<br>  • gql is the graphQLParams object in the format of<br>    { query, variables, operationName, raw }<br>    See https://github.com/graphql/express-graphql for more info</p>
 </div>
 
 
@@ -312,7 +121,7 @@
 
         <tr>
             
-                <td class="name"><code>o</code></td>
+                <td class="name"><code>modelData</code></td>
             
 
             <td class="type">
@@ -328,7 +137,30 @@
 
             
 
-            <td class="description last"><p>any value to test to see if it qualifies as a primitive</p></td>
+            <td class="description last"><p>this, typically an object, although anything<br>really is supported, represents the model data for our GraphQL object<br>instance.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>requestData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>see description above</p></td>
         </tr>
 
     
@@ -338,22 +170,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if the supplied value is a primitive, false otherwise</p></span>
-
-
-    
 
 
 
@@ -387,7 +203,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line407">line 407</a>
+        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line94">line 94</a>
     </dd>
     
 
@@ -413,7 +229,21 @@
 
 
 
-        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
     
 
     

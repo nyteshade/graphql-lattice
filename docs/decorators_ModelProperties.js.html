@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>global</title>
+  <title>decorators/ModelProperties.js</title>
 
 
 
@@ -47,381 +47,119 @@
 
     <div id="main">
         
-        <h1 class="page-title">global</h1>
+        <h1 class="page-title">decorators/ModelProperties.js</h1>
         
 
         
 
 
 
-
-<section>
-
-<header>
-    
-        <h2>
-        
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="PRIMITIVES">
-  <a class="anchor" href="#PRIMITIVES"></a>
-  <span class="type-name"><span class="type-signature type-attrib"></span>PRIMITIVES<span class="type-signature"></span></span></h4>
-
-
-
-
-<div class="description">
-    <p>Create a base set containing the typeOf representations for each of the<br>known primitive types.</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line402">line 402</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="PRIMITIVES%5Bundefined%5D">
-  <a class="anchor" href="#PRIMITIVES[undefined]"></a>
-  <span class="type-name"><span class="type-signature type-attrib"></span>PRIMITIVES[undefined]<span class="type-signature"></span></span></h4>
-
-
-
-
-<div class="description">
-    <p>Store the original has() method and bind it to PRIMITIVES</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line405">line 405</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="has"><a class="anchor" href="#has"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>has<span class="signature">(o)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Modify the PRIMITIVES <code>has()</code> method to invoke <code>typeOf()</code> on the argument<br>before passing it to the underlying has() method originally passed down from<br>the Set.prototype.</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>o</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any value to test to see if it qualifies as a primitive</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if the supplied value is a primitive, false otherwise</p></span>
-
-
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line407">line 407</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
     
-</article>
+    <section>
+        <article>
+            <pre class="source linenums"><code class="hljs js">/** @module ModelProperties */
+// @flow
+
+/**
+ * When working with `GQLBase` instances that expose properties
+ * that have a 1:1 mapping to their own model property of the
+ * same name, adding the getters manually can be annoying. This
+ * takes an indeterminate amount of strings representing the
+ * properties for which getters should be injected.
+ *
+ * @function ModelGetters
+ * @memberof ModelProperties
+ *
+ * @param {Array&lt;String>} propertyNames if the model has 'name' and
+ * 'age' as properties, then passing those two strings will result
+ * in getters that surface those properties as GraphQL fields.
+ * @return {Function} a class decorator method.s
+ */
+export function ModelGetters(...propertyNames: Array&lt;String>): Function {
+  return function(target: mixed): mixed {
+    for (let property of propertyNames) {
+      Object.defineProperty(target.prototype, property, {
+        get: function() {
+          return this.model[property];
+        }
+      });
+    }
+
+    return target;
+  }
+}
+
+/**
+ * When working with `GQLBase` instances that expose properties
+ * that have a 1:1 mapping to their own model property of the
+ * same name, adding the setters manually can be annoying. This
+ * takes an indeterminate amount of strings representing the
+ * properties for which setters should be injected.
+ *
+ * @function ModelSetters
+ * @memberof ModelProperties
+ *
+ * @param {Array&lt;String>} propertyNames if the model has 'name' and
+ * 'age' as properties, then passing those two strings will result
+ * in setters that surface those properties as GraphQL fields.
+ * @return {Function} a class decorator method
+ */
+export function ModelSetters(...propertyNames: Array&lt;String>):Function {
+  return function(target: mixed): mixed {
+    for (let property of propertyNames) {
+      Object.defineProperty(target.prototype, property, {
+        set: function(value) {
+          this.model[property] = value;
+        }
+      });
+    }
+
+    return target;
+  }
+}
+
+/**
+ * When working with `GQLBase` instances that expose properties
+ * that have a 1:1 mapping to their own model property of the
+ * same name, adding the getters manually can be annoying. This
+ * takes an indeterminate amount of strings representing the
+ * properties for which getters should be injected.
+ *
+ * This method creates both getters and setters
+ *
+ * @function ModelGettersSetters
+ * @memberof ModelProperties
+ *
+ * @param {Array&lt;String>} propertyNames if the model has 'name' and
+ * 'age' as properties, then passing those two strings will result
+ * in getters and setters that surface those properties as GraphQL fields.
+ * @return {Function} a class decorator method
+ */
+export function ModelGettersSetters(...propertyNames: Array&lt;String>): Function {
+  return function(target: mixed): mixed {
+    for (let property of propertyNames) {
+      Object.defineProperty(target.prototype, property, {
+        set: function(value) {
+          this.model[property] = value;
+        },
+        get: function() {
+          return this.model[property];
+        }
+      });
+    }
+
+    return target;
+  }
+}
+
+export default ModelGettersSetters;
+</code></pre>
+        </article>
+    </section>
+    <script type="text/javascript">
+      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
+    </script>
 
-</section>
 
 
 

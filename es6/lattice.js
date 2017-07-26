@@ -2,6 +2,8 @@ import { GQLBase } from './GQLBase'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { SyntaxTree } from './SyntaxTree'
 import { Deferred } from './utils'
+import { AdjacentSchema } from './decorators/AdjacentSchema'
+import { Getters, Setters, Properties } from './decorators/ModelProperties'
 import * as types from './types'
 
 const { typeOf } = types;
@@ -12,6 +14,10 @@ const defaultPackage = {
   GQLExpressMiddleware,
   SyntaxTree,
   Deferred,
+  AdjacentSchema,
+  Getters,
+  Setters,
+  Properties,
   typeOf,
   types
 };
@@ -23,4 +29,8 @@ export {SyntaxTree}
 export {Deferred}
 export {types}
 export {typeOf}
+export {AdjacentSchema}
+export {Getters}
+export {Setters}
+export {Properties}
 export default defaultPackage
