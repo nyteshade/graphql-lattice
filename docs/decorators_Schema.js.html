@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>⎆⠀constructor</title>
+  <title>decorators/Schema.js</title>
 
 
 
@@ -47,211 +47,59 @@
 
     <div id="main">
         
-        <h1 class="page-title">⎆⠀constructor</h1>
+        <h1 class="page-title">decorators/Schema.js</h1>
         
 
         
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="GQLBase.html">GQLBase</a>.</span>
-        
-        ⎆⠀constructor
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="source linenums"><code class="hljs js">/** @namespace decorators */
+/** @flow */
+
+/**
+ * This decorator allows you to specify the SCHEMA getter and associated 
+ * string as a parameter to the decorator itself. So, for example:
+ * 
+ * &lt;code>
+ * @Schema(`
+ *   type Item {
+ *     name: String 
+ *     cost: String 
+ *   }
+ * `)
+ * export class Item extends GQLBase {
+ *   // ...
+ * }
+ * &lt;/code>
+ * 
+ * @function Schema
+ * @memberof! decorators
+ * @since 2.2.0
+ * 
+ * @param {String} schemaString a GraphQL IDL compliant string for defining a 
+ * GraphQL Object Schema.
+ */
+export function Schema(schemaString) {
+  return function(target) {
+    Object.defineProperties(target, {
+      SCHEMA: {
+        get: () => schemaString
+      }
+    });
+  }
+}
+
+export default Schema;</code></pre>
+        </article>
+    </section>
+    <script type="text/javascript">
+      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
+    </script>
 
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-
-    <h4 class="name" id="⎆⠀constructor"><a class="anchor" href="#⎆⠀constructor"></a>
-      <span class="type-name"><span class="type-signature type-attrib"></span>new ⎆⠀constructor<span class="signature">(modelData, requestData)</span><span class="type-signature"></span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Request data is passed to this object when constructed. Typically these<br>objects, and their children, are instantiated by its own static MUTATORS<br>and RESOLVERS. They should contain request specific state if any is to<br>be shared.</p>
-<p>These can be considered request specific controllers for the object in<br>question. The base class takes a single object which should contain all<br>the HTTP/S request data and the graphQLParams is provided as the object<br>{ query, variables, operationName, raw }.</p>
-<p>When used with express-graphql, the requestData object has the format<br>{ req, res, gql } where<br>  • req is an Express 4.x request object<br>  • res is an Express 4.x response object<br>  • gql is the graphQLParams object in the format of<br>    { query, variables, operationName, raw }<br>    See https://github.com/graphql/express-graphql for more info</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>modelData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>this, typically an object, although anything<br>really is supported, represents the model data for our GraphQL object<br>instance.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>requestData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>see description above</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line94">line 94</a>
-    </dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 

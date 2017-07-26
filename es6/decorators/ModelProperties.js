@@ -1,4 +1,4 @@
-/** @module ModelProperties */
+/** @namespace decorators */
 // @flow
 
 /**
@@ -9,7 +9,7 @@
  * properties for which getters should be injected.
  *
  * @function Getters
- * @memberof ModelProperties
+ * @memberof! decorators
  *
  * @param {Array<String>} propertyNames if the model has 'name' and
  * 'age' as properties, then passing those two strings will result
@@ -38,7 +38,7 @@ export function Getters(...propertyNames: Array<String>): Function {
  * properties for which setters should be injected.
  *
  * @function Setters
- * @memberof ModelProperties
+ * @memberof! decorators
  *
  * @param {Array<String>} propertyNames if the model has 'name' and
  * 'age' as properties, then passing those two strings will result
@@ -69,7 +69,8 @@ export function Setters(...propertyNames: Array<String>):Function {
  * This method creates both getters and setters
  *
  * @function Properties
- * @memberof ModelProperties
+ * @memberof! decorators
+ * @since 2.1.0
  *
  * @param {Array<String>} propertyNames if the model has 'name' and
  * 'age' as properties, then passing those two strings will result

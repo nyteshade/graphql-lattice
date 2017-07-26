@@ -1,4 +1,4 @@
-/** @module AdjacentSchema */
+/** @namespace decorators */
 // @flow
 
 import { GQLBase } from '../GQLBase'
@@ -12,7 +12,8 @@ import { GQLBase } from '../GQLBase'
  * can determine whether or not the decorator was used.
  *
  * @function AdjacentSchema
- * @memberof AdjacentSchema
+ * @memberof! decorators
+ * @since 2.1.0
  *
  * @param {mixed} object the object on which to apply the decorator
  * @param {String} property the name of the object or property to

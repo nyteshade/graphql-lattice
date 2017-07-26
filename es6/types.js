@@ -357,6 +357,10 @@ export const NULL: string = typeOf(null);
 /**
  * Create a base set containing the typeOf representations for each of the 
  * known primitive types. 
+ *
+ * @type {Set<String>}
+ * @memberof types 
+ * @inner 
  */
 const PRIMITIVES: Set<string> = new Set([
   NULL, UNDEFINED, Boolean.name, Number.name, String.name, Symbol.name
@@ -371,6 +375,9 @@ PRIMITIVES[Symbol.for('original_has')] = PRIMITIVES.has.bind(PRIMITIVES)
  * the Set.prototype. 
  * 
  * @method has
+ * @memberof PRIMITIVES
+ * @inner
+ * 
  * @param {mixed} o any value to test to see if it qualifies as a primitive
  * @return {Boolean} true if the supplied value is a primitive, false otherwise
  */
