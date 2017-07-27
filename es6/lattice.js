@@ -4,6 +4,8 @@ import { SyntaxTree } from './SyntaxTree'
 import { Deferred } from './utils'
 import { AdjacentSchema } from './decorators/AdjacentSchema'
 import { Getters, Setters, Properties } from './decorators/ModelProperties'
+import { Schema } from './decorators/Schema'
+import { FileSchema } from './decorators/FileSchema'
 import * as types from './types'
 
 const { typeOf } = types;
@@ -18,19 +20,26 @@ const defaultPackage = {
   Getters,
   Setters,
   Properties,
+  Schema,
+  FileSchema,
   typeOf,
   types
 };
 
 /* Also export each of the constructs individually */
-export {GQLBase}
-export {GQLExpressMiddleware}
-export {SyntaxTree}
-export {Deferred}
-export {types}
-export {typeOf}
-export {AdjacentSchema}
-export {Getters}
-export {Setters}
-export {Properties}
+export {
+  GQLBase,
+  GQLExpressMiddleware,
+  SyntaxTree,
+  Deferred,
+  types,
+  typeOf,
+  AdjacentSchema,
+  Getters,
+  Setters,
+  Properties,
+  Schema,
+  FileSchema
+}
+
 export default defaultPackage

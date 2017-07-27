@@ -23,6 +23,9 @@ import { GQLBase } from '../GQLBase'
  */
 export default function AdjacentSchema(classModule) {
   return function(target) {
+    // Attempt to remove the SCHEMA and module properties or functions from 
+    // the class being decorated. This is not guaranteed to work but should 
+    // increase compatibilty and success rates.
     delete target.SCHEMA;
     delete target.module;
 

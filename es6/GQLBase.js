@@ -205,6 +205,7 @@ export class GQLBase {
    * @method ⬇︎⠀MUTATORS
    * @readonly
    * @static
+   * @deprecated Place all resolvers in RESOLVERS() 
    *
    * @param {Object} requestData typically an object containing three
    * properties; {req, res, gql}
@@ -213,7 +214,7 @@ export class GQLBase {
    */
   static async MUTATORS(requestData: Object): Promise<Object> {
     // define in base class
-    return Promise.resolve({});
+    return {};
   }
 
   /**
@@ -234,7 +235,7 @@ export class GQLBase {
    */
   static async RESOLVERS(requestData: Object): Promise<Object> {
     // define in base class
-    return Promise.resolve({});
+    return {};
   }
 
   /**

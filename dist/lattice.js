@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 76);
+/******/ 	return __webpack_require__(__webpack_require__.s = 78);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -75,7 +75,7 @@ if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 /***/ (function(module, exports, __webpack_require__) {
 
 var store      = __webpack_require__(41)('wks')
-  , uid        = __webpack_require__(21)
+  , uid        = __webpack_require__(23)
   , Symbol     = __webpack_require__(2).Symbol
   , USE_SYMBOL = typeof Symbol == 'function';
 
@@ -206,7 +206,7 @@ module.exports = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP         = __webpack_require__(5)
-  , createDesc = __webpack_require__(20);
+  , createDesc = __webpack_require__(22);
 module.exports = __webpack_require__(3) ? function(object, key, value){
   return dP.f(object, key, createDesc(1, value));
 } : function(object, key, value){
@@ -237,7 +237,7 @@ module.exports = function(it, key){
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(38)
-  , defined = __webpack_require__(18);
+  , defined = __webpack_require__(20);
 module.exports = function(it){
   return IObject(defined(it));
 };
@@ -323,9 +323,591 @@ module.exports = function(it, tag, stat){
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(107), __esModule: true };
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.IDLFileHandler = exports.GQLBase = exports.REQ_DATA_KEY = exports.MODEL_KEY = undefined;
+
+var _typeof2 = __webpack_require__(80);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+var _regenerator = __webpack_require__(47);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__(67);
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _classCallCheck2 = __webpack_require__(29);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(30);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _for = __webpack_require__(17);
+
+var _for2 = _interopRequireDefault(_for);
+
+var _path = __webpack_require__(72);
+
+var _path2 = _interopRequireDefault(_path);
+
+var _fs = __webpack_require__(108);
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _utils = __webpack_require__(73);
+
+var _types = __webpack_require__(31);
+
+var _SyntaxTree = __webpack_require__(52);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Constant referring to the nodejs module in which this code is defined.
+ *
+ * @memberof GQLBaseEnv
+ * @type {Object}
+ * @const
+ */
+var GQLBaseModule = module;
+
+/**
+ * A `Symbol` used as a key to store the backing model data. Designed as a
+ * way to separate model data and GraphQL property accessors into logical bits.
+ *
+ * @type {Symbol}
+ * @memberof GQLBaseEnv
+ * @const
+ */
+/** @namespace GQLBaseEnv */
+
+
+var MODEL_KEY = exports.MODEL_KEY = (0, _for2.default)('data-model-contents-key');
+
+/**
+ * A `Symbol` used as a key to store the request data for an instance of the
+ * GQLBase object in question.
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberof GQLBaseEnv
+ */
+var REQ_DATA_KEY = exports.REQ_DATA_KEY = (0, _for2.default)('request-data-object-key');
+
+/**
+ * All GraphQL Type objects used in this system are assumed to have extended
+ * from this class. An instance of this class can be used to wrap an existing
+ * structure if you have one.
+ *
+ * @class GQLBase
+ */
+
+var GQLBase = exports.GQLBase = function () {
+  /**
+   * Request data is passed to this object when constructed. Typically these
+   * objects, and their children, are instantiated by its own static MUTATORS
+   * and RESOLVERS. They should contain request specific state if any is to
+   * be shared.
+   *
+   * These can be considered request specific controllers for the object in
+   * question. The base class takes a single object which should contain all
+   * the HTTP/S request data and the graphQLParams is provided as the object
+   * { query, variables, operationName, raw }.
+   *
+   * When used with express-graphql, the requestData object has the format
+   * { req, res, gql } where
+   *   • req is an Express 4.x request object
+   *   • res is an Express 4.x response object
+   *   • gql is the graphQLParams object in the format of
+   *     { query, variables, operationName, raw }
+   *     See https://github.com/graphql/express-graphql for more info
+   *
+   * @memberof GQLBase
+   * @method ⎆⠀constructor
+   * @constructor
+   *
+   * @param {mixed} modelData this, typically an object, although anything
+   * really is supported, represents the model data for our GraphQL object
+   * instance.
+   * @param {Object} requestData see description above
+   */
+  function GQLBase() {
+    var modelData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var requestData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    (0, _classCallCheck3.default)(this, GQLBase);
+
+    var Class = this.constructor;
+
+    this.model = modelData;
+    this.requestData = requestData;
+    this.fileHandler = new IDLFileHandler(this.constructor);
+  }
+
+  /**
+   * Getter for the internally stored model data. The contents of this
+   * object are abstracted away behind a `Symbol` key to prevent collision
+   * between the underlying model and any GraphQL Object Definition properties.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method ⬇︎⠀model
+   *
+   * @param {Object} value any object you wish to use as a data store
+   */
+
+
+  (0, _createClass3.default)(GQLBase, [{
+    key: 'model',
+    get: function get() {
+      return this[MODEL_KEY];
+    }
+
+    /**
+     * Setter for the internally stored model data. The contents of this
+     * object are abstracted away behind a `Symbol` key to prevent collision
+     * between the underlying model and any GraphQL Object Definition properties.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬆︎⠀model
+     *
+     * @param {Object} value any object you wish to use as a data store
+     */
+    ,
+    set: function set(value) {
+      this[MODEL_KEY] = value;
+    }
+
+    /**
+     * A getter that retrieves the inner request data object. When used with
+     * GQLExpressMiddleware, this is an object matching {req, res, gql}.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬇︎⠀requestData
+     *
+     * @return {Object} an object, usually matching { req, res, gql }
+     */
+
+  }, {
+    key: 'requestData',
+    get: function get() {
+      return this[REQ_DATA_KEY];
+    }
+
+    /**
+     * A setter that assigns a value to the inner request data object. When
+     * used with GQLExpressMiddleware, this is an object matching {req, res, gql}.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬆︎⠀requestData
+     *
+     * @param {Object} value an object, usually matching { req, res, gql }
+     */
+    ,
+    set: function set(value) {
+      this[REQ_DATA_KEY] = value;
+    }
+
+    /**
+     * Defined in a base class, this getter should return either a String
+     * detailing the full IDL schema of a GraphQL handler or one of two
+     * types of Symbols.
+     *
+     * The first Symbol type is the constant `ADJACENT_FILE`. If this Symbol is
+     * returned, the system assumes that next to the source file in question is
+     * a file of the same name with a .graphql extension. This file should be
+     * made of the GraphQL IDL schema definitions for the object types being
+     * created.
+     *
+     * Example:
+     * ```js
+     *   static get SCHEMA(): String | Symbol {
+     *     return GQLBase.ADJACENT_FILE
+     *   }
+     * ```
+     *
+     * The primary advantage of this approach is allowing an outside editor that
+     * provides syntax highlighting rather than returning a string from the
+     * SCHEMA getter.
+     *
+     * Alternatively, the static method IDLFilePath can be used to point to an
+     * alternate location where the GraphQL IDL file resides. The extension can
+     * also be changed from .graphql to something else if need be using this
+     * method.
+     *
+     * Example:
+     * ```js
+     *   static get SCHEMA(): String | Symbol {
+     *     return GQLBase.IDLFilePath('/path/to/file', '.idl')
+     *   }
+     * ```
+     *
+     * NOTE - Important!
+     * When not returning a direct string based IDL schema, the call to super()
+     * from a child class must include `module` as the second parameter or an
+     * error will be thrown upon object creation.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬇︎⠀SCHEMA
+     * @readonly
+     * @static
+     *
+     * @return {string|Symbol} a valid IDL string or one of the Symbols
+     * described above.
+     *
+     * @see {@link GQLBase#ADJACENT_FILE}
+     * @see {@link GQLBase#IDLFilePath}
+     */
+
+  }], [{
+    key: 'MUTATORS',
+
+
+    /**
+     * This method should return a promise that resolves to an object of
+     * functions matching the names of the mutation operations. These are to be
+     * injected into the root object when used by `GQLExpressMiddleware`.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬇︎⠀MUTATORS
+     * @readonly
+     * @static
+     * @deprecated Place all resolvers in RESOLVERS() 
+     *
+     * @param {Object} requestData typically an object containing three
+     * properties; {req, res, gql}
+     * @return {Promise} a promise that resolves to an object; see above for more
+     * information.
+     */
+    value: function () {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(requestData) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt('return', {});
+
+              case 1:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function MUTATORS(_x3) {
+        return _ref.apply(this, arguments);
+      }
+
+      return MUTATORS;
+    }()
+
+    /**
+     * This method should return a promise that resolves to an object of
+     * functions matching the names of the query operations. These are to be
+     * injected into the root object when used by `GQLExpressMiddleware`.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬇︎⠀RESOLVERS
+     * @readonly
+     * @static
+     *
+     * @param {Object} requestData typically an object containing three
+     * properties; {req, res, gql}
+     * @return {Promise} a promise that resolves to an object; see above for more
+     * information.
+     */
+
+  }, {
+    key: 'RESOLVERS',
+    value: function () {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(requestData) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                return _context2.abrupt('return', {});
+
+              case 1:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function RESOLVERS(_x4) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return RESOLVERS;
+    }()
+
+    /**
+     * @see {@link GQLBase#SCHEMA}
+     *
+     * @memberof GQLBase
+     * @method ⬇︎⠀ADJACENT_FILE
+     * @static
+     * @const
+     *
+     * @return {Symbol} the Symbol, when returned from SCHEMA, causes
+     * the logic to load an IDL Schema from an associated file with a .graphql
+     * extension and bearing the same name.
+     */
+
+  }, {
+    key: 'IDLFilePath',
+
+
+    /**
+     * Creates an appropriate Symbol crafted with the right data for use by
+     * the IDLFileHandler class below.
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⌾⠀IDLFilePath
+     *
+     * @param {string} path a path to the IDL containing file
+     * @param {String} [extension='.graphql'] an extension, including the
+     * prefixed period, that will be added to the supplied path should it not
+     * already exist.
+     * @return Symbol
+     *
+     * @see {@link GQLBase#SCHEMA}
+     */
+    value: function IDLFilePath(path) {
+      var extension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.graphql';
+
+      return (0, _for2.default)('Path ' + path + ' Extension ' + extension);
+    }
+
+    /**
+     * A file handler for fetching the IDL schema string from the file system
+     * for those `GQLBase` extended classes that have indicated to do so by
+     * returning a `Symbol` for their `SCHEMA` property.
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⬇︎⠀handler
+     *
+     * @return {IDLFileHandler} instance of IDLFileHandler, created if one does
+     * not already exist, for fetching the contents from disk.
+     */
+
+  }, {
+    key: 'SCHEMA',
+    get: function get() {}
+    // define in base class
+
+  }, {
+    key: 'ADJACENT_FILE',
+    get: function get() {
+      return (0, _for2.default)('.graphql file located adjacent to source');
+    }
+  }, {
+    key: 'handler',
+    get: function get() {
+      var key = (0, _for2.default)(IDLFileHandler.name + '.' + this.name);
+
+      if (!this[key]) {
+        this[key] = new IDLFileHandler(this);
+      }
+
+      return this[key];
+    }
+
+    /**
+     * Returns the module object where your class is created. This needs to be
+     * defined on your class, as a static getter, in the FILE where you are
+     * defining your Class definition.
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⬇︎⠀module
+     * @const
+     *
+     * @return {Object} the reference to the module object defined and injected
+     * by node.js' module loading system.
+     *
+     * @see https://nodejs.org/api/modules.html
+     */
+
+  }, {
+    key: 'module',
+    get: function get() {
+      return GQLBaseModule;
+    }
+  }]);
+  return GQLBase;
+}();
+
+/**
+ * The handler, an instance of which is created for every instance of GQLBase.
+ * The handler manages the fetching and decoding of files bearing the IDL
+ * schema associated with the class represented by this instance of GQLBase.
+ *
+ * @class IDLFileHandler
+ */
+
+
+var IDLFileHandler = exports.IDLFileHandler = function () {
+  /**
+   * The IDLFileHandler checks the SCHEMA value returned by the class type
+   * of the supplied instance. If the resulting value is a Symbol, then the
+   * handler's responsibility is to find the file, load it from disk and
+   * provide various means of using its contents; i.e. as a Buffer, a String
+   * or wrapped in a SyntaxTree instance.
+   *
+   * @memberof IDLFileHandler
+   * @method ⎆⠀constructor
+   * @constructor
+   *
+   * @param {Function} Class a function or class definition that presumably
+   * extends from GQLBase were it an instance.
+   */
+  function IDLFileHandler(Class) {
+    (0, _classCallCheck3.default)(this, IDLFileHandler);
+
+    var symbol = (0, _typeof3.default)(Class.SCHEMA) === 'symbol' && Class.SCHEMA || null;
+    var pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
+
+    if (symbol) {
+      var symbolString = symbol.toString();
+
+      if (symbol === Class.ADJACENT_FILE) {
+        if (Class.module === GQLBaseModule) {
+          throw new Error('\n            The a static getter for \'module\' on ' + Class.name + ' must be present\n            that returns the module object where the Class is defined. Try the\n            following:\n\n            // your ' + Class.name + '.js file\n            import { GQLBase } from \'graphql-lattice\'\n\n            const ' + Class.name + 'Module = module;\n\n            class ' + Class.name + ' extends GQLBase {\n              ...\n\n              static get module() {\n                return ' + Class.name + 'Module;\n              }\n            }\n\n          ');
+        }
+
+        var filename = Class.module.filename;
+        var extension = _path2.default.extname(filename);
+        var dir = _path2.default.dirname(filename);
+        var filefixed = _path2.default.basename(filename, extension);
+        var build = _path2.default.resolve(_path2.default.join(dir, filefixed + '.graphql'));
+
+        this.path = build;
+        this.extension = '.graphql';
+      } else if (pattern.test(symbolString)) {
+        var parsed = pattern.exec(symbolString);
+        var _extension = parsed[2] || '.graphql';
+        var _dir = _path2.default.dirname(parsed[1]);
+        var file = _path2.default.basename(parsed[1], _extension);
+        var _build = _path2.default.resolve(_path2.default.join(_dir, '' + file + _extension));
+
+        this.path = _build;
+        this.extension = _extension;
+
+        console.log('Path ' + this.path + ' Ext ' + this.extension);
+        console.log('Resolved ' + _path2.default.resolve(this.path));
+      }
+    } else {
+      this.path = this.extension = null;
+    }
+  }
+
+  /**
+   * Loads the calculated file determined by the decoding of the meaning of
+   * the Symbol returned by the SCHEMA property of the instance supplied to
+   * the IDLFileHandler upon creation.
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method ⌾⠀getFile
+   *
+   * @return {Buffer|null} returns the Buffer containing the file base IDL
+   * schema or null if none was found or a direct string schema is returned
+   * by the SCHEMA property
+   */
+
+
+  (0, _createClass3.default)(IDLFileHandler, [{
+    key: 'getFile',
+    value: function getFile() {
+      return _fs2.default.readFileSync(this.path);
+    }
+
+    /**
+     * If getFile() returns a Buffer, this is the string representation of the
+     * underlying file contents. As a means of validating the contents of the
+     * file, the string contents are parsed into an AST and back to a string.
+     *
+     * @instance
+     * @memberof IDLFileHandler
+     * @method ⌾⠀getSchema
+     *
+     * @return {string|null} the string contents of the Buffer containing the
+     * file based IDL schema.
+     */
+
+  }, {
+    key: 'getSchema',
+    value: function getSchema() {
+      if (!this.path) {
+        return null;
+      }
+
+      var tree = this.getSyntaxTree();
+
+      return tree.toString();
+    }
+
+    /**
+     * If getFile() returns a Buffer, the string contents are passed to a new
+     * instance of SyntaxTree which parses this into an AST for manipulation.
+     *
+     * @instance
+     * @memberof IDLFileHandler
+     * @method ⌾⠀getSyntaxTree
+     *
+     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
+     * schema contents loaded from disk. Null is returned if a calculated path
+     * cannot be found; always occurs when SCHEMA returns a string.
+     */
+
+  }, {
+    key: 'getSyntaxTree',
+    value: function getSyntaxTree() {
+      var buffer = this.getFile();
+      var tree = new _SyntaxTree.SyntaxTree(buffer.toString());
+
+      return tree;
+    }
+  }]);
+  return IDLFileHandler;
+}();
+
+exports.default = GQLBase;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(79)(module)))
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
-var $at  = __webpack_require__(80)(true);
+var $at  = __webpack_require__(82)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
 __webpack_require__(33)(String, 'String', function(iterated){
@@ -343,7 +925,7 @@ __webpack_require__(33)(String, 'String', function(iterated){
 });
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -353,13 +935,13 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = function(bitmap, value){
@@ -372,7 +954,7 @@ module.exports = function(bitmap, value){
 };
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 var id = 0
@@ -382,10 +964,10 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(84);
+__webpack_require__(86);
 var global        = __webpack_require__(2)
   , hide          = __webpack_require__(7)
   , Iterators     = __webpack_require__(13)
@@ -400,33 +982,33 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
 }
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.f = __webpack_require__(1);
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx         = __webpack_require__(11)
-  , call        = __webpack_require__(97)
-  , isArrayIter = __webpack_require__(98)
+  , call        = __webpack_require__(99)
+  , isArrayIter = __webpack_require__(100)
   , anObject    = __webpack_require__(6)
   , toLength    = __webpack_require__(39)
-  , getIterFn   = __webpack_require__(67)
+  , getIterFn   = __webpack_require__(69)
   , BREAK       = {}
   , RETURN      = {};
 var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
@@ -448,7 +1030,7 @@ exports.BREAK  = BREAK;
 exports.RETURN = RETURN;
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -463,7 +1045,7 @@ exports.default = function (instance, Constructor) {
 };
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -471,7 +1053,7 @@ exports.default = function (instance, Constructor) {
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(52);
+var _defineProperty = __webpack_require__(51);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -496,13 +1078,7 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(105), __esModule: true };
-
-/***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -513,7 +1089,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PRIMITIVES = exports.NULL = exports.UNDEFINED = exports.isClass = exports.isOfType = exports.isValue = exports.isPrimitive = exports.isUndefined = exports.isNull = exports.isRegExp = exports.isNumber = exports.isString = exports.isObject = exports.isDate = exports.isArray = exports.isFunction = undefined;
 
-var _for = __webpack_require__(29);
+var _for = __webpack_require__(17);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -521,11 +1097,11 @@ var _symbol = __webpack_require__(63);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
-var _set = __webpack_require__(73);
+var _set = __webpack_require__(74);
 
 var _set2 = _interopRequireDefault(_set);
 
-var _getPrototypeOf = __webpack_require__(117);
+var _getPrototypeOf = __webpack_require__(119);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
@@ -906,6 +1482,10 @@ var NULL = exports.NULL = typeOf(null);
 /**
  * Create a base set containing the typeOf representations for each of the 
  * known primitive types. 
+ *
+ * @type {Set<String>}
+ * @memberof types 
+ * @inner 
  */
 var PRIMITIVES = new _set2.default([NULL, UNDEFINED, Boolean.name, Number.name, String.name, _symbol2.default.name]);
 
@@ -918,6 +1498,9 @@ PRIMITIVES[(0, _for2.default)('original_has')] = PRIMITIVES.has.bind(PRIMITIVES)
  * the Set.prototype. 
  * 
  * @method has
+ * @memberof PRIMITIVES
+ * @inner
+ * 
  * @param {mixed} o any value to test to see if it qualifies as a primitive
  * @return {Boolean} true if the supplied value is a primitive, false otherwise
  */
@@ -942,585 +1525,6 @@ PRIMITIVES.has = function (o) {
 exports.PRIMITIVES = PRIMITIVES;
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.IDLFileHandler = exports.GQLBase = exports.REQ_DATA_KEY = exports.MODEL_KEY = undefined;
-
-var _typeof2 = __webpack_require__(78);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-var _regenerator = __webpack_require__(47);
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _promise = __webpack_require__(48);
-
-var _promise2 = _interopRequireDefault(_promise);
-
-var _asyncToGenerator2 = __webpack_require__(70);
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _classCallCheck2 = __webpack_require__(27);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(28);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _for = __webpack_require__(29);
-
-var _for2 = _interopRequireDefault(_for);
-
-var _path = __webpack_require__(71);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _fs = __webpack_require__(106);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _utils = __webpack_require__(72);
-
-var _types = __webpack_require__(30);
-
-var _SyntaxTree = __webpack_require__(53);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Constant referring to the nodejs module in which this code is defined.
- *
- * @memberof GQLBaseEnv
- * @type {Object}
- * @const
- */
-var GQLBaseModule = module;
-
-/**
- * A `Symbol` used as a key to store the backing model data. Designed as a
- * way to separate model data and GraphQL property accessors into logical bits.
- *
- * @type {Symbol}
- * @memberof GQLBaseEnv
- * @const
- */
-/** @namespace GQLBaseEnv */
-
-
-var MODEL_KEY = exports.MODEL_KEY = (0, _for2.default)('data-model-contents-key');
-
-/**
- * A `Symbol` used as a key to store the request data for an instance of the
- * GQLBase object in question.
- *
- * @type {Symbol}
- * @const
- * @inner
- * @memberof GQLBaseEnv
- */
-var REQ_DATA_KEY = exports.REQ_DATA_KEY = (0, _for2.default)('request-data-object-key');
-
-/**
- * All GraphQL Type objects used in this system are assumed to have extended
- * from this class. An instance of this class can be used to wrap an existing
- * structure if you have one.
- *
- * @class GQLBase
- */
-
-var GQLBase = exports.GQLBase = function () {
-  /**
-   * Request data is passed to this object when constructed. Typically these
-   * objects, and their children, are instantiated by its own static MUTATORS
-   * and RESOLVERS. They should contain request specific state if any is to
-   * be shared.
-   *
-   * These can be considered request specific controllers for the object in
-   * question. The base class takes a single object which should contain all
-   * the HTTP/S request data and the graphQLParams is provided as the object
-   * { query, variables, operationName, raw }.
-   *
-   * When used with express-graphql, the requestData object has the format
-   * { req, res, gql } where
-   *   • req is an Express 4.x request object
-   *   • res is an Express 4.x response object
-   *   • gql is the graphQLParams object in the format of
-   *     { query, variables, operationName, raw }
-   *     See https://github.com/graphql/express-graphql for more info
-   *
-   * @memberof GQLBase
-   * @method ⎆⠀constructor
-   * @constructor
-   *
-   * @param {mixed} modelData this, typically an object, although anything
-   * really is supported, represents the model data for our GraphQL object
-   * instance.
-   * @param {Object} requestData see description above
-   */
-  function GQLBase() {
-    var modelData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var requestData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    (0, _classCallCheck3.default)(this, GQLBase);
-
-    var Class = this.constructor;
-
-    this.model = modelData;
-    this.requestData = requestData;
-    this.fileHandler = new IDLFileHandler(this.constructor);
-  }
-
-  /**
-   * Getter for the internally stored model data. The contents of this
-   * object are abstracted away behind a `Symbol` key to prevent collision
-   * between the underlying model and any GraphQL Object Definition properties.
-   *
-   * @instance
-   * @memberof GQLBase
-   * @method ⬇︎⠀model
-   *
-   * @param {Object} value any object you wish to use as a data store
-   */
-
-
-  (0, _createClass3.default)(GQLBase, [{
-    key: 'model',
-    get: function get() {
-      return this[MODEL_KEY];
-    }
-
-    /**
-     * Setter for the internally stored model data. The contents of this
-     * object are abstracted away behind a `Symbol` key to prevent collision
-     * between the underlying model and any GraphQL Object Definition properties.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬆︎⠀model
-     *
-     * @param {Object} value any object you wish to use as a data store
-     */
-    ,
-    set: function set(value) {
-      this[MODEL_KEY] = value;
-    }
-
-    /**
-     * A getter that retrieves the inner request data object. When used with
-     * GQLExpressMiddleware, this is an object matching {req, res, gql}.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀requestData
-     *
-     * @return {Object} an object, usually matching { req, res, gql }
-     */
-
-  }, {
-    key: 'requestData',
-    get: function get() {
-      return this[REQ_DATA_KEY];
-    }
-
-    /**
-     * A setter that assigns a value to the inner request data object. When
-     * used with GQLExpressMiddleware, this is an object matching {req, res, gql}.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬆︎⠀requestData
-     *
-     * @param {Object} value an object, usually matching { req, res, gql }
-     */
-    ,
-    set: function set(value) {
-      this[REQ_DATA_KEY] = value;
-    }
-
-    /**
-     * Defined in a base class, this getter should return either a String
-     * detailing the full IDL schema of a GraphQL handler or one of two
-     * types of Symbols.
-     *
-     * The first Symbol type is the constant `ADJACENT_FILE`. If this Symbol is
-     * returned, the system assumes that next to the source file in question is
-     * a file of the same name with a .graphql extension. This file should be
-     * made of the GraphQL IDL schema definitions for the object types being
-     * created.
-     *
-     * Example:
-     * ```js
-     *   static get SCHEMA(): String | Symbol {
-     *     return GQLBase.ADJACENT_FILE
-     *   }
-     * ```
-     *
-     * The primary advantage of this approach is allowing an outside editor that
-     * provides syntax highlighting rather than returning a string from the
-     * SCHEMA getter.
-     *
-     * Alternatively, the static method IDLFilePath can be used to point to an
-     * alternate location where the GraphQL IDL file resides. The extension can
-     * also be changed from .graphql to something else if need be using this
-     * method.
-     *
-     * Example:
-     * ```js
-     *   static get SCHEMA(): String | Symbol {
-     *     return GQLBase.IDLFilePath('/path/to/file', '.idl')
-     *   }
-     * ```
-     *
-     * NOTE - Important!
-     * When not returning a direct string based IDL schema, the call to super()
-     * from a child class must include `module` as the second parameter or an
-     * error will be thrown upon object creation.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀SCHEMA
-     * @readonly
-     * @static
-     *
-     * @return {string|Symbol} a valid IDL string or one of the Symbols
-     * described above.
-     *
-     * @see {@link GQLBase#ADJACENT_FILE}
-     * @see {@link GQLBase#IDLFilePath}
-     */
-
-  }], [{
-    key: 'MUTATORS',
-
-
-    /**
-     * This method should return a promise that resolves to an object of
-     * functions matching the names of the mutation operations. These are to be
-     * injected into the root object when used by `GQLExpressMiddleware`.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀MUTATORS
-     * @readonly
-     * @static
-     *
-     * @param {Object} requestData typically an object containing three
-     * properties; {req, res, gql}
-     * @return {Promise} a promise that resolves to an object; see above for more
-     * information.
-     */
-    value: function () {
-      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(requestData) {
-        return _regenerator2.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                return _context.abrupt('return', _promise2.default.resolve({}));
-
-              case 1:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function MUTATORS(_x3) {
-        return _ref.apply(this, arguments);
-      }
-
-      return MUTATORS;
-    }()
-
-    /**
-     * This method should return a promise that resolves to an object of
-     * functions matching the names of the query operations. These are to be
-     * injected into the root object when used by `GQLExpressMiddleware`.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀RESOLVERS
-     * @readonly
-     * @static
-     *
-     * @param {Object} requestData typically an object containing three
-     * properties; {req, res, gql}
-     * @return {Promise} a promise that resolves to an object; see above for more
-     * information.
-     */
-
-  }, {
-    key: 'RESOLVERS',
-    value: function () {
-      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(requestData) {
-        return _regenerator2.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                return _context2.abrupt('return', _promise2.default.resolve({}));
-
-              case 1:
-              case 'end':
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function RESOLVERS(_x4) {
-        return _ref2.apply(this, arguments);
-      }
-
-      return RESOLVERS;
-    }()
-
-    /**
-     * @see {@link GQLBase#SCHEMA}
-     *
-     * @memberof GQLBase
-     * @method ⬇︎⠀ADJACENT_FILE
-     * @static
-     * @const
-     *
-     * @return {Symbol} the Symbol, when returned from SCHEMA, causes
-     * the logic to load an IDL Schema from an associated file with a .graphql
-     * extension and bearing the same name.
-     */
-
-  }, {
-    key: 'IDLFilePath',
-
-
-    /**
-     * Creates an appropriate Symbol crafted with the right data for use by
-     * the IDLFileHandler class below.
-     *
-     * @static
-     * @memberof GQLBase
-     * @method ⌾⠀IDLFilePath
-     *
-     * @param {string} path a path to the IDL containing file
-     * @param {String} [extension='.graphql'] an extension, including the
-     * prefixed period, that will be added to the supplied path should it not
-     * already exist.
-     * @return Symbol
-     *
-     * @see {@link GQLBase#SCHEMA}
-     */
-    value: function IDLFilePath(path) {
-      var extension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.graphql';
-
-      return (0, _for2.default)('Path ' + path + ' Extension ' + extension);
-    }
-
-    /**
-     * A file handler for fetching the IDL schema string from the file system
-     * for those `GQLBase` extended classes that have indicated to do so by
-     * returning a `Symbol` for their `SCHEMA` property.
-     *
-     * @static
-     * @memberof GQLBase
-     * @method ⬇︎⠀handler
-     *
-     * @return {IDLFileHandler} instance of IDLFileHandler, created if one does
-     * not already exist, for fetching the contents from disk.
-     */
-
-  }, {
-    key: 'SCHEMA',
-    get: function get() {}
-    // define in base class
-
-  }, {
-    key: 'ADJACENT_FILE',
-    get: function get() {
-      return (0, _for2.default)('.graphql file located adjacent to source');
-    }
-  }, {
-    key: 'handler',
-    get: function get() {
-      var key = (0, _for2.default)(IDLFileHandler.name + '.' + this.name);
-
-      if (!this[key]) {
-        this[key] = new IDLFileHandler(this);
-      }
-
-      return this[key];
-    }
-
-    /**
-     * Returns the module object where your class is created. This needs to be
-     * defined on your class, as a static getter, in the FILE where you are
-     * defining your Class definition.
-     *
-     * @static
-     * @memberof GQLBase
-     * @method ⬇︎⠀module
-     * @const
-     *
-     * @return {Object} the reference to the module object defined and injected
-     * by node.js' module loading system.
-     *
-     * @see https://nodejs.org/api/modules.html
-     */
-
-  }, {
-    key: 'module',
-    get: function get() {
-      return GQLBaseModule;
-    }
-  }]);
-  return GQLBase;
-}();
-
-/**
- * The handler, an instance of which is created for every instance of GQLBase.
- * The handler manages the fetching and decoding of files bearing the IDL
- * schema associated with the class represented by this instance of GQLBase.
- *
- * @class IDLFileHandler
- */
-
-
-var IDLFileHandler = exports.IDLFileHandler = function () {
-  /**
-   * The IDLFileHandler checks the SCHEMA value returned by the class type
-   * of the supplied instance. If the resulting value is a Symbol, then the
-   * handler's responsibility is to find the file, load it from disk and
-   * provide various means of using its contents; i.e. as a Buffer, a String
-   * or wrapped in a SyntaxTree instance.
-   *
-   * @memberof IDLFileHandler
-   * @method ⎆⠀constructor
-   * @constructor
-   *
-   * @param {Function} Class a function or class definition that presumably
-   * extends from GQLBase were it an instance.
-   */
-  function IDLFileHandler(Class) {
-    (0, _classCallCheck3.default)(this, IDLFileHandler);
-
-    var symbol = (0, _typeof3.default)(Class.SCHEMA) === 'symbol' && Class.SCHEMA || null;
-    var pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
-
-    if (symbol) {
-      var symbolString = symbol.toString();
-
-      if (symbol === Class.ADJACENT_FILE) {
-        if (Class.module === GQLBaseModule) {
-          throw new Error('\n            The a static getter for \'module\' on ' + Class.name + ' must be present\n            that returns the module object where the Class is defined. Try the\n            following:\n\n            // your ' + Class.name + '.js file\n            import { GQLBase } from \'graphql-lattice\'\n\n            const ' + Class.name + 'Module = module;\n\n            class ' + Class.name + ' extends GQLBase {\n              ...\n\n              static get module() {\n                return ' + Class.name + 'Module;\n              }\n            }\n\n          ');
-        }
-
-        var filename = Class.module.filename;
-        var extension = _path2.default.extname(filename);
-        var dir = _path2.default.dirname(filename);
-        var filefixed = _path2.default.basename(filename, extension);
-        var build = _path2.default.resolve(_path2.default.join(dir, filefixed + '.graphql'));
-
-        this.path = build;
-        this.extension = '.graphql';
-      } else if (pattern.test(symbolString)) {
-        var parsed = pattern.exec(symbolString);
-        var _extension = parsed[2] || '.graphql';
-        var _dir = _path2.default.dirname(parsed[1]);
-        var file = _path2.default.basename(parsed[1], _extension);
-        var _build = _path2.default.resolve(_path2.default.join(_dir, '' + file + _extension));
-
-        this.path = _build;
-        this.extension = _extension;
-
-        console.log('Path ' + this.path + ' Ext ' + this.extension);
-        console.log('Resolved ' + _path2.default.resolve(this.path));
-      }
-    } else {
-      this.path = this.extension = null;
-    }
-  }
-
-  /**
-   * Loads the calculated file determined by the decoding of the meaning of
-   * the Symbol returned by the SCHEMA property of the instance supplied to
-   * the IDLFileHandler upon creation.
-   *
-   * @instance
-   * @memberof IDLFileHandler
-   * @method ⌾⠀getFile
-   *
-   * @return {Buffer|null} returns the Buffer containing the file base IDL
-   * schema or null if none was found or a direct string schema is returned
-   * by the SCHEMA property
-   */
-
-
-  (0, _createClass3.default)(IDLFileHandler, [{
-    key: 'getFile',
-    value: function getFile() {
-      return _fs2.default.readFileSync(this.path);
-    }
-
-    /**
-     * If getFile() returns a Buffer, this is the string representation of the
-     * underlying file contents. As a means of validating the contents of the
-     * file, the string contents are parsed into an AST and back to a string.
-     *
-     * @instance
-     * @memberof IDLFileHandler
-     * @method ⌾⠀getSchema
-     *
-     * @return {string|null} the string contents of the Buffer containing the
-     * file based IDL schema.
-     */
-
-  }, {
-    key: 'getSchema',
-    value: function getSchema() {
-      if (!this.path) {
-        return null;
-      }
-
-      var tree = this.getSyntaxTree();
-
-      return tree.toString();
-    }
-
-    /**
-     * If getFile() returns a Buffer, the string contents are passed to a new
-     * instance of SyntaxTree which parses this into an AST for manipulation.
-     *
-     * @instance
-     * @memberof IDLFileHandler
-     * @method ⌾⠀getSyntaxTree
-     *
-     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
-     * schema contents loaded from disk. Null is returned if a calculated path
-     * cannot be found; always occurs when SCHEMA returns a string.
-     */
-
-  }, {
-    key: 'getSyntaxTree',
-    value: function getSyntaxTree() {
-      var buffer = this.getFile();
-      var tree = new _SyntaxTree.SyntaxTree(buffer.toString());
-
-      return tree;
-    }
-  }]);
-  return IDLFileHandler;
-}();
-
-exports.default = GQLBase;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(77)(module)))
-
-/***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
@@ -1537,13 +1541,13 @@ module.exports = function(it){
 
 "use strict";
 
-var LIBRARY        = __webpack_require__(19)
+var LIBRARY        = __webpack_require__(21)
   , $export        = __webpack_require__(4)
   , redefine       = __webpack_require__(57)
   , hide           = __webpack_require__(7)
   , has            = __webpack_require__(9)
   , Iterators      = __webpack_require__(13)
-  , $iterCreate    = __webpack_require__(81)
+  , $iterCreate    = __webpack_require__(83)
   , setToStringTag = __webpack_require__(16)
   , getPrototypeOf = __webpack_require__(61)
   , ITERATOR       = __webpack_require__(1)('iterator')
@@ -1718,7 +1722,7 @@ module.exports = function(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(41)('keys')
-  , uid    = __webpack_require__(21);
+  , uid    = __webpack_require__(23);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
@@ -1748,7 +1752,7 @@ module.exports = (
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(18);
+var defined = __webpack_require__(20);
 module.exports = function(it){
   return Object(defined(it));
 };
@@ -1757,7 +1761,7 @@ module.exports = function(it){
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META     = __webpack_require__(21)('meta')
+var META     = __webpack_require__(23)('meta')
   , isObject = __webpack_require__(8)
   , has      = __webpack_require__(9)
   , setDesc  = __webpack_require__(5).f
@@ -1817,8 +1821,8 @@ var meta = module.exports = {
 
 var global         = __webpack_require__(2)
   , core           = __webpack_require__(0)
-  , LIBRARY        = __webpack_require__(19)
-  , wksExt         = __webpack_require__(23)
+  , LIBRARY        = __webpack_require__(21)
+  , wksExt         = __webpack_require__(25)
   , defineProperty = __webpack_require__(5).f;
 module.exports = function(name){
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -1835,17 +1839,11 @@ exports.f = Object.getOwnPropertySymbols;
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(93);
+module.exports = __webpack_require__(95);
 
 
 /***/ }),
 /* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(95), __esModule: true };
-
-/***/ }),
-/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
@@ -1873,7 +1871,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports) {
 
 module.exports = function(it, Constructor, name, forbiddenField){
@@ -1883,7 +1881,7 @@ module.exports = function(it, Constructor, name, forbiddenField){
 };
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var hide = __webpack_require__(7);
@@ -1895,13 +1893,13 @@ module.exports = function(target, src, safe){
 };
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(103), __esModule: true };
+module.exports = { "default": __webpack_require__(105), __esModule: true };
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1912,7 +1910,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SyntaxTree = undefined;
 
-var _escape = __webpack_require__(120);
+var _escape = __webpack_require__(122);
 
 var _escape2 = _interopRequireDefault(_escape);
 
@@ -1924,37 +1922,37 @@ var _iterator2 = __webpack_require__(55);
 
 var _iterator3 = _interopRequireDefault(_iterator2);
 
-var _getIterator2 = __webpack_require__(54);
+var _getIterator2 = __webpack_require__(53);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _set = __webpack_require__(73);
+var _set = __webpack_require__(74);
 
 var _set2 = _interopRequireDefault(_set);
 
-var _assign = __webpack_require__(74);
+var _assign = __webpack_require__(75);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _toStringTag = __webpack_require__(129);
+var _toStringTag = __webpack_require__(131);
 
 var _toStringTag2 = _interopRequireDefault(_toStringTag);
 
-var _classCallCheck2 = __webpack_require__(27);
+var _classCallCheck2 = __webpack_require__(29);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(28);
+var _createClass2 = __webpack_require__(30);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _for = __webpack_require__(29);
+var _for = __webpack_require__(17);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _types = __webpack_require__(30);
+var _types = __webpack_require__(31);
 
-var _graphql = __webpack_require__(75);
+var _graphql = __webpack_require__(76);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2616,16 +2614,22 @@ exports.default = SyntaxTree;
 // require('./bootstrap'); let typeOf = require('./lib/utils').typeOf, GQL=require('graphql'), ST = require('./lib/GraphQL/SyntaxTree').SyntaxTree, schema = `input MessageInput { content: String author: String } type Message { id: ID! content: String author: String } type Query { getMessage(id: ID!): Message } type Mutation { createMessage(input: MessageInput): Message updateMessage(id: ID!, input: MessageInput): Message }`, ast = GQL.parse(schema), st = ST.fromSchema(schema), query = ST.EmptyQuery(), mutation = ST.EmptyMutation()
 
 /***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(126), __esModule: true };
+
+/***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(124), __esModule: true };
+module.exports = { "default": __webpack_require__(136), __esModule: true };
 
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(79), __esModule: true };
+module.exports = { "default": __webpack_require__(81), __esModule: true };
 
 /***/ }),
 /* 56 */
@@ -2665,7 +2669,7 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 
 var has          = __webpack_require__(9)
   , toIObject    = __webpack_require__(10)
-  , arrayIndexOf = __webpack_require__(82)(false)
+  , arrayIndexOf = __webpack_require__(84)(false)
   , IE_PROTO     = __webpack_require__(40)('IE_PROTO');
 
 module.exports = function(object, names){
@@ -2717,7 +2721,7 @@ module.exports = function(done, value){
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(86), __esModule: true };
+module.exports = { "default": __webpack_require__(88), __esModule: true };
 
 /***/ }),
 /* 64 */
@@ -2735,20 +2739,20 @@ var global         = __webpack_require__(2)
   , $fails         = __webpack_require__(12)
   , shared         = __webpack_require__(41)
   , setToStringTag = __webpack_require__(16)
-  , uid            = __webpack_require__(21)
+  , uid            = __webpack_require__(23)
   , wks            = __webpack_require__(1)
-  , wksExt         = __webpack_require__(23)
+  , wksExt         = __webpack_require__(25)
   , wksDefine      = __webpack_require__(45)
-  , keyOf          = __webpack_require__(87)
-  , enumKeys       = __webpack_require__(88)
+  , keyOf          = __webpack_require__(89)
+  , enumKeys       = __webpack_require__(90)
   , isArray        = __webpack_require__(65)
   , anObject       = __webpack_require__(6)
   , toIObject      = __webpack_require__(10)
   , toPrimitive    = __webpack_require__(36)
-  , createDesc     = __webpack_require__(20)
+  , createDesc     = __webpack_require__(22)
   , _create        = __webpack_require__(37)
-  , gOPNExt        = __webpack_require__(89)
-  , $GOPD          = __webpack_require__(90)
+  , gOPNExt        = __webpack_require__(91)
+  , $GOPD          = __webpack_require__(92)
   , $DP            = __webpack_require__(5)
   , $keys          = __webpack_require__(14)
   , gOPD           = $GOPD.f
@@ -2874,10 +2878,10 @@ if(!USE_NATIVE){
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f   = $defineProperty;
   __webpack_require__(66).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(24).f  = $propertyIsEnumerable;
+  __webpack_require__(26).f  = $propertyIsEnumerable;
   __webpack_require__(46).f = $getOwnPropertySymbols;
 
-  if(DESCRIPTORS && !__webpack_require__(19)){
+  if(DESCRIPTORS && !__webpack_require__(21)){
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -2986,7 +2990,57 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof   = __webpack_require__(49)
+"use strict";
+
+
+exports.__esModule = true;
+
+var _promise = __webpack_require__(68);
+
+var _promise2 = _interopRequireDefault(_promise);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new _promise2.default(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+
+        if (info.done) {
+          resolve(value);
+        } else {
+          return _promise2.default.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+
+      return step("next");
+    });
+  };
+};
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(97), __esModule: true };
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var classof   = __webpack_require__(48)
   , ITERATOR  = __webpack_require__(1)('iterator')
   , Iterators = __webpack_require__(13);
 module.exports = __webpack_require__(0).getIteratorMethod = function(it){
@@ -2996,11 +3050,11 @@ module.exports = __webpack_require__(0).getIteratorMethod = function(it){
 };
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx                = __webpack_require__(11)
-  , invoke             = __webpack_require__(100)
+  , invoke             = __webpack_require__(102)
   , html               = __webpack_require__(60)
   , cel                = __webpack_require__(35)
   , global             = __webpack_require__(2)
@@ -3076,7 +3130,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3096,57 +3150,13 @@ module.exports = function(KEY){
 };
 
 /***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _promise = __webpack_require__(48);
-
-var _promise2 = _interopRequireDefault(_promise);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (fn) {
-  return function () {
-    var gen = fn.apply(this, arguments);
-    return new _promise2.default(function (resolve, reject) {
-      function step(key, arg) {
-        try {
-          var info = gen[key](arg);
-          var value = info.value;
-        } catch (error) {
-          reject(error);
-          return;
-        }
-
-        if (info.done) {
-          resolve(value);
-        } else {
-          return _promise2.default.resolve(value).then(function (value) {
-            step("next", value);
-          }, function (err) {
-            step("throw", err);
-          });
-        }
-      }
-
-      return step("next");
-    });
-  };
-};
-
-/***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3157,15 +3167,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Deferred = undefined;
 
-var _promise = __webpack_require__(48);
+var _promise = __webpack_require__(68);
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _classCallCheck2 = __webpack_require__(27);
+var _classCallCheck2 = __webpack_require__(29);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(28);
+var _createClass2 = __webpack_require__(30);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
@@ -3245,25 +3255,55 @@ var Deferred = exports.Deferred = function () {
 }();
 
 /***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(107), __esModule: true };
-
-/***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(126), __esModule: true };
+module.exports = { "default": __webpack_require__(109), __esModule: true };
 
 /***/ }),
 /* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(128), __esModule: true };
+
+/***/ }),
+/* 76 */
 /***/ (function(module, exports) {
 
 module.exports = require("graphql");
 
 /***/ }),
-/* 76 */
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(51);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (obj, key, value) {
+  if (key in obj) {
+    (0, _defineProperty2.default)(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+/***/ }),
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3272,21 +3312,25 @@ module.exports = require("graphql");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Properties = exports.Setters = exports.Getters = exports.AdjacentSchema = exports.typeOf = exports.types = exports.Deferred = exports.SyntaxTree = exports.GQLExpressMiddleware = exports.GQLBase = undefined;
+exports.FileSchema = exports.Schema = exports.Properties = exports.Setters = exports.Getters = exports.AdjacentSchema = exports.typeOf = exports.types = exports.Deferred = exports.SyntaxTree = exports.GQLExpressMiddleware = exports.GQLBase = undefined;
 
-var _GQLBase = __webpack_require__(31);
+var _GQLBase = __webpack_require__(18);
 
-var _GQLExpressMiddleware = __webpack_require__(131);
+var _GQLExpressMiddleware = __webpack_require__(133);
 
-var _SyntaxTree = __webpack_require__(53);
+var _SyntaxTree = __webpack_require__(52);
 
-var _utils = __webpack_require__(72);
+var _utils = __webpack_require__(73);
 
-var _AdjacentSchema = __webpack_require__(133);
+var _AdjacentSchema = __webpack_require__(135);
 
 var _ModelProperties = __webpack_require__(138);
 
-var _types = __webpack_require__(30);
+var _Schema = __webpack_require__(139);
+
+var _FileSchema = __webpack_require__(140);
+
+var _types = __webpack_require__(31);
 
 var types = _interopRequireWildcard(_types);
 
@@ -3305,6 +3349,8 @@ var defaultPackage = {
   Getters: _ModelProperties.Getters,
   Setters: _ModelProperties.Setters,
   Properties: _ModelProperties.Properties,
+  Schema: _Schema.Schema,
+  FileSchema: _FileSchema.FileSchema,
   typeOf: typeOf,
   types: types
 };
@@ -3320,10 +3366,12 @@ exports.AdjacentSchema = _AdjacentSchema.AdjacentSchema;
 exports.Getters = _ModelProperties.Getters;
 exports.Setters = _ModelProperties.Setters;
 exports.Properties = _ModelProperties.Properties;
+exports.Schema = _Schema.Schema;
+exports.FileSchema = _FileSchema.FileSchema;
 exports.default = defaultPackage;
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -3351,7 +3399,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3378,19 +3426,19 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(17);
-__webpack_require__(22);
-module.exports = __webpack_require__(23).f('iterator');
+__webpack_require__(19);
+__webpack_require__(24);
+module.exports = __webpack_require__(25).f('iterator');
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(32)
-  , defined   = __webpack_require__(18);
+  , defined   = __webpack_require__(20);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -3408,13 +3456,13 @@ module.exports = function(TO_STRING){
 };
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var create         = __webpack_require__(37)
-  , descriptor     = __webpack_require__(20)
+  , descriptor     = __webpack_require__(22)
   , setToStringTag = __webpack_require__(16)
   , IteratorPrototype = {};
 
@@ -3427,14 +3475,14 @@ module.exports = function(Constructor, NAME, next){
 };
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = __webpack_require__(10)
   , toLength  = __webpack_require__(39)
-  , toIndex   = __webpack_require__(83);
+  , toIndex   = __webpack_require__(85);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -3453,7 +3501,7 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(32)
@@ -3465,12 +3513,12 @@ module.exports = function(index, length){
 };
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(85)
+var addToUnscopables = __webpack_require__(87)
   , step             = __webpack_require__(62)
   , Iterators        = __webpack_require__(13)
   , toIObject        = __webpack_require__(10);
@@ -3505,23 +3553,23 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports) {
 
 module.exports = function(){ /* empty */ };
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(64);
-__webpack_require__(25);
-__webpack_require__(91);
-__webpack_require__(92);
+__webpack_require__(27);
+__webpack_require__(93);
+__webpack_require__(94);
 module.exports = __webpack_require__(0).Symbol;
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getKeys   = __webpack_require__(14)
@@ -3536,13 +3584,13 @@ module.exports = function(object, el){
 };
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(14)
   , gOPS    = __webpack_require__(46)
-  , pIE     = __webpack_require__(24);
+  , pIE     = __webpack_require__(26);
 module.exports = function(it){
   var result     = getKeys(it)
     , getSymbols = gOPS.f;
@@ -3556,7 +3604,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
@@ -3581,11 +3629,11 @@ module.exports.f = function getOwnPropertyNames(it){
 
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE            = __webpack_require__(24)
-  , createDesc     = __webpack_require__(20)
+var pIE            = __webpack_require__(26)
+  , createDesc     = __webpack_require__(22)
   , toIObject      = __webpack_require__(10)
   , toPrimitive    = __webpack_require__(36)
   , has            = __webpack_require__(9)
@@ -3602,19 +3650,19 @@ exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O,
 };
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(45)('asyncIterator');
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(45)('observable');
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // This method of obtaining a reference to the global object needs to be
@@ -3635,7 +3683,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(94);
+module.exports = __webpack_require__(96);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -3651,7 +3699,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports) {
 
 /**
@@ -4393,33 +4441,33 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(25);
-__webpack_require__(17);
-__webpack_require__(22);
-__webpack_require__(96);
+__webpack_require__(27);
+__webpack_require__(19);
+__webpack_require__(24);
+__webpack_require__(98);
 module.exports = __webpack_require__(0).Promise;
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY            = __webpack_require__(19)
+var LIBRARY            = __webpack_require__(21)
   , global             = __webpack_require__(2)
   , ctx                = __webpack_require__(11)
-  , classof            = __webpack_require__(49)
+  , classof            = __webpack_require__(48)
   , $export            = __webpack_require__(4)
   , isObject           = __webpack_require__(8)
   , aFunction          = __webpack_require__(34)
-  , anInstance         = __webpack_require__(50)
-  , forOf              = __webpack_require__(26)
-  , speciesConstructor = __webpack_require__(99)
-  , task               = __webpack_require__(68).set
-  , microtask          = __webpack_require__(101)()
+  , anInstance         = __webpack_require__(49)
+  , forOf              = __webpack_require__(28)
+  , speciesConstructor = __webpack_require__(101)
+  , task               = __webpack_require__(70).set
+  , microtask          = __webpack_require__(103)()
   , PROMISE            = 'Promise'
   , TypeError          = global.TypeError
   , process            = global.process
@@ -4611,7 +4659,7 @@ if(!USE_NATIVE){
     this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
     this._n = false;          // <- notify
   };
-  Internal.prototype = __webpack_require__(51)($Promise.prototype, {
+  Internal.prototype = __webpack_require__(50)($Promise.prototype, {
     // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
     then: function then(onFulfilled, onRejected){
       var reaction    = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -4638,7 +4686,7 @@ if(!USE_NATIVE){
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
 __webpack_require__(16)($Promise, PROMISE);
-__webpack_require__(69)(PROMISE);
+__webpack_require__(71)(PROMISE);
 Wrapper = __webpack_require__(0)[PROMISE];
 
 // statics
@@ -4662,7 +4710,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return capability.promise;
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(102)(function(iter){
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(104)(function(iter){
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -4708,7 +4756,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(102)(functio
 });
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -4725,7 +4773,7 @@ module.exports = function(iterator, fn, value, entries){
 };
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -4738,7 +4786,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
@@ -4751,7 +4799,7 @@ module.exports = function(O, D){
 };
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, exports) {
 
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -4772,11 +4820,11 @@ module.exports = function(fn, args, that){
 };
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global    = __webpack_require__(2)
-  , macrotask = __webpack_require__(68).set
+  , macrotask = __webpack_require__(70).set
   , Observer  = global.MutationObserver || global.WebKitMutationObserver
   , process   = global.process
   , Promise   = global.Promise
@@ -4845,7 +4893,7 @@ module.exports = function(){
 };
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ITERATOR     = __webpack_require__(1)('iterator')
@@ -4871,17 +4919,17 @@ module.exports = function(exec, skipClosing){
 };
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(104);
+__webpack_require__(106);
 var $Object = __webpack_require__(0).Object;
 module.exports = function defineProperty(it, key, desc){
   return $Object.defineProperty(it, key, desc);
 };
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(4);
@@ -4889,39 +4937,39 @@ var $export = __webpack_require__(4);
 $export($export.S + $export.F * !__webpack_require__(3), 'Object', {defineProperty: __webpack_require__(5).f});
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(64);
 module.exports = __webpack_require__(0).Symbol['for'];
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 107 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(25);
-__webpack_require__(17);
-__webpack_require__(22);
-__webpack_require__(108);
-__webpack_require__(114);
+__webpack_require__(27);
+__webpack_require__(19);
+__webpack_require__(24);
+__webpack_require__(110);
+__webpack_require__(116);
 module.exports = __webpack_require__(0).Set;
 
 /***/ }),
-/* 108 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strong = __webpack_require__(109);
+var strong = __webpack_require__(111);
 
 // 23.2 Set Objects
-module.exports = __webpack_require__(110)('Set', function(get){
+module.exports = __webpack_require__(112)('Set', function(get){
   return function Set(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.2.3.1 Set.prototype.add(value)
@@ -4931,21 +4979,21 @@ module.exports = __webpack_require__(110)('Set', function(get){
 }, strong);
 
 /***/ }),
-/* 109 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var dP          = __webpack_require__(5).f
   , create      = __webpack_require__(37)
-  , redefineAll = __webpack_require__(51)
+  , redefineAll = __webpack_require__(50)
   , ctx         = __webpack_require__(11)
-  , anInstance  = __webpack_require__(50)
-  , defined     = __webpack_require__(18)
-  , forOf       = __webpack_require__(26)
+  , anInstance  = __webpack_require__(49)
+  , defined     = __webpack_require__(20)
+  , forOf       = __webpack_require__(28)
   , $iterDefine = __webpack_require__(33)
   , step        = __webpack_require__(62)
-  , setSpecies  = __webpack_require__(69)
+  , setSpecies  = __webpack_require__(71)
   , DESCRIPTORS = __webpack_require__(3)
   , fastKey     = __webpack_require__(44).fastKey
   , SIZE        = DESCRIPTORS ? '_s' : 'size';
@@ -5079,7 +5127,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5089,13 +5137,13 @@ var global         = __webpack_require__(2)
   , meta           = __webpack_require__(44)
   , fails          = __webpack_require__(12)
   , hide           = __webpack_require__(7)
-  , redefineAll    = __webpack_require__(51)
-  , forOf          = __webpack_require__(26)
-  , anInstance     = __webpack_require__(50)
+  , redefineAll    = __webpack_require__(50)
+  , forOf          = __webpack_require__(28)
+  , anInstance     = __webpack_require__(49)
   , isObject       = __webpack_require__(8)
   , setToStringTag = __webpack_require__(16)
   , dP             = __webpack_require__(5).f
-  , each           = __webpack_require__(111)(0)
+  , each           = __webpack_require__(113)(0)
   , DESCRIPTORS    = __webpack_require__(3);
 
 module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
@@ -5144,7 +5192,7 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 };
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 0 -> Array#forEach
@@ -5158,7 +5206,7 @@ var ctx      = __webpack_require__(11)
   , IObject  = __webpack_require__(38)
   , toObject = __webpack_require__(43)
   , toLength = __webpack_require__(39)
-  , asc      = __webpack_require__(112);
+  , asc      = __webpack_require__(114);
 module.exports = function(TYPE, $create){
   var IS_MAP        = TYPE == 1
     , IS_FILTER     = TYPE == 2
@@ -5193,18 +5241,18 @@ module.exports = function(TYPE, $create){
 };
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(113);
+var speciesConstructor = __webpack_require__(115);
 
 module.exports = function(original, length){
   return new (speciesConstructor(original))(length);
 };
 
 /***/ }),
-/* 113 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(8)
@@ -5225,21 +5273,21 @@ module.exports = function(original){
 };
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export  = __webpack_require__(4);
 
-$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(115)('Set')});
+$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(117)('Set')});
 
 /***/ }),
-/* 115 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-var classof = __webpack_require__(49)
-  , from    = __webpack_require__(116);
+var classof = __webpack_require__(48)
+  , from    = __webpack_require__(118);
 module.exports = function(NAME){
   return function toJSON(){
     if(classof(this) != NAME)throw TypeError(NAME + "#toJSON isn't generic");
@@ -5248,10 +5296,10 @@ module.exports = function(NAME){
 };
 
 /***/ }),
-/* 116 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var forOf = __webpack_require__(26);
+var forOf = __webpack_require__(28);
 
 module.exports = function(iter, ITERATOR){
   var result = [];
@@ -5261,20 +5309,20 @@ module.exports = function(iter, ITERATOR){
 
 
 /***/ }),
-/* 117 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(118), __esModule: true };
+module.exports = { "default": __webpack_require__(120), __esModule: true };
 
 /***/ }),
-/* 118 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(119);
+__webpack_require__(121);
 module.exports = __webpack_require__(0).Reflect.getPrototypeOf;
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.8 Reflect.getPrototypeOf(target)
@@ -5289,31 +5337,31 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(121), __esModule: true };
+module.exports = { "default": __webpack_require__(123), __esModule: true };
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(122);
+__webpack_require__(124);
 module.exports = __webpack_require__(0).RegExp.escape;
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/benjamingr/RexExp.escape
 var $export = __webpack_require__(4)
-  , $re     = __webpack_require__(123)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+  , $re     = __webpack_require__(125)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
 $export($export.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, exports) {
 
 module.exports = function(regExp, replace){
@@ -5326,19 +5374,19 @@ module.exports = function(regExp, replace){
 };
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(22);
-__webpack_require__(17);
-module.exports = __webpack_require__(125);
+__webpack_require__(24);
+__webpack_require__(19);
+module.exports = __webpack_require__(127);
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(6)
-  , get      = __webpack_require__(67);
+  , get      = __webpack_require__(69);
 module.exports = __webpack_require__(0).getIterator = function(it){
   var iterFn = get(it);
   if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
@@ -5346,23 +5394,23 @@ module.exports = __webpack_require__(0).getIterator = function(it){
 };
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(127);
+__webpack_require__(129);
 module.exports = __webpack_require__(0).Object.assign;
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.1 Object.assign(target, source)
 var $export = __webpack_require__(4);
 
-$export($export.S + $export.F, 'Object', {assign: __webpack_require__(128)});
+$export($export.S + $export.F, 'Object', {assign: __webpack_require__(130)});
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5370,7 +5418,7 @@ $export($export.S + $export.F, 'Object', {assign: __webpack_require__(128)});
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys  = __webpack_require__(14)
   , gOPS     = __webpack_require__(46)
-  , pIE      = __webpack_require__(24)
+  , pIE      = __webpack_require__(26)
   , toObject = __webpack_require__(43)
   , IObject  = __webpack_require__(38)
   , $assign  = Object.assign;
@@ -5401,20 +5449,20 @@ module.exports = !$assign || __webpack_require__(12)(function(){
 } : $assign;
 
 /***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(130), __esModule: true };
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(25);
-module.exports = __webpack_require__(23).f('toStringTag');
-
-/***/ }),
 /* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(132), __esModule: true };
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(27);
+module.exports = __webpack_require__(25).f('toStringTag');
+
+/***/ }),
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5429,39 +5477,39 @@ var _regenerator = __webpack_require__(47);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _assign = __webpack_require__(74);
+var _assign = __webpack_require__(75);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _getIterator2 = __webpack_require__(54);
+var _getIterator2 = __webpack_require__(53);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _asyncToGenerator2 = __webpack_require__(70);
+var _asyncToGenerator2 = __webpack_require__(67);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _classCallCheck2 = __webpack_require__(27);
+var _classCallCheck2 = __webpack_require__(29);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(28);
+var _createClass2 = __webpack_require__(30);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _SyntaxTree = __webpack_require__(53);
+var _SyntaxTree = __webpack_require__(52);
 
-var _expressGraphql = __webpack_require__(132);
+var _expressGraphql = __webpack_require__(134);
 
 var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
 
-var _graphql = __webpack_require__(75);
+var _graphql = __webpack_require__(76);
 
-var _GQLBase = __webpack_require__(31);
+var _GQLBase = __webpack_require__(18);
 
-var _types = __webpack_require__(30);
+var _types = __webpack_require__(31);
 
-var _path = __webpack_require__(71);
+var _path = __webpack_require__(72);
 
 var _path2 = _interopRequireDefault(_path);
 
@@ -5790,13 +5838,13 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
 exports.default = GQLExpressMiddleware;
 
 /***/ }),
-/* 132 */
+/* 134 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-graphql");
 
 /***/ }),
-/* 133 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5807,21 +5855,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AdjacentSchema = undefined;
 
-var _defineProperty2 = __webpack_require__(134);
+var _defineProperty2 = __webpack_require__(77);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _for = __webpack_require__(29);
+var _for = __webpack_require__(17);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _defineProperties = __webpack_require__(135);
+var _defineProperties = __webpack_require__(54);
 
 var _defineProperties2 = _interopRequireDefault(_defineProperties);
 
 exports.default = AdjacentSchema;
 
-var _GQLBase = __webpack_require__(31);
+var _GQLBase = __webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5834,7 +5882,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * can determine whether or not the decorator was used.
  *
  * @function AdjacentSchema
- * @memberof AdjacentSchema
+ * @memberof! decorators
+ * @since 2.1.0
  *
  * @param {mixed} object the object on which to apply the decorator
  * @param {String} property the name of the object or property to
@@ -5844,6 +5893,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 function AdjacentSchema(classModule) {
   return function (target) {
+    // Attempt to remove the SCHEMA and module properties or functions from 
+    // the class being decorated. This is not guaranteed to work but should 
+    // increase compatibilty and success rates.
     delete target.SCHEMA;
     delete target.module;
 
@@ -5866,46 +5918,10 @@ function AdjacentSchema(classModule) {
       }
     }));
   };
-} /** @module AdjacentSchema */
+} /** @namespace decorators */
 
 
 exports.AdjacentSchema = AdjacentSchema;
-
-/***/ }),
-/* 134 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(52);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (obj, key, value) {
-  if (key in obj) {
-    (0, _defineProperty2.default)(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-
-/***/ }),
-/* 135 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(136), __esModule: true };
 
 /***/ }),
 /* 136 */
@@ -5936,11 +5952,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty = __webpack_require__(52);
+var _defineProperty = __webpack_require__(51);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
-var _getIterator2 = __webpack_require__(54);
+var _getIterator2 = __webpack_require__(53);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
@@ -5950,7 +5966,7 @@ exports.Properties = Properties;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** @module ModelProperties */
+/** @namespace decorators */
 
 
 /**
@@ -5961,7 +5977,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * properties for which getters should be injected.
  *
  * @function Getters
- * @memberof ModelProperties
+ * @memberof! decorators
  *
  * @param {Array<String>} propertyNames if the model has 'name' and
  * 'age' as properties, then passing those two strings will result
@@ -6019,7 +6035,7 @@ function Getters() {
  * properties for which setters should be injected.
  *
  * @function Setters
- * @memberof ModelProperties
+ * @memberof! decorators
  *
  * @param {Array<String>} propertyNames if the model has 'name' and
  * 'age' as properties, then passing those two strings will result
@@ -6079,7 +6095,8 @@ function Setters() {
  * This method creates both getters and setters
  *
  * @function Properties
- * @memberof ModelProperties
+ * @memberof! decorators
+ * @since 2.1.0
  *
  * @param {Array<String>} propertyNames if the model has 'name' and
  * 'age' as properties, then passing those two strings will result
@@ -6133,6 +6150,143 @@ function Properties() {
 }
 
 exports.default = Properties;
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _defineProperties = __webpack_require__(54);
+
+var _defineProperties2 = _interopRequireDefault(_defineProperties);
+
+exports.Schema = Schema;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** @namespace decorators */
+
+
+/**
+ * This decorator allows you to specify the SCHEMA getter and associated 
+ * string as a parameter to the decorator itself. So, for example:
+ * 
+ * <code>
+ * @Schema(`
+ *   type Item {
+ *     name: String 
+ *     cost: String 
+ *   }
+ * `)
+ * export class Item extends GQLBase {
+ *   // ...
+ * }
+ * </code>
+ * 
+ * @function Schema
+ * @memberof! decorators
+ * @since 2.2.0
+ * 
+ * @param {String} schemaString a GraphQL IDL compliant string for defining a 
+ * GraphQL Object Schema.
+ */
+function Schema(schemaString) {
+  return function (target) {
+    (0, _defineProperties2.default)(target, {
+      SCHEMA: {
+        get: function get() {
+          return schemaString;
+        }
+      }
+    });
+  };
+}
+
+exports.default = Schema;
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.FileSchema = undefined;
+
+var _defineProperty2 = __webpack_require__(77);
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _for = __webpack_require__(17);
+
+var _for2 = _interopRequireDefault(_for);
+
+var _defineProperties = __webpack_require__(54);
+
+var _defineProperties2 = _interopRequireDefault(_defineProperties);
+
+exports.default = FileSchema;
+
+var _GQLBase = __webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * A decorator that does three things. First it defines the
+ * module() static method that is required when using adjacent
+ * schema files. Secondly, it defines a SCHEMA getter that
+ * returns `GQLBase.ADJACENT_FILE`. Finally it sets a static
+ * getter with the `Symbol`, `@adjacentSchema` so that other
+ * can determine whether or not the decorator was used.
+ *
+ * @function FileSchema
+ * @memberof! decorators
+ * @since 2.3.0
+ *
+ * @param {String} path a relative or absolute path to the file containing 
+ * your GraphQL IDL schema portion for your object type.
+ * @param {String} extension the extension of the graphql schema file pointed 
+ * to in the previous parameter. By default these are `".graphql"` but should 
+ * your path point to a file with a different extension, you should specify 
+ * that extension here.
+ * @return {mixed} as per all class decorators, `FileSchema` returns the 
+ * class object being modified
+ */
+function FileSchema(path) {
+  var extension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ".graphql";
+
+  return function (target) {
+    // Attempt to remove the SCHEMA property or function from the class 
+    // being decorated. This is not guaranteed to work but should increase 
+    // compatibilty and success rates.
+    delete target.SCHEMA;
+
+    return (0, _defineProperties2.default)(target, (0, _defineProperty3.default)({
+      SCHEMA: {
+        get: function get() {
+          return _GQLBase.GQLBase.IDLFilePath(path, extension);
+        }
+      }
+
+    }, (0, _for2.default)('@fileSchema'), {
+      get: function get() {
+        return true;
+      }
+    }));
+  };
+} /** @namespace decorators */
+
+
+exports.FileSchema = FileSchema;
 
 /***/ })
 /******/ ])));

@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Home</title>
+  <title>decorators/FileSchema.js</title>
 
 
 
@@ -47,44 +47,71 @@
 
     <div id="main">
         
+        <h1 class="page-title">decorators/FileSchema.js</h1>
+        
 
         
 
 
 
     
+    <section>
+        <article>
+            <pre class="source linenums"><code class="hljs js">/** @namespace decorators */
+// @flow
 
+import { GQLBase } from '../GQLBase'
 
+/**
+ * A decorator that does three things. First it defines the
+ * module() static method that is required when using adjacent
+ * schema files. Secondly, it defines a SCHEMA getter that
+ * returns `GQLBase.ADJACENT_FILE`. Finally it sets a static
+ * getter with the `Symbol`, `@adjacentSchema` so that other
+ * can determine whether or not the decorator was used.
+ *
+ * @function FileSchema
+ * @memberof! decorators
+ * @since 2.3.0
+ *
+ * @param {String} path a relative or absolute path to the file containing 
+ * your GraphQL IDL schema portion for your object type.
+ * @param {String} extension the extension of the graphql schema file pointed 
+ * to in the previous parameter. By default these are `".graphql"` but should 
+ * your path point to a file with a different extension, you should specify 
+ * that extension here.
+ * @return {mixed} as per all class decorators, `FileSchema` returns the 
+ * class object being modified
+ */
+export default function FileSchema(
+  path: String, 
+  extension: String = ".graphql"
+): mixed {
+  return function(target: mixed): mixed {
+    // Attempt to remove the SCHEMA property or function from the class 
+    // being decorated. This is not guaranteed to work but should increase 
+    // compatibilty and success rates.
+    delete target.SCHEMA;
 
+    return Object.defineProperties(target, {
+      SCHEMA: {
+        get: () => GQLBase.IDLFilePath(path, extension)
+      },
 
+      [Symbol.for('@fileSchema')]: {
+        get: () => true
+      }
+    });
+  }
+}
 
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>graphql-lattice (<a href="https://www.graphql-lattice.com">www.graphql-lattice.com</a>)</h1><p><img src="http://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png" alt="GraphQL Logo"></p>
-<h2>About</h2><p>Lattice for GraphQL is a lightweight implementation pattern/framework that is meant to provide a basis for your applications to fetch exactly the data that your needs demand; be they web, native mobile or desktop applications.</p>
-<p>This is especially true for projects where your GraphQL object type definitions are better designed and served by not being muddled down on how to programmatically merge each type and its query and mutation types into a single GraphQL IDL document someplace.</p>
-<p>Through the use of GraphQL's provided abstract syntax tree, or AST, toolkit, your object types can be automatically read from disk on server startup. Each type and their associated IDL definitions are calculated and merged for you. This results in a dynamically generated schema string that can be consumed easily by <code>express-graphql</code> or other similar libraries.</p>
-<h3><em>State of Things</em></h3><h4>Current Limitations</h4><ul>
-<li>Currently only tested for use with Express 4.x, express-graphql and graphql-js. </li>
-</ul>
-<h4>TODO List</h4><ul>
-<li>[ ] <code>GQLExpressMiddleware</code> to be modified to take a directory containing your projects object type definition sources. These should all descend from <code>GQLBase</code> directly. This is in lieu of currently taking references to each class you want to have included manually. <em>This should be an optional alternative</em>.</li>
-<li>[ ] Safely merge more than <code>ObjectTypeDefinition</code> AST types. Currently as these exist outside of the default implementation, they have not been fully explored by me.</li>
-</ul>
-<h2>What is GraphQL?</h2><p>Facebook's site on GraphQL states that GraphQL is, &quot;A query language for your API.&quot; It goes on to say</p>
-<blockquote>
-<p>GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.</p>
-</blockquote>
-<p>Facebook provides an excellent source of information on learning GraphQL and interfacing it with various server side language implementations that you might be using. To learn more about this, head over to <a href="https://www.graphql.org">their site</a>.</p>
-<h2>Examples</h2><p><strong><em>Coming Soon</em></strong></p></article>
+export { FileSchema };
+</code></pre>
+        </article>
     </section>
-
+    <script type="text/javascript">
+      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
+    </script>
 
 
 
