@@ -24,16 +24,22 @@ describe('@Getters', () => {
   @Getters('test', 'fun')
   class Sample extends GQLBase { }
   
-  const test = 'with jest'
-  const fun = 'always'
+  @Getters(['name', 'firstName'], 'job')
+  class Employee extends GQLBase { }
   
-  let instance = new Sample({test, fun})
+  const test = 'with jest'
+  const fun = 'always'  
+  const firstName = 'Jane'
+  const job = 'Engineer'  
+  const instance = new Sample({test, fun})
+  const employee = new Employee({firstName, job})
   
   it('should have a getter for "test"', () => {
     expect(instance.test).toEqual(test)
     expect(() => {
       instance.test = 'Something else'
     }).toThrow();    
+    expect(instance.test).toEqual(test)
   })
 
   it('should have a getter for "fun"', () => {
@@ -41,17 +47,28 @@ describe('@Getters', () => {
     expect(() => {
       instance.fun = 'Something else'
     }).toThrow();    
+    expect(instance.fun).toEqual(fun)
+  })
+  
+  it('should allow for remapping between type fields and model fields', () => {
+    expect(employee.name).toEqual(firstName)
+    expect(employee.job).toEqual(job);
   })
 })
 
 describe('@Setters', () => {
   @Setters('test', 'fun')
   class Sample extends GQLBase { }
+
+  @Setters(['name', 'firstName'], 'job')
+  class Employee extends GQLBase { }
   
   const test = 'with jest'
-  const fun = 'always'
-  
-  let instance = new Sample({test, fun})
+  const fun = 'always'  
+  const firstName = 'Brielle'
+  const job = 'Engineer'  
+  const instance = new Sample({test, fun})
+  const employee = new Employee({firstName, job})
   
   it('should have a setter for "test"', () => {    
     expect(() => {
@@ -66,16 +83,31 @@ describe('@Setters', () => {
     }).not.toThrow(); 
     expect(instance.fun).toBeUndefined()
   })
+  
+  it('should allow for remapping between type fields and model fields', () => {
+    expect(() => {
+      employee.name = 'Dorkis'
+      employee.job = 'Vendor'
+    }).not.toThrow()
+    
+    expect(employee.model.firstName).toEqual('Dorkis')
+    expect(employee.model.job).toEqual('Vendor');
+  })
 })
 
 describe('@Properties', () => {
   @Properties('test', 'fun')
   class Sample extends GQLBase { }
+
+  @Properties(['name', 'firstName'], 'job')
+  class Employee extends GQLBase { }
   
   const test = 'with jest'
   const fun = 'always'
-  
-  let instance = new Sample({test, fun})
+  const firstName = 'Brielle'
+  const job = 'Engineer'  
+  const instance = new Sample({test, fun})
+  const employee = new Employee({firstName, job})
   
   it('should have a setter for "test"', () => {    
     expect(instance.test).toEqual(test)
@@ -91,6 +123,18 @@ describe('@Properties', () => {
       instance.fun = 'Something else'
     }).not.toThrow(); 
     expect(instance.fun).not.toBeUndefined()
+  })
+  
+  it('should allow for remapping between type fields and model fields', () => {
+    expect(employee.name).toEqual(firstName);
+    expect(employee.job).toEqual(job);
+    expect(() => {
+      employee.name = 'Dorkis'
+      employee.job = 'Vendor'
+    }).not.toThrow()
+    
+    expect(employee.name).toEqual('Dorkis')
+    expect(employee.job).toEqual('Vendor');
   })
 })
 
