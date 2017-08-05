@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 78);
+/******/ 	return __webpack_require__(__webpack_require__.s = 87);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,44 +74,10 @@ if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store      = __webpack_require__(43)('wks')
-  , uid        = __webpack_require__(25)
-  , Symbol     = __webpack_require__(2).Symbol
-  , USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function(name){
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
-if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(12)(function(){
-  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
-});
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global    = __webpack_require__(2)
+var global    = __webpack_require__(3)
   , core      = __webpack_require__(0)
-  , ctx       = __webpack_require__(11)
-  , hide      = __webpack_require__(7)
+  , ctx       = __webpack_require__(10)
+  , hide      = __webpack_require__(8)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -171,15 +137,49 @@ $export.R = 128; // real proto method for `library`
 module.exports = $export;
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store      = __webpack_require__(47)('wks')
+  , uid        = __webpack_require__(28)
+  , Symbol     = __webpack_require__(3).Symbol
+  , USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function(name){
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(11)(function(){
+  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+});
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject       = __webpack_require__(6)
-  , IE8_DOM_DEFINE = __webpack_require__(56)
-  , toPrimitive    = __webpack_require__(38)
+  , IE8_DOM_DEFINE = __webpack_require__(63)
+  , toPrimitive    = __webpack_require__(43)
   , dP             = Object.defineProperty;
 
-exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+exports.f = __webpack_require__(4) ? Object.defineProperty : function defineProperty(O, P, Attributes){
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -195,7 +195,7 @@ exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProp
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(8);
+var isObject = __webpack_require__(7);
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
@@ -203,19 +203,6 @@ module.exports = function(it){
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP         = __webpack_require__(5)
-  , createDesc = __webpack_require__(24);
-module.exports = __webpack_require__(3) ? function(object, key, value){
-  return dP.f(object, key, createDesc(1, value));
-} : function(object, key, value){
-  object[key] = value;
-  return object;
-};
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -223,31 +210,35 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
 
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function(it, key){
-  return hasOwnProperty.call(it, key);
+var dP         = __webpack_require__(5)
+  , createDesc = __webpack_require__(26);
+module.exports = __webpack_require__(4) ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(44)
+  , defined = __webpack_require__(24);
+module.exports = function(it){
+  return IObject(defined(it));
 };
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(40)
-  , defined = __webpack_require__(22);
-module.exports = function(it){
-  return IObject(defined(it));
-};
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // optional / simple context binding
-var aFunction = __webpack_require__(36);
+var aFunction = __webpack_require__(41);
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -268,7 +259,7 @@ module.exports = function(fn, that, length){
 };
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = function(exec){
@@ -280,94 +271,944 @@ module.exports = function(exec){
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports) {
 
-module.exports = {};
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function(it, key){
+  return hasOwnProperty.call(it, key);
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.IDLFileHandler = exports.GQLBase = exports.REQ_DATA_KEY = exports.MODEL_KEY = undefined;
+
+var _typeof2 = __webpack_require__(38);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+var _defineProperty = __webpack_require__(34);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+var _regenerator = __webpack_require__(52);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__(74);
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _taggedTemplateLiteral2 = __webpack_require__(114);
+
+var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
+
+var _toStringTag = __webpack_require__(80);
+
+var _toStringTag2 = _interopRequireDefault(_toStringTag);
+
+var _assign = __webpack_require__(56);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _getPrototypeOf = __webpack_require__(57);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(20);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(21);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(58);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(59);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _for = __webpack_require__(22);
+
+var _for2 = _interopRequireDefault(_for);
+
+var _templateObject = (0, _taggedTemplateLiteral3.default)(['\n        GQLBase class implementation. GQLBase is the root class used in\n        graphql-lattice to describe a GraphQLObjectType. If you are reading\n        this, the person using lattice failed to provide documentation for\n        their type. :)\n      '], ['\n        GQLBase class implementation. GQLBase is the root class used in\n        graphql-lattice to describe a GraphQLObjectType. If you are reading\n        this, the person using lattice failed to provide documentation for\n        their type. :)\n      ']); /** @namespace GQLBaseEnv */
+
+
+var _path = __webpack_require__(81);
+
+var _path2 = _interopRequireDefault(_path);
+
+var _fs = __webpack_require__(134);
+
+var _fs2 = _interopRequireDefault(_fs);
+
+var _utils = __webpack_require__(82);
+
+var _types = __webpack_require__(15);
+
+var _SyntaxTree = __webpack_require__(60);
+
+var _graphql = __webpack_require__(37);
+
+var _events = __webpack_require__(84);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Constant referring to the nodejs module in which this code is defined.
+ *
+ * @memberof GQLBaseEnv
+ * @type {Object}
+ * @const
+ */
+var GQLBaseModule = module;
+
+/**
+ * A `Symbol` used as a key to store the backing model data. Designed as a
+ * way to separate model data and GraphQL property accessors into logical bits.
+ *
+ * @type {Symbol}
+ * @memberof GQLBaseEnv
+ * @const
+ */
+var MODEL_KEY = exports.MODEL_KEY = (0, _for2.default)('data-model-contents-key');
+
+/**
+ * A `Symbol` used as a key to store the request data for an instance of the
+ * GQLBase object in question.
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberof GQLBaseEnv
+ */
+var REQ_DATA_KEY = exports.REQ_DATA_KEY = (0, _for2.default)('request-data-object-key');
+
+/**
+ * All GraphQL Type objects used in this system are assumed to have extended
+ * from this class. An instance of this class can be used to wrap an existing
+ * structure if you have one.
+ *
+ * @class GQLBase
+ */
+
+var GQLBase = exports.GQLBase = function (_EventEmitter) {
+  (0, _inherits3.default)(GQLBase, _EventEmitter);
+
+  /**
+   * Request data is passed to this object when constructed. Typically these
+   * objects, and their children, are instantiated by its own static MUTATORS
+   * and RESOLVERS. They should contain request specific state if any is to
+   * be shared.
+   *
+   * These can be considered request specific controllers for the object in
+   * question. The base class takes a single object which should contain all
+   * the HTTP/S request data and the graphQLParams is provided as the object
+   * { query, variables, operationName, raw }.
+   *
+   * When used with express-graphql, the requestData object has the format
+   * { req, res, gql } where
+   *   • req is an Express 4.x request object
+   *   • res is an Express 4.x response object
+   *   • gql is the graphQLParams object in the format of
+   *     { query, variables, operationName, raw }
+   *     See https://github.com/graphql/express-graphql for more info
+   *
+   * @memberof GQLBase
+   * @method ⎆⠀constructor
+   * @constructor
+   *
+   * @param {mixed} modelData this, typically an object, although anything
+   * really is supported, represents the model data for our GraphQL object
+   * instance.
+   * @param {Object} requestData see description above
+   */
+  function GQLBase() {
+    var modelData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var requestData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    (0, _classCallCheck3.default)(this, GQLBase);
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (GQLBase.__proto__ || (0, _getPrototypeOf2.default)(GQLBase)).call(this));
+
+    var Class = _this.constructor;
+
+    GQLBase.setupModel(_this);
+    _this.setModel(modelData);
+    _this.requestData = requestData;
+    _this.fileHandler = new IDLFileHandler(_this.constructor);
+    return _this;
+  }
+
+  /**
+   * Getter for the internally stored model data. The contents of this
+   * object are abstracted away behind a `Symbol` key to prevent collision
+   * between the underlying model and any GraphQL Object Definition properties.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method ⌾⠀getModel
+   * @since 2.5
+   *
+   * @param {Object} value any object you wish to use as a data store
+   */
+
+
+  (0, _createClass3.default)(GQLBase, [{
+    key: 'getModel',
+    value: function getModel() {
+      return this[MODEL_KEY];
+    }
+
+    /**
+     * Setter for the internally stored model data. The contents of this
+     * object are abstracted away behind a `Symbol` key to prevent collision
+     * between the underlying model and any GraphQL Object Definition properties.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⌾⠀setModel
+     * @since 2.5
+     *
+     * @param {Object} value any object you wish to use as a data store
+     */
+
+  }, {
+    key: 'setModel',
+    value: function setModel(value) {
+      this[MODEL_KEY] = value;
+      return this;
+    }
+
+    /**
+     * Uses `Object.assign` to modify the internal backing data store for the 
+     * object instance. This is a shortcut for 
+     * `Object.assign(instance[MODEL_KEY], ...extensions)`
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⌾⠀extendModel
+     * @since 2.5
+     * 
+     * @param {mixed} extensions n-number of valid `Object.assign` parameters
+     * @return {GQLBase} this is returned
+     */
+
+  }, {
+    key: 'extendModel',
+    value: function extendModel() {
+      for (var _len = arguments.length, extensions = Array(_len), _key = 0; _key < _len; _key++) {
+        extensions[_key] = arguments[_key];
+      }
+
+      _assign2.default.apply(Object, [this[MODEL_KEY]].concat(extensions));
+      return this;
+    }
+
+    /**
+     * A getter that retrieves the inner request data object. When used with
+     * GQLExpressMiddleware, this is an object matching {req, res, gql}.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬇︎⠀requestData
+     *
+     * @return {Object} an object, usually matching { req, res, gql }
+     */
+
+  }, {
+    key: 'requestData',
+    get: function get() {
+      return this[REQ_DATA_KEY];
+    }
+
+    /**
+     * A setter that assigns a value to the inner request data object. When
+     * used with GQLExpressMiddleware, this is an object matching {req, res, gql}.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬆︎⠀requestData
+     *
+     * @param {Object} value an object, usually matching { req, res, gql }
+     */
+    ,
+    set: function set(value) {
+      this[REQ_DATA_KEY] = value;
+    }
+  }, {
+    key: _toStringTag2.default,
+
+
+    /**
+     * Returns the `constructor` name. If invoked as the context, or `this`,
+     * object of the `toString` method of `Object`'s `prototype`, the resulting
+     * value will be `[object MyClass]`, given an instance of `MyClass`
+     *
+     * @method ⌾⠀[Symbol.toStringTag]
+     * @memberof ModuleParser
+     *
+     * @return {String} the name of the class this is an instance of
+     */
+    get: function get() {
+      return this.constructor.name;
+    }
+
+    /**
+     * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static 
+     * scale. So, if you perform `Object.prototype.toString.call(MyClass)` 
+     * the result would be `[object MyClass]`.
+     *
+     * @method ⌾⠀[Symbol.toStringTag]
+     * @memberof ModuleParser
+     * @static
+     *
+     * @return {String} the name of this class
+     */
+
+  }], [{
+    key: 'apiDocs',
+    value: function apiDocs() {
+      return {
+        "class": (0, _utils.lineJoin)(_templateObject),
+
+        "fields": {},
+
+        "queries": {},
+
+        "mutators": {},
+
+        "subscriptions": {}
+      };
+    }
+
+    /**
+     * Defined in a base class, this getter should return either a String
+     * detailing the full IDL schema of a GraphQL handler or one of two
+     * types of Symbols.
+     *
+     * The first Symbol type is the constant `ADJACENT_FILE`. If this Symbol is
+     * returned, the system assumes that next to the source file in question is
+     * a file of the same name with a .graphql extension. This file should be
+     * made of the GraphQL IDL schema definitions for the object types being
+     * created.
+     *
+     * Example:
+     * ```js
+     *   static get SCHEMA(): String | Symbol {
+     *     return GQLBase.ADJACENT_FILE
+     *   }
+     * ```
+     *
+     * The primary advantage of this approach is allowing an outside editor that
+     * provides syntax highlighting rather than returning a string from the
+     * SCHEMA getter.
+     *
+     * Alternatively, the static method IDLFilePath can be used to point to an
+     * alternate location where the GraphQL IDL file resides. The extension can
+     * also be changed from .graphql to something else if need be using this
+     * method.
+     *
+     * Example:
+     * ```js
+     *   static get SCHEMA(): String | Symbol {
+     *     return GQLBase.IDLFilePath('/path/to/file', '.idl')
+     *   }
+     * ```
+     *
+     * NOTE - Important!
+     * When not returning a direct string based IDL schema, the call to super()
+     * from a child class must include `module` as the second parameter or an
+     * error will be thrown upon object creation.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⬇︎⠀SCHEMA
+     * @readonly
+     * @static
+     *
+     * @return {string|Symbol} a valid IDL string or one of the Symbols
+     * described above.
+     *
+     * @see {@link GQLBase#ADJACENT_FILE}
+     * @see {@link GQLBase#IDLFilePath}
+     */
+
+  }, {
+    key: 'MUTATORS',
+
+
+    /**
+     * This method should return a promise that resolves to an object of
+     * functions matching the names of the mutation operations. These are to be
+     * injected into the root object when used by `GQLExpressMiddleware`.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⌾⠀MUTATORS
+     * @readonly
+     * @static
+     * @deprecated Place all resolvers in RESOLVERS()
+     *
+     * @param {Object} requestData typically an object containing three
+     * properties; {req, res, gql}
+     * @return {Promise} a promise that resolves to an object; see above for more
+     * information.
+     */
+    value: function () {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(requestData) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                return _context.abrupt('return', {});
+
+              case 1:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function MUTATORS(_x3) {
+        return _ref.apply(this, arguments);
+      }
+
+      return MUTATORS;
+    }()
+
+    /**
+     * This method should return a promise that resolves to an object of
+     * functions matching the names of the query operations. These are to be
+     * injected into the root object when used by `GQLExpressMiddleware`.
+     *
+     * @instance
+     * @memberof GQLBase
+     * @method ⌾⠀RESOLVERS
+     * @readonly
+     * @static
+     *
+     * @param {Object} requestData typically an object containing three
+     * properties; {req, res, gql}
+     * @return {Promise} a promise that resolves to an object; see above for more
+     * information.
+     */
+
+  }, {
+    key: 'RESOLVERS',
+    value: function () {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(requestData) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                return _context2.abrupt('return', {});
+
+              case 1:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function RESOLVERS(_x4) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return RESOLVERS;
+    }()
+
+    /**
+     * @see {@link GQLBase#SCHEMA}
+     *
+     * @memberof GQLBase
+     * @method ⬇︎⠀ADJACENT_FILE
+     * @static
+     * @const
+     *
+     * @return {Symbol} the Symbol, when returned from SCHEMA, causes
+     * the logic to load an IDL Schema from an associated file with a .graphql
+     * extension and bearing the same name.
+     */
+
+  }, {
+    key: 'IDLFilePath',
+
+
+    /**
+     * Creates an appropriate Symbol crafted with the right data for use by
+     * the IDLFileHandler class below.
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⌾⠀IDLFilePath
+     *
+     * @param {string} path a path to the IDL containing file
+     * @param {String} [extension='.graphql'] an extension, including the
+     * prefixed period, that will be added to the supplied path should it not
+     * already exist.
+     * @return Symbol
+     *
+     * @see {@link GQLBase#SCHEMA}
+     */
+    value: function IDLFilePath(path) {
+      var extension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.graphql';
+
+      return (0, _for2.default)('Path ' + path + ' Extension ' + extension);
+    }
+
+    /**
+     * A file handler for fetching the IDL schema string from the file system
+     * for those `GQLBase` extended classes that have indicated to do so by
+     * returning a `Symbol` for their `SCHEMA` property.
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⬇︎⠀handler
+     *
+     * @return {IDLFileHandler} instance of IDLFileHandler, created if one does
+     * not already exist, for fetching the contents from disk.
+     */
+
+  }, {
+    key: 'setupModel',
+
+
+    /**
+     * The internal data model has some custom `EventEmitter` code wrapped 
+     * it here. When the data model is set via `setModel` or by accessing it
+     * via `instance[MODEL_KEY]`, an event `EVENT_MODEL_SET` is emitted. Any 
+     * listener listening for this event receives an object with two keys 
+     * ```
+     * {
+     *   model: The actual model being set; changes are persisted
+     *   instance: The GQLBase instance the model is associated with 
+     * }
+     * ```
+     *
+     * Subsequently, the events `EVENT_MODEL_PROP_CHANGE` and 
+     * `EVENT_MODEL_PROP_DELETE` can be listened to if your version of node 
+     * supports Proxy objects. They allow you to be notified whenever your 
+     * model has a property changed or deleted, respectively.
+     *
+     * The callback for `change` receives an object with four properties
+     * ```
+     * {
+     *   model: The model object the value is being changed on
+     *   old: The old value being replaced; undefined if it is the first time 
+     *   key: The property key for the value being changed 
+     *   value: The new value being set
+     * }
+     * ```
+     *
+     * The callback for `delete` receives an object with four properties
+     * ```
+     * {
+     *   model: The model object the value is deleted from
+     *   key: The property key for the deleted value  
+     *   deleted: The deleted value
+     * }
+     * ```
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⌾⠀setupModel
+     * 
+     * @param {GQLBase} instance typically `this` as passed in from a call in
+     * the constructor
+     */
+    value: function setupModel(instance) {
+      var _MODEL_KEY = (0, _for2.default)('data-model-contents-value');
+      var hasProxy = typeof global.Proxy !== 'undefined';
+
+      var changeHandler = {
+        /**
+         * Proxy set() handler. This is where the change events are fired from 
+         * 
+         * @method set
+         * @param {Object} target the `GQLBase` model object 
+         * @param {String} key the property name
+         * @param {mixed} value the new property value
+         */
+        set: function set(target, key, value) {
+          var old = target[key];
+
+          target[key] = value;
+          instance.emit(GQLBase.EVENT_MODEL_PROP_CHANGE, {
+            model: target,
+            old: old,
+            key: key,
+            value: value
+          });
+        },
+
+
+        /**
+         * Proxy deleteProperty() handler. This is where the delete property 
+         * events are fired from  
+         * 
+         * @method deleteProperty
+         * @param {Object} target the `GQLBase` model object 
+         * @param {String} key the property name
+         */
+        deleteProperty: function deleteProperty(target, key) {
+          var deleted = target[key];
+
+          delete target[key];
+          instance.emit(GQLBase.EVENT_MODEL_PROP_DELETE, {
+            model: target,
+            key: key,
+            deleted: deleted
+          });
+        }
+      };
+
+      /**
+       * 'Publicly' the Symbol for accessing the `GQLBase` model is `MODEL_KEY`. 
+       * In truth it is stored under a Symbol defined in `setupModel` and
+       * referred to as `_MODEL_KEY` in this code. This is done so a getter and 
+       * setter can be wrapped around the usage of the instance's data model.
+       *
+       * When being read, if `Proxy` exists in the node environment and if there 
+       * are any registered `EVENT_MODEL_PROP_CHANGE` or `EVENT_MODEL_PROP_DELETE`
+       * events, then the returned model is a Proxy around the real model that 
+       * allows us to capture the changes and deletion of keys 
+       *
+       * When being assigned, the event `EVENT_MODEL_WILL_BE_SET` and the event 
+       * `EVENT_MODEL_HAS_BEEN_SET` are emitted to allow listeners to modify and 
+       * see the final data around the setting of a model object. Both events 
+       * receive an object with two keys
+       *
+       * ```
+       * {
+       *   model: The object being or having been set 
+       *   instance: The GQLBase instance receiving the model 
+       * }
+       * ```
+       * 
+       * @type {[type]}
+       */
+      (0, _defineProperty2.default)(instance, MODEL_KEY, {
+        get: function get() {
+          var model = this[_MODEL_KEY];
+          var hasListeners = this.listenerCount(GQLBase.EVENT_MODEL_PROP_CHANGE) + this.listenerCount(GQLBase.EVENT_MODEL_PROP_DELETE);
+
+          if (hasProxy && hasListeners) {
+            model = new Proxy(model, changeHandler);
+          }
+
+          return model;
+        },
+
+        set: function set(model) {
+          var instance = this;
+
+          this.emit(GQLBase.EVENT_MODEL_WILL_BE_SET, { model: model, instance: instance });
+          instance[_MODEL_KEY] = model;
+          this.emit(GQLBase.EVENT_MODEL_HAS_BEEN_SET, { model: model, instance: instance });
+        }
+      });
+    }
+  }, {
+    key: 'SCHEMA',
+    get: function get() {}
+    // define in base class
+
+  }, {
+    key: 'ADJACENT_FILE',
+    get: function get() {
+      return (0, _for2.default)('.graphql file located adjacent to source');
+    }
+
+    /**
+     * Determines the default type targeted by this GQLBase class. Any
+     * type will technically be valid but only will trigger special behavior
+     *
+     * @memberof GQLBase
+     * @method ⬇︎⠀GQL_TYPE
+     * @static
+     * @const
+     *
+     * @return {Function} a type, such as `GraphQLObjectType` or
+     * `GraphQLInterfaceType` 
+     */
+
+  }, {
+    key: 'GQL_TYPE',
+    get: function get() {
+      return _graphql.GraphQLObjectType;
+    }
+  }, {
+    key: 'handler',
+    get: function get() {
+      var key = (0, _for2.default)(IDLFileHandler.name + '.' + this.name);
+
+      if (!this[key]) {
+        this[key] = new IDLFileHandler(this);
+      }
+
+      return this[key];
+    }
+
+    /**
+     * Returns the module object where your class is created. This needs to be
+     * defined on your class, as a static getter, in the FILE where you are
+     * defining your Class definition.
+     *
+     * @static
+     * @memberof GQLBase
+     * @method ⬇︎⠀module
+     * @const
+     *
+     * @return {Object} the reference to the module object defined and injected
+     * by node.js' module loading system.
+     *
+     * @see https://nodejs.org/api/modules.html
+     */
+
+  }, {
+    key: 'module',
+    get: function get() {
+      return GQLBaseModule;
+    }
+
+    // TODO
+
+  }, {
+    key: 'EVENT_MODEL_WILL_BE_SET',
+    get: function get() {
+      return 'E: Int. model will be set';
+    }
+
+    // TODO
+
+  }, {
+    key: 'EVENT_MODEL_HAS_BEEN_SET',
+    get: function get() {
+      return 'E: Int. model has been set';
+    }
+
+    // TODO
+
+  }, {
+    key: 'EVENT_MODEL_PROP_CHANGE',
+    get: function get() {
+      return 'E: Int. model prop changed';
+    }
+
+    // TODO
+
+  }, {
+    key: 'EVENT_MODEL_PROP_DELETE',
+    get: function get() {
+      return 'E: Int. model prop deleted';
+    }
+  }, {
+    key: _toStringTag2.default,
+    get: function get() {
+      return this.name;
+    }
+  }]);
+  return GQLBase;
+}(_events.EventEmitter);
+
+/**
+ * The handler, an instance of which is created for every instance of GQLBase.
+ * The handler manages the fetching and decoding of files bearing the IDL
+ * schema associated with the class represented by this instance of GQLBase.
+ *
+ * @class IDLFileHandler
+ */
+
+
+var IDLFileHandler = exports.IDLFileHandler = function () {
+  /**
+   * The IDLFileHandler checks the SCHEMA value returned by the class type
+   * of the supplied instance. If the resulting value is a Symbol, then the
+   * handler's responsibility is to find the file, load it from disk and
+   * provide various means of using its contents; i.e. as a Buffer, a String
+   * or wrapped in a SyntaxTree instance.
+   *
+   * @memberof IDLFileHandler
+   * @method ⎆⠀constructor
+   * @constructor
+   *
+   * @param {Function} Class a function or class definition that presumably
+   * extends from GQLBase were it an instance.
+   */
+  function IDLFileHandler(Class) {
+    (0, _classCallCheck3.default)(this, IDLFileHandler);
+
+    var symbol = (0, _typeof3.default)(Class.SCHEMA) === 'symbol' && Class.SCHEMA || null;
+    var pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
+
+    if (symbol) {
+      var symbolString = symbol.toString();
+
+      if (symbol === Class.ADJACENT_FILE) {
+        if (Class.module === GQLBaseModule) {
+          throw new Error('\n            The a static getter for \'module\' on ' + Class.name + ' must be present\n            that returns the module object where the Class is defined. Try the\n            following:\n\n            // your ' + Class.name + '.js file\n            import { GQLBase } from \'graphql-lattice\'\n\n            const ' + Class.name + 'Module = module;\n\n            class ' + Class.name + ' extends GQLBase {\n              ...\n\n              static get module() {\n                return ' + Class.name + 'Module;\n              }\n            }\n\n          ');
+        }
+
+        var filename = Class.module.filename;
+        var extension = _path2.default.extname(filename);
+        var dir = _path2.default.dirname(filename);
+        var filefixed = _path2.default.basename(filename, extension);
+        var build = _path2.default.resolve(_path2.default.join(dir, filefixed + '.graphql'));
+
+        this.path = build;
+        this.extension = '.graphql';
+      } else if (pattern.test(symbolString)) {
+        var parsed = pattern.exec(symbolString);
+        var _extension = parsed[2] || '.graphql';
+        var _dir = _path2.default.dirname(parsed[1]);
+        var file = _path2.default.basename(parsed[1], _extension);
+        var _build = _path2.default.resolve(_path2.default.join(_dir, '' + file + _extension));
+
+        this.path = _build;
+        this.extension = _extension;
+      }
+    } else {
+      this.path = this.extension = null;
+    }
+  }
+
+  /**
+   * Loads the calculated file determined by the decoding of the meaning of
+   * the Symbol returned by the SCHEMA property of the instance supplied to
+   * the IDLFileHandler upon creation.
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method ⌾⠀getFile
+   *
+   * @return {Buffer|null} returns the Buffer containing the file base IDL
+   * schema or null if none was found or a direct string schema is returned
+   * by the SCHEMA property
+   */
+
+
+  (0, _createClass3.default)(IDLFileHandler, [{
+    key: 'getFile',
+    value: function getFile() {
+      return _fs2.default.readFileSync(this.path);
+    }
+
+    /**
+     * If getFile() returns a Buffer, this is the string representation of the
+     * underlying file contents. As a means of validating the contents of the
+     * file, the string contents are parsed into an AST and back to a string.
+     *
+     * @instance
+     * @memberof IDLFileHandler
+     * @method ⌾⠀getSchema
+     *
+     * @return {string|null} the string contents of the Buffer containing the
+     * file based IDL schema.
+     */
+
+  }, {
+    key: 'getSchema',
+    value: function getSchema() {
+      if (!this.path) {
+        return null;
+      }
+
+      var tree = this.getSyntaxTree();
+
+      return tree.toString();
+    }
+
+    /**
+     * If getFile() returns a Buffer, the string contents are passed to a new
+     * instance of SyntaxTree which parses this into an AST for manipulation.
+     *
+     * @instance
+     * @memberof IDLFileHandler
+     * @method ⌾⠀getSyntaxTree
+     *
+     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
+     * schema contents loaded from disk. Null is returned if a calculated path
+     * cannot be found; always occurs when SCHEMA returns a string.
+     */
+
+  }, {
+    key: 'getSyntaxTree',
+    value: function getSyntaxTree() {
+      var buffer = this.getFile();
+      var tree = new _SyntaxTree.SyntaxTree(buffer.toString());
+
+      return tree;
+    }
+
+    /**
+     * Returns the `constructor` name. If invoked as the context, or `this`,
+     * object of the `toString` method of `Object`'s `prototype`, the resulting
+     * value will be `[object MyClass]`, given an instance of `MyClass`
+     *
+     * @method ⌾⠀[Symbol.toStringTag]
+     * @memberof IDLFileHandler
+     *
+     * @return {String} the name of the class this is an instance of
+     */
+
+  }, {
+    key: _toStringTag2.default,
+    get: function get() {
+      return this.constructor.name;
+    }
+
+    /**
+     * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static 
+     * scale. So, if you perform `Object.prototype.toString.call(MyClass)` 
+     * the result would be `[object MyClass]`.
+     *
+     * @method ⌾⠀[Symbol.toStringTag]
+     * @memberof IDLFileHandler
+     * @static
+     *
+     * @return {String} the name of this class
+     */
+
+  }], [{
+    key: _toStringTag2.default,
+    get: function get() {
+      return this.name;
+    }
+  }]);
+  return IDLFileHandler;
+}();
+
+exports.default = GQLBase;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(88)(module)))
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-var $at  = __webpack_require__(82)(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(35)(String, 'String', function(iterated){
-  this._t = String(iterated); // target
-  this._i = 0;                // next index
-// 21.1.5.2.1 %StringIteratorPrototype%.next()
-}, function(){
-  var O     = this._t
-    , index = this._i
-    , point;
-  if(index >= O.length)return {value: undefined, done: true};
-  point = $at(O, index);
-  this._i += point.length;
-  return {value: point, done: false};
-});
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys       = __webpack_require__(59)
-  , enumBugKeys = __webpack_require__(44);
+var $keys       = __webpack_require__(66)
+  , enumBugKeys = __webpack_require__(48);
 
 module.exports = Object.keys || function keys(O){
   return $keys(O, enumBugKeys);
 };
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function(it){
-  return toString.call(it).slice(8, -1);
-};
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var def = __webpack_require__(5).f
-  , has = __webpack_require__(9)
-  , TAG = __webpack_require__(1)('toStringTag');
-
-module.exports = function(it, tag, stat){
-  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
-};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(86);
-var global        = __webpack_require__(2)
-  , hide          = __webpack_require__(7)
-  , Iterators     = __webpack_require__(13)
-  , TO_STRING_TAG = __webpack_require__(1)('toStringTag');
-
-for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
-  var NAME       = collections[i]
-    , Collection = global[NAME]
-    , proto      = Collection && Collection.prototype;
-  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(107), __esModule: true };
-
-/***/ }),
-/* 20 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -378,19 +1219,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PRIMITIVES = exports.NULL = exports.UNDEFINED = exports.isClass = exports.isOfType = exports.isValue = exports.isPrimitive = exports.isUndefined = exports.isNull = exports.isRegExp = exports.isNumber = exports.isString = exports.isObject = exports.isDate = exports.isArray = exports.isFunction = undefined;
 
-var _for = __webpack_require__(19);
+var _for = __webpack_require__(22);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _symbol = __webpack_require__(63);
+var _symbol = __webpack_require__(69);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
-var _set = __webpack_require__(74);
+var _set = __webpack_require__(83);
 
 var _set2 = _interopRequireDefault(_set);
 
-var _getPrototypeOf = __webpack_require__(119);
+var _getPrototypeOf = __webpack_require__(145);
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
@@ -814,698 +1655,41 @@ PRIMITIVES.has = function (o) {
 exports.PRIMITIVES = PRIMITIVES;
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.IDLFileHandler = exports.GQLBase = exports.REQ_DATA_KEY = exports.MODEL_KEY = undefined;
-
-var _typeof2 = __webpack_require__(80);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-var _regenerator = __webpack_require__(49);
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _asyncToGenerator2 = __webpack_require__(67);
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _classCallCheck2 = __webpack_require__(31);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(32);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _for = __webpack_require__(19);
-
-var _for2 = _interopRequireDefault(_for);
-
-var _path = __webpack_require__(72);
-
-var _path2 = _interopRequireDefault(_path);
-
-var _fs = __webpack_require__(108);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _utils = __webpack_require__(73);
-
-var _types = __webpack_require__(20);
-
-var _SyntaxTree = __webpack_require__(53);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Constant referring to the nodejs module in which this code is defined.
- *
- * @memberof GQLBaseEnv
- * @type {Object}
- * @const
- */
-var GQLBaseModule = module;
-
-/**
- * A `Symbol` used as a key to store the backing model data. Designed as a
- * way to separate model data and GraphQL property accessors into logical bits.
- *
- * @type {Symbol}
- * @memberof GQLBaseEnv
- * @const
- */
-/** @namespace GQLBaseEnv */
-
-
-var MODEL_KEY = exports.MODEL_KEY = (0, _for2.default)('data-model-contents-key');
-
-/**
- * A `Symbol` used as a key to store the request data for an instance of the
- * GQLBase object in question.
- *
- * @type {Symbol}
- * @const
- * @inner
- * @memberof GQLBaseEnv
- */
-var REQ_DATA_KEY = exports.REQ_DATA_KEY = (0, _for2.default)('request-data-object-key');
-
-/**
- * All GraphQL Type objects used in this system are assumed to have extended
- * from this class. An instance of this class can be used to wrap an existing
- * structure if you have one.
- *
- * @class GQLBase
- */
-
-var GQLBase = exports.GQLBase = function () {
-  /**
-   * Request data is passed to this object when constructed. Typically these
-   * objects, and their children, are instantiated by its own static MUTATORS
-   * and RESOLVERS. They should contain request specific state if any is to
-   * be shared.
-   *
-   * These can be considered request specific controllers for the object in
-   * question. The base class takes a single object which should contain all
-   * the HTTP/S request data and the graphQLParams is provided as the object
-   * { query, variables, operationName, raw }.
-   *
-   * When used with express-graphql, the requestData object has the format
-   * { req, res, gql } where
-   *   • req is an Express 4.x request object
-   *   • res is an Express 4.x response object
-   *   • gql is the graphQLParams object in the format of
-   *     { query, variables, operationName, raw }
-   *     See https://github.com/graphql/express-graphql for more info
-   *
-   * @memberof GQLBase
-   * @method ⎆⠀constructor
-   * @constructor
-   *
-   * @param {mixed} modelData this, typically an object, although anything
-   * really is supported, represents the model data for our GraphQL object
-   * instance.
-   * @param {Object} requestData see description above
-   */
-  function GQLBase() {
-    var modelData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var requestData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    (0, _classCallCheck3.default)(this, GQLBase);
-
-    var Class = this.constructor;
-
-    this.model = modelData;
-    this.requestData = requestData;
-    this.fileHandler = new IDLFileHandler(this.constructor);
-  }
-
-  /**
-   * Getter for the internally stored model data. The contents of this
-   * object are abstracted away behind a `Symbol` key to prevent collision
-   * between the underlying model and any GraphQL Object Definition properties.
-   *
-   * @instance
-   * @memberof GQLBase
-   * @method ⬇︎⠀model
-   *
-   * @param {Object} value any object you wish to use as a data store
-   */
-
-
-  (0, _createClass3.default)(GQLBase, [{
-    key: 'model',
-    get: function get() {
-      return this[MODEL_KEY];
-    }
-
-    /**
-     * Setter for the internally stored model data. The contents of this
-     * object are abstracted away behind a `Symbol` key to prevent collision
-     * between the underlying model and any GraphQL Object Definition properties.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬆︎⠀model
-     *
-     * @param {Object} value any object you wish to use as a data store
-     */
-    ,
-    set: function set(value) {
-      this[MODEL_KEY] = value;
-    }
-
-    /**
-     * A getter that retrieves the inner request data object. When used with
-     * GQLExpressMiddleware, this is an object matching {req, res, gql}.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀requestData
-     *
-     * @return {Object} an object, usually matching { req, res, gql }
-     */
-
-  }, {
-    key: 'requestData',
-    get: function get() {
-      return this[REQ_DATA_KEY];
-    }
-
-    /**
-     * A setter that assigns a value to the inner request data object. When
-     * used with GQLExpressMiddleware, this is an object matching {req, res, gql}.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬆︎⠀requestData
-     *
-     * @param {Object} value an object, usually matching { req, res, gql }
-     */
-    ,
-    set: function set(value) {
-      this[REQ_DATA_KEY] = value;
-    }
-
-    /**
-     * Defined in a base class, this getter should return either a String
-     * detailing the full IDL schema of a GraphQL handler or one of two
-     * types of Symbols.
-     *
-     * The first Symbol type is the constant `ADJACENT_FILE`. If this Symbol is
-     * returned, the system assumes that next to the source file in question is
-     * a file of the same name with a .graphql extension. This file should be
-     * made of the GraphQL IDL schema definitions for the object types being
-     * created.
-     *
-     * Example:
-     * ```js
-     *   static get SCHEMA(): String | Symbol {
-     *     return GQLBase.ADJACENT_FILE
-     *   }
-     * ```
-     *
-     * The primary advantage of this approach is allowing an outside editor that
-     * provides syntax highlighting rather than returning a string from the
-     * SCHEMA getter.
-     *
-     * Alternatively, the static method IDLFilePath can be used to point to an
-     * alternate location where the GraphQL IDL file resides. The extension can
-     * also be changed from .graphql to something else if need be using this
-     * method.
-     *
-     * Example:
-     * ```js
-     *   static get SCHEMA(): String | Symbol {
-     *     return GQLBase.IDLFilePath('/path/to/file', '.idl')
-     *   }
-     * ```
-     *
-     * NOTE - Important!
-     * When not returning a direct string based IDL schema, the call to super()
-     * from a child class must include `module` as the second parameter or an
-     * error will be thrown upon object creation.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀SCHEMA
-     * @readonly
-     * @static
-     *
-     * @return {string|Symbol} a valid IDL string or one of the Symbols
-     * described above.
-     *
-     * @see {@link GQLBase#ADJACENT_FILE}
-     * @see {@link GQLBase#IDLFilePath}
-     */
-
-  }], [{
-    key: 'MUTATORS',
-
-
-    /**
-     * This method should return a promise that resolves to an object of
-     * functions matching the names of the mutation operations. These are to be
-     * injected into the root object when used by `GQLExpressMiddleware`.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀MUTATORS
-     * @readonly
-     * @static
-     * @deprecated Place all resolvers in RESOLVERS() 
-     *
-     * @param {Object} requestData typically an object containing three
-     * properties; {req, res, gql}
-     * @return {Promise} a promise that resolves to an object; see above for more
-     * information.
-     */
-    value: function () {
-      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(requestData) {
-        return _regenerator2.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                return _context.abrupt('return', {});
-
-              case 1:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function MUTATORS(_x3) {
-        return _ref.apply(this, arguments);
-      }
-
-      return MUTATORS;
-    }()
-
-    /**
-     * This method should return a promise that resolves to an object of
-     * functions matching the names of the query operations. These are to be
-     * injected into the root object when used by `GQLExpressMiddleware`.
-     *
-     * @instance
-     * @memberof GQLBase
-     * @method ⬇︎⠀RESOLVERS
-     * @readonly
-     * @static
-     *
-     * @param {Object} requestData typically an object containing three
-     * properties; {req, res, gql}
-     * @return {Promise} a promise that resolves to an object; see above for more
-     * information.
-     */
-
-  }, {
-    key: 'RESOLVERS',
-    value: function () {
-      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(requestData) {
-        return _regenerator2.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                return _context2.abrupt('return', {});
-
-              case 1:
-              case 'end':
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this);
-      }));
-
-      function RESOLVERS(_x4) {
-        return _ref2.apply(this, arguments);
-      }
-
-      return RESOLVERS;
-    }()
-
-    /**
-     * @see {@link GQLBase#SCHEMA}
-     *
-     * @memberof GQLBase
-     * @method ⬇︎⠀ADJACENT_FILE
-     * @static
-     * @const
-     *
-     * @return {Symbol} the Symbol, when returned from SCHEMA, causes
-     * the logic to load an IDL Schema from an associated file with a .graphql
-     * extension and bearing the same name.
-     */
-
-  }, {
-    key: 'IDLFilePath',
-
-
-    /**
-     * Creates an appropriate Symbol crafted with the right data for use by
-     * the IDLFileHandler class below.
-     *
-     * @static
-     * @memberof GQLBase
-     * @method ⌾⠀IDLFilePath
-     *
-     * @param {string} path a path to the IDL containing file
-     * @param {String} [extension='.graphql'] an extension, including the
-     * prefixed period, that will be added to the supplied path should it not
-     * already exist.
-     * @return Symbol
-     *
-     * @see {@link GQLBase#SCHEMA}
-     */
-    value: function IDLFilePath(path) {
-      var extension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.graphql';
-
-      return (0, _for2.default)('Path ' + path + ' Extension ' + extension);
-    }
-
-    /**
-     * A file handler for fetching the IDL schema string from the file system
-     * for those `GQLBase` extended classes that have indicated to do so by
-     * returning a `Symbol` for their `SCHEMA` property.
-     *
-     * @static
-     * @memberof GQLBase
-     * @method ⬇︎⠀handler
-     *
-     * @return {IDLFileHandler} instance of IDLFileHandler, created if one does
-     * not already exist, for fetching the contents from disk.
-     */
-
-  }, {
-    key: 'SCHEMA',
-    get: function get() {}
-    // define in base class
-
-  }, {
-    key: 'ADJACENT_FILE',
-    get: function get() {
-      return (0, _for2.default)('.graphql file located adjacent to source');
-    }
-  }, {
-    key: 'handler',
-    get: function get() {
-      var key = (0, _for2.default)(IDLFileHandler.name + '.' + this.name);
-
-      if (!this[key]) {
-        this[key] = new IDLFileHandler(this);
-      }
-
-      return this[key];
-    }
-
-    /**
-     * Returns the module object where your class is created. This needs to be
-     * defined on your class, as a static getter, in the FILE where you are
-     * defining your Class definition.
-     *
-     * @static
-     * @memberof GQLBase
-     * @method ⬇︎⠀module
-     * @const
-     *
-     * @return {Object} the reference to the module object defined and injected
-     * by node.js' module loading system.
-     *
-     * @see https://nodejs.org/api/modules.html
-     */
-
-  }, {
-    key: 'module',
-    get: function get() {
-      return GQLBaseModule;
-    }
-  }]);
-  return GQLBase;
-}();
-
-/**
- * The handler, an instance of which is created for every instance of GQLBase.
- * The handler manages the fetching and decoding of files bearing the IDL
- * schema associated with the class represented by this instance of GQLBase.
- *
- * @class IDLFileHandler
- */
-
-
-var IDLFileHandler = exports.IDLFileHandler = function () {
-  /**
-   * The IDLFileHandler checks the SCHEMA value returned by the class type
-   * of the supplied instance. If the resulting value is a Symbol, then the
-   * handler's responsibility is to find the file, load it from disk and
-   * provide various means of using its contents; i.e. as a Buffer, a String
-   * or wrapped in a SyntaxTree instance.
-   *
-   * @memberof IDLFileHandler
-   * @method ⎆⠀constructor
-   * @constructor
-   *
-   * @param {Function} Class a function or class definition that presumably
-   * extends from GQLBase were it an instance.
-   */
-  function IDLFileHandler(Class) {
-    (0, _classCallCheck3.default)(this, IDLFileHandler);
-
-    var symbol = (0, _typeof3.default)(Class.SCHEMA) === 'symbol' && Class.SCHEMA || null;
-    var pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
-
-    if (symbol) {
-      var symbolString = symbol.toString();
-
-      if (symbol === Class.ADJACENT_FILE) {
-        if (Class.module === GQLBaseModule) {
-          throw new Error('\n            The a static getter for \'module\' on ' + Class.name + ' must be present\n            that returns the module object where the Class is defined. Try the\n            following:\n\n            // your ' + Class.name + '.js file\n            import { GQLBase } from \'graphql-lattice\'\n\n            const ' + Class.name + 'Module = module;\n\n            class ' + Class.name + ' extends GQLBase {\n              ...\n\n              static get module() {\n                return ' + Class.name + 'Module;\n              }\n            }\n\n          ');
-        }
-
-        var filename = Class.module.filename;
-        var extension = _path2.default.extname(filename);
-        var dir = _path2.default.dirname(filename);
-        var filefixed = _path2.default.basename(filename, extension);
-        var build = _path2.default.resolve(_path2.default.join(dir, filefixed + '.graphql'));
-
-        this.path = build;
-        this.extension = '.graphql';
-      } else if (pattern.test(symbolString)) {
-        var parsed = pattern.exec(symbolString);
-        var _extension = parsed[2] || '.graphql';
-        var _dir = _path2.default.dirname(parsed[1]);
-        var file = _path2.default.basename(parsed[1], _extension);
-        var _build = _path2.default.resolve(_path2.default.join(_dir, '' + file + _extension));
-
-        this.path = _build;
-        this.extension = _extension;
-
-        console.log('Path ' + this.path + ' Ext ' + this.extension);
-        console.log('Resolved ' + _path2.default.resolve(this.path));
-      }
-    } else {
-      this.path = this.extension = null;
-    }
-  }
-
-  /**
-   * Loads the calculated file determined by the decoding of the meaning of
-   * the Symbol returned by the SCHEMA property of the instance supplied to
-   * the IDLFileHandler upon creation.
-   *
-   * @instance
-   * @memberof IDLFileHandler
-   * @method ⌾⠀getFile
-   *
-   * @return {Buffer|null} returns the Buffer containing the file base IDL
-   * schema or null if none was found or a direct string schema is returned
-   * by the SCHEMA property
-   */
-
-
-  (0, _createClass3.default)(IDLFileHandler, [{
-    key: 'getFile',
-    value: function getFile() {
-      return _fs2.default.readFileSync(this.path);
-    }
-
-    /**
-     * If getFile() returns a Buffer, this is the string representation of the
-     * underlying file contents. As a means of validating the contents of the
-     * file, the string contents are parsed into an AST and back to a string.
-     *
-     * @instance
-     * @memberof IDLFileHandler
-     * @method ⌾⠀getSchema
-     *
-     * @return {string|null} the string contents of the Buffer containing the
-     * file based IDL schema.
-     */
-
-  }, {
-    key: 'getSchema',
-    value: function getSchema() {
-      if (!this.path) {
-        return null;
-      }
-
-      var tree = this.getSyntaxTree();
-
-      return tree.toString();
-    }
-
-    /**
-     * If getFile() returns a Buffer, the string contents are passed to a new
-     * instance of SyntaxTree which parses this into an AST for manipulation.
-     *
-     * @instance
-     * @memberof IDLFileHandler
-     * @method ⌾⠀getSyntaxTree
-     *
-     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
-     * schema contents loaded from disk. Null is returned if a calculated path
-     * cannot be found; always occurs when SCHEMA returns a string.
-     */
-
-  }, {
-    key: 'getSyntaxTree',
-    value: function getSyntaxTree() {
-      var buffer = this.getFile();
-      var tree = new _SyntaxTree.SyntaxTree(buffer.toString());
-
-      return tree;
-    }
-  }]);
-  return IDLFileHandler;
-}();
-
-exports.default = GQLBase;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(79)(module)))
-
-/***/ }),
-/* 22 */
+/* 16 */
 /***/ (function(module, exports) {
 
-// 7.2.1 RequireObjectCoercible(argument)
+module.exports = {};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
 module.exports = function(it){
-  if(it == undefined)throw TypeError("Can't call method on  " + it);
-  return it;
+  return toString.call(it).slice(8, -1);
 };
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-module.exports = function(bitmap, value){
-  return {
-    enumerable  : !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable    : !(bitmap & 4),
-    value       : value
-  };
-};
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-var id = 0
-  , px = Math.random();
-module.exports = function(key){
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-/***/ }),
-/* 26 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(1);
+var def = __webpack_require__(5).f
+  , has = __webpack_require__(12)
+  , TAG = __webpack_require__(2)('toStringTag');
+
+module.exports = function(it, tag, stat){
+  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+};
 
 /***/ }),
-/* 27 */
+/* 19 */
 /***/ (function(module, exports) {
 
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(16)
-  , TAG = __webpack_require__(1)('toStringTag')
-  // ES3 wrong here
-  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
-
-// fallback for IE11 Script Access Denied error
-var tryGet = function(it, key){
-  try {
-    return it[key];
-  } catch(e){ /* empty */ }
-};
-
-module.exports = function(it){
-  var O, T, B;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    // @@toStringTag case
-    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-    // builtinTag case
-    : ARG ? cof(O)
-    // ES3 arguments fallback
-    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-};
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ctx         = __webpack_require__(11)
-  , call        = __webpack_require__(99)
-  , isArrayIter = __webpack_require__(100)
-  , anObject    = __webpack_require__(6)
-  , toLength    = __webpack_require__(41)
-  , getIterFn   = __webpack_require__(69)
-  , BREAK       = {}
-  , RETURN      = {};
-var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
-  var iterFn = ITERATOR ? function(){ return iterable; } : getIterFn(iterable)
-    , f      = ctx(fn, that, entries ? 2 : 1)
-    , index  = 0
-    , length, step, iterator, result;
-  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
-  // fast case for arrays with default iterator
-  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
-    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
-    if(result === BREAK || result === RETURN)return result;
-  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
-    result = call(iterator, f, step.value, entries);
-    if(result === BREAK || result === RETURN)return result;
-  }
-};
-exports.BREAK  = BREAK;
-exports.RETURN = RETURN;
-
-/***/ }),
-/* 31 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1520,7 +1704,7 @@ exports.default = function (instance, Constructor) {
 };
 
 /***/ }),
-/* 32 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1528,7 +1712,7 @@ exports.default = function (instance, Constructor) {
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(52);
+var _defineProperty = __webpack_require__(34);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -1553,13 +1737,295 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 33 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(126), __esModule: true };
+module.exports = { "default": __webpack_require__(133), __esModule: true };
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $at  = __webpack_require__(90)(true);
+
+// 21.1.3.27 String.prototype[@@iterator]()
+__webpack_require__(40)(String, 'String', function(iterated){
+  this._t = String(iterated); // target
+  this._i = 0;                // next index
+// 21.1.5.2.1 %StringIteratorPrototype%.next()
+}, function(){
+  var O     = this._t
+    , index = this._i
+    , point;
+  if(index >= O.length)return {value: undefined, done: true};
+  point = $at(O, index);
+  this._i += point.length;
+  return {value: point, done: false};
+});
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = true;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = function(bitmap, value){
+  return {
+    enumerable  : !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable    : !(bitmap & 4),
+    value       : value
+  };
+};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject    = __webpack_require__(6)
+  , dPs         = __webpack_require__(65)
+  , enumBugKeys = __webpack_require__(48)
+  , IE_PROTO    = __webpack_require__(46)('IE_PROTO')
+  , Empty       = function(){ /* empty */ }
+  , PROTOTYPE   = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function(){
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(42)('iframe')
+    , i      = enumBugKeys.length
+    , lt     = '<'
+    , gt     = '>'
+    , iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(67).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties){
+  var result;
+  if(O !== null){
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty;
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+var id = 0
+  , px = Math.random();
+module.exports = function(key){
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(24);
+module.exports = function(it){
+  return Object(defined(it));
+};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(94);
+var global        = __webpack_require__(3)
+  , hide          = __webpack_require__(8)
+  , Iterators     = __webpack_require__(16)
+  , TO_STRING_TAG = __webpack_require__(2)('toStringTag');
+
+for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
+  var NAME       = collections[i]
+    , Collection = global[NAME]
+    , proto      = Collection && Collection.prototype;
+  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.f = __webpack_require__(2);
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var META     = __webpack_require__(28)('meta')
+  , isObject = __webpack_require__(7)
+  , has      = __webpack_require__(12)
+  , setDesc  = __webpack_require__(5).f
+  , id       = 0;
+var isExtensible = Object.isExtensible || function(){
+  return true;
+};
+var FREEZE = !__webpack_require__(11)(function(){
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function(it){
+  setDesc(it, META, {value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  }});
+};
+var fastKey = function(it, create){
+  // return primitive with prefix
+  if(!isObject(it))return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if(!has(it, META)){
+    // can't set metadata to uncaught frozen object
+    if(!isExtensible(it))return 'F';
+    // not necessary to add metadata
+    if(!create)return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function(it, create){
+  if(!has(it, META)){
+    // can't set metadata to uncaught frozen object
+    if(!isExtensible(it))return true;
+    // not necessary to add metadata
+    if(!create)return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function(it){
+  if(FREEZE && meta.NEED && isExtensible(it) && !has(it, META))setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY:      META,
+  NEED:     false,
+  fastKey:  fastKey,
+  getWeak:  getWeak,
+  onFreeze: onFreeze
+};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(102), __esModule: true };
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ctx         = __webpack_require__(10)
+  , call        = __webpack_require__(108)
+  , isArrayIter = __webpack_require__(109)
+  , anObject    = __webpack_require__(6)
+  , toLength    = __webpack_require__(45)
+  , getIterFn   = __webpack_require__(76)
+  , BREAK       = {}
+  , RETURN      = {};
+var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
+  var iterFn = ITERATOR ? function(){ return iterable; } : getIterFn(iterable)
+    , f      = ctx(fn, that, entries ? 2 : 1)
+    , index  = 0
+    , length, step, iterator, result;
+  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if(result === BREAK || result === RETURN)return result;
+  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
+    result = call(iterator, f, step.value, entries);
+    if(result === BREAK || result === RETURN)return result;
+  }
+};
+exports.BREAK  = BREAK;
+exports.RETURN = RETURN;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(115), __esModule: true };
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql");
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _iterator = __webpack_require__(62);
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = __webpack_require__(69);
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -1570,21 +2036,21 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 35 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY        = __webpack_require__(23)
-  , $export        = __webpack_require__(4)
-  , redefine       = __webpack_require__(57)
-  , hide           = __webpack_require__(7)
-  , has            = __webpack_require__(9)
-  , Iterators      = __webpack_require__(13)
-  , $iterCreate    = __webpack_require__(83)
-  , setToStringTag = __webpack_require__(17)
-  , getPrototypeOf = __webpack_require__(61)
-  , ITERATOR       = __webpack_require__(1)('iterator')
+var LIBRARY        = __webpack_require__(25)
+  , $export        = __webpack_require__(1)
+  , redefine       = __webpack_require__(64)
+  , hide           = __webpack_require__(8)
+  , has            = __webpack_require__(12)
+  , Iterators      = __webpack_require__(16)
+  , $iterCreate    = __webpack_require__(91)
+  , setToStringTag = __webpack_require__(18)
+  , getPrototypeOf = __webpack_require__(49)
+  , ITERATOR       = __webpack_require__(2)('iterator')
   , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
   , FF_ITERATOR    = '@@iterator'
   , KEYS           = 'keys'
@@ -1646,7 +2112,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
 };
 
 /***/ }),
-/* 36 */
+/* 41 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -1655,11 +2121,11 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 37 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(8)
-  , document = __webpack_require__(2).document
+var isObject = __webpack_require__(7)
+  , document = __webpack_require__(3).document
   // in old IE typeof document.createElement is 'object'
   , is = isObject(document) && isObject(document.createElement);
 module.exports = function(it){
@@ -1667,11 +2133,11 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 38 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(8);
+var isObject = __webpack_require__(7);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function(it, S){
@@ -1684,88 +2150,41 @@ module.exports = function(it, S){
 };
 
 /***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject    = __webpack_require__(6)
-  , dPs         = __webpack_require__(58)
-  , enumBugKeys = __webpack_require__(44)
-  , IE_PROTO    = __webpack_require__(42)('IE_PROTO')
-  , Empty       = function(){ /* empty */ }
-  , PROTOTYPE   = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function(){
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(37)('iframe')
-    , i      = enumBugKeys.length
-    , lt     = '<'
-    , gt     = '>'
-    , iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(60).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties){
-  var result;
-  if(O !== null){
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty;
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 40 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(16);
+var cof = __webpack_require__(17);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 41 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(34)
+var toInteger = __webpack_require__(39)
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-/* 42 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(43)('keys')
-  , uid    = __webpack_require__(25);
+var shared = __webpack_require__(47)('keys')
+  , uid    = __webpack_require__(28);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-/* 43 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(2)
+var global = __webpack_require__(3)
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
@@ -1773,7 +2192,7 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 44 */
+/* 48 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -1782,81 +2201,31 @@ module.exports = (
 ).split(',');
 
 /***/ }),
-/* 45 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(22);
-module.exports = function(it){
-  return Object(defined(it));
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has         = __webpack_require__(12)
+  , toObject    = __webpack_require__(29)
+  , IE_PROTO    = __webpack_require__(46)('IE_PROTO')
+  , ObjectProto = Object.prototype;
+
+module.exports = Object.getPrototypeOf || function(O){
+  O = toObject(O);
+  if(has(O, IE_PROTO))return O[IE_PROTO];
+  if(typeof O.constructor == 'function' && O instanceof O.constructor){
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
 };
 
 /***/ }),
-/* 46 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META     = __webpack_require__(25)('meta')
-  , isObject = __webpack_require__(8)
-  , has      = __webpack_require__(9)
-  , setDesc  = __webpack_require__(5).f
-  , id       = 0;
-var isExtensible = Object.isExtensible || function(){
-  return true;
-};
-var FREEZE = !__webpack_require__(12)(function(){
-  return isExtensible(Object.preventExtensions({}));
-});
-var setMeta = function(it){
-  setDesc(it, META, {value: {
-    i: 'O' + ++id, // object ID
-    w: {}          // weak collections IDs
-  }});
-};
-var fastKey = function(it, create){
-  // return primitive with prefix
-  if(!isObject(it))return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if(!has(it, META)){
-    // can't set metadata to uncaught frozen object
-    if(!isExtensible(it))return 'F';
-    // not necessary to add metadata
-    if(!create)return 'E';
-    // add missing metadata
-    setMeta(it);
-  // return object ID
-  } return it[META].i;
-};
-var getWeak = function(it, create){
-  if(!has(it, META)){
-    // can't set metadata to uncaught frozen object
-    if(!isExtensible(it))return true;
-    // not necessary to add metadata
-    if(!create)return false;
-    // add missing metadata
-    setMeta(it);
-  // return hash weak collections IDs
-  } return it[META].w;
-};
-// add metadata on freeze-family methods calling
-var onFreeze = function(it){
-  if(FREEZE && meta.NEED && isExtensible(it) && !has(it, META))setMeta(it);
-  return it;
-};
-var meta = module.exports = {
-  KEY:      META,
-  NEED:     false,
-  fastKey:  fastKey,
-  getWeak:  getWeak,
-  onFreeze: onFreeze
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global         = __webpack_require__(2)
+var global         = __webpack_require__(3)
   , core           = __webpack_require__(0)
-  , LIBRARY        = __webpack_require__(23)
-  , wksExt         = __webpack_require__(26)
+  , LIBRARY        = __webpack_require__(25)
+  , wksExt         = __webpack_require__(31)
   , defineProperty = __webpack_require__(5).f;
 module.exports = function(name){
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -1864,20 +2233,48 @@ module.exports = function(name){
 };
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(95);
+module.exports = __webpack_require__(104);
 
 
 /***/ }),
-/* 50 */
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// getting tag from 19.1.3.6 Object.prototype.toString()
+var cof = __webpack_require__(17)
+  , TAG = __webpack_require__(2)('toStringTag')
+  // ES3 wrong here
+  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
+
+// fallback for IE11 Script Access Denied error
+var tryGet = function(it, key){
+  try {
+    return it[key];
+  } catch(e){ /* empty */ }
+};
+
+module.exports = function(it){
+  var O, T, B;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    // @@toStringTag case
+    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
+    // builtinTag case
+    : ARG ? cof(O)
+    // ES3 arguments fallback
+    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
+};
+
+/***/ }),
+/* 54 */
 /***/ (function(module, exports) {
 
 module.exports = function(it, Constructor, name, forbiddenField){
@@ -1887,10 +2284,10 @@ module.exports = function(it, Constructor, name, forbiddenField){
 };
 
 /***/ }),
-/* 51 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hide = __webpack_require__(7);
+var hide = __webpack_require__(8);
 module.exports = function(target, src, safe){
   for(var key in src){
     if(safe && target[key])target[key] = src[key];
@@ -1899,13 +2296,81 @@ module.exports = function(target, src, safe){
 };
 
 /***/ }),
-/* 52 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(105), __esModule: true };
+module.exports = { "default": __webpack_require__(121), __esModule: true };
 
 /***/ }),
-/* 53 */
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(124), __esModule: true };
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof2 = __webpack_require__(38);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
+};
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _setPrototypeOf = __webpack_require__(126);
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _create = __webpack_require__(130);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _typeof2 = __webpack_require__(38);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+/***/ }),
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1916,63 +2381,63 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SyntaxTree = undefined;
 
-var _escape = __webpack_require__(122);
-
-var _escape2 = _interopRequireDefault(_escape);
-
-var _regenerator = __webpack_require__(49);
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _iterator2 = __webpack_require__(55);
-
-var _iterator3 = _interopRequireDefault(_iterator2);
-
-var _getIterator2 = __webpack_require__(33);
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
-var _set = __webpack_require__(74);
-
-var _set2 = _interopRequireDefault(_set);
-
-var _assign = __webpack_require__(75);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-var _toStringTag = __webpack_require__(131);
+var _toStringTag = __webpack_require__(80);
 
 var _toStringTag2 = _interopRequireDefault(_toStringTag);
 
-var _classCallCheck2 = __webpack_require__(31);
+var _escape = __webpack_require__(148);
+
+var _escape2 = _interopRequireDefault(_escape);
+
+var _regenerator = __webpack_require__(52);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _iterator2 = __webpack_require__(62);
+
+var _iterator3 = _interopRequireDefault(_iterator2);
+
+var _getIterator2 = __webpack_require__(61);
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _set = __webpack_require__(83);
+
+var _set2 = _interopRequireDefault(_set);
+
+var _assign = __webpack_require__(56);
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _classCallCheck2 = __webpack_require__(20);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(32);
+var _createClass2 = __webpack_require__(21);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _for = __webpack_require__(19);
+var _for = __webpack_require__(22);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _types = __webpack_require__(20);
+var _types = __webpack_require__(15);
 
-var _graphql = __webpack_require__(76);
+var _graphql = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Shorthand for the key storing the internal AST 
-// @prop 
+// Shorthand for the key storing the internal AST
+// @prop
 
 // @module SyntaxTree
 
 var AST_KEY = (0, _for2.default)('Internal AST Storage Key');
 
 /**
- * A parser and processor of GraphQL IDL Abstract Syntax Trees. Used to combine 
- * a set of {@link GQLBase} class instances. 
- * 
+ * A parser and processor of GraphQL IDL Abstract Syntax Trees. Used to combine
+ * a set of {@link GQLBase} class instances.
+ *
  * @class SyntaxTree
  */
 
@@ -1982,11 +2447,11 @@ var SyntaxTree = exports.SyntaxTree = function () {
    * an already parsed AST object, either of which is valid GraphQL IDL, then
    * its parsed AST will be the internals of this object.
    *
-   * @instance
+   * @constructor
    * @memberof SyntaxTree
    * @method ⎆⠀constructor
-   * 
-   * @param {string|Object|SyntaxTree} schemaOrASTOrST if supplied the tree 
+   *
+   * @param {string|Object|SyntaxTree} schemaOrASTOrST if supplied the tree
    * will be constructed with the contents of the data. If a string of IDL is
    * given, it will be parsed. If an AST is given, it will be verified. If a
    * SyntaxTree is supplied, it will be copied.
@@ -1994,7 +2459,6 @@ var SyntaxTree = exports.SyntaxTree = function () {
   function SyntaxTree(schemaOrASTOrST) {
     (0, _classCallCheck3.default)(this, SyntaxTree);
 
-    this[_toStringTag2.default] = this.constructor.name;
     this[AST_KEY] = {};
 
     if (schemaOrASTOrST) {
@@ -2004,11 +2468,11 @@ var SyntaxTree = exports.SyntaxTree = function () {
 
   /**
    * Getter that retrieves the abstract syntax tree created by `graphql.parse`
-   * when it is presented with a valid string of IDL. 
-   * 
+   * when it is presented with a valid string of IDL.
+   *
    * @instance
    * @memberof SyntaxTree
-   * @method ⬇︎⠀ast 
+   * @method ⬇︎⠀ast
    *
    * @return {Object} a GraphQL AST object
    */
@@ -2025,7 +2489,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
      * @instance
      * @memberof SyntaxTree
      * @method ⌾⠀setAST
-     * 
+     *
      * @param {string|Object} schemaOrAST a valid GraphQL IDL schema or a
      * previosuly parsed or compatible GraphQL IDL AST object.
      * @return {SyntaxTree} this for inlining.
@@ -2068,16 +2532,16 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * As passthru update method that works on the internal AST object. If 
+     * As passthru update method that works on the internal AST object. If
      * an error occurs, the update is skipped. An error can occur if adding the
      * changes would make the AST invalid. In such a case, the error is logged
-     * to the error console. 
+     * to the error console.
      *
      * @instance
      * @memberof SyntaxTree
      * @method ⌾⠀updateAST
-     * 
-     * @param {Object} ast an existing GraphQL IDL AST object that will be 
+     *
+     * @param {Object} ast an existing GraphQL IDL AST object that will be
      * merged on top of the existing tree using Object.assign()
      * @return {SyntaxTree} this for inlining.
      */
@@ -2102,25 +2566,25 @@ var SyntaxTree = exports.SyntaxTree = function () {
       return this;
     }
 
-    /** 
-     * Appends all definitions from another AST to this one. The method will 
+    /**
+     * Appends all definitions from another AST to this one. The method will
      * actually create a copy using SyntaxTree.from() so the input types can
-     * be any one of a valid GraphQL IDL schema string, a GraphQL IDL AST or 
+     * be any one of a valid GraphQL IDL schema string, a GraphQL IDL AST or
      * another SyntaxTree object instance.
      *
-     * Definitions of the same name but different kinds will be replaced by the 
+     * Definitions of the same name but different kinds will be replaced by the
      * new copy. Those of the same kind and name will be merged (TODO handle more
-     * than ObjectTypeDefinition kinds when merging; currently other types are 
+     * than ObjectTypeDefinition kinds when merging; currently other types are
      * overwritten).
      *
      * @instance
      * @memberof SyntaxTree
      * @method ⌾⠀appendDefinitions
-     * 
-     * @param {string|Object|SyntaxTree} schemaOrASTOrST an instance of one of 
-     * the valid types for SyntaxTree.from() that can be used to create or 
+     *
+     * @param {string|Object|SyntaxTree} schemaOrASTOrST an instance of one of
+     * the valid types for SyntaxTree.from() that can be used to create or
      * duplicate the source from which to copy definitions.
-     * @return {SyntaxTree} this for inlining 
+     * @return {SyntaxTree} this for inlining
      */
 
   }, {
@@ -2170,7 +2634,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
                         ours.fields = [].concat(ours.fields, theirs.fields);
                         break;
                       default:
-                        // Since we don't support other types yet. Let's replace 
+                        // Since we don't support other types yet. Let's replace
                         this.ast.definitions[index] = theirs;
                         break;
                     }
@@ -2203,13 +2667,13 @@ var SyntaxTree = exports.SyntaxTree = function () {
      * supplied object does, then the supplied one is moved over. If neither
      * has a query handler, then nothing happens.
      *
-     * NOTE this *removes* the Query type definition from the supplied AST or 
+     * NOTE this *removes* the Query type definition from the supplied AST or
      * SyntaxTree object.
      *
      * @instance
      * @memberof SyntaxTree
      * @method ⌾⠀consumeDefinition
-     * 
+     *
      * @param {Object|SyntaxTree} astOrSyntaxTree a valid GraphQL IDL AST or
      * an instance of SyntaxTree that represents one.
      * @param {string|RegExp} definitionType a valid search input as would be
@@ -2235,10 +2699,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
       }
 
       if (!left) {
-        console.log('Here');
-        console.log('Before', this.ast.definitions);
         this.ast.definitions.push(right);
-        console.log('After', this.ast.definitions);
 
         // Remove the copied definition from the source
         tree.ast.definitions.splice(tree.ast.definitions.indexOf(right), 1);
@@ -2258,10 +2719,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
             left.directives = [].concat(left.directives, right.directives);
           }
           if (left.fields && right.fields) {
-            console.log('Left fields before', left.fields);
-            console.log('Right fields', right.fields);
             left.fields = [].concat(left.fields, right.fields);
-            console.log('Left fields after', left.fields);
           }
 
           break;
@@ -2276,7 +2734,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * When iterating over an instance of SyntaxTree, you are actually 
+     * When iterating over an instance of SyntaxTree, you are actually
      * iterating over the definitions of the SyntaxTree if there are any;
      *
      * @instance
@@ -2317,17 +2775,17 @@ var SyntaxTree = exports.SyntaxTree = function () {
 
     /**
      * Iterate through the definitions of the AST if there are any. For each
-     * definition the name property's value field is compared to the supplied 
+     * definition the name property's value field is compared to the supplied
      * definitionName. The definitionName can be a string or a regular
-     * expression if finer granularity is desired. 
+     * expression if finer granularity is desired.
      *
      * @instance
      * @memberof SyntaxTree
      * @method ⌾⠀find
-     * 
+     *
      * @param {string|RegExp} definitionName a string or regular expression used
-     * to match against the definition name field in a given AST. 
-     * @return {Object|null} a reference to the internal definition field or 
+     * to match against the definition name field in a given AST.
+     * @return {Object|null} a reference to the internal definition field or
      * null if one with a matching name could not be found.
      */
 
@@ -2356,7 +2814,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
      * @instance
      * @memberof SyntaxTree
      * @method ⌾⠀toString
-     * 
+     *
      * @return {string} the AST for the tree parsed back into a string
      */
 
@@ -2368,9 +2826,9 @@ var SyntaxTree = exports.SyntaxTree = function () {
 
     /**
      * A runtime constant denoting a query type.
-     * 
+     *
      * @type {string}
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⬇︎⠀QUERY
      * @readonly
@@ -2384,13 +2842,13 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * Setter that assigns the abstract syntax tree, typically created by 
+     * Setter that assigns the abstract syntax tree, typically created by
      * `graphql.parse` when given a valid string of IDL.
      *
      * @instance
      * @memberof SyntaxTree
      * @method ⬆︎⠀ast
-     * 
+     *
      * @param {Object} value a valid AST object. Other operations will act
      * in an undefined manner should this object not be a valid AST
      */
@@ -2398,19 +2856,49 @@ var SyntaxTree = exports.SyntaxTree = function () {
     set: function set(value) {
       this[AST_KEY] = value;
     }
+  }, {
+    key: _toStringTag2.default,
+
+
+    /**
+     * Returns the `constructor` name. If invoked as the context, or `this`,
+     * object of the `toString` method of `Object`'s `prototype`, the resulting
+     * value will be `[object MyClass]`, given an instance of `MyClass`
+     *
+     * @method ⌾⠀[Symbol.toStringTag]
+     * @memberof SyntaxTree
+     *
+     * @return {string} the name of the class this is an instance of
+     */
+    get: function get() {
+      return this.constructor.name;
+    }
+
+    /**
+     * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static 
+     * scale. So, if you perform `Object.prototype.toString.call(MyClass)` 
+     * the result would be `[object MyClass]`.
+     *
+     * @method ⌾⠀[Symbol.toStringTag]
+     * @memberof SyntaxTree
+     * @static
+     *
+     * @return {string} the name of this class
+     */
+
   }], [{
     key: 'from',
 
 
     /**
      * Given one of, a valid GraphQL IDL schema string, a valid GraphQL AST or
-     * an instance of SyntaxTree, the static from() method will create a new 
+     * an instance of SyntaxTree, the static from() method will create a new
      * instance of the SyntaxTree with the values you provide.
      *
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⌾⠀from
-     * 
+     *
      * @param {String|Object|SyntaxTree} mixed an instance of one of the valid
      * types specified above. Everything else will result in a null value.
      * @return {SyntaxTree} a newly created and populated instance of SyntaxTree
@@ -2449,16 +2937,16 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * Generates a new instance of SyntaxTree from the supplied, valid, GraphQL 
+     * Generates a new instance of SyntaxTree from the supplied, valid, GraphQL
      * schema. This method does not perform try/catch validation and if an
      * invalid GraphQL schema is supplied an error will be thrown.
      *
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⌾⠀fromSchema
-     * 
+     *
      * @param {string} schema a valid GraphQL IDL schema string.
-     * @return {SyntaxTree} a new instance of SyntaxTree initialized with a 
+     * @return {SyntaxTree} a new instance of SyntaxTree initialized with a
      * parsed response from require('graphql').parse().
      */
 
@@ -2472,16 +2960,16 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * Generates a new instance of SyntaxTree from the supplied, valid, GraphQL 
+     * Generates a new instance of SyntaxTree from the supplied, valid, GraphQL
      * schema. This method does not perform try/catch validation and if an
      * invalid GraphQL schema is supplied an error will be thrown.
      *
      * @static
      * @memberof SyntaxTree
      * @method ⌾⠀fromAST
-     * 
+     *
      * @param {object} ast a valid GraphQL AST object.
-     * @return {SyntaxTree} a new instance of SyntaxTree initialized with a 
+     * @return {SyntaxTree} a new instance of SyntaxTree initialized with a
      * supplied abstract syntax tree generated by require('graphql').parse() or
      * other compatible method.
      */
@@ -2496,16 +2984,16 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * Query types in GraphQL are an ObjectTypeDefinition of importance for 
-     * placement on the root object. There is utility in creating an empty 
-     * one that can be injected with the fields of other GraphQL object query 
+     * Query types in GraphQL are an ObjectTypeDefinition of importance for
+     * placement on the root object. There is utility in creating an empty
+     * one that can be injected with the fields of other GraphQL object query
      * entries.
      *
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⌾⠀EmptyQuery
-     * 
-     * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated 
+     *
+     * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated
      * by parsing the graph query, "type Query {}"
      */
 
@@ -2516,16 +3004,16 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
-     * Mutation types in GraphQL are an ObjectTypeDefinition of importance for 
-     * placement on the root object. There is utility in creating an empty 
-     * one that can be injected with the fields of other GraphQL object mutation 
+     * Mutation types in GraphQL are an ObjectTypeDefinition of importance for
+     * placement on the root object. There is utility in creating an empty
+     * one that can be injected with the fields of other GraphQL object mutation
      * entries.
      *
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⌾⠀EmptyMutation
-     * 
-     * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated 
+     *
+     * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated
      * by parsing the graph query, "type Mutation {}"
      */
 
@@ -2538,10 +3026,10 @@ var SyntaxTree = exports.SyntaxTree = function () {
     /**
      * The starting point for a SyntaxTree that will be built up programmatically.
      *
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⌾⠀EmptyDocument
-     * 
+     *
      * @param {string|Object|SyntaxTree} schemaOrASTOrST any valid type taken by
      * SyntaxTree.from() used to further populate the new empty document
      * @return {SyntaxTree} an instance of SyntaxTree with no definitions and a
@@ -2553,7 +3041,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
     value: function EmptyDocument(schemaOrASTOrST) {
       var tree = new SyntaxTree();
 
-      // Due to normal validation methods with ASTs (i.e. converting to string 
+      // Due to normal validation methods with ASTs (i.e. converting to string
       // and then back to an AST object), doing this with an empty document
       // fails. Therefore, we manually set the document contents here. This allows
       // toString(), consumeDefinition() and similar methods to still work.
@@ -2577,9 +3065,9 @@ var SyntaxTree = exports.SyntaxTree = function () {
 
     /**
      * A runtime constant denoting a mutation type.
-     * 
+     *
      * @type {string}
-     * @static 
+     * @static
      * @memberof SyntaxTree
      * @method ⬇︎⠀MUTATION
      * @readonly
@@ -2591,24 +3079,10 @@ var SyntaxTree = exports.SyntaxTree = function () {
     get: function get() {
       return 'Mutation';
     }
-
-    /**
-     * Ensures that the object type reported by Object.prototype.toString() 
-     * for SyntaxTree objects returns as [object SyntaxTree]. Used by 
-     * {@link utils#typeOf}
-     * 
-     * @type {string}
-     * @static 
-     * @memberof SyntaxTree
-     * @method ⬇︎⠀QUERY
-     * @readonly
-     * @const
-     */
-
   }, {
     key: _toStringTag2.default,
     get: function get() {
-      return SyntaxTree.name;
+      return this.name;
     }
   }]);
   return SyntaxTree;
@@ -2620,40 +3094,40 @@ exports.default = SyntaxTree;
 // require('./bootstrap'); let typeOf = require('./lib/utils').typeOf, GQL=require('graphql'), ST = require('./lib/GraphQL/SyntaxTree').SyntaxTree, schema = `input MessageInput { content: String author: String } type Message { id: ID! content: String author: String } type Query { getMessage(id: ID!): Message } type Mutation { createMessage(input: MessageInput): Message updateMessage(id: ID!, input: MessageInput): Message }`, ast = GQL.parse(schema), st = ST.fromSchema(schema), query = ST.EmptyQuery(), mutation = ST.EmptyMutation()
 
 /***/ }),
-/* 54 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(136), __esModule: true };
+module.exports = { "default": __webpack_require__(152), __esModule: true };
 
 /***/ }),
-/* 55 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(81), __esModule: true };
+module.exports = { "default": __webpack_require__(89), __esModule: true };
 
 /***/ }),
-/* 56 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(3) && !__webpack_require__(12)(function(){
-  return Object.defineProperty(__webpack_require__(37)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+module.exports = !__webpack_require__(4) && !__webpack_require__(11)(function(){
+  return Object.defineProperty(__webpack_require__(42)('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 57 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(8);
 
 /***/ }),
-/* 58 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP       = __webpack_require__(5)
   , anObject = __webpack_require__(6)
-  , getKeys  = __webpack_require__(15);
+  , getKeys  = __webpack_require__(14);
 
-module.exports = __webpack_require__(3) ? Object.defineProperties : function defineProperties(O, Properties){
+module.exports = __webpack_require__(4) ? Object.defineProperties : function defineProperties(O, Properties){
   anObject(O);
   var keys   = getKeys(Properties)
     , length = keys.length
@@ -2664,13 +3138,13 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 };
 
 /***/ }),
-/* 59 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has          = __webpack_require__(9)
-  , toIObject    = __webpack_require__(10)
-  , arrayIndexOf = __webpack_require__(84)(false)
-  , IE_PROTO     = __webpack_require__(42)('IE_PROTO');
+var has          = __webpack_require__(12)
+  , toIObject    = __webpack_require__(9)
+  , arrayIndexOf = __webpack_require__(92)(false)
+  , IE_PROTO     = __webpack_require__(46)('IE_PROTO');
 
 module.exports = function(object, names){
   var O      = toIObject(object)
@@ -2686,31 +3160,13 @@ module.exports = function(object, names){
 };
 
 /***/ }),
-/* 60 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(2).document && document.documentElement;
+module.exports = __webpack_require__(3).document && document.documentElement;
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has         = __webpack_require__(9)
-  , toObject    = __webpack_require__(45)
-  , IE_PROTO    = __webpack_require__(42)('IE_PROTO')
-  , ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function(O){
-  O = toObject(O);
-  if(has(O, IE_PROTO))return O[IE_PROTO];
-  if(typeof O.constructor == 'function' && O instanceof O.constructor){
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-/***/ }),
-/* 62 */
+/* 68 */
 /***/ (function(module, exports) {
 
 module.exports = function(done, value){
@@ -2718,43 +3174,43 @@ module.exports = function(done, value){
 };
 
 /***/ }),
-/* 63 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(88), __esModule: true };
+module.exports = { "default": __webpack_require__(96), __esModule: true };
 
 /***/ }),
-/* 64 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // ECMAScript 6 symbols shim
-var global         = __webpack_require__(2)
-  , has            = __webpack_require__(9)
-  , DESCRIPTORS    = __webpack_require__(3)
-  , $export        = __webpack_require__(4)
-  , redefine       = __webpack_require__(57)
-  , META           = __webpack_require__(46).KEY
-  , $fails         = __webpack_require__(12)
-  , shared         = __webpack_require__(43)
-  , setToStringTag = __webpack_require__(17)
-  , uid            = __webpack_require__(25)
-  , wks            = __webpack_require__(1)
-  , wksExt         = __webpack_require__(26)
-  , wksDefine      = __webpack_require__(47)
-  , keyOf          = __webpack_require__(89)
-  , enumKeys       = __webpack_require__(90)
-  , isArray        = __webpack_require__(65)
+var global         = __webpack_require__(3)
+  , has            = __webpack_require__(12)
+  , DESCRIPTORS    = __webpack_require__(4)
+  , $export        = __webpack_require__(1)
+  , redefine       = __webpack_require__(64)
+  , META           = __webpack_require__(32).KEY
+  , $fails         = __webpack_require__(11)
+  , shared         = __webpack_require__(47)
+  , setToStringTag = __webpack_require__(18)
+  , uid            = __webpack_require__(28)
+  , wks            = __webpack_require__(2)
+  , wksExt         = __webpack_require__(31)
+  , wksDefine      = __webpack_require__(50)
+  , keyOf          = __webpack_require__(97)
+  , enumKeys       = __webpack_require__(98)
+  , isArray        = __webpack_require__(71)
   , anObject       = __webpack_require__(6)
-  , toIObject      = __webpack_require__(10)
-  , toPrimitive    = __webpack_require__(38)
-  , createDesc     = __webpack_require__(24)
-  , _create        = __webpack_require__(39)
-  , gOPNExt        = __webpack_require__(91)
-  , $GOPD          = __webpack_require__(92)
+  , toIObject      = __webpack_require__(9)
+  , toPrimitive    = __webpack_require__(43)
+  , createDesc     = __webpack_require__(26)
+  , _create        = __webpack_require__(27)
+  , gOPNExt        = __webpack_require__(99)
+  , $GOPD          = __webpack_require__(73)
   , $DP            = __webpack_require__(5)
-  , $keys          = __webpack_require__(15)
+  , $keys          = __webpack_require__(14)
   , gOPD           = $GOPD.f
   , dP             = $DP.f
   , gOPN           = gOPNExt.f
@@ -2877,11 +3333,11 @@ if(!USE_NATIVE){
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f   = $defineProperty;
-  __webpack_require__(66).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(27).f  = $propertyIsEnumerable;
-  __webpack_require__(48).f = $getOwnPropertySymbols;
+  __webpack_require__(72).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(19).f  = $propertyIsEnumerable;
+  __webpack_require__(51).f = $getOwnPropertySymbols;
 
-  if(DESCRIPTORS && !__webpack_require__(23)){
+  if(DESCRIPTORS && !__webpack_require__(25)){
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -2956,7 +3412,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function(){
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(7)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(8)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -2965,29 +3421,50 @@ setToStringTag(Math, 'Math', true);
 setToStringTag(global.JSON, 'JSON', true);
 
 /***/ }),
-/* 65 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(16);
+var cof = __webpack_require__(17);
 module.exports = Array.isArray || function isArray(arg){
   return cof(arg) == 'Array';
 };
 
 /***/ }),
-/* 66 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys      = __webpack_require__(59)
-  , hiddenKeys = __webpack_require__(44).concat('length', 'prototype');
+var $keys      = __webpack_require__(66)
+  , hiddenKeys = __webpack_require__(48).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
   return $keys(O, hiddenKeys);
 };
 
 /***/ }),
-/* 67 */
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pIE            = __webpack_require__(19)
+  , createDesc     = __webpack_require__(26)
+  , toIObject      = __webpack_require__(9)
+  , toPrimitive    = __webpack_require__(43)
+  , has            = __webpack_require__(12)
+  , IE8_DOM_DEFINE = __webpack_require__(63)
+  , gOPD           = Object.getOwnPropertyDescriptor;
+
+exports.f = __webpack_require__(4) ? gOPD : function getOwnPropertyDescriptor(O, P){
+  O = toIObject(O);
+  P = toPrimitive(P, true);
+  if(IE8_DOM_DEFINE)try {
+    return gOPD(O, P);
+  } catch(e){ /* empty */ }
+  if(has(O, P))return createDesc(!pIE.f.call(O, P), O[P]);
+};
+
+/***/ }),
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2995,7 +3472,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
 
 exports.__esModule = true;
 
-var _promise = __webpack_require__(68);
+var _promise = __webpack_require__(75);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -3031,18 +3508,18 @@ exports.default = function (fn) {
 };
 
 /***/ }),
-/* 68 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(97), __esModule: true };
+module.exports = { "default": __webpack_require__(106), __esModule: true };
 
 /***/ }),
-/* 69 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof   = __webpack_require__(29)
-  , ITERATOR  = __webpack_require__(1)('iterator')
-  , Iterators = __webpack_require__(13);
+var classof   = __webpack_require__(53)
+  , ITERATOR  = __webpack_require__(2)('iterator')
+  , Iterators = __webpack_require__(16);
 module.exports = __webpack_require__(0).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
@@ -3050,14 +3527,14 @@ module.exports = __webpack_require__(0).getIteratorMethod = function(it){
 };
 
 /***/ }),
-/* 70 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ctx                = __webpack_require__(11)
-  , invoke             = __webpack_require__(102)
-  , html               = __webpack_require__(60)
-  , cel                = __webpack_require__(37)
-  , global             = __webpack_require__(2)
+var ctx                = __webpack_require__(10)
+  , invoke             = __webpack_require__(111)
+  , html               = __webpack_require__(67)
+  , cel                = __webpack_require__(42)
+  , global             = __webpack_require__(3)
   , process            = global.process
   , setTask            = global.setImmediate
   , clearTask          = global.clearImmediate
@@ -3092,7 +3569,7 @@ if(!setTask || !clearTask){
     delete queue[id];
   };
   // Node.js 0.8-
-  if(__webpack_require__(16)(process) == 'process'){
+  if(__webpack_require__(17)(process) == 'process'){
     defer = function(id){
       process.nextTick(ctx(run, id, 1));
     };
@@ -3130,16 +3607,16 @@ module.exports = {
 };
 
 /***/ }),
-/* 71 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var global      = __webpack_require__(2)
+var global      = __webpack_require__(3)
   , core        = __webpack_require__(0)
   , dP          = __webpack_require__(5)
-  , DESCRIPTORS = __webpack_require__(3)
-  , SPECIES     = __webpack_require__(1)('species');
+  , DESCRIPTORS = __webpack_require__(4)
+  , SPECIES     = __webpack_require__(2)('species');
 
 module.exports = function(KEY){
   var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -3150,13 +3627,34 @@ module.exports = function(KEY){
 };
 
 /***/ }),
-/* 72 */
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(1)
+  , core    = __webpack_require__(0)
+  , fails   = __webpack_require__(11);
+module.exports = function(KEY, exec){
+  var fn  = (core.Object || {})[KEY] || Object[KEY]
+    , exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
+};
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(120), __esModule: true };
+
+/***/ }),
+/* 81 */
 /***/ (function(module, exports) {
 
 module.exports = require("path");
 
 /***/ }),
-/* 73 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3167,43 +3665,48 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Deferred = undefined;
 
-var _promise = __webpack_require__(68);
+var _promise = __webpack_require__(75);
 
 var _promise2 = _interopRequireDefault(_promise);
 
-var _classCallCheck2 = __webpack_require__(31);
+var _classCallCheck2 = __webpack_require__(20);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(32);
+var _createClass2 = __webpack_require__(21);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
+
+exports.lineJoin = lineJoin;
+
+var _types = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Deferred is modeled after jQuery's deferred object. It inverts a promise 
- * such that its resolve and reject methods can be invoked without wrapping 
- * all of the related code within a Promise's function. 
+ * Deferred is modeled after jQuery's deferred object. It inverts a promise
+ * such that its resolve and reject methods can be invoked without wrapping
+ * all of the related code within a Promise's function.
  *
+ * @memberof utils
  * @class Deferred
  */
 var Deferred = exports.Deferred = function () {
   /**
-   * Creates an object with four properties of note; promise, resolve, reject 
-   * and a flag complete that will be set once either resolve or reject have 
+   * Creates an object with four properties of note; promise, resolve, reject
+   * and a flag complete that will be set once either resolve or reject have
    * been called. A Deferred is considered to be pending while complete is set
    * to false.
    *
-   * Once constructed, resolve and reject can be called later, at which point, 
-   * the promise is completed. The promise property is the promise resolved 
-   * or rejected by the associated properties and can be used with other 
+   * Once constructed, resolve and reject can be called later, at which point,
+   * the promise is completed. The promise property is the promise resolved
+   * or rejected by the associated properties and can be used with other
    * async/await or Promise based code.
    *
    * @instance
    * @memberof Deferred
    * @method ⎆⠀constructor
-   * 
+   *
    * @param {any} resolveWith a deferred resolved as Promise.resolve() might do
    * @param {any} rejectWith a deferred rejected as Promise.reject() might do
    */
@@ -3235,45 +3738,215 @@ var Deferred = exports.Deferred = function () {
   }
 
   /**
-   * Shorthand getter that denotes true if the deferred is not yet complete. 
+   * Shorthand getter that denotes true if the deferred is not yet complete.
    *
    * @instance
    * @memberof Deferred
    * @method ⬇︎⠀pending
-   * 
+   *
    * @return {boolean} true if the promise is not yet complete; false otherwise
    */
 
 
   (0, _createClass3.default)(Deferred, [{
-    key: "pending",
+    key: 'pending',
     get: function get() {
       return !this.complete;
+    }
+
+    /**
+     * Promises are great but if the code never resolves or rejects a deferred,
+     * then things will become eternal; in a bad way. This makes that less likely
+     * of an event.
+     *
+     * If the number of milliseconds elapses before a resolve or reject occur,
+     * then the deferred is rejected.
+     *
+     * @static
+     * @memberof Deferred
+     * @method ⌾⠀TimedDeferred
+     *
+     * @param {Number} timeOut a number of milliseconds to wait before rejecting
+     * the deferred.
+     * @param {Promise} proxyPromise a promise to proxy then/catch through to the
+     * deferreds resolve/reject.
+     * @return {Deferred} an instance of deferred that will timeout after
+     * `timeOut` milliseconds have elapsed. If `proxyPromise` is a `Promise`
+     * then the deferred's reject and resolve will be tied to the Promise's
+     * catch() and then() methods, respectively.
+     */
+
+  }], [{
+    key: 'TimedDeferred',
+    value: function TimedDeferred(timeOut, proxyPromise) {
+      var deferred = new Deferred();
+
+      if (proxyPromise && (0, _types.typeOf)(proxyPromise) === _promise2.default.name) {
+        proxyPromise.then(function () {
+          return deferred.resolve.apply(deferred, arguments);
+        });
+        proxyPromise.catch(function (reason) {
+          return deferred.reject(reason);
+        });
+      }
+
+      setTimeout(function () {
+        return deferred.reject(new Error('Deferred timed out'), timeOut);
+      });
+
+      return deferred;
     }
   }]);
   return Deferred;
 }();
 
+/**
+ * A small helper for multiline template strings that allows you to
+ * not worry about new lines and indentations within your code from
+ * breaking up the format of the string. 
+ *
+ * @memberof utils
+ * @since 2.5
+ * 
+ * @param {Array} strings an array of Strings from the template, broken up by
+ * where the substitions are to be inserted.
+ * @param {Array} values an array of values to be inserted after each string
+ * of a matching index.
+ * @return {String} a template String without any prefixed or postfixed tabs
+ * and other whitespaced characters. 
+ */
+/** @namespace utils */
+
+
+function lineJoin(strings) {
+  var result = [];
+
+  for (var _len = arguments.length, values = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    values[_key - 1] = arguments[_key];
+  }
+
+  for (var i = 0; i < strings.length; i++) {
+    var string = strings[i];
+    var value = values.length > i && values[i] + ' ' || '';
+    result.push(string.replace(/(^\s*)?(.*)(\s*$)?/g, '$2').replace(/\r?\n/g, ' '));
+    result.push(value);
+  }
+  return result.join('');
+}
+
 /***/ }),
-/* 74 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(109), __esModule: true };
+module.exports = { "default": __webpack_require__(135), __esModule: true };
 
 /***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(128), __esModule: true };
-
-/***/ }),
-/* 76 */
+/* 84 */
 /***/ (function(module, exports) {
 
-module.exports = require("graphql");
+module.exports = require("events");
 
 /***/ }),
-/* 77 */
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GQLInterface = undefined;
+
+var _getPrototypeOf = __webpack_require__(57);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(20);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(21);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(58);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(59);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _GQLBase2 = __webpack_require__(13);
+
+var _graphql = __webpack_require__(37);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Used by Lattice to implement interface types in the schema when necessary
+ *
+ * @class GQLInterface
+ */
+/**
+ @namespace GQLInterface
+ 
+ */
+
+var GQLInterface = exports.GQLInterface = function (_GQLBase) {
+  (0, _inherits3.default)(GQLInterface, _GQLBase);
+
+  function GQLInterface() {
+    (0, _classCallCheck3.default)(this, GQLInterface);
+    return (0, _possibleConstructorReturn3.default)(this, (GQLInterface.__proto__ || (0, _getPrototypeOf2.default)(GQLInterface)).apply(this, arguments));
+  }
+
+  (0, _createClass3.default)(GQLInterface, null, [{
+    key: 'resolveType',
+
+
+    /**
+     * This needs to be able to, depending on your implementors, identify
+     * which on the data actually is given the model to work with.
+     *
+     * @memberof GQLInterface
+     * @method ⌾⠀resolveType
+     * @static
+     *
+     * @param {mixed} model the data you can use to instantiate the type of
+     * object in question.
+     * @return {String} a string matching the name of a defined GraphQL type
+     * found elsewhere in your schema
+     */
+    value: function resolveType(model) {
+      throw new Error('\n      You must override "resolveType(model)" in your GQLInterface instance\n      and determine the implementor type by the contents of the supplied\n      model. Returning "null" when nothing matches.\n    ');
+    }
+
+    /**
+     * Denotes that this GQLBase descendent is describing a graphql
+     * interface type.
+     *
+     * @memberof GQLInterface
+     * @method ⬇︎⠀GQL_TYPE
+     * @static
+     * @const
+     *
+     * @return {Function} a type, such as `GraphQLObjectType` or
+     * `GraphQLInterfaceType`
+     */
+
+  }, {
+    key: 'GQL_TYPE',
+    get: function get() {
+      return _graphql.GraphQLInterfaceType;
+    }
+  }]);
+  return GQLInterface;
+}(_GQLBase2.GQLBase);
+
+/***/ }),
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3281,7 +3954,7 @@ module.exports = require("graphql");
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(52);
+var _defineProperty = __webpack_require__(34);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -3303,7 +3976,7 @@ exports.default = function (obj, key, value) {
 };
 
 /***/ }),
-/* 78 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3312,25 +3985,27 @@ exports.default = function (obj, key, value) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FileSchema = exports.Schema = exports.Properties = exports.Setters = exports.Getters = exports.AdjacentSchema = exports.typeOf = exports.types = exports.Deferred = exports.SyntaxTree = exports.GQLExpressMiddleware = exports.GQLBase = undefined;
+exports.FileSchema = exports.Schema = exports.Properties = exports.Setters = exports.Getters = exports.AdjacentSchema = exports.typeOf = exports.types = exports.Deferred = exports.SyntaxTree = exports.GQLExpressMiddleware = exports.GQLInterface = exports.GQLBase = undefined;
 
-var _GQLBase = __webpack_require__(21);
+var _GQLBase = __webpack_require__(13);
 
-var _GQLExpressMiddleware = __webpack_require__(133);
+var _GQLInterface = __webpack_require__(85);
 
-var _SyntaxTree = __webpack_require__(53);
+var _GQLExpressMiddleware = __webpack_require__(154);
 
-var _utils = __webpack_require__(73);
+var _SyntaxTree = __webpack_require__(60);
 
-var _AdjacentSchema = __webpack_require__(135);
+var _utils = __webpack_require__(82);
 
-var _ModelProperties = __webpack_require__(138);
+var _AdjacentSchema = __webpack_require__(160);
 
-var _Schema = __webpack_require__(143);
+var _ModelProperties = __webpack_require__(161);
 
-var _FileSchema = __webpack_require__(144);
+var _Schema = __webpack_require__(163);
 
-var _types = __webpack_require__(20);
+var _FileSchema = __webpack_require__(164);
+
+var _types = __webpack_require__(15);
 
 var types = _interopRequireWildcard(_types);
 
@@ -3342,6 +4017,7 @@ var typeOf = types.typeOf;
 
 var defaultPackage = {
   GQLBase: _GQLBase.GQLBase,
+  GQLInterface: _GQLInterface.GQLInterface,
   GQLExpressMiddleware: _GQLExpressMiddleware.GQLExpressMiddleware,
   SyntaxTree: _SyntaxTree.SyntaxTree,
   Deferred: _utils.Deferred,
@@ -3357,6 +4033,7 @@ var defaultPackage = {
 
 /* Also export each of the constructs individually */
 exports.GQLBase = _GQLBase.GQLBase;
+exports.GQLInterface = _GQLInterface.GQLInterface;
 exports.GQLExpressMiddleware = _GQLExpressMiddleware.GQLExpressMiddleware;
 exports.SyntaxTree = _SyntaxTree.SyntaxTree;
 exports.Deferred = _utils.Deferred;
@@ -3371,7 +4048,7 @@ exports.FileSchema = _FileSchema.FileSchema;
 exports.default = defaultPackage;
 
 /***/ }),
-/* 79 */
+/* 88 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -3399,46 +4076,19 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 80 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _iterator = __webpack_require__(55);
-
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _symbol = __webpack_require__(63);
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
-var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-} : function (obj) {
-  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-};
+__webpack_require__(23);
+__webpack_require__(30);
+module.exports = __webpack_require__(31).f('iterator');
 
 /***/ }),
-/* 81 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
-__webpack_require__(18);
-module.exports = __webpack_require__(26).f('iterator');
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(34)
-  , defined   = __webpack_require__(22);
+var toInteger = __webpack_require__(39)
+  , defined   = __webpack_require__(24);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -3456,18 +4106,18 @@ module.exports = function(TO_STRING){
 };
 
 /***/ }),
-/* 83 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var create         = __webpack_require__(39)
-  , descriptor     = __webpack_require__(24)
-  , setToStringTag = __webpack_require__(17)
+var create         = __webpack_require__(27)
+  , descriptor     = __webpack_require__(26)
+  , setToStringTag = __webpack_require__(18)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(7)(IteratorPrototype, __webpack_require__(1)('iterator'), function(){ return this; });
+__webpack_require__(8)(IteratorPrototype, __webpack_require__(2)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -3475,14 +4125,14 @@ module.exports = function(Constructor, NAME, next){
 };
 
 /***/ }),
-/* 84 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(10)
-  , toLength  = __webpack_require__(41)
-  , toIndex   = __webpack_require__(85);
+var toIObject = __webpack_require__(9)
+  , toLength  = __webpack_require__(45)
+  , toIndex   = __webpack_require__(93);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -3501,10 +4151,10 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 85 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(34)
+var toInteger = __webpack_require__(39)
   , max       = Math.max
   , min       = Math.min;
 module.exports = function(index, length){
@@ -3513,21 +4163,21 @@ module.exports = function(index, length){
 };
 
 /***/ }),
-/* 86 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(87)
-  , step             = __webpack_require__(62)
-  , Iterators        = __webpack_require__(13)
-  , toIObject        = __webpack_require__(10);
+var addToUnscopables = __webpack_require__(95)
+  , step             = __webpack_require__(68)
+  , Iterators        = __webpack_require__(16)
+  , toIObject        = __webpack_require__(9);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(35)(Array, 'Array', function(iterated, kind){
+module.exports = __webpack_require__(40)(Array, 'Array', function(iterated, kind){
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -3553,27 +4203,27 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
-/* 87 */
+/* 95 */
 /***/ (function(module, exports) {
 
 module.exports = function(){ /* empty */ };
 
 /***/ }),
-/* 88 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(64);
-__webpack_require__(28);
-__webpack_require__(93);
-__webpack_require__(94);
+__webpack_require__(70);
+__webpack_require__(33);
+__webpack_require__(100);
+__webpack_require__(101);
 module.exports = __webpack_require__(0).Symbol;
 
 /***/ }),
-/* 89 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getKeys   = __webpack_require__(15)
-  , toIObject = __webpack_require__(10);
+var getKeys   = __webpack_require__(14)
+  , toIObject = __webpack_require__(9);
 module.exports = function(object, el){
   var O      = toIObject(object)
     , keys   = getKeys(O)
@@ -3584,13 +4234,13 @@ module.exports = function(object, el){
 };
 
 /***/ }),
-/* 90 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(15)
-  , gOPS    = __webpack_require__(48)
-  , pIE     = __webpack_require__(27);
+var getKeys = __webpack_require__(14)
+  , gOPS    = __webpack_require__(51)
+  , pIE     = __webpack_require__(19);
 module.exports = function(it){
   var result     = getKeys(it)
     , getSymbols = gOPS.f;
@@ -3604,12 +4254,12 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 91 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(10)
-  , gOPN      = __webpack_require__(66).f
+var toIObject = __webpack_require__(9)
+  , gOPN      = __webpack_require__(72).f
   , toString  = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -3629,40 +4279,37 @@ module.exports.f = function getOwnPropertyNames(it){
 
 
 /***/ }),
-/* 92 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE            = __webpack_require__(27)
-  , createDesc     = __webpack_require__(24)
-  , toIObject      = __webpack_require__(10)
-  , toPrimitive    = __webpack_require__(38)
-  , has            = __webpack_require__(9)
-  , IE8_DOM_DEFINE = __webpack_require__(56)
-  , gOPD           = Object.getOwnPropertyDescriptor;
+__webpack_require__(50)('asyncIterator');
 
-exports.f = __webpack_require__(3) ? gOPD : function getOwnPropertyDescriptor(O, P){
-  O = toIObject(O);
-  P = toPrimitive(P, true);
-  if(IE8_DOM_DEFINE)try {
-    return gOPD(O, P);
-  } catch(e){ /* empty */ }
-  if(has(O, P))return createDesc(!pIE.f.call(O, P), O[P]);
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(50)('observable');
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(103);
+var $Object = __webpack_require__(0).Object;
+module.exports = function defineProperty(it, key, desc){
+  return $Object.defineProperty(it, key, desc);
 };
 
 /***/ }),
-/* 93 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(47)('asyncIterator');
+var $export = __webpack_require__(1);
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !__webpack_require__(4), 'Object', {defineProperty: __webpack_require__(5).f});
 
 /***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(47)('observable');
-
-/***/ }),
-/* 95 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // This method of obtaining a reference to the global object needs to be
@@ -3683,7 +4330,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(96);
+module.exports = __webpack_require__(105);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -3699,7 +4346,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 96 */
+/* 105 */
 /***/ (function(module, exports) {
 
 /**
@@ -4441,33 +5088,33 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 97 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(28);
-__webpack_require__(14);
-__webpack_require__(18);
-__webpack_require__(98);
+__webpack_require__(33);
+__webpack_require__(23);
+__webpack_require__(30);
+__webpack_require__(107);
 module.exports = __webpack_require__(0).Promise;
 
 /***/ }),
-/* 98 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY            = __webpack_require__(23)
-  , global             = __webpack_require__(2)
-  , ctx                = __webpack_require__(11)
-  , classof            = __webpack_require__(29)
-  , $export            = __webpack_require__(4)
-  , isObject           = __webpack_require__(8)
-  , aFunction          = __webpack_require__(36)
-  , anInstance         = __webpack_require__(50)
-  , forOf              = __webpack_require__(30)
-  , speciesConstructor = __webpack_require__(101)
-  , task               = __webpack_require__(70).set
-  , microtask          = __webpack_require__(103)()
+var LIBRARY            = __webpack_require__(25)
+  , global             = __webpack_require__(3)
+  , ctx                = __webpack_require__(10)
+  , classof            = __webpack_require__(53)
+  , $export            = __webpack_require__(1)
+  , isObject           = __webpack_require__(7)
+  , aFunction          = __webpack_require__(41)
+  , anInstance         = __webpack_require__(54)
+  , forOf              = __webpack_require__(35)
+  , speciesConstructor = __webpack_require__(110)
+  , task               = __webpack_require__(77).set
+  , microtask          = __webpack_require__(112)()
   , PROMISE            = 'Promise'
   , TypeError          = global.TypeError
   , process            = global.process
@@ -4481,7 +5128,7 @@ var USE_NATIVE = !!function(){
   try {
     // correct subclassing with @@species support
     var promise     = $Promise.resolve(1)
-      , FakePromise = (promise.constructor = {})[__webpack_require__(1)('species')] = function(exec){ exec(empty, empty); };
+      , FakePromise = (promise.constructor = {})[__webpack_require__(2)('species')] = function(exec){ exec(empty, empty); };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
     return (isNode || typeof PromiseRejectionEvent == 'function') && promise.then(empty) instanceof FakePromise;
   } catch(e){ /* empty */ }
@@ -4659,7 +5306,7 @@ if(!USE_NATIVE){
     this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
     this._n = false;          // <- notify
   };
-  Internal.prototype = __webpack_require__(51)($Promise.prototype, {
+  Internal.prototype = __webpack_require__(55)($Promise.prototype, {
     // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
     then: function then(onFulfilled, onRejected){
       var reaction    = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -4685,8 +5332,8 @@ if(!USE_NATIVE){
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: $Promise});
-__webpack_require__(17)($Promise, PROMISE);
-__webpack_require__(71)(PROMISE);
+__webpack_require__(18)($Promise, PROMISE);
+__webpack_require__(78)(PROMISE);
 Wrapper = __webpack_require__(0)[PROMISE];
 
 // statics
@@ -4710,7 +5357,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return capability.promise;
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(104)(function(iter){
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(113)(function(iter){
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -4756,7 +5403,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(104)(functio
 });
 
 /***/ }),
-/* 99 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -4773,12 +5420,12 @@ module.exports = function(iterator, fn, value, entries){
 };
 
 /***/ }),
-/* 100 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators  = __webpack_require__(13)
-  , ITERATOR   = __webpack_require__(1)('iterator')
+var Iterators  = __webpack_require__(16)
+  , ITERATOR   = __webpack_require__(2)('iterator')
   , ArrayProto = Array.prototype;
 
 module.exports = function(it){
@@ -4786,20 +5433,20 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 101 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject  = __webpack_require__(6)
-  , aFunction = __webpack_require__(36)
-  , SPECIES   = __webpack_require__(1)('species');
+  , aFunction = __webpack_require__(41)
+  , SPECIES   = __webpack_require__(2)('species');
 module.exports = function(O, D){
   var C = anObject(O).constructor, S;
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 };
 
 /***/ }),
-/* 102 */
+/* 111 */
 /***/ (function(module, exports) {
 
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -4820,15 +5467,15 @@ module.exports = function(fn, args, that){
 };
 
 /***/ }),
-/* 103 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global    = __webpack_require__(2)
-  , macrotask = __webpack_require__(70).set
+var global    = __webpack_require__(3)
+  , macrotask = __webpack_require__(77).set
   , Observer  = global.MutationObserver || global.WebKitMutationObserver
   , process   = global.process
   , Promise   = global.Promise
-  , isNode    = __webpack_require__(16)(process) == 'process';
+  , isNode    = __webpack_require__(17)(process) == 'process';
 
 module.exports = function(){
   var head, last, notify;
@@ -4893,10 +5540,10 @@ module.exports = function(){
 };
 
 /***/ }),
-/* 104 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR     = __webpack_require__(1)('iterator')
+var ITERATOR     = __webpack_require__(2)('iterator')
   , SAFE_CLOSING = false;
 
 try {
@@ -4919,57 +5566,269 @@ module.exports = function(exec, skipClosing){
 };
 
 /***/ }),
-/* 105 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(106);
-var $Object = __webpack_require__(0).Object;
-module.exports = function defineProperty(it, key, desc){
-  return $Object.defineProperty(it, key, desc);
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperties = __webpack_require__(36);
+
+var _defineProperties2 = _interopRequireDefault(_defineProperties);
+
+var _freeze = __webpack_require__(117);
+
+var _freeze2 = _interopRequireDefault(_freeze);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (strings, raw) {
+  return (0, _freeze2.default)((0, _defineProperties2.default)(strings, {
+    raw: {
+      value: (0, _freeze2.default)(raw)
+    }
+  }));
 };
 
 /***/ }),
-/* 106 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $export = __webpack_require__(4);
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(3), 'Object', {defineProperty: __webpack_require__(5).f});
+__webpack_require__(116);
+var $Object = __webpack_require__(0).Object;
+module.exports = function defineProperties(T, D){
+  return $Object.defineProperties(T, D);
+};
 
 /***/ }),
-/* 107 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(64);
+var $export = __webpack_require__(1);
+// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
+$export($export.S + $export.F * !__webpack_require__(4), 'Object', {defineProperties: __webpack_require__(65)});
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(118), __esModule: true };
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(119);
+module.exports = __webpack_require__(0).Object.freeze;
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.5 Object.freeze(O)
+var isObject = __webpack_require__(7)
+  , meta     = __webpack_require__(32).onFreeze;
+
+__webpack_require__(79)('freeze', function($freeze){
+  return function freeze(it){
+    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
+  };
+});
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(33);
+module.exports = __webpack_require__(31).f('toStringTag');
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(122);
+module.exports = __webpack_require__(0).Object.assign;
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(1);
+
+$export($export.S + $export.F, 'Object', {assign: __webpack_require__(123)});
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// 19.1.2.1 Object.assign(target, source, ...)
+var getKeys  = __webpack_require__(14)
+  , gOPS     = __webpack_require__(51)
+  , pIE      = __webpack_require__(19)
+  , toObject = __webpack_require__(29)
+  , IObject  = __webpack_require__(44)
+  , $assign  = Object.assign;
+
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = !$assign || __webpack_require__(11)(function(){
+  var A = {}
+    , B = {}
+    , S = Symbol()
+    , K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function(k){ B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+  var T     = toObject(target)
+    , aLen  = arguments.length
+    , index = 1
+    , getSymbols = gOPS.f
+    , isEnum     = pIE.f;
+  while(aLen > index){
+    var S      = IObject(arguments[index++])
+      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+      , length = keys.length
+      , j      = 0
+      , key;
+    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+  } return T;
+} : $assign;
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(125);
+module.exports = __webpack_require__(0).Object.getPrototypeOf;
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 Object.getPrototypeOf(O)
+var toObject        = __webpack_require__(29)
+  , $getPrototypeOf = __webpack_require__(49);
+
+__webpack_require__(79)('getPrototypeOf', function(){
+  return function getPrototypeOf(it){
+    return $getPrototypeOf(toObject(it));
+  };
+});
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(127), __esModule: true };
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(128);
+module.exports = __webpack_require__(0).Object.setPrototypeOf;
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+var $export = __webpack_require__(1);
+$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(129).set});
+
+/***/ }),
+/* 129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = __webpack_require__(7)
+  , anObject = __webpack_require__(6);
+var check = function(O, proto){
+  anObject(O);
+  if(!isObject(proto) && proto !== null)throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function(test, buggy, set){
+      try {
+        set = __webpack_require__(10)(Function.call, __webpack_require__(73).f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch(e){ buggy = true; }
+      return function setPrototypeOf(O, proto){
+        check(O, proto);
+        if(buggy)O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(131), __esModule: true };
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(132);
+var $Object = __webpack_require__(0).Object;
+module.exports = function create(P, D){
+  return $Object.create(P, D);
+};
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(1)
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+$export($export.S, 'Object', {create: __webpack_require__(27)});
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(70);
 module.exports = __webpack_require__(0).Symbol['for'];
 
 /***/ }),
-/* 108 */
+/* 134 */
 /***/ (function(module, exports) {
 
 module.exports = require("fs");
 
 /***/ }),
-/* 109 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(28);
-__webpack_require__(14);
-__webpack_require__(18);
-__webpack_require__(110);
-__webpack_require__(116);
+__webpack_require__(33);
+__webpack_require__(23);
+__webpack_require__(30);
+__webpack_require__(136);
+__webpack_require__(142);
 module.exports = __webpack_require__(0).Set;
 
 /***/ }),
-/* 110 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strong = __webpack_require__(111);
+var strong = __webpack_require__(137);
 
 // 23.2 Set Objects
-module.exports = __webpack_require__(112)('Set', function(get){
+module.exports = __webpack_require__(138)('Set', function(get){
   return function Set(){ return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.2.3.1 Set.prototype.add(value)
@@ -4979,23 +5838,23 @@ module.exports = __webpack_require__(112)('Set', function(get){
 }, strong);
 
 /***/ }),
-/* 111 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var dP          = __webpack_require__(5).f
-  , create      = __webpack_require__(39)
-  , redefineAll = __webpack_require__(51)
-  , ctx         = __webpack_require__(11)
-  , anInstance  = __webpack_require__(50)
-  , defined     = __webpack_require__(22)
-  , forOf       = __webpack_require__(30)
-  , $iterDefine = __webpack_require__(35)
-  , step        = __webpack_require__(62)
-  , setSpecies  = __webpack_require__(71)
-  , DESCRIPTORS = __webpack_require__(3)
-  , fastKey     = __webpack_require__(46).fastKey
+  , create      = __webpack_require__(27)
+  , redefineAll = __webpack_require__(55)
+  , ctx         = __webpack_require__(10)
+  , anInstance  = __webpack_require__(54)
+  , defined     = __webpack_require__(24)
+  , forOf       = __webpack_require__(35)
+  , $iterDefine = __webpack_require__(40)
+  , step        = __webpack_require__(68)
+  , setSpecies  = __webpack_require__(78)
+  , DESCRIPTORS = __webpack_require__(4)
+  , fastKey     = __webpack_require__(32).fastKey
   , SIZE        = DESCRIPTORS ? '_s' : 'size';
 
 var getEntry = function(that, key){
@@ -5127,24 +5986,24 @@ module.exports = {
 };
 
 /***/ }),
-/* 112 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var global         = __webpack_require__(2)
-  , $export        = __webpack_require__(4)
-  , meta           = __webpack_require__(46)
-  , fails          = __webpack_require__(12)
-  , hide           = __webpack_require__(7)
-  , redefineAll    = __webpack_require__(51)
-  , forOf          = __webpack_require__(30)
-  , anInstance     = __webpack_require__(50)
-  , isObject       = __webpack_require__(8)
-  , setToStringTag = __webpack_require__(17)
+var global         = __webpack_require__(3)
+  , $export        = __webpack_require__(1)
+  , meta           = __webpack_require__(32)
+  , fails          = __webpack_require__(11)
+  , hide           = __webpack_require__(8)
+  , redefineAll    = __webpack_require__(55)
+  , forOf          = __webpack_require__(35)
+  , anInstance     = __webpack_require__(54)
+  , isObject       = __webpack_require__(7)
+  , setToStringTag = __webpack_require__(18)
   , dP             = __webpack_require__(5).f
-  , each           = __webpack_require__(113)(0)
-  , DESCRIPTORS    = __webpack_require__(3);
+  , each           = __webpack_require__(139)(0)
+  , DESCRIPTORS    = __webpack_require__(4);
 
 module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
   var Base  = global[NAME]
@@ -5192,7 +6051,7 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 };
 
 /***/ }),
-/* 113 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 0 -> Array#forEach
@@ -5202,11 +6061,11 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 // 4 -> Array#every
 // 5 -> Array#find
 // 6 -> Array#findIndex
-var ctx      = __webpack_require__(11)
-  , IObject  = __webpack_require__(40)
-  , toObject = __webpack_require__(45)
-  , toLength = __webpack_require__(41)
-  , asc      = __webpack_require__(114);
+var ctx      = __webpack_require__(10)
+  , IObject  = __webpack_require__(44)
+  , toObject = __webpack_require__(29)
+  , toLength = __webpack_require__(45)
+  , asc      = __webpack_require__(140);
 module.exports = function(TYPE, $create){
   var IS_MAP        = TYPE == 1
     , IS_FILTER     = TYPE == 2
@@ -5241,23 +6100,23 @@ module.exports = function(TYPE, $create){
 };
 
 /***/ }),
-/* 114 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(115);
+var speciesConstructor = __webpack_require__(141);
 
 module.exports = function(original, length){
   return new (speciesConstructor(original))(length);
 };
 
 /***/ }),
-/* 115 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(8)
-  , isArray  = __webpack_require__(65)
-  , SPECIES  = __webpack_require__(1)('species');
+var isObject = __webpack_require__(7)
+  , isArray  = __webpack_require__(71)
+  , SPECIES  = __webpack_require__(2)('species');
 
 module.exports = function(original){
   var C;
@@ -5273,21 +6132,21 @@ module.exports = function(original){
 };
 
 /***/ }),
-/* 116 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-var $export  = __webpack_require__(4);
+var $export  = __webpack_require__(1);
 
-$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(117)('Set')});
+$export($export.P + $export.R, 'Set', {toJSON: __webpack_require__(143)('Set')});
 
 /***/ }),
-/* 117 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-var classof = __webpack_require__(29)
-  , from    = __webpack_require__(118);
+var classof = __webpack_require__(53)
+  , from    = __webpack_require__(144);
 module.exports = function(NAME){
   return function toJSON(){
     if(classof(this) != NAME)throw TypeError(NAME + "#toJSON isn't generic");
@@ -5296,10 +6155,10 @@ module.exports = function(NAME){
 };
 
 /***/ }),
-/* 118 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var forOf = __webpack_require__(30);
+var forOf = __webpack_require__(35);
 
 module.exports = function(iter, ITERATOR){
   var result = [];
@@ -5309,25 +6168,25 @@ module.exports = function(iter, ITERATOR){
 
 
 /***/ }),
-/* 119 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(120), __esModule: true };
+module.exports = { "default": __webpack_require__(146), __esModule: true };
 
 /***/ }),
-/* 120 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(121);
+__webpack_require__(147);
 module.exports = __webpack_require__(0).Reflect.getPrototypeOf;
 
 /***/ }),
-/* 121 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.8 Reflect.getPrototypeOf(target)
-var $export  = __webpack_require__(4)
-  , getProto = __webpack_require__(61)
+var $export  = __webpack_require__(1)
+  , getProto = __webpack_require__(49)
   , anObject = __webpack_require__(6);
 
 $export($export.S, 'Reflect', {
@@ -5337,31 +6196,31 @@ $export($export.S, 'Reflect', {
 });
 
 /***/ }),
-/* 122 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(123), __esModule: true };
+module.exports = { "default": __webpack_require__(149), __esModule: true };
 
 /***/ }),
-/* 123 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(124);
+__webpack_require__(150);
 module.exports = __webpack_require__(0).RegExp.escape;
 
 /***/ }),
-/* 124 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/benjamingr/RexExp.escape
-var $export = __webpack_require__(4)
-  , $re     = __webpack_require__(125)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+var $export = __webpack_require__(1)
+  , $re     = __webpack_require__(151)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
 $export($export.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
 
 /***/ }),
-/* 125 */
+/* 151 */
 /***/ (function(module, exports) {
 
 module.exports = function(regExp, replace){
@@ -5374,19 +6233,19 @@ module.exports = function(regExp, replace){
 };
 
 /***/ }),
-/* 126 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(18);
-__webpack_require__(14);
-module.exports = __webpack_require__(127);
+__webpack_require__(30);
+__webpack_require__(23);
+module.exports = __webpack_require__(153);
 
 /***/ }),
-/* 127 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(6)
-  , get      = __webpack_require__(69);
+  , get      = __webpack_require__(76);
 module.exports = __webpack_require__(0).getIterator = function(it){
   var iterFn = get(it);
   if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
@@ -5394,75 +6253,7 @@ module.exports = __webpack_require__(0).getIterator = function(it){
 };
 
 /***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(129);
-module.exports = __webpack_require__(0).Object.assign;
-
-/***/ }),
-/* 129 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(4);
-
-$export($export.S + $export.F, 'Object', {assign: __webpack_require__(130)});
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 19.1.2.1 Object.assign(target, source, ...)
-var getKeys  = __webpack_require__(15)
-  , gOPS     = __webpack_require__(48)
-  , pIE      = __webpack_require__(27)
-  , toObject = __webpack_require__(45)
-  , IObject  = __webpack_require__(40)
-  , $assign  = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(12)(function(){
-  var A = {}
-    , B = {}
-    , S = Symbol()
-    , K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function(k){ B[k] = k; });
-  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
-  var T     = toObject(target)
-    , aLen  = arguments.length
-    , index = 1
-    , getSymbols = gOPS.f
-    , isEnum     = pIE.f;
-  while(aLen > index){
-    var S      = IObject(arguments[index++])
-      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
-      , length = keys.length
-      , j      = 0
-      , key;
-    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
-  } return T;
-} : $assign;
-
-/***/ }),
-/* 131 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(132), __esModule: true };
-
-/***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(28);
-module.exports = __webpack_require__(26).f('toStringTag');
-
-/***/ }),
-/* 133 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5473,43 +6264,63 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GQLExpressMiddleware = undefined;
 
-var _regenerator = __webpack_require__(49);
+var _values = __webpack_require__(155);
+
+var _values2 = _interopRequireDefault(_values);
+
+var _regenerator = __webpack_require__(52);
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _assign = __webpack_require__(75);
+var _assign = __webpack_require__(56);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _getIterator2 = __webpack_require__(33);
+var _getIterator2 = __webpack_require__(61);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _asyncToGenerator2 = __webpack_require__(67);
+var _asyncToGenerator2 = __webpack_require__(74);
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _classCallCheck2 = __webpack_require__(31);
+var _getPrototypeOf = __webpack_require__(57);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(20);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _createClass2 = __webpack_require__(32);
+var _createClass2 = __webpack_require__(21);
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-var _SyntaxTree = __webpack_require__(53);
+var _possibleConstructorReturn2 = __webpack_require__(58);
 
-var _expressGraphql = __webpack_require__(134);
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(59);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _SyntaxTree = __webpack_require__(60);
+
+var _expressGraphql = __webpack_require__(159);
 
 var _expressGraphql2 = _interopRequireDefault(_expressGraphql);
 
-var _graphql = __webpack_require__(76);
+var _graphql = __webpack_require__(37);
 
-var _GQLBase = __webpack_require__(21);
+var _GQLBase = __webpack_require__(13);
 
-var _types = __webpack_require__(20);
+var _GQLInterface = __webpack_require__(85);
 
-var _path = __webpack_require__(72);
+var _types = __webpack_require__(15);
+
+var _events = __webpack_require__(84);
+
+var _path = __webpack_require__(81);
 
 var _path2 = _interopRequireDefault(_path);
 
@@ -5529,22 +6340,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // @module GQLExpressMiddleware
 
-var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
+var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitter) {
+  (0, _inherits3.default)(GQLExpressMiddleware, _EventEmitter);
+
   /**
    * For now, takes an Array of classes extending from GQLBase. These are
    * parsed and a combined schema of all their individual schemas is generated
    * via the use of ASTs. This is passed off to express-graphql.
    *
-   * @instance
    * @memberof GQLExpressMiddleware
    * @method ⎆⠀constructor
+   * @constructor
    *
    * @param {Array<GQLBase>} handlers an array of GQLBase extended classes
    */
   function GQLExpressMiddleware(handlers) {
     (0, _classCallCheck3.default)(this, GQLExpressMiddleware);
 
-    this.handlers = handlers;
+    var _this = (0, _possibleConstructorReturn3.default)(this, (GQLExpressMiddleware.__proto__ || (0, _getPrototypeOf2.default)(GQLExpressMiddleware)).call(this));
+
+    _this.handlers = handlers;
+    return _this;
   }
 
   /**
@@ -5761,13 +6577,19 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
       * @return {Function} a middleware function compatible with Express
      */
     value: function customMiddleware() {
-      var _this = this;
+      var _this2 = this;
 
       var graphqlHttpOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { graphiql: true };
       var patchFinalOpts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       var schema = (0, _graphql.buildSchema)(this.makeSchema());
 
+      // TODO handle scalars, unions and the rest 
+      this.injectInterfaceResolvers(schema);
+      this.injectComments(schema);
+
+      // See if there is a way abstract the passing req, res, gql to each 
+      // makeRoot resolver without invoking makeRoot again every time.
       return (0, _expressGraphql2.default)(function () {
         var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, gql) {
           var opts;
@@ -5777,35 +6599,131 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
                 case 0:
                   _context2.t0 = schema;
                   _context2.next = 3;
-                  return _this.makeRoot(req, res, gql);
+                  return _this2.makeRoot(req, res, gql);
 
                 case 3:
                   _context2.t1 = _context2.sent;
+
+                  _context2.t2 = function formatError(error) {
+                    return {
+                      message: error.message,
+                      locations: error.locations,
+                      stack: error.stack,
+                      path: error.path
+                    };
+                  };
+
                   opts = {
                     schema: _context2.t0,
-                    rootValue: _context2.t1
+                    rootValue: _context2.t1,
+                    formatError: _context2.t2
                   };
 
 
                   (0, _assign2.default)(opts, graphqlHttpOptions);
                   if (patchFinalOpts) {
-                    (0, _assign2.default)(opts, patchFinalOpts(opts) || opts);
+                    (0, _assign2.default)(opts, patchFinalOpts.bind(_this2)(opts) || opts);
                   }
 
                   return _context2.abrupt('return', opts);
 
-                case 8:
+                case 9:
                 case 'end':
                   return _context2.stop();
               }
             }
-          }, _callee2, _this);
+          }, _callee2, _this2);
         }));
 
         return function (_x6, _x7, _x8) {
           return _ref2.apply(this, arguments);
         };
       }());
+    }
+  }, {
+    key: 'injectComments',
+    value: function injectComments(schema) {
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = (0, _getIterator3.default)(this.handlers), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var handler = _step3.value;
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+    }
+  }, {
+    key: 'injectInterfaceResolvers',
+    value: function injectInterfaceResolvers(schema) {
+      var _iteratorNormalCompletion4 = true;
+      var _didIteratorError4 = false;
+      var _iteratorError4 = undefined;
+
+      try {
+        for (var _iterator4 = (0, _getIterator3.default)(this.handlers), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var handler = _step4.value;
+
+          if (handler.GQL_TYPE === _graphql.GraphQLInterfaceType) {
+            console.log('Applying ' + handler.name + '\'s resolveType() method');
+            schema._typeMap[handler.name].resolveType = schema._typeMap[handler.name]._typeConfig.resolveType = handler.resolveType;
+          }
+        }
+
+        // TODO remove this
+      } catch (err) {
+        _didIteratorError4 = true;
+        _iteratorError4 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion4 && _iterator4.return) {
+            _iterator4.return();
+          }
+        } finally {
+          if (_didIteratorError4) {
+            throw _iteratorError4;
+          }
+        }
+      }
+
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = (0, _getIterator3.default)((0, _values2.default)(schema._typeMap)), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var type = _step5.value;
+
+          console.log('\x1b[1m%s\n\x1b[0m%s', type.name);
+          console.dir(type);
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
     }
   }, {
     key: 'middleware',
@@ -5833,18 +6751,66 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function () {
     }
   }]);
   return GQLExpressMiddleware;
-}();
+}(_events.EventEmitter);
 
 exports.default = GQLExpressMiddleware;
 
 /***/ }),
-/* 134 */
+/* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(156), __esModule: true };
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(157);
+module.exports = __webpack_require__(0).Object.values;
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// https://github.com/tc39/proposal-object-values-entries
+var $export = __webpack_require__(1)
+  , $values = __webpack_require__(158)(false);
+
+$export($export.S, 'Object', {
+  values: function values(it){
+    return $values(it);
+  }
+});
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getKeys   = __webpack_require__(14)
+  , toIObject = __webpack_require__(9)
+  , isEnum    = __webpack_require__(19).f;
+module.exports = function(isEntries){
+  return function(it){
+    var O      = toIObject(it)
+      , keys   = getKeys(O)
+      , length = keys.length
+      , i      = 0
+      , result = []
+      , key;
+    while(length > i)if(isEnum.call(O, key = keys[i++])){
+      result.push(isEntries ? [key, O[key]] : O[key]);
+    } return result;
+  };
+};
+
+/***/ }),
+/* 159 */
 /***/ (function(module, exports) {
 
 module.exports = require("express-graphql");
 
 /***/ }),
-/* 135 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5855,21 +6821,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AdjacentSchema = undefined;
 
-var _defineProperty2 = __webpack_require__(77);
+var _defineProperty2 = __webpack_require__(86);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _for = __webpack_require__(19);
+var _for = __webpack_require__(22);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _defineProperties = __webpack_require__(54);
+var _defineProperties = __webpack_require__(36);
 
 var _defineProperties2 = _interopRequireDefault(_defineProperties);
 
 exports.default = AdjacentSchema;
 
-var _GQLBase = __webpack_require__(21);
+var _GQLBase = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5924,25 +6890,7 @@ function AdjacentSchema(classModule) {
 exports.AdjacentSchema = AdjacentSchema;
 
 /***/ }),
-/* 136 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(137);
-var $Object = __webpack_require__(0).Object;
-module.exports = function defineProperties(T, D){
-  return $Object.defineProperties(T, D);
-};
-
-/***/ }),
-/* 137 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(4);
-// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-$export($export.S + $export.F * !__webpack_require__(3), 'Object', {defineProperties: __webpack_require__(58)});
-
-/***/ }),
-/* 138 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5952,15 +6900,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty = __webpack_require__(52);
+var _defineProperty = __webpack_require__(34);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
-var _slicedToArray2 = __webpack_require__(139);
-
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-
-var _getIterator2 = __webpack_require__(33);
+var _getIterator2 = __webpack_require__(61);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
@@ -5968,9 +6912,86 @@ exports.Getters = Getters;
 exports.Setters = Setters;
 exports.Properties = Properties;
 
-var _types = __webpack_require__(20);
+var _GQLBase = __webpack_require__(13);
+
+var _types = __webpack_require__(15);
+
+var _util = __webpack_require__(162);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function extractBits(property) {
+  var array = (0, _types.isArray)(property) ? property : [property, property, null];
+  var reply = void 0;
+
+  if (!property) {
+    var error = new Error('Invalid property. Given\n  %o', (0, _util.inspect)(property, { depth: 2 }));
+
+    return {
+      typePropertyName: 'anErrorOccurred',
+      modelPropertyName: 'anErrorOccurred',
+      typeClass: null,
+      getterMaker: function getterMaker() {
+        return function () {
+          return error;
+        };
+      },
+      setterMaker: function setterMaker() {
+        return function (v) {
+          return undefined;
+        };
+      }
+    };
+  }
+
+  //
+  if (array.length === 3) {
+    reply = {
+      typePropertyName: array[0],
+      modelPropertyName: array[1],
+      typeClass: typeof array[2] === 'function' && array[2] || null
+    };
+  }
+
+  //
+  else if (array.length === 2) {
+      reply = {
+        typePropertyName: array[0],
+        modelPropertyName: typeof array[1] === 'string' ? array[1] : array[0],
+        typeClass: typeof array[1] === 'function' && array[1] || null
+      };
+    }
+
+    //
+    else {
+        reply = {
+          typePropertyName: array[0],
+          modelPropertyName: array[0],
+          typeClass: array[0]
+        };
+      }
+
+  reply.getterMaker = function () {
+    var _reply = reply,
+        modelPropertyName = _reply.modelPropertyName,
+        typeClass = _reply.typeClass;
+
+    return function () {
+      return typeClass ? new typeClass(this[_GQLBase.MODEL_KEY][modelPropertyName]) : this[_GQLBase.MODEL_KEY][modelPropertyName];
+    };
+  };
+
+  reply.setterMaker = function () {
+    var _reply2 = reply,
+        modelPropertyName = _reply2.modelPropertyName;
+
+    return function (value) {
+      this[_GQLBase.MODEL_KEY][modelPropertyName] = value;
+    };
+  };
+
+  return reply;
+}
 
 /**
  * When working with `GQLBase` instances that expose properties
@@ -5982,11 +7003,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @function Getters
  * @memberof! decorators
  *
- * @param {Array<String|Array<String>>} propertyNames if the model has 'name' and
- * 'age' as properties, then passing those two strings will result
+ * @param {Array<String|Array<String>>} propertyNames if the model has 'name' 
+ * and 'age' as properties, then passing those two strings will result
  * in getters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method.s
  */
+/** @namespace decorators */
+
+
 function Getters() {
   for (var _len = arguments.length, propertyNames = Array(_len), _key = 0; _key < _len; _key++) {
     propertyNames[_key] = arguments[_key];
@@ -5998,23 +7022,16 @@ function Getters() {
     var _iteratorError = undefined;
 
     try {
-      var _loop = function _loop() {
+      for (var _iterator = (0, _getIterator3.default)(propertyNames), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var property = _step.value;
 
-        var _ref = (0, _types.isArray)(property) ? property : [property, property],
-            _ref2 = (0, _slicedToArray3.default)(_ref, 2),
-            typePropertyName = _ref2[0],
-            modelPropertyName = _ref2[1];
+        var _extractBits = extractBits(property),
+            typePropertyName = _extractBits.typePropertyName,
+            getterMaker = _extractBits.getterMaker;
 
         (0, _defineProperty2.default)(target.prototype, typePropertyName, {
-          get: function get() {
-            return this.model[modelPropertyName];
-          }
+          value: getterMaker()
         });
-      };
-
-      for (var _iterator = (0, _getIterator3.default)(propertyNames), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        _loop();
       }
     } catch (err) {
       _didIteratorError = true;
@@ -6050,9 +7067,6 @@ function Getters() {
  * result in setters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method
  */
-/** @namespace decorators */
-
-
 function Setters() {
   for (var _len2 = arguments.length, propertyNames = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
     propertyNames[_key2] = arguments[_key2];
@@ -6064,23 +7078,16 @@ function Setters() {
     var _iteratorError2 = undefined;
 
     try {
-      var _loop2 = function _loop2() {
+      for (var _iterator2 = (0, _getIterator3.default)(propertyNames), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var property = _step2.value;
 
-        var _ref3 = (0, _types.isArray)(property) ? property : [property, property],
-            _ref4 = (0, _slicedToArray3.default)(_ref3, 2),
-            typePropertyName = _ref4[0],
-            modelPropertyName = _ref4[1];
+        var _extractBits2 = extractBits(property),
+            typePropertyName = _extractBits2.typePropertyName,
+            setterMaker = _extractBits2.setterMaker;
 
         (0, _defineProperty2.default)(target.prototype, typePropertyName, {
-          set: function set(value) {
-            this.model[modelPropertyName] = value;
-          }
+          set: setterMaker()
         });
-      };
-
-      for (var _iterator2 = (0, _getIterator3.default)(propertyNames), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        _loop2();
       }
     } catch (err) {
       _didIteratorError2 = true;
@@ -6130,26 +7137,18 @@ function Properties() {
     var _iteratorError3 = undefined;
 
     try {
-      var _loop3 = function _loop3() {
+      for (var _iterator3 = (0, _getIterator3.default)(propertyNames), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
         var property = _step3.value;
 
-        var _ref5 = (0, _types.isArray)(property) ? property : [property, property],
-            _ref6 = (0, _slicedToArray3.default)(_ref5, 2),
-            typePropertyName = _ref6[0],
-            modelPropertyName = _ref6[1];
+        var _extractBits3 = extractBits(property),
+            typePropertyName = _extractBits3.typePropertyName,
+            getterMaker = _extractBits3.getterMaker,
+            setterMaker = _extractBits3.setterMaker;
 
         (0, _defineProperty2.default)(target.prototype, typePropertyName, {
-          set: function set(value) {
-            this.model[modelPropertyName] = value;
-          },
-          get: function get() {
-            return this.model[modelPropertyName];
-          }
+          set: setterMaker(),
+          get: getterMaker()
         });
-      };
-
-      for (var _iterator3 = (0, _getIterator3.default)(propertyNames), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        _loop3();
       }
     } catch (err) {
       _didIteratorError3 = true;
@@ -6173,92 +7172,13 @@ function Properties() {
 exports.default = Properties;
 
 /***/ }),
-/* 139 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 162 */
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _isIterable2 = __webpack_require__(140);
-
-var _isIterable3 = _interopRequireDefault(_isIterable2);
-
-var _getIterator2 = __webpack_require__(33);
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if ((0, _isIterable3.default)(Object(arr))) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
+module.exports = require("util");
 
 /***/ }),
-/* 140 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(141), __esModule: true };
-
-/***/ }),
-/* 141 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(18);
-__webpack_require__(14);
-module.exports = __webpack_require__(142);
-
-/***/ }),
-/* 142 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var classof   = __webpack_require__(29)
-  , ITERATOR  = __webpack_require__(1)('iterator')
-  , Iterators = __webpack_require__(13);
-module.exports = __webpack_require__(0).isIterable = function(it){
-  var O = Object(it);
-  return O[ITERATOR] !== undefined
-    || '@@iterator' in O
-    || Iterators.hasOwnProperty(classof(O));
-};
-
-/***/ }),
-/* 143 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6268,7 +7188,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperties = __webpack_require__(54);
+var _defineProperties = __webpack_require__(36);
 
 var _defineProperties2 = _interopRequireDefault(_defineProperties);
 
@@ -6317,7 +7237,7 @@ function Schema(schemaString) {
 exports.default = Schema;
 
 /***/ }),
-/* 144 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6328,21 +7248,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FileSchema = undefined;
 
-var _defineProperty2 = __webpack_require__(77);
+var _defineProperty2 = __webpack_require__(86);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
-var _for = __webpack_require__(19);
+var _for = __webpack_require__(22);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _defineProperties = __webpack_require__(54);
+var _defineProperties = __webpack_require__(36);
 
 var _defineProperties2 = _interopRequireDefault(_defineProperties);
 
 exports.default = FileSchema;
 
-var _GQLBase = __webpack_require__(21);
+var _GQLBase = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -4,9 +4,11 @@
 import Path from 'path'
 import fs from 'fs'
 
-import { Deferred } from './utils'
+import { Deferred, lineJoin } from './utils'
 import { typeOf } from './types'
 import { SyntaxTree } from './SyntaxTree'
+import { GraphQLObjectType } from 'graphql'
+import { EventEmitter } from 'events'
 
 /**
  * Constant referring to the nodejs module in which this code is defined.
@@ -45,7 +47,7 @@ export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
  *
  * @class GQLBase
  */
-export class GQLBase {
+export class GQLBase extends EventEmitter {
   /**
    * Request data is passed to this object when constructed. Typically these
    * objects, and their children, are instantiated by its own static MUTATORS
@@ -75,9 +77,12 @@ export class GQLBase {
    * @param {Object} requestData see description above
    */
   constructor(modelData: Object = {}, requestData: Object = null) {
+    super();
+
     const Class = this.constructor;
 
-    this.model = modelData;
+    GQLBase.setupModel(this);
+    this.setModel(modelData);
     this.requestData = requestData;
     this.fileHandler = new IDLFileHandler(this.constructor);
   }
@@ -89,11 +94,12 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method ⬇︎⠀model
+   * @method ⌾⠀getModel
+   * @since 2.5
    *
    * @param {Object} value any object you wish to use as a data store
    */
-  get model() {
+  getModel() {
     return this[MODEL_KEY];
   }
 
@@ -104,12 +110,32 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method ⬆︎⠀model
+   * @method ⌾⠀setModel
+   * @since 2.5
    *
    * @param {Object} value any object you wish to use as a data store
    */
-  set model(value: Object) {
+  setModel(value: Object): GQLBase {
     this[MODEL_KEY] = value;
+    return this;
+  }
+
+  /**
+   * Uses `Object.assign` to modify the internal backing data store for the
+   * object instance. This is a shortcut for
+   * `Object.assign(instance[MODEL_KEY], ...extensions)`
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method ⌾⠀extendModel
+   * @since 2.5
+   *
+   * @param {mixed} extensions n-number of valid `Object.assign` parameters
+   * @return {GQLBase} this is returned
+   */
+  extendModel(...extensions: Array<mixed>): GQLBase {
+    Object.assign(this[MODEL_KEY], ...extensions);
+    return this;
   }
 
   /**
@@ -138,6 +164,33 @@ export class GQLBase {
    */
   set requestData(value: Object): void {
     this[REQ_DATA_KEY] = value;
+  }
+
+  static apiDocs(): Object {
+    return {
+      "class": lineJoin`
+        GQLBase class implementation. GQLBase is the root class used in
+        graphql-lattice to describe a GraphQLObjectType. If you are reading
+        this, the person using lattice failed to provide documentation for
+        their type. :)
+      `,
+
+      "fields": {
+
+      },
+
+      "queries": {
+
+      },
+
+      "mutators": {
+
+      },
+
+      "subscriptions": {
+
+      }
+    }
   }
 
   /**
@@ -202,10 +255,10 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method ⬇︎⠀MUTATORS
+   * @method ⌾⠀MUTATORS
    * @readonly
    * @static
-   * @deprecated Place all resolvers in RESOLVERS() 
+   * @deprecated Place all resolvers in RESOLVERS()
    *
    * @param {Object} requestData typically an object containing three
    * properties; {req, res, gql}
@@ -224,7 +277,7 @@ export class GQLBase {
    *
    * @instance
    * @memberof GQLBase
-   * @method ⬇︎⠀RESOLVERS
+   * @method ⌾⠀RESOLVERS
    * @readonly
    * @static
    *
@@ -252,6 +305,22 @@ export class GQLBase {
    */
   static get ADJACENT_FILE(): Symbol {
     return Symbol.for('.graphql file located adjacent to source')
+  }
+
+  /**
+   * Determines the default type targeted by this GQLBase class. Any
+   * type will technically be valid but only will trigger special behavior
+   *
+   * @memberof GQLBase
+   * @method ⬇︎⠀GQL_TYPE
+   * @static
+   * @const
+   *
+   * @return {Function} a type, such as `GraphQLObjectType` or
+   * `GraphQLInterfaceType`
+   */
+  static get GQL_TYPE(): Function {
+    return GraphQLObjectType;
   }
 
   /**
@@ -313,6 +382,220 @@ export class GQLBase {
    */
   static get module(): Object {
     return GQLBaseModule;
+  }
+
+  /**
+   * A constant used to register an event listener for when the internal
+   * model object is assigned a new value. This event fires before the model
+   * is set. Changes to the model value at this point will affect the contents
+   * before the value assignment takes place.
+   *
+   * @static
+   * @memberof GQLBase
+   * @const
+   *
+   * @type {String}
+   */
+  static get EVENT_MODEL_WILL_BE_SET() { return 'E: Int. model will be set' }
+
+  /**
+   * A constant used to register an event listener for when the internal
+   * model object is assigned a new value. This event fires after the model
+   * is set.
+   *
+   * @static
+   * @memberof GQLBase
+   * @const
+   *
+   * @type {String}
+   */
+  static get EVENT_MODEL_HAS_BEEN_SET() { return 'E: Int. model has been set' }
+
+  /**
+   * A constant used to register an event listener for when a property of the
+   * internal model object is set to a new or intial value.
+   *
+   * @static
+   * @memberof GQLBase
+   * @const
+   *
+   * @type {String}
+   */
+  static get EVENT_MODEL_PROP_CHANGE() { return 'E: Int. model prop changed' }
+
+  /**
+   * A constant used to register an event listener for when a property of the
+   * internal model object has been deleted. This event fires after the value
+   * has been deleted.
+   *
+   * @static
+   * @memberof GQLBase
+   * @const
+   *
+   * @type {String}
+   */
+  static get EVENT_MODEL_PROP_DELETE() { return 'E: Int. model prop deleted' }
+
+  /**
+   * Returns the `constructor` name. If invoked as the context, or `this`,
+   * object of the `toString` method of `Object`'s `prototype`, the resulting
+   * value will be `[object MyClass]`, given an instance of `MyClass`
+   *
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof ModuleParser
+   *
+   * @return {String} the name of the class this is an instance of
+   */
+  get [Symbol.toStringTag]() { return this.constructor.name }
+
+  /**
+   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static
+   * scale. So, if you perform `Object.prototype.toString.call(MyClass)`
+   * the result would be `[object MyClass]`.
+   *
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof ModuleParser
+   * @static
+   *
+   * @return {String} the name of this class
+   */
+  static get [Symbol.toStringTag]() { return this.name }
+
+  /**
+   * The internal data model has some custom `EventEmitter` code wrapped
+   * it here. When the data model is set via `setModel` or by accessing it
+   * via `instance[MODEL_KEY]`, an event `EVENT_MODEL_SET` is emitted. Any
+   * listener listening for this event receives an object with two keys
+   * ```
+   * {
+   *   model: The actual model being set; changes are persisted
+   *   instance: The GQLBase instance the model is associated with
+   * }
+   * ```
+   *
+   * Subsequently, the events `EVENT_MODEL_PROP_CHANGE` and
+   * `EVENT_MODEL_PROP_DELETE` can be listened to if your version of node
+   * supports Proxy objects. They allow you to be notified whenever your
+   * model has a property changed or deleted, respectively.
+   *
+   * The callback for `change` receives an object with four properties
+   * ```
+   * {
+   *   model: The model object the value is being changed on
+   *   old: The old value being replaced; undefined if it is the first time
+   *   key: The property key for the value being changed
+   *   value: The new value being set
+   * }
+   * ```
+   *
+   * The callback for `delete` receives an object with four properties
+   * ```
+   * {
+   *   model: The model object the value is deleted from
+   *   key: The property key for the deleted value
+   *   deleted: The deleted value
+   * }
+   * ```
+   *
+   * @static
+   * @memberof GQLBase
+   * @method ⌾⠀setupModel
+   *
+   * @param {GQLBase} instance typically `this` as passed in from a call in
+   * the constructor
+   */
+  static setupModel(instance: GQLBase) {
+    const _MODEL_KEY = Symbol.for('data-model-contents-value');
+    const hasProxy = typeof global.Proxy !== 'undefined';
+
+    const changeHandler = {
+      /**
+       * Proxy set() handler. This is where the change events are fired from
+       *
+       * @method set
+       * @param {Object} target the `GQLBase` model object
+       * @param {String} key the property name
+       * @param {mixed} value the new property value
+       */
+      set(target, key, value) {
+        const old = target[key];
+
+        target[key] = value;
+        instance.emit(GQLBase.EVENT_MODEL_PROP_CHANGE, {
+          model: target,
+          old,
+          key,
+          value
+        })
+      },
+
+      /**
+       * Proxy deleteProperty() handler. This is where the delete property
+       * events are fired from
+       *
+       * @method deleteProperty
+       * @param {Object} target the `GQLBase` model object
+       * @param {String} key the property name
+       */
+      deleteProperty(target, key) {
+        const deleted = target[key];
+
+        delete target[key];
+        instance.emit(GQLBase.EVENT_MODEL_PROP_DELETE, {
+          model: target,
+          key,
+          deleted
+        })
+      }
+    }
+
+    /**
+     * 'Publicly' the Symbol for accessing the `GQLBase` model is `MODEL_KEY`.
+     * In truth it is stored under a Symbol defined in `setupModel` and
+     * referred to as `_MODEL_KEY` in this code. This is done so a getter and
+     * setter can be wrapped around the usage of the instance's data model.
+     *
+     * When being read, if `Proxy` exists in the node environment and if there
+     * are any registered `EVENT_MODEL_PROP_CHANGE` or `EVENT_MODEL_PROP_DELETE`
+     * events, then the returned model is a Proxy around the real model that
+     * allows us to capture the changes and deletion of keys
+     *
+     * When being assigned, the event `EVENT_MODEL_WILL_BE_SET` and the event
+     * `EVENT_MODEL_HAS_BEEN_SET` are emitted to allow listeners to modify and
+     * see the final data around the setting of a model object. Both events
+     * receive an object with two keys
+     *
+     * ```
+     * {
+     *   model: The object being or having been set
+     *   instance: The GQLBase instance receiving the model
+     * }
+     * ```
+     *
+     * @type {[type]}
+     */
+    Object.defineProperty(instance, MODEL_KEY, {
+      get: function() {
+        let model = this[_MODEL_KEY]
+        let hasListeners =
+          this.listenerCount(GQLBase.EVENT_MODEL_PROP_CHANGE) +
+          this.listenerCount(GQLBase.EVENT_MODEL_PROP_DELETE)
+
+        if (hasProxy && hasListeners) {
+          model = new Proxy(model, changeHandler);
+        }
+
+        return model
+      },
+
+      set: function(model) {
+        const instance = this;
+
+        this.emit(GQLBase.EVENT_MODEL_WILL_BE_SET, { model, instance });
+        instance[_MODEL_KEY] = model;
+        this.emit(GQLBase.EVENT_MODEL_HAS_BEEN_SET, { model, instance })
+      }
+    });
   }
 }
 
@@ -386,9 +669,6 @@ export class IDLFileHandler {
 
         this.path = build;
         this.extension = extension;
-
-        console.log(`Path ${this.path} Ext ${this.extension}`)
-        console.log(`Resolved ${Path.resolve(this.path)}`)
       }
     }
     else {
@@ -451,6 +731,31 @@ export class IDLFileHandler {
 
     return tree;
   }
+
+  /**
+   * Returns the `constructor` name. If invoked as the context, or `this`,
+   * object of the `toString` method of `Object`'s `prototype`, the resulting
+   * value will be `[object MyClass]`, given an instance of `MyClass`
+   *
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof IDLFileHandler
+   *
+   * @return {String} the name of the class this is an instance of
+   */
+  get [Symbol.toStringTag]() { return this.constructor.name }
+
+  /**
+   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static
+   * scale. So, if you perform `Object.prototype.toString.call(MyClass)`
+   * the result would be `[object MyClass]`.
+   *
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof IDLFileHandler
+   * @static
+   *
+   * @return {String} the name of this class
+   */
+  static get [Symbol.toStringTag]() { return this.name }
 }
 
 export default GQLBase;
