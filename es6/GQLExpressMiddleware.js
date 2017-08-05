@@ -3,9 +3,11 @@
 
 import { SyntaxTree } from './SyntaxTree'
 import graphqlHTTP from 'express-graphql'
-import { parse, print, buildSchema } from 'graphql'
+import { parse, print, buildSchema, GraphQLInterfaceType } from 'graphql'
 import { GQLBase } from './GQLBase'
+import { GQLInterface } from './GQLInterface'
 import { typeOf } from './types'
+import { EventEmitter } from 'events'
 import path from 'path'
 
 /**
@@ -19,20 +21,21 @@ import path from 'path'
  *
  * @class GQLExpressMiddleware
  */
-export class GQLExpressMiddleware
+export class GQLExpressMiddleware extends EventEmitter
 {
   /**
    * For now, takes an Array of classes extending from GQLBase. These are
    * parsed and a combined schema of all their individual schemas is generated
    * via the use of ASTs. This is passed off to express-graphql.
    *
-   * @instance
    * @memberof GQLExpressMiddleware
    * @method ⎆⠀constructor
+   * @constructor
    *
    * @param {Array<GQLBase>} handlers an array of GQLBase extended classes
    */
   constructor(handlers: Array<GQLBase>) {
+    super();
     this.handlers = handlers;
   }
 
@@ -163,24 +166,61 @@ export class GQLExpressMiddleware
    * @return {Function} a middleware function compatible with Express
    */
   customMiddleware(
-    graphqlHttpOptions = {graphiql: true},
+    graphqlHttpOptions: Object = {graphiql: true},
     patchFinalOpts: Function = null
   ): Function {
     const schema = buildSchema(this.makeSchema());
 
-    return graphqlHTTP(async (req, res, gql) => {
-      const opts = {
-        schema,
-        rootValue: await this.makeRoot(req, res, gql)
-      };
+    // TODO handle scalars, unions and the rest 
+    this.injectInterfaceResolvers(schema);
+    this.injectComments(schema);
 
+    // See if there is a way abstract the passing req, res, gql to each 
+    // makeRoot resolver without invoking makeRoot again every time.
+    return graphqlHTTP(async (req, res, gql) => {
+      let opts = {
+        schema,
+        rootValue: await this.makeRoot(req, res, gql),
+        formatError: error => ({
+          message: error.message,
+          locations: error.locations,
+          stack: error.stack,
+          path: error.path
+        })
+      };
+      
       Object.assign(opts, graphqlHttpOptions);
       if (patchFinalOpts) {
-        Object.assign(opts, patchFinalOpts(opts) || opts);
+        Object.assign(opts, patchFinalOpts.bind(this)(opts) || opts);
       }
-
+      
       return opts;
     });
+  }
+
+  injectComments(schema: Object) {
+    for (let handler of this.handlers) {      
+    }
+  }
+
+  injectInterfaceResolvers(schema: Object) {
+    for (let handler of this.handlers) {      
+      if (handler.GQL_TYPE === GraphQLInterfaceType) {
+        console.log(`Applying ${handler.name}'s resolveType() method`);
+        schema._typeMap[handler.name].resolveType =
+        schema._typeMap[handler.name]._typeConfig.resolveType = 
+          handler.resolveType;
+      }
+    }
+
+    // TODO remove this
+    for (let type of Object.values(schema._typeMap)) {
+      console.log(
+        '\x1b[1m%s\n\x1b[0m%s', 
+        type.name
+      )
+      console.dir(type);
+    }    
   }
 }
 
