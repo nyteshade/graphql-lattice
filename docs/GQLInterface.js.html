@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ModuleParser.js</title>
+  <title>GQLInterface.js</title>
 
 
 
@@ -47,7 +47,7 @@
 
     <div id="main">
         
-        <h1 class="page-title">ModuleParser.js</h1>
+        <h1 class="page-title">GQLInterface.js</h1>
         
 
         
@@ -57,137 +57,57 @@
     
     <section>
         <article>
-            <pre class="source linenums"><code class="hljs js">// @flow
+            <pre class="source linenums"><code class="hljs js">/**
+ @namespace GQLInterface
+ @flow
+ */
 
-import * as types from './types'
-
-const {
-  isString,
-  isOfType,
-  isPrimitive,
-  isArray,
-  isObject
-} = types;
+import { GQLBase } from './GQLBase'
+import { GraphQLInterfaceType } from 'graphql'
 
 /**
- * The ModuleParser is a utility class designed to loop through and iterate
- * on a directory and pull out of each .js file found, any classes or exports
- * that extend from GQLBase or a child of GQLBase.
+ * Used by Lattice to implement interface types in the schema when necessary
  *
- * @class ModuleParser
+ * @class GQLInterface
  */
-export class ModuleParser {
-  /**
-   * The constructor
-   *
-   * @constructor
-   * @method ⎆⠀constructor
-   * @memberof ModuleParser
-   * @inner
-   *
-   * @param {string|mixed} moduleNameOrModule [description]
-   */
-  constuctor(moduleNameOrModule: string|mixed):ModuleParser {
-    let moduleName, moduleContents;
-
-    if (isString(moduleNameOrModule)) {
-      try { moduleContents = require(moduleNameOrModule); } catch(ignore) { }
-      if (!moduleContents) {
-        throw new Error(`
-          Unable to require()'${moduleNameOrModule}'). Please check this file
-          to make sure it should be part of the load process.
-        `);
-      }
-    }
-    else {
-      moduleContents = moduleNameOrModule;
-    }
-
-    if (!moduleContents) {
-      throw new Error(`
-        Inspite of being passed ${moduleNameOrModule}, it was determined that
-        the value passed in was null or falsey. Please provide a module name
-        or an Object that can be iterated over for potential GQLBase classes.
-      `);
-    }
-
-    this.initWith(moduleContents);
-  }
+export class GQLInterface extends GQLBase {
 
   /**
-   * Given an object, typically the result of a `require()` or `import`
-   * command, iterate over its contents and find any `GQLBase` derived
-   * exports. Continually, and recursively, build this list of classes out
-   * so that we can add them to a `GQLExpressMiddleware`.
+   * This needs to be able to, depending on your implementors, identify
+   * which on the data actually is given the model to work with.
    *
-   * @method ⌾⠀initWith
-   * @memberof ModuleParser
-   * @inner
-   *
-   * @param {mixed} contents the object to parse for properties extending
-   * from `GQLBase`
-   * @param {Array&lt;GQLBase>} gqlDefinitions the results, allowed as a second
-   * parameter during recursion as a means to save state between calls
-   * @return {Set&lt;mixed>} a unique set of values that are currently being
-   * iterated over. Passed in as a third parameter to save state between calls
-   * during recursion.
-   */
-  initWith(
-    contents: mixed,
-    gqlDefinitions: Array&lt;GQLBase> = [],
-    stack: Set&lt;mixed> = new Set()
-  ): void {
-    // In order to prevent infinite object recursion, we should add the
-    // object being iterated over to our Set. At each new recursive level
-    // add the item being iterated over to the set and only recurse into
-    // if the item does not already exist in the stack itself.
-    stack.add(contents)
-
-    for (let key in contents) {
-      let value = contents[key];
-
-      if (isPrimitive(value)) { continue }
-
-      if (extendsFrom(value, GQLBase)) {
-        gqlDefinitions.push(value);
-      }
-
-      if ((isObject(value) || isArray(value)) &amp;&amp; !stack.has(value)) {
-        gqlDefinitions = this.initWith(value, gqlDefinitions, stack);
-      }
-    }
-
-    // We remove the current iterable from our set as we leave this current
-    // recursive iteration.
-    stack.delete(contents)
-
-    return gqlDefinitions
-  }
-
-  /**
-   * Returns the `constructor` name. If invoked as the context, or `this`,
-   * object of the `toString` method of `Object`'s `prototype`, the resulting
-   * value will be `[object MyClass]`, given an instance of `MyClass`
-   *
-   * @method ⌾⠀[Symbol.toStringTag]
-   * @memberof ModuleParser
-   *
-   * @return {string} the name of the class this is an instance of
-   */
-  get [Symbol.toStringTag]() { return this.constructor.name }
-
-  /**
-   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static 
-   * scale. So, if you perform `Object.prototype.toString.call(MyClass)` 
-   * the result would be `[object MyClass]`.
-   *
-   * @method ⌾⠀[Symbol.toStringTag]
-   * @memberof ModuleParser
+   * @memberof GQLInterface
+   * @method ⌾⠀resolveType
    * @static
    *
-   * @return {string} the name of this class
+   * @param {mixed} model the data you can use to instantiate the type of
+   * object in question.
+   * @return {String} a string matching the name of a defined GraphQL type
+   * found elsewhere in your schema
    */
-  static get [Symbol.toStringTag]() { return this.name }
+  static resolveType(model: mixed): String {
+    throw new Error(`
+      You must override "resolveType(model)" in your GQLInterface instance
+      and determine the implementor type by the contents of the supplied
+      model. Returning "null" when nothing matches.
+    `);
+  }
+
+  /**
+   * Denotes that this GQLBase descendent is describing a graphql
+   * interface type.
+   *
+   * @memberof GQLInterface
+   * @method ⬇︎⠀GQL_TYPE
+   * @static
+   * @const
+   *
+   * @return {Function} a type, such as `GraphQLObjectType` or
+   * `GraphQLInterfaceType`
+   */
+  static get GQL_TYPE(): Function {
+    return GraphQLInterfaceType;
+  }
 }
 </code></pre>
         </article>

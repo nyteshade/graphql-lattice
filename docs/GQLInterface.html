@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>ModuleParser.js</title>
+  <title>GQLInterface</title>
 
 
 
@@ -47,155 +47,321 @@
 
     <div id="main">
         
-        <h1 class="page-title">ModuleParser.js</h1>
+        <h1 class="page-title">GQLInterface</h1>
         
 
         
 
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        GQLInterface
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLInterface.js.html">GQLInterface.js</a>, <a href="GQLInterface.js.html#line39">line 39</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".%E2%AC%87%EF%B8%8E%E2%A0%80GQL_TYPE">
+  <a class="anchor" href="#⬇︎⠀GQL_TYPE"></a>
+  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>⬇︎⠀GQL_TYPE<span class="type-signature"></span></span></h4>
+
+
+
+
+<div class="description">
+    <p>Denotes that this GQLBase descendent is describing a graphql<br>interface type.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLInterface.js.html">GQLInterface.js</a>, <a href="GQLInterface.js.html#line73">line 73</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80resolveType"><a class="anchor" href="#⌾⠀resolveType"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⌾⠀resolveType<span class="signature">(model)</span><span class="type-signature"> &rarr; {String}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This needs to be able to, depending on your implementors, identify<br>which on the data actually is given the model to work with.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>model</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mixed</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the data you can use to instantiate the type of<br>object in question.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">String</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a string matching the name of a defined GraphQL type<br>found elsewhere in your schema</p></span>
 
 
     
-    <section>
-        <article>
-            <pre class="source linenums"><code class="hljs js">// @flow
 
-import * as types from './types'
 
-const {
-  isString,
-  isOfType,
-  isPrimitive,
-  isArray,
-  isObject
-} = types;
 
-/**
- * The ModuleParser is a utility class designed to loop through and iterate
- * on a directory and pull out of each .js file found, any classes or exports
- * that extend from GQLBase or a child of GQLBase.
- *
- * @class ModuleParser
- */
-export class ModuleParser {
-  /**
-   * The constructor
-   *
-   * @constructor
-   * @method ⎆⠀constructor
-   * @memberof ModuleParser
-   * @inner
-   *
-   * @param {string|mixed} moduleNameOrModule [description]
-   */
-  constuctor(moduleNameOrModule: string|mixed):ModuleParser {
-    let moduleName, moduleContents;
 
-    if (isString(moduleNameOrModule)) {
-      try { moduleContents = require(moduleNameOrModule); } catch(ignore) { }
-      if (!moduleContents) {
-        throw new Error(`
-          Unable to require()'${moduleNameOrModule}'). Please check this file
-          to make sure it should be part of the load process.
-        `);
-      }
-    }
-    else {
-      moduleContents = moduleNameOrModule;
-    }
+<dl class="details">
 
-    if (!moduleContents) {
-      throw new Error(`
-        Inspite of being passed ${moduleNameOrModule}, it was determined that
-        the value passed in was null or falsey. Please provide a module name
-        or an Object that can be iterated over for potential GQLBase classes.
-      `);
-    }
+    
 
-    this.initWith(moduleContents);
-  }
+    
 
-  /**
-   * Given an object, typically the result of a `require()` or `import`
-   * command, iterate over its contents and find any `GQLBase` derived
-   * exports. Continually, and recursively, build this list of classes out
-   * so that we can add them to a `GQLExpressMiddleware`.
-   *
-   * @method ⌾⠀initWith
-   * @memberof ModuleParser
-   * @inner
-   *
-   * @param {mixed} contents the object to parse for properties extending
-   * from `GQLBase`
-   * @param {Array&lt;GQLBase>} gqlDefinitions the results, allowed as a second
-   * parameter during recursion as a means to save state between calls
-   * @return {Set&lt;mixed>} a unique set of values that are currently being
-   * iterated over. Passed in as a third parameter to save state between calls
-   * during recursion.
-   */
-  initWith(
-    contents: mixed,
-    gqlDefinitions: Array&lt;GQLBase> = [],
-    stack: Set&lt;mixed> = new Set()
-  ): void {
-    // In order to prevent infinite object recursion, we should add the
-    // object being iterated over to our Set. At each new recursive level
-    // add the item being iterated over to the set and only recurse into
-    // if the item does not already exist in the stack itself.
-    stack.add(contents)
+    
 
-    for (let key in contents) {
-      let value = contents[key];
+    
 
-      if (isPrimitive(value)) { continue }
+    
 
-      if (extendsFrom(value, GQLBase)) {
-        gqlDefinitions.push(value);
-      }
+    
 
-      if ((isObject(value) || isArray(value)) &amp;&amp; !stack.has(value)) {
-        gqlDefinitions = this.initWith(value, gqlDefinitions, stack);
-      }
-    }
+    
 
-    // We remove the current iterable from our set as we leave this current
-    // recursive iteration.
-    stack.delete(contents)
+    
 
-    return gqlDefinitions
-  }
+    
 
-  /**
-   * Returns the `constructor` name. If invoked as the context, or `this`,
-   * object of the `toString` method of `Object`'s `prototype`, the resulting
-   * value will be `[object MyClass]`, given an instance of `MyClass`
-   *
-   * @method ⌾⠀[Symbol.toStringTag]
-   * @memberof ModuleParser
-   *
-   * @return {string} the name of the class this is an instance of
-   */
-  get [Symbol.toStringTag]() { return this.constructor.name }
+    
 
-  /**
-   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static 
-   * scale. So, if you perform `Object.prototype.toString.call(MyClass)` 
-   * the result would be `[object MyClass]`.
-   *
-   * @method ⌾⠀[Symbol.toStringTag]
-   * @memberof ModuleParser
-   * @static
-   *
-   * @return {string} the name of this class
-   */
-  static get [Symbol.toStringTag]() { return this.name }
-}
-</code></pre>
-        </article>
-    </section>
-    <script type="text/javascript">
-      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
-    </script>
+    
 
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLInterface.js.html">GQLInterface.js</a>, <a href="GQLInterface.js.html#line56">line 56</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

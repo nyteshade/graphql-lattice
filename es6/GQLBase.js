@@ -570,8 +570,6 @@ export class GQLBase extends EventEmitter {
      *   instance: The GQLBase instance receiving the model
      * }
      * ```
-     *
-     * @type {[type]}
      */
     Object.defineProperty(instance, MODEL_KEY, {
       get: function() {
