@@ -2,7 +2,7 @@
   "name": "graphql-lattice",
   "version": "2.4.0",
   "description": "OO Underpinnings for ease of GraphQL Implementation",
-  "main": "dist/lattice.js",
+  "main": "dist/lattice.min.js",
   "scripts": {
     "test": "jest",
     "build": "webpack --config webpack.config.js",

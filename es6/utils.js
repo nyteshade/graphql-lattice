@@ -110,7 +110,7 @@ export class Deferred {
  * @return {String} a template String without any prefixed or postfixed tabs
  * and other whitespaced characters. 
  */
-export function lineJoin(strings, ...values) {
+export function joinLines(strings, ...values) {
   let result = [];
   for (let i = 0; i < strings.length; i++) {
     let string = strings[i];

@@ -198,11 +198,86 @@ export class GQLExpressMiddleware extends EventEmitter
     });
   }
 
+  /**
+   * Until such time as I can get the reference Facebook GraphQL AST parser to 
+   * read and apply descriptions or until such time as I employ the Apollo 
+   * AST parser, providing a `static get apiDocs()` getter is the way to get 
+   * your descriptions into the proper fields, post schema creation.
+   *
+   * This method walks the types in the registered handlers and the supplied 
+   * schema type. It then injects the written comments such that they can 
+   * be exposed in graphiql and to applications or code that read the meta 
+   * fields of a built schema
+   *
+   * TODO handle argument comments and other outliers
+   *
+   * @memberof GQLExpressMiddleware
+   * @method ⌾⠀injectComments
+   * @instance
+   * 
+   * @param {Object} schema a built GraphQLSchema object created via buildSchema
+   * or some other alternative but compatible manner
+   */
   injectComments(schema: Object) {
-    for (let handler of this.handlers) {      
+    const { 
+      DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS
+    } = GQLBase;
+    
+    for (let handler of this.handlers) { 
+      console.log('handler: %s', handler.name)
+      
+      const docs = handler.apiDocs();
+      const query = schema._typeMap.Query;
+      const mutation = schema._typeMap.Mutation;
+      const subscription = schema._typeMap.Subscription;
+      let type;
+      
+      if ((type = schema._typeMap[handler.name])) {
+        let fields = type._fields;
+        
+        if (docs[DOC_CLASS]) { type.description = docs[DOC_CLASS] }
+        for (let field of Object.keys(docs[DOC_FIELDS] || {})) {
+          if (field in fields) {
+            fields[field].description = docs[DOC_FIELDS][field];
+          }
+        }
+      }
+      
+      for (let [_type, _CONST] of [
+        [query, DOC_QUERIES],
+        [mutation, DOC_MUTATORS],
+        [subscription, DOC_SUBSCRIPTIONS]
+      ]) {
+        if (_type && Object.keys(docs[_CONST] || {}).length) {
+          let fields = _type._fields;
+          
+          if (docs[_CONST][DOC_CLASS]) { 
+            _type.description = docs[_CONST][DOC_CLASS] 
+          }
+          
+          for (let field of Object.keys(docs[_CONST])) {
+            if (field in fields) {
+              fields[field].description = docs[_CONST][field];
+            }
+          }        
+        }      
+      }      
     }
   }
 
+  /**
+   * Somewhat like `injectComments` and other similar methods, the 
+   * `injectInterfaceResolvers` method walks the registered handlers and 
+   * finds `GQLInterface` types and applies their `resolveType()` 
+   * implementations.
+   *
+   * @memberof GQLExpressMiddleware
+   * @method ⌾⠀injectInterfaceResolvers
+   * @instance
+   * 
+   * @param {Object} schema a built GraphQLSchema object created via buildSchema
+   * or some other alternative but compatible manner
+   */
   injectInterfaceResolvers(schema: Object) {
     for (let handler of this.handlers) {      
       if (handler.GQL_TYPE === GraphQLInterfaceType) {
@@ -212,15 +287,6 @@ export class GQLExpressMiddleware extends EventEmitter
           handler.resolveType;
       }
     }
-
-    // TODO remove this
-    for (let type of Object.values(schema._typeMap)) {
-      console.log(
-        '\x1b[1m%s\n\x1b[0m%s', 
-        type.name
-      )
-      console.dir(type);
-    }    
   }
 }
 

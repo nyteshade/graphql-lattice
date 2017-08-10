@@ -5,6 +5,55 @@ import { MODEL_KEY } from '../GQLBase'
 import { isArray } from '../types'
 import { inspect } from 'util'
 
+/**
+ * For each of the decorators, Getters, Setters, and Properties, we take a 
+ * list of property names used to create the appropriate accessor types. In 
+ * some cases, however, the instance of GQLBase's data model may have a
+ * different name. Finally if the return type for the getter should be wrapped 
+ * in a another GQLBase class type, we will need a way to specify those things 
+ * too. 
+ *
+ * The `extractBits()` takes a single argument value from the decorator as it 
+ * parses them and converts it into an object, properly sorted, into values that 
+ * allow the above described behavior.
+ *
+ * Examples:
+ * 
+ * ```
+ * // Create a class with a name and age property that map directly to the 
+ * // underlying data model
+ * @Getters('name', 'age')
+ * class MyType extends GQLBase {...}
+ *
+ * // Create a class with a name property that maps to a different property 
+ * // name in the underlying data model 
+ * @Getters(['name', '_fake_name'])
+ * class MyMockType extends GQLBase {...}
+ *
+ * // Create a class with an employee property that returns an Employee 
+ * @Getters(['employee', Employee])
+ * class MyRoleType extends GQLBase {...}
+ *
+ * // Finally create a class with an employe property that returns an Employee 
+ * // with data under a different name in the underlying data model.
+ * @Getters(['employee', '_worker', Employee])
+ * class MyMockRoleType extends GQLBase {...}
+ * ```
+ * 
+ * @memberof decorators
+ * @method ⌾⠀extractBits
+ * @since 2.5
+ * 
+ * @param {String|Array<String|Function>} property name of a property, or list 
+ * of property names and a Class. 
+ * @return {Object} an object with the following format ```
+ * {
+ *   typePropertyName: name of root instance property to create 
+ *   modelPropertyName: name of its associated internal model property 
+ *   typeClass: an optional class to wrap around the results in a getter 
+ * }
+ * ```
+ */
 function extractBits(property) {
   let array = isArray(property) ? property : [property, property, null]
   let reply;
@@ -57,7 +106,7 @@ function extractBits(property) {
     let { modelPropertyName, typeClass } = reply;
     return function() {
       return typeClass 
-        ? new typeClass(this[MODEL_KEY][modelPropertyName])
+        ? new typeClass(this[MODEL_KEY][modelPropertyName], this.requestData)
         : this[MODEL_KEY][modelPropertyName]
     }
   }
@@ -79,7 +128,7 @@ function extractBits(property) {
  * takes an indeterminate amount of strings representing the
  * properties for which getters should be injected.
  *
- * @function Getters
+ * @function 🏷⠀Getters
  * @memberof! decorators
  *
  * @param {Array<String|Array<String>>} propertyNames if the model has 'name' 
@@ -88,14 +137,14 @@ function extractBits(property) {
  * @return {Function} a class decorator method.s
  */
 export function Getters(
-  ...propertyNames: Array<String|Array<String>>
+  ...propertyNames: Array<String|Array<String|Function>>
 ): Function {
   return function(target: mixed): mixed {
     for (let property of propertyNames) {
       let { typePropertyName, getterMaker } = extractBits(property);
         
       Object.defineProperty(target.prototype, typePropertyName, {
-        value: getterMaker()
+        get: getterMaker()
       });
     }
 
@@ -110,8 +159,9 @@ export function Getters(
  * takes an indeterminate amount of strings representing the
  * properties for which setters should be injected.
  *
- * @function Setters
+ * @function 🏷⠀Setters
  * @memberof! decorators
+ * @since 2.1.0
  *
  * @param {Array<String|Array<String>>} propertyNames if the model has 
  * 'name' and 'age' as properties, then passing those two strings will 
@@ -119,7 +169,7 @@ export function Getters(
  * @return {Function} a class decorator method
  */
 export function Setters(
-  ...propertyNames: Array<String|Array<String>>
+  ...propertyNames: Array<String|Array<String|Function>>
 ): Function {
   return function(target: mixed): mixed {
     for (let property of propertyNames) {
@@ -143,7 +193,7 @@ export function Setters(
  *
  * This method creates both getters and setters
  *
- * @function Properties
+ * @function 🏷⠀Properties
  * @memberof! decorators
  * @since 2.1.0
  *
@@ -153,7 +203,7 @@ export function Setters(
  * @return {Function} a class decorator method
  */
 export function Properties(
-  ...propertyNames: Array<String|Array<String>>
+  ...propertyNames: Array<String|Array<String|Function>>
 ): Function {
   return function(target: mixed): mixed {
     for (let property of propertyNames) {
