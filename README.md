@@ -16,6 +16,15 @@ Through the use of GraphQL's provided abstract syntax tree, or AST, toolkit, you
 #### TODO List
  - [ ] `GQLExpressMiddleware` to be modified to take a directory containing your projects object type definition sources. These should all descend from `GQLBase` directly. This is in lieu of currently taking references to each class you want to have included manually. *This should be an optional alternative*.
  - [ ] Safely merge more than `ObjectTypeDefinition` AST types. Currently as these exist outside of the default implementation, they have not been fully explored by me.
+ - [x] Provide mechanism to specify docs for graphiql
+ - [x] Provide support for GraphQLObjectType definitions 
+ - [x] Provide support for GraphQLInterfaceType definitions 
+ - [ ] Provide support for GraphQLUnionType definitions
+ - [ ] Provide support for GraphQL subscriptions
+ - [x] Provide emitter support for GQLBase and derivatives
+ - [x] Provide decorator support for @Schema 
+ - [x] Provide decorator support for @AdjacentSchema
+ - [x] Provide decorator support for @Getters, @Setters, @Properties (since 2.1, 2.4 provided alias renaming, 2.5 provides type instantiation)
 
 ## What is GraphQL?
 Facebook's site on GraphQL states that GraphQL is, "A query language for your API." It goes on to say

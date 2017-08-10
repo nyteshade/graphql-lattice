@@ -7,6 +7,8 @@ import {
   Schema
 } from '../dist/lattice'
 
+import { typeOf } from '../dist/lattice'
+
 describe('@AdjacentSchema', () => {
   @AdjacentSchema(module)
   class Sample extends GQLBase { }
@@ -27,12 +29,16 @@ describe('@Getters', () => {
   @Getters(['name', 'firstName'], 'job')
   class Employee extends GQLBase { }
   
+  @Getters(['employee', '_emp', Employee])
+  class Person extends GQLBase { }
+  
   const test = 'with jest'
   const fun = 'always'  
   const firstName = 'Jane'
   const job = 'Engineer'  
   const instance = new Sample({test, fun})
   const employee = new Employee({firstName, job})
+  const person = new Person({_emp: {firstName, job}})
   
   it('should have a getter for "test"', () => {
     expect(instance.test).toEqual(test)
@@ -53,6 +59,10 @@ describe('@Getters', () => {
   it('should allow for remapping between type fields and model fields', () => {
     expect(employee.name).toEqual(firstName)
     expect(employee.job).toEqual(job);
+  })
+  
+  it('should return an actual Employee object', () => {
+    expect(typeOf(person.employee)).toEqual(Employee.name)
   })
 })
 

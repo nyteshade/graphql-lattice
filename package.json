@@ -5,7 +5,7 @@
   "main": "dist/lattice.min.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack --optimize-minimize --config webpack.config.js",
+    "build": "webpack --config webpack.config.js",
     "docs": "rm -rf ./docs && jsdoc -c conf.json"
   },
   "repository": {
