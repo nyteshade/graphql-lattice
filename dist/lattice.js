@@ -953,8 +953,6 @@ var GQLBase = exports.GQLBase = function (_EventEmitter) {
        *   instance: The GQLBase instance receiving the model
        * }
        * ```
-       *
-       * @type {[type]}
        */
       (0, _defineProperty3.default)(instance, MODEL_KEY, {
         get: function get() {
@@ -6858,11 +6856,11 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
 
       var schema = (0, _graphql.buildSchema)(this.makeSchema());
 
-      // TODO handle scalars, unions and the rest 
+      // TODO handle scalars, unions and the rest
       this.injectInterfaceResolvers(schema);
       this.injectComments(schema);
 
-      // See if there is a way abstract the passing req, res, gql to each 
+      // See if there is a way abstract the passing req, res, gql to each
       // makeRoot resolver without invoking makeRoot again every time.
       return (0, _expressGraphql2.default)(function () {
         var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(req, res, gql) {
@@ -6916,14 +6914,14 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
     }
 
     /**
-     * Until such time as I can get the reference Facebook GraphQL AST parser to 
-     * read and apply descriptions or until such time as I employ the Apollo 
-     * AST parser, providing a `static get apiDocs()` getter is the way to get 
+     * Until such time as I can get the reference Facebook GraphQL AST parser to
+     * read and apply descriptions or until such time as I employ the Apollo
+     * AST parser, providing a `static get apiDocs()` getter is the way to get
      * your descriptions into the proper fields, post schema creation.
      *
-     * This method walks the types in the registered handlers and the supplied 
-     * schema type. It then injects the written comments such that they can 
-     * be exposed in graphiql and to applications or code that read the meta 
+     * This method walks the types in the registered handlers and the supplied
+     * schema type. It then injects the written comments such that they can
+     * be exposed in graphiql and to applications or code that read the meta
      * fields of a built schema
      *
      * TODO handle argument comments and other outliers
@@ -6931,7 +6929,7 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
      * @memberof GQLExpressMiddleware
      * @method ⌾⠀injectComments
      * @instance
-     * 
+     *
      * @param {Object} schema a built GraphQLSchema object created via buildSchema
      * or some other alternative but compatible manner
      */
@@ -6952,8 +6950,6 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
 
         for (var _iterator3 = (0, _getIterator3.default)(this.handlers), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
           var handler = _step3.value;
-
-          console.log('handler: %s', handler.name);
 
           var docs = handler.apiDocs();
           var query = schema._typeMap.Query;
@@ -7054,15 +7050,15 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
     }
 
     /**
-     * Somewhat like `injectComments` and other similar methods, the 
-     * `injectInterfaceResolvers` method walks the registered handlers and 
-     * finds `GQLInterface` types and applies their `resolveType()` 
+     * Somewhat like `injectComments` and other similar methods, the
+     * `injectInterfaceResolvers` method walks the registered handlers and
+     * finds `GQLInterface` types and applies their `resolveType()`
      * implementations.
      *
      * @memberof GQLExpressMiddleware
      * @method ⌾⠀injectInterfaceResolvers
      * @instance
-     * 
+     *
      * @param {Object} schema a built GraphQLSchema object created via buildSchema
      * or some other alternative but compatible manner
      */
@@ -7079,7 +7075,6 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
           var handler = _step6.value;
 
           if (handler.GQL_TYPE === _graphql.GraphQLInterfaceType) {
-            console.log('Applying ' + handler.name + '\'s resolveType() method');
             schema._typeMap[handler.name].resolveType = schema._typeMap[handler.name]._typeConfig.resolveType = handler.resolveType;
           }
         }
@@ -7098,6 +7093,18 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
         }
       }
     }
+
+    /**
+     * An optional express middleware function that can be mounted to return
+     * a copy of the generated schema string being used by GQLExpressMiddleware.
+     *
+     * @memberof GQLExpressMiddleware
+     * @method schemaMiddleware
+     * @instance
+     *
+     * @type {Function}
+     */
+
   }, {
     key: 'middleware',
     get: function get() {
@@ -7121,6 +7128,15 @@ var GQLExpressMiddleware = exports.GQLExpressMiddleware = function (_EventEmitte
     key: 'middlewareWithoutGraphiQL',
     get: function get() {
       return this.customMiddleware({ graphiql: false });
+    }
+  }, {
+    key: 'schemaMiddleware',
+    get: function get() {
+      var _this3 = this;
+
+      return function (req, res, next) {
+        res.status(200).send(_this3.makeSchema());
+      };
     }
   }]);
   return GQLExpressMiddleware;

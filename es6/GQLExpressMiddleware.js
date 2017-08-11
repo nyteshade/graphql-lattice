@@ -171,11 +171,11 @@ export class GQLExpressMiddleware extends EventEmitter
   ): Function {
     const schema = buildSchema(this.makeSchema());
 
-    // TODO handle scalars, unions and the rest 
+    // TODO handle scalars, unions and the rest
     this.injectInterfaceResolvers(schema);
     this.injectComments(schema);
 
-    // See if there is a way abstract the passing req, res, gql to each 
+    // See if there is a way abstract the passing req, res, gql to each
     // makeRoot resolver without invoking makeRoot again every time.
     return graphqlHTTP(async (req, res, gql) => {
       let opts = {
@@ -188,25 +188,25 @@ export class GQLExpressMiddleware extends EventEmitter
           path: error.path
         })
       };
-      
+
       Object.assign(opts, graphqlHttpOptions);
       if (patchFinalOpts) {
         Object.assign(opts, patchFinalOpts.bind(this)(opts) || opts);
       }
-      
+
       return opts;
     });
   }
 
   /**
-   * Until such time as I can get the reference Facebook GraphQL AST parser to 
-   * read and apply descriptions or until such time as I employ the Apollo 
-   * AST parser, providing a `static get apiDocs()` getter is the way to get 
+   * Until such time as I can get the reference Facebook GraphQL AST parser to
+   * read and apply descriptions or until such time as I employ the Apollo
+   * AST parser, providing a `static get apiDocs()` getter is the way to get
    * your descriptions into the proper fields, post schema creation.
    *
-   * This method walks the types in the registered handlers and the supplied 
-   * schema type. It then injects the written comments such that they can 
-   * be exposed in graphiql and to applications or code that read the meta 
+   * This method walks the types in the registered handlers and the supplied
+   * schema type. It then injects the written comments such that they can
+   * be exposed in graphiql and to applications or code that read the meta
    * fields of a built schema
    *
    * TODO handle argument comments and other outliers
@@ -214,27 +214,25 @@ export class GQLExpressMiddleware extends EventEmitter
    * @memberof GQLExpressMiddleware
    * @method ⌾⠀injectComments
    * @instance
-   * 
+   *
    * @param {Object} schema a built GraphQLSchema object created via buildSchema
    * or some other alternative but compatible manner
    */
   injectComments(schema: Object) {
-    const { 
+    const {
       DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS
     } = GQLBase;
-    
-    for (let handler of this.handlers) { 
-      console.log('handler: %s', handler.name)
-      
+
+    for (let handler of this.handlers) {
       const docs = handler.apiDocs();
       const query = schema._typeMap.Query;
       const mutation = schema._typeMap.Mutation;
       const subscription = schema._typeMap.Subscription;
       let type;
-      
+
       if ((type = schema._typeMap[handler.name])) {
         let fields = type._fields;
-        
+
         if (docs[DOC_CLASS]) { type.description = docs[DOC_CLASS] }
         for (let field of Object.keys(docs[DOC_FIELDS] || {})) {
           if (field in fields) {
@@ -242,7 +240,7 @@ export class GQLExpressMiddleware extends EventEmitter
           }
         }
       }
-      
+
       for (let [_type, _CONST] of [
         [query, DOC_QUERIES],
         [mutation, DOC_MUTATORS],
@@ -250,42 +248,57 @@ export class GQLExpressMiddleware extends EventEmitter
       ]) {
         if (_type && Object.keys(docs[_CONST] || {}).length) {
           let fields = _type._fields;
-          
-          if (docs[_CONST][DOC_CLASS]) { 
-            _type.description = docs[_CONST][DOC_CLASS] 
+
+          if (docs[_CONST][DOC_CLASS]) {
+            _type.description = docs[_CONST][DOC_CLASS]
           }
-          
+
           for (let field of Object.keys(docs[_CONST])) {
             if (field in fields) {
               fields[field].description = docs[_CONST][field];
             }
-          }        
-        }      
-      }      
+          }
+        }
+      }
     }
   }
 
   /**
-   * Somewhat like `injectComments` and other similar methods, the 
-   * `injectInterfaceResolvers` method walks the registered handlers and 
-   * finds `GQLInterface` types and applies their `resolveType()` 
+   * Somewhat like `injectComments` and other similar methods, the
+   * `injectInterfaceResolvers` method walks the registered handlers and
+   * finds `GQLInterface` types and applies their `resolveType()`
    * implementations.
    *
    * @memberof GQLExpressMiddleware
    * @method ⌾⠀injectInterfaceResolvers
    * @instance
-   * 
+   *
    * @param {Object} schema a built GraphQLSchema object created via buildSchema
    * or some other alternative but compatible manner
    */
   injectInterfaceResolvers(schema: Object) {
-    for (let handler of this.handlers) {      
+    for (let handler of this.handlers) {
       if (handler.GQL_TYPE === GraphQLInterfaceType) {
-        console.log(`Applying ${handler.name}'s resolveType() method`);
         schema._typeMap[handler.name].resolveType =
-        schema._typeMap[handler.name]._typeConfig.resolveType = 
+        schema._typeMap[handler.name]._typeConfig.resolveType =
           handler.resolveType;
       }
+    }
+  }
+
+  /**
+   * An optional express middleware function that can be mounted to return
+   * a copy of the generated schema string being used by GQLExpressMiddleware.
+   *
+   * @memberof GQLExpressMiddleware
+   * @method schemaMiddleware
+   * @instance
+   *
+   * @type {Function}
+   */
+  get schemaMiddleware(): Function {
+    return (req: mixed, res: mixed, next: ?Function) => {
+      res.status(200).send(this.makeSchema());
     }
   }
 }
