@@ -3,12 +3,18 @@
 
 import { SyntaxTree } from './SyntaxTree'
 import graphqlHTTP from 'express-graphql'
-import { parse, print, buildSchema, GraphQLInterfaceType } from 'graphql'
 import { GQLBase } from './GQLBase'
 import { GQLInterface } from './GQLInterface'
 import { typeOf } from './types'
 import { EventEmitter } from 'events'
 import path from 'path'
+import {
+  parse,
+  print,
+  buildSchema,
+  GraphQLInterfaceType,
+  GraphQLEnumType
+} from 'graphql'
 
 /**
  * A handler that exposes an express middleware function that mounts a
@@ -173,6 +179,7 @@ export class GQLExpressMiddleware extends EventEmitter
 
     // TODO handle scalars, unions and the rest
     this.injectInterfaceResolvers(schema);
+    this.injectEnums(schema);
     this.injectComments(schema);
 
     // See if there is a way abstract the passing req, res, gql to each
@@ -232,11 +239,20 @@ export class GQLExpressMiddleware extends EventEmitter
 
       if ((type = schema._typeMap[handler.name])) {
         let fields = type._fields;
+        let values = type._values;
 
         if (docs[DOC_CLASS]) { type.description = docs[DOC_CLASS] }
+
         for (let field of Object.keys(docs[DOC_FIELDS] || {})) {
-          if (field in fields) {
+          if (fields && field in fields) {
             fields[field].description = docs[DOC_FIELDS][field];
+          }
+          if (values) {
+            for (let value of values) {
+              if (value.name === field) {
+                value.description = docs[DOC_FIELDS][field].value
+              }
+            }
           }
         }
       }
@@ -282,6 +298,34 @@ export class GQLExpressMiddleware extends EventEmitter
         schema._typeMap[handler.name].resolveType =
         schema._typeMap[handler.name]._typeConfig.resolveType =
           handler.resolveType;
+      }
+    }
+  }
+
+  /**
+   * Somewhat like `injectComments` and other similar methods, the
+   * `injectInterfaceResolvers` method walks the registered handlers and
+   * finds `GQLInterface` types and applies their `resolveType()`
+   * implementations.
+   *
+   * @memberof GQLExpressMiddleware
+   * @method injectEnums
+   * @instance
+   *
+   * @param {Object} schema a built GraphQLSchema object created via buildSchema
+   * or some other alternative but compatible manner
+   */
+  injectEnums(schema: Object) {
+    for (let handler of this.handlers) {
+      if (handler.GQL_TYPE === GraphQLEnumType) {
+        const __enum = schema._typeMap[handler.name];
+        const values = handler.values();
+
+        for (let value of __enum._values) {
+          if (value.name in values) {
+            Object.assign(value, values[value.name])
+          }
+        }
       }
     }
   }

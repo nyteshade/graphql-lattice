@@ -1,5 +1,6 @@
 import { GQLBase, MODEL_KEY } from './GQLBase'
 import { GQLInterface } from './GQLInterface'
+import { GQLEnum } from './GQLEnum'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { SyntaxTree } from './SyntaxTree'
 import { Deferred, joinLines } from './utils'
@@ -23,6 +24,7 @@ const defaultPackage = {
   GQLBase,
   GQLExpressMiddleware,
   GQLInterface,
+  GQLEnum,
   joinLines,
   Properties,
   Schema,
@@ -30,12 +32,12 @@ const defaultPackage = {
   SyntaxTree,
   typeOf,
   types,
-  
+
   MODEL_KEY,
-  DOC_CLASS, 
-  DOC_FIELDS, 
-  DOC_QUERIES, 
-  DOC_MUTATORS, 
+  DOC_CLASS,
+  DOC_FIELDS,
+  DOC_QUERIES,
+  DOC_MUTATORS,
   DOC_SUBSCRIPTIONS
 };
 
@@ -48,6 +50,7 @@ export {
   GQLBase,
   GQLExpressMiddleware,
   GQLInterface,
+  GQLEnum,
   joinLines,
   Properties,
   Schema,
@@ -55,13 +58,13 @@ export {
   SyntaxTree,
   typeOf,
   types,
-  
+
   MODEL_KEY,
-  DOC_CLASS, 
-  DOC_FIELDS, 
-  DOC_QUERIES, 
-  DOC_MUTATORS, 
-  DOC_SUBSCRIPTIONS  
+  DOC_CLASS,
+  DOC_FIELDS,
+  DOC_QUERIES,
+  DOC_MUTATORS,
+  DOC_SUBSCRIPTIONS
 }
 
 export default defaultPackage
