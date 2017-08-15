@@ -4,6 +4,7 @@
 import { MODEL_KEY } from '../GQLBase'
 import { isArray } from '../types'
 import { inspect } from 'util'
+import { GraphQLEnumType } from 'graphql'
 
 /**
  * For each of the decorators, Getters, Setters, and Properties, we take a 
@@ -105,9 +106,23 @@ function extractBits(property) {
   reply.getterMaker = function() {
     let { modelPropertyName, typeClass } = reply;
     return function() {
-      return typeClass 
-        ? new typeClass(this[MODEL_KEY][modelPropertyName], this.requestData)
-        : this[MODEL_KEY][modelPropertyName]
+      if (typeClass) {
+        let args = [this[MODEL_KEY][modelPropertyName], this.requestData];
+        let val;
+
+        if (extractBits.DIRECT_TYPES.includes(typeClass.name)) {
+          val = typeClass(...args)
+        }
+        else {
+          val = new typeClass(...args)
+        }
+        
+        if (typeClass.GQL_TYPE === GraphQLEnumType) { return val.value; }
+        
+        return val;
+      }
+        
+      return this[MODEL_KEY][modelPropertyName]
     }
   }
   
@@ -120,6 +135,11 @@ function extractBits(property) {
   
   return reply;
 }
+
+extractBits.DIRECT_TYPES = [
+  'String',
+  'Number'
+];
 
 /**
  * When working with `GQLBase` instances that expose properties
