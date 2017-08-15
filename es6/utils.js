@@ -113,13 +113,13 @@ export class Deferred {
 export function joinLines(strings, ...values) {
   let result = [];
   for (let i = 0; i < strings.length; i++) {
-    let string = strings[i];
-    let value = values.length > i && `${values[i]} ` || '' 
+    let string = String(strings[i]).trim();
+    let value = values.length > i && `${String(values[i]).trim()} ` || '' 
     result.push(string
-      .replace(/(^\s*)?(.*)(\s*$)?/g, '$2')
-      .replace(/\r?\n/g, ' ')
+      .replace(/(\s+)/g, ' ')
+      .replace(/$/g, ' ')
     );
     result.push(value);
   }
-  return result.join('');
+  return result.join('').trim();
 }

@@ -1,6 +1,8 @@
 import { GQLBase, MODEL_KEY } from './GQLBase'
 import { GQLInterface } from './GQLInterface'
 import { GQLEnum } from './GQLEnum'
+import { GQLScalar } from './GQLScalar'
+import { GQLJSON } from './types/GQLJSON'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { SyntaxTree } from './SyntaxTree'
 import { Deferred, joinLines } from './utils'
@@ -25,6 +27,8 @@ const defaultPackage = {
   GQLExpressMiddleware,
   GQLInterface,
   GQLEnum,
+  GQLScalar,
+  GQLJSON,
   joinLines,
   Properties,
   Schema,
@@ -51,6 +55,8 @@ export {
   GQLExpressMiddleware,
   GQLInterface,
   GQLEnum,
+  GQLScalar,
+  GQLJSON,
   joinLines,
   Properties,
   Schema,

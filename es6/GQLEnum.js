@@ -5,22 +5,40 @@
 
 import { GQLBase } from './GQLBase'
 import { GraphQLEnumType, parse } from 'graphql'
+import { Getters } from './decorators/ModelProperties'
 
+/* Internal Symbol referring to real accessor to GQLBase model object */
+const _MODEL_KEY = Symbol.for('data-model-contents-value');
+
+/* Internal Symbol referring to the static object containing a proxy handler */
+const _PROXY_HANDLER = Symbol.for('internal-base-proxy-handler')
+
+/* Internal Symbol property referring to the mapping of values on the GQLEnum */
 const ENUMS = Symbol();
 
+/**
+ * TODO finish comment
+ *
+ * @class GQLEnum
+ */
+@Getters(['value', String])
 export class GQLEnum extends GQLBase {
   constructor(enumValueOrKey: ?mixed, requestData: ?Object) {
     super({}, requestData)
 
     const Class = this.constructor
-    const enums = Class.enums();
+    const enums = Class.enums;
     let symbol;
 
-    if (enums.nameToSymbol.has(enumValueOrKey)) {
-      symbol = enums.nameToSymbol.get(enumValueOrKey);
-    }
-    else if (enums.valueToSymbol.has(enumValueOrKey)) {
-      symbol = enums.valueToSymbol.get(enumValueOrKey);
+    for (let property of [
+      enumValueOrKey,
+      String(enumValueOrKey && enumValueOrKey.value),
+      String(enumValueOrKey && enumValueOrKey.toString())
+    ]) {
+      if (property in enums) {        
+        symbol = enums[property]
+        break;
+      }
     }
 
     if (symbol) {
@@ -30,12 +48,6 @@ export class GQLEnum extends GQLBase {
         symbol: symbol
       })
     }
-
-    console.log(this.model)
-  }
-
-  [Symbol.toPrimitive]() {
-    return this.model.name;
   }
 
   /**
@@ -61,7 +73,7 @@ export class GQLEnum extends GQLBase {
    *
    * Example:
    * ```
-   *   static values(): ?Object {
+   *   static get values(): ?Object {
    *     const { valueOf } = this;
    *
    *     return {
@@ -70,20 +82,20 @@ export class GQLEnum extends GQLBase {
    *   }
    * ```
    *
-   * @method values
+   * @method ⬇︎⠀values
    * @memberof GQLEnum
    * @static
    *
    * @return {Object|Null} an object mapping with each key mapping to an object
    * possessing at least a value field, which in turn maps to the desired value
    */
-  static values(): Object {
+  static get values(): Object {
     return {};
   }
 
   /**
    * Shorthand method to generate a GraphQLEnumValueDefinition implementation
-   * object. Use this for building and customizing your `values()` key/value
+   * object. Use this for building and customizing your `values` key/value
    * object in your child classes.
    *
    * @memberof GQLEnum
@@ -116,32 +128,37 @@ export class GQLEnum extends GQLBase {
    * to be written to it.
    *
    * @memberof GQLEnum
-   * @method enums
+   * @method ⬇︎⠀enums
    * @static
    *
    * @return {Array<Symbol>} an array of modified Symbols for each enum
    * variation defined.
    */
-  static enums(): Array<Symbol> {
+  static get enums(): Array<Symbol> {
     if (!this[ENUMS]) {
       const ast = parse(this.SCHEMA);
       const array = [];
+      const values = this.values || {};
 
-      array.nameToSymbol = new Map();
-      array.valueToSymbol = new WeakMap();
-
+      // Walk the AST for the class' schema and extract the names (same as 
+      // values when specified in GraphQL SDL) and build an object the has 
+      // the actual defined value and the AST generated name/value. 
       for (let enumDef of ast.definitions[0].values) {
-        let symObj = Object(Symbol.for(enumDef.name.value));
+        let defKey = enumDef.name.value;
+        let symObj = Object(Symbol.for(defKey));
 
-        symObj.value = this.values()[enumDef.name.value] || enumDef.name.value;
-        symObj.name = enumDef.name.value;
+        symObj.value = (values[defKey] && values[defKey].value) || defKey;
+        symObj.name = defKey;
         symObj.sym = symObj.valueOf()
 
+        // This bit of logic allows us to look into the "enums" property and 
+        // get the generated Object wrapped Symbol with keys and values by 
+        // supplying either a key or value.
         array.push(symObj)
-        array.nameToSymbol.set(symObj.name, symObj)
-        array.valueToSymbol.set(symObj.value, symObj)
+        array[defKey] = symObj;
+        array[symObj.value] = symObj;
       }
-
+      
       this[ENUMS] = array;
     }
 

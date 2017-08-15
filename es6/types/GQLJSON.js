@@ -1,4 +1,5 @@
-import { GQLScalar } from 'graphql-lattice'
+import { GQLScalar } from '../GQLScalar'
+import { Schema } from '../decorators/Schema'
 import { Kind } from 'graphql/language'
 
 @Schema('scalar JSON')
@@ -16,6 +17,19 @@ export class GQLJSON extends GQLScalar {
    */
   static serialize(value: mixed): mixed {
     return value;
+  }
+  
+  /**
+   * All processing by GraphQL Lattice uses the Class.name property. We want 
+   * to report JSON and not GQLJSON so this is what we do.
+   *
+   * @memberof GQLJSON
+   * @method name 
+   * @static
+   * @type {String}
+   */
+  static get name() {
+    return 'JSON';
   }
 
   /**
