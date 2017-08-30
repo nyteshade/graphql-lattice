@@ -4,7 +4,7 @@
   "description": "OO Underpinnings for ease of GraphQL Implementation",
   "main": "dist/lattice.min.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "build": "webpack --config webpack.config.js",
     "docs": "rm -rf ./docs && jsdoc -c conf.json"
   },

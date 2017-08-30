@@ -1,4 +1,4 @@
-import { SyntaxTree } from '../dist/lattice'
+import { SyntaxTree } from '../es6/lattice'
 
 test('Should convert simple IDL to AST and back', () => {
   const IDL = `

@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>utils</title>
+  <title>SchemaUtils</title>
 
 
 
@@ -47,7 +47,7 @@
 
     <div id="main">
         
-        <h1 class="page-title">utils</h1>
+        <h1 class="page-title">SchemaUtils</h1>
         
 
         
@@ -60,7 +60,7 @@
 <header>
     
         <h2>
-        utils
+        SchemaUtils
         </h2>
         
     
@@ -71,7 +71,31 @@
     
         
 
-        
+    
+
+    <h4 class="name" id="SchemaUtils"><a class="anchor" href="#SchemaUtils"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>new SchemaUtils<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>The SchemaUtils is used by tools such as GQLExpressMiddleware in order to<br>apply GraphQL Lattice specifics to the build schema.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -103,7 +127,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source">
-        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line158">line 158</a>
+        <a href="SchemaUtils.js.html">SchemaUtils.js</a>, <a href="SchemaUtils.js.html#line68">line 68</a>
     </dd>
     
 
@@ -115,7 +139,20 @@
 </dl>
 
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     </div>
 
@@ -124,13 +161,6 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="utils.Deferred.html">Deferred</a></dt>
-            <dd></dd>
-        </dl>
-    
 
      
 
@@ -138,6 +168,816 @@
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80createMergedRoot"><a class="anchor" href="#⌾⠀createMergedRoot"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⌾⠀createMergedRoot<span class="signature">(Classes, requestData)</span><span class="type-signature"> &rarr; {Promise.&lt;Object>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>An asynchronous function used to parse the supplied classes for each<br>ones resolvers and mutators. These are all combined into a single root<br>object passed to express-graphql.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>Classes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;function()></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the GQLBase extended class objects or<br>functions from which to merge the RESOLVERS and MUTATORS functions.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>requestData</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>for Express apss, this will be an object<br>containing { req, res, gql } where those are the Express request and<br>response object as well as the GraphQL parameters for the request.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">Promise.&lt;Object></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>a Promise resolving to an Object containing all<br>the functions described in both Query and Mutation types.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SchemaUtils.js.html">SchemaUtils.js</a>, <a href="SchemaUtils.js.html#line502">line 502</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80injectComments"><a class="anchor" href="#⌾⠀injectComments"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⌾⠀injectComments<span class="signature">(schema, Classes)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Until such time as I can get the reference Facebook GraphQL AST parser to<br>read and apply descriptions or until such time as I employ the Apollo<br>AST parser, providing a <code>static get apiDocs()</code> getter is the way to get<br>your descriptions into the proper fields, post schema creation.</p>
+<p>This method walks the types in the registered classes and the supplied<br>schema type. It then injects the written comments such that they can<br>be exposed in graphiql and to applications or code that read the meta<br>fields of a built schema</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Classes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;function()></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>these are GQLBase extended classes used to<br>manipulate the schema with.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since">2.7.0</dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SchemaUtils.js.html">SchemaUtils.js</a>, <a href="SchemaUtils.js.html#line85">line 85</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80injectEnums"><a class="anchor" href="#⌾⠀injectEnums"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⌾⠀injectEnums<span class="signature">(schema, Classes)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Somewhat like <code>injectComments</code> and other similar methods, the<br><code>injectInterfaceResolvers</code> method walks the registered classes and<br>finds <code>GQLInterface</code> types and applies their <code>resolveType()</code><br>implementations.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Classes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;function()></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>these are GQLBase extended classes used to<br>manipulate the schema with.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SchemaUtils.js.html">SchemaUtils.js</a>, <a href="SchemaUtils.js.html#line296">line 296</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80injectInterfaceResolvers"><a class="anchor" href="#⌾⠀injectInterfaceResolvers"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⌾⠀injectInterfaceResolvers<span class="signature">(schema, Classes)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Somewhat like <code>injectComments</code> and other similar methods, the<br><code>injectInterfaceResolvers</code> method walks the registered classes and<br>finds <code>GQLInterface</code> types and applies their <code>resolveType()</code><br>implementations.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Classes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;function()></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>these are GQLBase extended classes used to<br>manipulate the schema with.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SchemaUtils.js.html">SchemaUtils.js</a>, <a href="SchemaUtils.js.html#line249">line 249</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80injectScalars"><a class="anchor" href="#⌾⠀injectScalars"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⌾⠀injectScalars<span class="signature">(schema, Classes)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>GQLScalar types must define three methods to have a valid implementation.<br>They are serialize, parseValue and parseLiteral. See their docs for more<br>info on how to do so.</p>
+<p>This code finds each scalar and adds their implementation details to the<br>generated schema type config.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>Classes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;function()></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>these are GQLBase extended classes used to<br>manipulate the schema with.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="SchemaUtils.js.html">SchemaUtils.js</a>, <a href="SchemaUtils.js.html#line371">line 371</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     

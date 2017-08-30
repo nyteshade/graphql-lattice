@@ -1,15 +1,18 @@
-import { GQLBase, MODEL_KEY } from './GQLBase'
-import { GQLInterface } from './GQLInterface'
-import { GQLEnum } from './GQLEnum'
-import { GQLScalar } from './GQLScalar'
-import { GQLJSON } from './types/GQLJSON'
-import { GQLExpressMiddleware } from './GQLExpressMiddleware'
-import { SyntaxTree } from './SyntaxTree'
-import { Deferred, joinLines } from './utils'
 import { AdjacentSchema } from './decorators/AdjacentSchema'
-import { Getters, Setters, Properties } from './decorators/ModelProperties'
-import { Schema } from './decorators/Schema'
+import { Deferred, joinLines } from './utils'
 import { FileSchema } from './decorators/FileSchema'
+import { 
+  Getters, Setters, Properties, DirectTypeManager 
+} from './decorators/ModelProperties'
+import { GQLBase, MODEL_KEY } from './GQLBase'
+import { GQLEnum } from './GQLEnum'
+import { GQLExpressMiddleware } from './GQLExpressMiddleware'
+import { GQLInterface } from './GQLInterface'
+import { GQLJSON } from './types/GQLJSON'
+import { GQLScalar } from './GQLScalar'
+import { Schema } from './decorators/Schema'
+import { SchemaUtils } from './SchemaUtils'
+import { SyntaxTree } from './SyntaxTree'
 import * as types from './types'
 
 const { typeOf } = types;
@@ -21,17 +24,19 @@ const {
 const defaultPackage = {
   AdjacentSchema,
   Deferred,
+  DirectTypeManager,
   FileSchema,
   Getters,
   GQLBase,
+  GQLEnum,
   GQLExpressMiddleware,
   GQLInterface,
-  GQLEnum,
-  GQLScalar,
   GQLJSON,
+  GQLScalar,
   joinLines,
   Properties,
   Schema,
+  SchemaUtils,
   Setters,
   SyntaxTree,
   typeOf,
@@ -49,17 +54,19 @@ const defaultPackage = {
 export {
   AdjacentSchema,
   Deferred,
+  DirectTypeManager,
   FileSchema,
   Getters,
   GQLBase,
+  GQLEnum,
   GQLExpressMiddleware,
   GQLInterface,
-  GQLEnum,
-  GQLScalar,
   GQLJSON,
+  GQLScalar,
   joinLines,
   Properties,
   Schema,
+  SchemaUtils,
   Setters,
   SyntaxTree,
   typeOf,

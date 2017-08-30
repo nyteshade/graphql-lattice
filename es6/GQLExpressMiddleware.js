@@ -8,6 +8,7 @@ import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
 import { EventEmitter } from 'events'
+import { SchemaUtils } from './SchemaUtils'
 import path from 'path'
 import {
   parse,
@@ -45,74 +46,6 @@ export class GQLExpressMiddleware extends EventEmitter
   constructor(handlers: Array<GQLBase>) {
     super();
     this.handlers = handlers;
-  }
-
-  /**
-   * An asynchronous function used to parse the supplied classes for each
-   * ones resolvers and mutators. These are all combined into a single root
-   * object passed to express-graphql.
-   *
-   * @instance
-   * @memberof GQLExpressMiddleware
-   * @method ⌾⠀makeRoot
-   *
-   * @param {Request} req an Express 4.x request object
-   * @param {Response} res an Express 4.x response object
-   * @param {Object} gql an object containing information about the graphql
-   * request. It has the format of `{ query, variables, operationName, raw }`
-   * as described here: https://github.com/graphql/express-graphql
-   * @return {Promise<Object>} a Promise resolving to an Object containing all
-   * the functions described in both Query and Mutation types.
-   */
-  async makeRoot(req: Object, res: Object, gql: Object): Promise<Object> {
-    this.root = {};
-
-    for (let object of this.handlers) {
-      Object.assign(
-        this.root,
-        await object.RESOLVERS({req, res, gql}),
-        await object.MUTATORS({req, res, gql})
-      );
-    }
-
-    return this.root;
-  }
-
-  /**
-   * A function that combines the IDL schemas of all the supplied classes and
-   * returns that value to the middleware getter.
-   *
-   * @instance
-   * @memberof GQLExpressMiddleware
-   * @method ⌾⠀makeSchema
-   *
-   * @return {string} a dynamically generated GraphQL IDL schema string
-   */
-  makeSchema(): string {
-    let schema = SyntaxTree.EmptyDocument();
-
-    for (let Class of this.handlers) {
-      let classSchema = Class.SCHEMA;
-
-      if (typeOf(classSchema) === 'Symbol') {
-        let handler = Class.handler;
-        let filename = path.basename(Class.handler.path)
-
-        classSchema = handler.getSchema();
-        console.log(
-          `\nRead schema (%s)\n%s\n%s\n`,
-          filename,
-          '-'.repeat(14 + filename.length),
-          classSchema.replace(/^/gm, '  ')
-        )
-      }
-
-      schema.appendDefinitions(classSchema);
-    }
-
-    console.log('\nGenerated GraphQL Schema\n----------------\n%s', schema);
-
-    return schema.toString();
   }
 
   /**
@@ -177,20 +110,23 @@ export class GQLExpressMiddleware extends EventEmitter
     graphqlHttpOptions: Object = {graphiql: true},
     patchFinalOpts: Function = null
   ): Function {
-    const schema = buildSchema(this.makeSchema());
+    const schema = this.schema = buildSchema(
+      SchemaUtils.generateSchemaSDL(this.handlers)
+    );
 
-    // TODO handle scalars, unions and the rest
-    this.injectInterfaceResolvers(schema);
-    this.injectEnums(schema);
-    this.injectScalars(schema);
-    this.injectComments(schema);
+    SchemaUtils.injectInterfaceResolvers(schema, this.handlers);
+    SchemaUtils.injectEnums(schema, this.handlers);
+    SchemaUtils.injectScalars(schema, this.handlers);
+    SchemaUtils.injectComments(schema, this.handlers);
 
     // See if there is a way abstract the passing req, res, gql to each
     // makeRoot resolver without invoking makeRoot again every time.
     return graphqlHTTP(async (req, res, gql) => {
       let opts = {
         schema,
-        rootValue: await this.makeRoot(req, res, gql),
+        rootValue: await SchemaUtils.createMergedRoot(
+          this.handlers, {req, res, gql}
+        ),
         formatError: error => ({
           message: error.message,
           locations: error.locations,
@@ -206,168 +142,6 @@ export class GQLExpressMiddleware extends EventEmitter
 
       return opts;
     });
-  }
-
-  /**
-   * Until such time as I can get the reference Facebook GraphQL AST parser to
-   * read and apply descriptions or until such time as I employ the Apollo
-   * AST parser, providing a `static get apiDocs()` getter is the way to get
-   * your descriptions into the proper fields, post schema creation.
-   *
-   * This method walks the types in the registered handlers and the supplied
-   * schema type. It then injects the written comments such that they can
-   * be exposed in graphiql and to applications or code that read the meta
-   * fields of a built schema
-   *
-   * TODO handle argument comments and other outliers
-   *
-   * @memberof GQLExpressMiddleware
-   * @method ⌾⠀injectComments
-   * @instance
-   *
-   * @param {Object} schema a built GraphQLSchema object created via buildSchema
-   * or some other alternative but compatible manner
-   */
-  injectComments(schema: Object) {
-    const {
-      DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS
-    } = GQLBase;
-
-    for (let handler of this.handlers) {
-      const docs = handler.apiDocs();
-      const query = schema._typeMap.Query;
-      const mutation = schema._typeMap.Mutation;
-      const subscription = schema._typeMap.Subscription;
-      let type;
-
-      if ((type = schema._typeMap[handler.name])) {
-        let fields = type._fields;
-        let values = type._values;
-
-        if (docs[DOC_CLASS]) { type.description = docs[DOC_CLASS] }
-
-        for (let field of Object.keys(docs[DOC_FIELDS] || {})) {
-          if (fields && field in fields) {
-            fields[field].description = docs[DOC_FIELDS][field];
-          }
-          if (values) {
-            for (let value of values) {
-              if (value.name === field) {
-                value.description = docs[DOC_FIELDS][field]
-              }
-            }
-          }
-        }
-      }
-
-      for (let [_type, _CONST] of [
-        [query, DOC_QUERIES],
-        [mutation, DOC_MUTATORS],
-        [subscription, DOC_SUBSCRIPTIONS]
-      ]) {
-        if (_type && Object.keys(docs[_CONST] || {}).length) {
-          let fields = _type._fields;
-
-          if (docs[_CONST][DOC_CLASS]) {
-            _type.description = docs[_CONST][DOC_CLASS]
-          }
-
-          for (let field of Object.keys(docs[_CONST])) {
-            if (field in fields) {
-              fields[field].description = docs[_CONST][field];
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * Somewhat like `injectComments` and other similar methods, the
-   * `injectInterfaceResolvers` method walks the registered handlers and
-   * finds `GQLInterface` types and applies their `resolveType()`
-   * implementations.
-   *
-   * @memberof GQLExpressMiddleware
-   * @method ⌾⠀injectInterfaceResolvers
-   * @instance
-   *
-   * @param {Object} schema a built GraphQLSchema object created via buildSchema
-   * or some other alternative but compatible manner
-   */
-  injectInterfaceResolvers(schema: Object) {
-    for (let handler of this.handlers) {
-      if (handler.GQL_TYPE === GraphQLInterfaceType) {
-        schema._typeMap[handler.name].resolveType =
-        schema._typeMap[handler.name]._typeConfig.resolveType =
-          handler.resolveType;
-      }
-    }
-  }
-
-  /**
-   * Somewhat like `injectComments` and other similar methods, the
-   * `injectInterfaceResolvers` method walks the registered handlers and
-   * finds `GQLInterface` types and applies their `resolveType()`
-   * implementations.
-   *
-   * @memberof GQLExpressMiddleware
-   * @method injectEnums
-   * @instance
-   *
-   * @param {Object} schema a built GraphQLSchema object created via buildSchema
-   * or some other alternative but compatible manner
-   */
-  injectEnums(schema: Object) {
-    for (let handler of this.handlers) {
-      if (handler.GQL_TYPE === GraphQLEnumType) {
-        const __enum = schema._typeMap[handler.name];
-        const values = handler.values;
-
-        for (let value of __enum._values) {
-          if (value.name in values) {
-            Object.assign(value, values[value.name])
-          }
-        }
-      }
-    }
-  }
-  
-  /**
-   * GQLScalar types must define three methods to have a valid implementation.
-   * They are serialize, parseValue and parseLiteral. See their docs for more 
-   * info on how to do so.
-   *
-   * This code finds each scalar and adds their implementation details to the 
-   * generated schema type config.
-   *
-   * @memberof GQLExpressMiddleware
-   * @method injectScalars
-   * @instance
-   * 
-   * @param {Object} schema a built GraphQLSchema object created via buildSchema
-   * or some other alternative but compatible manner
-   */
-  injectScalars(schema: Object) {
-    for (let handler of this.handlers) {
-      if (handler.GQL_TYPE === GraphQLScalarType) {
-        const type = schema._typeMap[handler.name];
-        const { serialize, parseValue, parseLiteral } = handler;
-        
-        console.dir(handler.name, type);
-        
-        if (!serialize || !parseValue || !parseLiteral) {
-          console.error(`Scalar type ${handler.name} has invaild impl.`);
-          continue;
-        }
-        
-        Object.assign(type._scalarConfig, {
-          serialize,
-          parseValue,
-          parseLiteral
-        });
-      }
-    }
   }
 
   /**

@@ -1,10 +1,11 @@
 /** @namespace decorators */
 // @flow
 
-import { MODEL_KEY } from '../GQLBase'
-import { isArray } from '../types'
+import { GQLBase, MODEL_KEY } from '../GQLBase'
+import { isArray, extendsFrom } from '../types'
 import { inspect } from 'util'
-import { GraphQLEnumType } from 'graphql'
+import { GraphQLEnumType, parse } from 'graphql'
+import { SyntaxTree } from '../SyntaxTree'
 
 /**
  * For each of the decorators, Getters, Setters, and Properties, we take a 
@@ -104,25 +105,71 @@ function extractBits(property) {
   }
   
   reply.getterMaker = function() {
-    let { modelPropertyName, typeClass } = reply;
+    let { modelPropertyName, typePropertyName, typeClass } = reply;
+    
     return function() {
-      if (typeClass) {
-        let args = [this[MODEL_KEY][modelPropertyName], this.requestData];
-        let val;
+      const thisClass = this.constructor
+      const model = this[MODEL_KEY] || null
+      
+      if (!extendsFrom(thisClass, GQLBase)) {
+        console.error(`${thisClass.name} is not derived from GQLBase`);
+        return undefined
+      }
 
-        if (extractBits.DIRECT_TYPES.includes(typeClass.name)) {
-          val = typeClass(...args)
-        }
-        else {
-          val = new typeClass(...args)
-        }
+      if (!thisClass.SCHEMA) {
+        throw new Error(`
+        All GQLBase extended classes should have a defined SCHEMA. Please
+        manually define a static get SCHEMA() in your class or use the 
+        @Schema() decorator to do so.
+        `)
+      }
+            
+      if (typeClass) {
+        const { meta } = SyntaxTree.findField(
+          parse(this.constructor.SCHEMA),
+          this.constructor.name,
+          modelPropertyName
+        );
         
-        if (typeClass.GQL_TYPE === GraphQLEnumType) { return val.value; }
+        let args = [model[modelPropertyName], this.requestData];
+        let val;
+        
+        if (meta && !meta.nullable && !model) {
+          throw new Error(`
+            Using @Getters or @Properties decorators with a null or 
+            undefined model when the schema states that this field 
+            cannot be null.
+            
+            Type      : ${typeClass.name}
+            Field (AST data)
+              name    : ${meta.name}
+              type    : ${meta.type}
+              nullable: ${meta.nullable}
+            [getter]  : ${typePropertyName}
+            [maps to] : ${modelPropertyName}
+            [model  ] : ${model}            
+          `)
+        }
+
+        // If the following is true, it means that despite allowing nulls 
+        // for this field in the schema, we do have a valid model and should 
+        // proceed.
+        if (model) {
+          if (extractBits.DIRECT_TYPES.includes(typeClass.name)) {
+            val = typeClass(...args)
+          }
+          else {
+            val = new typeClass(...args)
+          }
+          
+          if (typeClass.GQL_TYPE === GraphQLEnumType) { return val.value; }
+        }
         
         return val;
       }
-        
-      return this[MODEL_KEY][modelPropertyName]
+      else {
+        return model[modelPropertyName];
+      }        
     }
   }
   
@@ -136,10 +183,93 @@ function extractBits(property) {
   return reply;
 }
 
+/**
+ * An array of proper class names that are used to test for cases where the 
+ * proper usage of instantiating an instance should preclude the use of `new`
+ *
+ * @memberof decorators
+ * @type {Array<String>}
+ */
 extractBits.DIRECT_TYPES = [
-  'String',
-  'Number'
+  String.name
 ];
+
+/**
+ * A small suite of functions a getter that allows easy manipulation of the 
+ * the DIRECT_TYPES workaround needed for some types of complex class 
+ * wrapping allowed by the @Getters and @Properties decorators. Namely the 
+ * ability to do something like @Getters('name', String) which would wrap the 
+ * contents of whatever is in the objects model in a String call. 
+ *
+ * Direct types are those that need to be called without `new` in order for the 
+ * desired behavior to present itself. 
+ *
+ * @memberof decorators 
+ * @type {Object}
+ * @since 2.7.0
+ */
+export const DirectTypeManager = {
+  /**
+   * A getter that retrieves the array of direct types 
+   *
+   * @method DirectTypeManager#types
+   * @member {Array<String>} types
+   * 
+   * @return {Array<String>} an array of class name strings. 
+   */
+  get types(): Array<String> { 
+    return extractBits.DIRECT_TYPES 
+  },
+  
+  /**
+   * Appends the supplied class name to the list of registered direct types. If 
+   * a class or function is passed, rather than a String, 
+   *
+   * @method DirectTypeManager#types
+   *
+   * @param {Function|string|RegExp} className the name of the class to append. 
+   * Typically it is best to pass the name property of the class in question 
+   * such as `RegExp.name` or `MyClass.name`.
+   */
+  add(className: string | RegExp | Function): void {
+    if (typeof className === 'function') { 
+      className = className.name 
+    }
+    
+    extractBits.DIRECT_TYPES.push(className);
+  },
+  
+  /**
+   * Foricbly empties the contents of the extractBits.DIRECT_TYPES array. This 
+   * is not recommended as it can have unintended consequences. It is 
+   * recommended to use `reset` instead
+   *
+   * @method DirectTypeManager#clear
+   *
+   * @return {Array<string>} an array of class name Strings that were removed 
+   * when cleared.
+   */
+  clear(): Array<string> {
+    return extractBits.DIRECT_TYPES.splice(0, extractBits.DIRECT_TYPES.length)
+  },
+  
+  /**
+   * The recommended way to reset the DIRECT_TYPES list. This removes all 
+   * changed values, returns the removed bits, and adds back in the defaults.
+   *
+   * @method DirectTypeManager#reset 
+   *
+   * @return {Array<string>} an array of class name Strings that were removed 
+   * during the reset process.
+   */
+  reset(): Array<string> {
+    return extractBits.DIRECT_TYPES.splice(
+      0, 
+      extractBits.DIRECT_TYPES.length,
+      String.name
+    )
+  }
+}
 
 /**
  * When working with `GQLBase` instances that expose properties

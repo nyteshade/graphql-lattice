@@ -298,6 +298,12 @@ export function extendsFrom(
  RootClass: Function,
  enforceClasses: boolean = false
 ): boolean {
+  TestedClass = TestedClass.constructor && typeof TestedClass !== 'function'
+    ? TestedClass.constructor : TestedClass
+
+  RootClass = RootClass.constructor && typeof RootClass !== 'function'
+    ? RootClass.constructor : RootClass
+  
   if (parseInt(process.version.substring(1)) < 6) {
     throw new Error(`
       Reflect must be implemented in the JavaScript engine. This cannot be

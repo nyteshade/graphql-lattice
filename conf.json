@@ -24,10 +24,10 @@
           "targets": { "node": "current" },
           "modules": "commonjs",
           "useBuiltIns": true,
-          "debug": true
+          "debug": false
         }]
       ],
-      "plugins": ["transform-runtime", "transform-flow-strip-types"]
+      "plugins": ["transform-runtime", "transform-decorators-legacy"]
   },    
   "markdown": {
 		"parser": "gfm",

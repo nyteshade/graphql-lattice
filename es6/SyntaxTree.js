@@ -323,19 +323,7 @@ export class SyntaxTree
    * null if one with a matching name could not be found.
    */
   find(definitionName: string|RegExp): Object | null {
-    const isRegExp = /RegExp/.test(typeOf(definitionName));
-    const regex = !isRegExp
-      ? new RegExp(RegExp.escape(definitionName.toString()))
-      : definitionName;
-    const flags = regex.flags;
-    const source = regex.source;
-    const reducer = (last,cur,i) => {
-      if (last !== -1) return last;
-      return new RegExp(source, flags).test(cur.name.value) ? i : -1
-    }
-    const index = this[AST_KEY].definitions.reduce(reducer, -1);
-
-    return (~index) ? this[AST_KEY].definitions[index] : null;
+    return SyntaxTree.findDefinition(this[AST_KEY], definitionName);
   }
 
   /**
@@ -481,6 +469,118 @@ export class SyntaxTree
 
     return source ? tree : null;
   }
+  
+  /**
+   * Iterate through the definitions of the AST if there are any. For each
+   * definition the name property's value field is compared to the supplied
+   * definitionName. The definitionName can be a string or a regular
+   * expression if finer granularity is desired.
+   *
+   * @static
+   * @memberof SyntaxTree
+   * @method ⌾⠀findDefinition
+   *
+   * @param {Object} ast an abstract syntax tree object created from a GQL SDL 
+   * @param {string|RegExp} definitionName a string or regular expression used
+   * to match against the definition name field in a given AST.
+   * @return {Object|null} a reference to the internal definition field or
+   * null if one with a matching name could not be found.
+   */
+  static findDefinition(ast: Object, definitionName: string | RegExp) {
+    return this.findInASTArrayByNameValue(
+      ast.definitions,
+      definitionName
+    );
+  }
+
+  /**
+   * Iterate through the fields of a definition AST if there are any. For each
+   * field, the name property's value field is compared to the supplied
+   * fieldName. The fieldName can be a string or a regular expression if 
+   * finer granularity is desired.
+   *
+   * Before iterating over the fields, however, the definition is found using 
+   * `SyntaxTree#findDefinition`. If either the field or definition are not 
+   * found, null is returned.
+   *
+   * @static
+   * @memberof SyntaxTree
+   * @method ⌾⠀findField
+   *
+   * @param {Object} ast an abstract syntax tree object created from a GQL SDL 
+   * @param {string|RegExp} definitionName a string or regular expression used
+   * to match against the definition name field in a given AST.
+   * @param {string|RegExp} fieldName a string or regular expression used
+   * to match against the field name field in a given AST.
+   * @return {Object|null} an object containing two keys, the first being 
+   * `field` which points to the requested AST definition field. The second 
+   * being `meta` which contains three commonly requested bits of data; `name`,
+   * `type` and `nullable`. Non-nullable fields have their actual type wrapped 
+   * in a `NonNullType` GraphQL construct. The actual field type is contained 
+   * within. The meta object surfaces those values for easy use.
+   */
+  static findField(
+    ast: Object, 
+    definitionName: string | RegExp, 
+    fieldName: string | RegExp
+  ) {
+    const definition = this.findDefinition(ast, definitionName)
+    let meta;
+    
+    if (!definition) {
+      return null;
+    }    
+    
+    const field = this.findInASTArrayByNameValue(definition.fields, fieldName)
+    
+    if (field) {
+      meta = {
+        name: field.name && field.name.value || null,
+        type: field.type && field.type.kind === 'NonNullType' 
+          ? field.type.type.name.value 
+          : field.type && field.type.name && field.type.name.value || null,
+        nullable: !!(field.type && field.type.kind !== 'NonNullType')
+      }
+    }
+
+    return { field, meta };
+  }
+  
+  /**
+   * A lot of searching in ASTs is filtering through arrays and matching on 
+   * subobject properties on each iteration. A common theme is find something 
+   * by its `.name.value`. This method simplifies that by taking an array of 
+   * AST nodes and searching them for a `.name.value` property that exists 
+   * within.
+   * 
+   * @static
+   * @memberof SyntaxTree
+   * @method ⌾⠀findInASTArrayByNameValue
+   *
+   * @param {Array} array of mixed AST object nodes containing `name.value`s
+   * @param {string|RegExp} name a string or regular expression used
+   * to match against the node name value
+   * @return {Object|null} the AST leaf if one matches or null otherwise.
+   */
+  static findInASTArrayByNameValue(
+    array: mixed[], 
+    name: string | RegExp
+  ): ?Object {
+    const isRegExp = /RegExp/.test(typeOf(name));
+    const regex = !isRegExp
+      ? new RegExp(RegExp.escape(name.toString()))
+      : name;
+    const flags = regex.flags;
+    const source = regex.source;
+    const reducer = (last,cur,i) => {
+      if (last !== -1) return last;
+      if (!cur || !cur.name || !cur.name.value) return -1;
+      return new RegExp(source, flags).test(cur.name.value) ? i : -1
+    }
+    const index = array.reduce(reducer, -1);
+
+    return (~index) ? array[index] : null;    
+  }
 
   /**
    * Query types in GraphQL are an ObjectTypeDefinition of importance for
@@ -552,6 +652,3 @@ export class SyntaxTree
 }
 
 export default SyntaxTree;
-
-// repl testing
-// require('./bootstrap'); let typeOf = require('./lib/utils').typeOf, GQL=require('graphql'), ST = require('./lib/GraphQL/SyntaxTree').SyntaxTree, schema = `input MessageInput { content: String author: String } type Message { id: ID! content: String author: String } type Query { getMessage(id: ID!): Message } type Mutation { createMessage(input: MessageInput): Message updateMessage(id: ID!, input: MessageInput): Message }`, ast = GQL.parse(schema), st = ST.fromSchema(schema), query = ST.EmptyQuery(), mutation = ST.EmptyMutation()

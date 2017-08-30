@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>decorators/Schema.js</title>
+  <title>GQLScalar</title>
 
 
 
@@ -47,59 +47,681 @@
 
     <div id="main">
         
-        <h1 class="page-title">decorators/Schema.js</h1>
+        <h1 class="page-title">GQLScalar</h1>
         
 
         
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        GQLScalar
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="GQLScalar"><a class="anchor" href="#GQLScalar"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>new GQLScalar<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>GQLScalars are how one might construct their own types for use within<br>GraphQL with Lattice. The descriptions below should be sufficient to get<br>you started with your own types. The SDL for a Scalar looks like this:</p>
+<pre class="prettyprint source"><code>scalar MyType</code></pre>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLScalar.js.html">GQLScalar.js</a>, <a href="GQLScalar.js.html#line34">line 34</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     
-    <section>
-        <article>
-            <pre class="source linenums"><code class="hljs js">/** @namespace decorators */
-/** @flow */
+    </div>
 
-/**
- * This decorator allows you to specify the SCHEMA getter and associated 
- * string as a parameter to the decorator itself. So, for example:
- * 
- * &lt;code>
- * @Schema(`
- *   type Item {
- *     name: String 
- *     cost: String 
- *   }
- * `)
- * export class Item extends GQLBase {
- *   // ...
- * }
- * &lt;/code>
- * 
- * @function Schema
- * @memberof! decorators
- * @since 2.2.0
- * 
- * @param {String} schemaString a GraphQL IDL compliant string for defining a 
- * GraphQL Object Schema.
- */
-export function Schema(schemaString) {
-  return function(target) {
-    Object.defineProperties(target, {
-      SCHEMA: {
-        get: () => schemaString
-      }
-    });
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".%E2%AC%87%EF%B8%8E%E2%A0%80GQL_TYPE">
+  <a class="anchor" href="#⬇︎⠀GQL_TYPE"></a>
+  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>⬇︎⠀GQL_TYPE<span class="type-signature"></span></span></h4>
+
+
+
+
+<div class="description">
+    <p>Determines the default type targeted by this GQLBase class. Any<br>type will technically be valid but only will trigger special behavior</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLScalar.js.html">GQLScalar.js</a>, <a href="GQLScalar.js.html#line155">line 155</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".parseLiteral"><a class="anchor" href="#parseLiteral"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>parseLiteral<span class="signature">(ast)</span><span class="type-signature"> &rarr; {mixed}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Similar to <code>parseValue</code>, but rather than receiving the input values from<br>a query or from a query variable, the data comes in the form of a parsed<br>abstract syntax/source tree (AST). It is the job of <code>parseLiteral</code> to<br>convert from an AST type to the desired output value. </p>
+<p>An example that converts all Strings to Numbers and vice versa</p>
+<pre class="prettyprint source lang-javascript"><code>static parseLiteral(ast) {
+  const { Kind } = require('graphql/language')
+
+  switch (ast.kind) {
+    case Kind.INT:
+    case Kind.FLOAT:
+      return String(ast.value)
+    case Kind.STRING:
+      return parseFloat(ast.value)
+    default:
+      return null;
+  }
+}</code></pre>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ast</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the parse value of the type given some literal SDL<br>syntax. Presumably this is where you can choose to take a String, for<br>example, and convert it to an integer when Kind.STRING is supplied.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">mixed</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>the value of the conversion, given input.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLScalar.js.html">GQLScalar.js</a>, <a href="GQLScalar.js.html#line115">line 115</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".parseValue"><a class="anchor" href="#parseValue"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>parseValue<span class="signature">(value)</span><span class="type-signature"> &rarr; {mixed}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Parse value handles input from the client. In this form, the value is<br>taken directly from the sent query. The type of the value can be nearly<br>anything, but the <code>parseValue</code> function's job is to interpret the<br>input and return the understood value.</p>
+<p>You could have a ColorBlind scalar type that took in a hexadecimal<br>color string and converted it to a color scheme as seen by those with<br>some form of color blindness. The value supplied to <code>parseValue</code> would<br>be the input color. The modified color would be the output value.</p>
+<pre class="prettyprint source"><code>query {
+  showMe(colorBlind: '#ff0000') {
+    color 
   }
 }
 
-export default Schema;</code></pre>
-        </article>
-    </section>
-    <script type="text/javascript">
-      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
-    </script>
+// this might convert to #c65100</code></pre><p>This can also cover input sent in the form of variables. The variable<br>can be of any valid JSON type.</p>
+</div>
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mixed</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the input sent from a query that needs to be<br>converted to an internal value for GraphQL to proceed</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">mixed</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>the converted output given the input; this will be purely<br>how you want your scalars to function.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLScalar.js.html">GQLScalar.js</a>, <a href="GQLScalar.js.html#line75">line 75</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".serialize"><a class="anchor" href="#serialize"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>serialize<span class="signature">(value)</span><span class="type-signature"> &rarr; {mixed}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>The <code>serialize</code> method is called by GraphQL when the type is going to<br>be sent to the client. Since values on the client are in the form of<br>JSON, the return value of <code>serialize</code> can be any valid JSON value;<br>String, Number, Array, Object, etc...</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mixed</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the value that needs to be converted for the<br>downstream JSON client side result.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">mixed</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>any valid JSON value</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLScalar.js.html">GQLScalar.js</a>, <a href="GQLScalar.js.html#line57">line 57</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

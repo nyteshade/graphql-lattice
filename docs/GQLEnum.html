@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>decorators/Schema.js</title>
+  <title>GQLEnum</title>
 
 
 
@@ -47,59 +47,617 @@
 
     <div id="main">
         
-        <h1 class="page-title">decorators/Schema.js</h1>
+        <h1 class="page-title">GQLEnum</h1>
         
 
         
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        GQLEnum
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="GQLEnum"><a class="anchor" href="#GQLEnum"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>new GQLEnum<span class="signature">()</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>TODO finish comment</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLEnum.js.html">GQLEnum.js</a>, <a href="GQLEnum.js.html#line76">line 76</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     
-    <section>
-        <article>
-            <pre class="source linenums"><code class="hljs js">/** @namespace decorators */
-/** @flow */
+    </div>
 
-/**
- * This decorator allows you to specify the SCHEMA getter and associated 
- * string as a parameter to the decorator itself. So, for example:
- * 
- * &lt;code>
- * @Schema(`
- *   type Item {
- *     name: String 
- *     cost: String 
- *   }
- * `)
- * export class Item extends GQLBase {
- *   // ...
- * }
- * &lt;/code>
- * 
- * @function Schema
- * @memberof! decorators
- * @since 2.2.0
- * 
- * @param {String} schemaString a GraphQL IDL compliant string for defining a 
- * GraphQL Object Schema.
- */
-export function Schema(schemaString) {
-  return function(target) {
-    Object.defineProperties(target, {
-      SCHEMA: {
-        get: () => schemaString
-      }
-    });
-  }
-}
+    
 
-export default Schema;</code></pre>
-        </article>
-    </section>
-    <script type="text/javascript">
-      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
-    </script>
+    
 
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".%E2%AC%87%EF%B8%8E%E2%A0%80GQL_TYPE">
+  <a class="anchor" href="#⬇︎⠀GQL_TYPE"></a>
+  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>⬇︎⠀GQL_TYPE<span class="type-signature"></span></span></h4>
+
+
+
+
+<div class="description">
+    <p>Determines the default type targeted by this GQLBase class. Any<br>type will technically be valid but only will trigger special behavior</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLEnum.js.html">GQLEnum.js</a>, <a href="GQLEnum.js.html#line112">line 112</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".valueFor"><a class="anchor" href="#valueFor"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>valueFor<span class="signature">(value, deprecationReason, description)</span><span class="type-signature"> &rarr; {Object}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Shorthand method to generate a GraphQLEnumValueDefinition implementation<br>object. Use this for building and customizing your <code>values</code> key/value<br>object in your child classes.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mixed</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>any nonstandard value you wish your enum to have</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>deprecationReason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an optional reason to deprecate an enum</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>a non Lattice standard way to write a comment</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">Object</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>an object that conforms to the GraphQLEnumValueDefinition<br>defined here http://graphql.org/graphql-js/type/#graphqlenumtype</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLEnum.js.html">GQLEnum.js</a>, <a href="GQLEnum.js.html#line130">line 130</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%AC%87%EF%B8%8E%E2%A0%80enums"><a class="anchor" href="#⬇︎⠀enums"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⬇︎⠀enums<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;Symbol>}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>For easier use within JavaScript, the static enums method provides a<br>Symbol backed solution for each of the enums defined. Each <code>Symbol</code><br>instance is wrapped in Object so as to allow some additional properties<br>to be written to it.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">Array.&lt;Symbol></span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>an array of modified Symbols for each enum<br>variation defined.</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLEnum.js.html">GQLEnum.js</a>, <a href="GQLEnum.js.html#line158">line 158</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".%E2%AC%87%EF%B8%8E%E2%A0%80values"><a class="anchor" href="#⬇︎⠀values"></a>
+      <span class="type-name"><span class="type-signature type-attrib">(static) </span>⬇︎⠀values<span class="signature">()</span><span class="type-signature"> &rarr; {Object|Null}</span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Each instance of GQLEnum must specify a map of keys and values. If this<br>method returns null or is not defined, the value of the enum will match<br>the name of the enum as per the reference implementation.</p>
+<p>Example:</p>
+<pre class="prettyprint source"><code>  static get values(): ?Object {
+    const { valueOf } = this;
+
+    return {
+      NAME: valueOf(value)
+    }
+  }</code></pre>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<div class="returns-type"><code>(
+<span class="param-type">Object</span>
+|
+
+<span class="param-type">Null</span>
+
+)</code></div>
+
+
+
+<span class="returns-description"><p>an object mapping with each key mapping to an object<br>possessing at least a value field, which in turn maps to the desired value</p></span>
+
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="GQLEnum.js.html">GQLEnum.js</a>, <a href="GQLEnum.js.html#line191">line 191</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
