@@ -2759,6 +2759,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
      * @static
      * @memberof SyntaxTree
      * @method ⌾⠀findField
+     * @since 2.7.0
      *
      * @param {Object} ast an abstract syntax tree object created from a GQL SDL 
      * @param {string|RegExp} definitionName a string or regular expression used
@@ -2779,7 +2780,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
       var definition = this.findDefinition(ast, definitionName);
       var meta = void 0;
 
-      if (!definition) {
+      if (!definition || !definition.fields) {
         return null;
       }
 
@@ -2797,6 +2798,40 @@ var SyntaxTree = exports.SyntaxTree = function () {
     }
 
     /**
+     * Enum AST definitions operate differently than object type definitions
+     * do. Namely, they do not have a `fields` array but instead have a `values`
+     * array. This wrapper method, first finds the enum definition in the ast 
+     * and then searches the values for the named node desired and returns that 
+     * or null, if one could not be found.
+     *
+     * @method SyntaxTree#⌾⠀findEnumDefinition
+     * @since 2.7.0
+     * 
+     * @param {Object} ast the abstract syntax tree parsed by graphql 
+     * @param {string|RegExp} enumDefinitionName a string or regular expression 
+     * used to locate the enum definition in the AST. 
+     * @param {string|RegExp} enumValueName a string or regular expression used 
+     * to locate the value by name in the values of the enum definition.
+     * @return {Object|null} the desired AST node or null if one does not exist
+     */
+
+  }, {
+    key: 'findEnumDefinition',
+    value: function findEnumDefinition(ast, enumDefinitionName, enumValueName) {
+      // Fetch the enum definition 
+      var definition = this.findDefinition(ast, enumDefinitionName);
+
+      // Ensure we have one or that it has a values array
+      if (!definition || !definition.values) {
+        return null;
+      }
+
+      // Return the results of an `findInASTArrayByNameValue()` search of the 
+      // aforementioned 'values' array.
+      return this.findInASTArrayByNameValue(definition.values, enumValueName);
+    }
+
+    /**
      * A lot of searching in ASTs is filtering through arrays and matching on 
      * subobject properties on each iteration. A common theme is find something 
      * by its `.name.value`. This method simplifies that by taking an array of 
@@ -2806,6 +2841,7 @@ var SyntaxTree = exports.SyntaxTree = function () {
      * @static
      * @memberof SyntaxTree
      * @method ⌾⠀findInASTArrayByNameValue
+     * @since 2.7.0
      *
      * @param {Array} array of mixed AST object nodes containing `name.value`s
      * @param {string|RegExp} name a string or regular expression used

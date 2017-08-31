@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/nyteshade/graphql-lattice#readme",
   "dependencies": {
+    "@std/esm": "^0.7.1",
     "express-graphql": "^0.6.6",
     "graphql": "^0.10.3"
   },
