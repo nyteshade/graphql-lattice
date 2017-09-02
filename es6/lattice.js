@@ -1,5 +1,5 @@
 import { AdjacentSchema } from './decorators/AdjacentSchema'
-import { Deferred, joinLines } from './utils'
+import { Deferred, joinLines, promisify } from './utils'
 import { FileSchema } from './decorators/FileSchema'
 import { 
   Getters, Setters, Properties, DirectTypeManager 
@@ -10,6 +10,7 @@ import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { GQLInterface } from './GQLInterface'
 import { GQLJSON } from './types/GQLJSON'
 import { GQLScalar } from './GQLScalar'
+import { ModuleParser, walkSync } from './ModuleParser'
 import { Schema } from './decorators/Schema'
 import { SchemaUtils } from './SchemaUtils'
 import { SyntaxTree } from './SyntaxTree'
@@ -33,7 +34,9 @@ const defaultPackage = {
   GQLInterface,
   GQLJSON,
   GQLScalar,
+  ModuleParser,
   joinLines,
+  promisify,
   Properties,
   Schema,
   SchemaUtils,
@@ -63,7 +66,9 @@ export {
   GQLInterface,
   GQLJSON,
   GQLScalar,
+  ModuleParser,
   joinLines,
+  promisify,
   Properties,
   Schema,
   SchemaUtils,

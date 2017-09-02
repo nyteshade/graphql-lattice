@@ -2,6 +2,10 @@
 // @flow
 
 import { typeOf } from './types'
+import fs from 'fs'
+import util from 'util'
+
+const { Stats } = fs;
 
 /**
  * Deferred is modeled after jQuery's deferred object. It inverts a promise
@@ -122,4 +126,37 @@ export function joinLines(strings, ...values) {
     result.push(value);
   }
   return result.join('').trim();
+}
+
+/**
+ * A simply promisify style function that returns an async function wrapped 
+ * around a supplied function designed for the standard callback methodology. 
+ * If the callback is the last parameter, and that callback is in the form of 
+ * (error, ...results) then this wrapper will do the trick for you.
+ *
+ * @method utils~promisify
+ * @since 2.7.0
+ * 
+ * @param {Function} method a function to wrap in an asynchronous function 
+ * @param {mixed} context an optional `this` object for use with the supplied 
+ * function.
+ * @return {Function} an asynchronous function, i.e. one that returns a promise 
+ * containing the contents the callback results, that wraps the supplied 
+ * function.
+ */
+export function promisify(method: Function, context?: mixed): Function {
+  return async function(...args) {
+    return new Promise((resolve, reject) => {
+      args.push(function(error, ...callbackArgs) {
+        if (error) {
+          reject(error);
+        }
+        else {
+          resolve(...callbackArgs);
+        }
+      });
+      
+      method.apply(context, args);
+    })
+  }
 }
