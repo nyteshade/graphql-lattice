@@ -30,8 +30,9 @@ export class SyntaxTree
    * given, it will be parsed. If an AST is given, it will be verified. If a
    * SyntaxTree is supplied, it will be copied.
    */
-  constructor(schemaOrASTOrST: string | Object | SyntaxTree | undefined) {
-      this[AST_KEY] = {};
+  constructor(schemaOrASTOrST?: string | Object | SyntaxTree) {
+    // $ComputedType
+    this[AST_KEY] = {}; 
 
     if (schemaOrASTOrST) {
       this.setAST(schemaOrASTOrST);
@@ -49,6 +50,7 @@ export class SyntaxTree
    * @return {Object} a GraphQL AST object
    */
   get ast(): Object {
+    // $ComputedType
     return this[AST_KEY];
   }
 
@@ -64,6 +66,7 @@ export class SyntaxTree
    * in an undefined manner should this object not be a valid AST
    */
   set ast(value: Object): void {
+    // $ComputedType
     this[AST_KEY] = value;
   }
 
@@ -80,17 +83,17 @@ export class SyntaxTree
    * @return {SyntaxTree} this for inlining.
    */
   setAST(schemaOrASTOrST: string|Object|SyntaxTree): SyntaxTree {
+    // $ComputedType
     this[AST_KEY] = {};
 
     const type = typeOf(schemaOrASTOrST);
-    let schema;
-    let ast;
-    let st;
+    let ast: Object;
+    let st: SyntaxTree;
 
     switch (type) {
       case String.name:
         try {
-          ast = parse(schemaOrASTOrST);
+          ast = parse((schemaOrASTOrST: any));
 
           Object.assign(this.ast, ast);
         }
@@ -98,7 +101,7 @@ export class SyntaxTree
 
         break;
       case Object.name:
-        ast = schemaOrASTOrST;
+        ast = (schemaOrASTOrST: any);
 
         try {
           ast = parse(print(ast));
@@ -108,7 +111,7 @@ export class SyntaxTree
 
         break;
       case SyntaxTree.name:
-        st = schemaOrASTOrST;
+        st = (schemaOrASTOrST: any);
 
         Object.assign(this.ast, st.ast);
 
@@ -180,10 +183,16 @@ export class SyntaxTree
     })
 
     if (source && source.ast.definitions && this.ast.definitions) {
-      for (let theirs of source) {
+      for (let theirs of (source: any)) {
         let name = theirs.name.value;
         let ours = this.find(name);
         let index = ours && this.ast.definitions.indexOf(ours) || -1;
+
+        if (!ours) {
+          console.error('Cannot find `ours`')
+          console.error(new Error('`ours` missing'))
+          continue;
+        }
 
         // We don't yet have one with that name
         if (!set.has(name)) {
@@ -251,7 +260,13 @@ export class SyntaxTree
       ? astOrSyntaxTree
       : SyntaxTree.from(astOrSyntaxTree);
     let left = this.find(definitionType);
-    let right = tree.find(definitionType);
+    let right = tree && tree.find(definitionType) || null;
+    
+    if (!tree) {
+      console.error('There seems to be something wrong with your tree')
+      console.error(new Error('Missing tree; continuing...'));
+      return this;
+    }
 
     if (!right) { return this }
 
@@ -272,9 +287,11 @@ export class SyntaxTree
         if (left.interfaces && right.interfaces) {
           left.interfaces = [].concat(left.interfaces, right.interfaces);
         }
+        
         if (left.directives && right.directives) {
           left.directives = [].concat(left.directives, right.directives);
         }
+        
         if (left.fields && right.fields) {
           left.fields = [].concat(left.fields, right.fields);
         }
@@ -297,6 +314,7 @@ export class SyntaxTree
    * @instance
    * @memberof SyntaxTree
    * @method *[Symbol.iterator]
+   * @ComputedType
    */
   *[Symbol.iterator](): any {
     if (this[AST_KEY].definitions) {
@@ -323,6 +341,7 @@ export class SyntaxTree
    * null if one with a matching name could not be found.
    */
   find(definitionName: string|RegExp): Object | null {
+    // $ComputedType
     return SyntaxTree.findDefinition(this[AST_KEY], definitionName);
   }
 
@@ -339,6 +358,7 @@ export class SyntaxTree
    * @return {string} the AST for the tree parsed back into a string
    */
   toString(): string {
+    // $ComputedType
     return print(this[AST_KEY]);
   }
 
@@ -375,6 +395,7 @@ export class SyntaxTree
    * @memberof SyntaxTree
    *
    * @return {string} the name of the class this is an instance of
+   * @ComputedType
    */
   get [Symbol.toStringTag]() { return this.constructor.name }
 
@@ -388,6 +409,7 @@ export class SyntaxTree
    * @static
    *
    * @return {string} the name of this class
+   * @ComputedType
    */
   static get [Symbol.toStringTag]() { return this.name }
 
@@ -406,18 +428,18 @@ export class SyntaxTree
    * or null if an invalid type was supplied for mixed.
    */
   static from(mixed: string | Object | SyntaxTree): SyntaxTree | null {
-    let schema;
-    let ast;
+    let schema: string;
+    let ast: Object;
 
     switch (typeOf(mixed)) {
       case String.name:
-        schema = mixed;
+        schema = (mixed: any);
         try { parse(schema) } catch(error) { console.log(error); return null; }
 
-        return SyntaxTree.fromSchema(schema);
+        return SyntaxTree.fromSchema(String(schema));
       case Object.name:
-        ast = mixed;
-        try { print(ast) } catch(error) { return null; }
+        ast = (mixed: any);
+        try { print(ast) } catch(error) { return null; }        
 
         return SyntaxTree.fromAST(ast);
       case SyntaxTree.name:
@@ -603,15 +625,17 @@ export class SyntaxTree
    * @return {Object|null} the AST leaf if one matches or null otherwise.
    */
   static findInASTArrayByNameValue(
-    array: mixed[], 
+    array: Array<Object>, 
     name: string | RegExp
   ): ?Object {
-    const isRegExp = /RegExp/.test(typeOf(name));
+    const isRegExp: boolean = /RegExp/.test(typeOf(name));
     const regex = !isRegExp
+      // $FlowFixMe
       ? new RegExp(RegExp.escape(name.toString()))
-      : name;
-    const flags = regex.flags;
-    const source = regex.source;
+      // $FlowFixMe
+      : (name: RegExp);
+    const flags = regex.flags
+    const source = regex.source
     const reducer = (last,cur,i) => {
       if (last !== -1) return last;
       if (!cur || !cur.name || !cur.name.value) return -1;
@@ -635,7 +659,7 @@ export class SyntaxTree
    * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated
    * by parsing the graph query, "type Query {}"
    */
-  static EmptyQuery(): SyntaxTree {
+  static EmptyQuery(): ?SyntaxTree {
     return SyntaxTree.from(`type ${this.QUERY} {}`);
   }
 
@@ -652,7 +676,7 @@ export class SyntaxTree
    * @return {SyntaxTree} an instance of SyntaxTree with a base AST generated
    * by parsing the graph query, "type Mutation {}"
    */
-  static EmptyMutation(): SyntaxTree {
+  static EmptyMutation(): ?SyntaxTree {
     return SyntaxTree.from(`type ${this.MUTATION} {}`);
   }
 
@@ -669,7 +693,7 @@ export class SyntaxTree
    * kind set to 'Document'
    */
   static EmptyDocument(
-    schemaOrASTOrST: string | Object | SyntaxTree | undefined
+    schemaOrASTOrST?: string | Object | SyntaxTree
   ): SyntaxTree {
     let tree = new SyntaxTree();
 

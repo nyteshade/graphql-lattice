@@ -23,10 +23,10 @@ export class GQLInterface extends GQLBase {
    *
    * @param {mixed} model the data you can use to instantiate the type of
    * object in question.
-   * @return {String} a string matching the name of a defined GraphQL type
+   * @return {string} a string matching the name of a defined GraphQL type
    * found elsewhere in your schema
    */
-  static resolveType(model: mixed): String {
+  static resolveType(model: mixed): string {
     throw new Error(`
       You must override "resolveType(model)" in your GQLInterface instance
       and determine the implementor type by the contents of the supplied

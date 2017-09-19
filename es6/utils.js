@@ -17,6 +17,45 @@ const { Stats } = fs;
  */
 export class Deferred {
   /**
+   * This property holds a `resolve` function from within the promise this
+   * deferred inverts.
+   *
+   * @type {Function}
+   * @memberof Deferred
+   * @instance
+   */
+  resolve: Function;
+  
+  /**
+   * This property holds a `reject` function from within the promise this 
+   * deferred inverts
+   *
+   * @type {Function}
+   * @memberof Deferred
+   * @instance
+   */
+  reject: Function;
+  
+  /**
+   * This is the promise wrapped by and inverted in this deferred instance
+   *
+   * @type {Promise}
+   * @memberof Deferred
+   * @instance 
+   */
+  promise: any;
+  
+  /**
+   * An at a glance boolean property that denotes whether or not this 
+   * deferred has been resolved or rejected yet.
+   *
+   * @type {boolean}
+   * @memberof Deferred
+   * @instance
+   */
+  complete: boolean;
+  
+  /**
    * Creates an object with four properties of note; promise, resolve, reject
    * and a flag complete that will be set once either resolve or reject have
    * been called. A Deferred is considered to be pending while complete is set
@@ -85,7 +124,7 @@ export class Deferred {
    * then the deferred's reject and resolve will be tied to the Promise's
    * catch() and then() methods, respectively.
    */
-  static TimedDeferred(timeOut: Number, proxyPromise: ?Promise): Deferred {
+  static TimedDeferred(timeOut: Number, proxyPromise: ?any): Deferred {
     const deferred = new Deferred();
 
     if (proxyPromise && typeOf(proxyPromise) === Promise.name) {
@@ -114,7 +153,7 @@ export class Deferred {
  * @return {String} a template String without any prefixed or postfixed tabs
  * and other whitespaced characters. 
  */
-export function joinLines(strings, ...values) {
+export function joinLines(strings: Array<string>, ...values: Array<mixed>) {
   let result = [];
   for (let i = 0; i < strings.length; i++) {
     let string = String(strings[i]).trim();

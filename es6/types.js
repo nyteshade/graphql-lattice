@@ -1,5 +1,5 @@
 /** @namespace types */
-// @flow
+/** @flow */
 
 /**
  * One common way to determine the type of class that you are working with, 
@@ -20,12 +20,12 @@
  * @memberof types
  * @inner
  * 
- * @param {any} object any value is acceptable here, including null and 
+ * @param {mixed} object any value is acceptable here, including null and 
  * undefined
  * @return {string} for objects of type [object String] the value "String"
  * will be returned.
  */
-export function typeOf(object: any): string { 
+export function typeOf(object: mixed): string { 
   return /(\b\w+\b)\]/.exec(Object.prototype.toString.call(object))[1];
 }
 
@@ -36,10 +36,10 @@ export function typeOf(object: any): string {
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isFunction = (obj) => typeOf(obj) === Function.name
+export const isFunction = (obj: mixed) => typeOf(obj) === Function.name
 
 /**
  * Returns true if the type supplied evaluates to `[object Array]`
@@ -48,10 +48,10 @@ export const isFunction = (obj) => typeOf(obj) === Function.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isArray = (obj) => typeOf(obj) === Array.name
+export const isArray = (obj: mixed) => typeOf(obj) === Array.name
 
 /**
  * Returns true if the type supplied evaluates to `[object Date]`
@@ -60,10 +60,10 @@ export const isArray = (obj) => typeOf(obj) === Array.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isDate = (obj) => typeOf(obj) === Date.name
+export const isDate = (obj: mixed) => typeOf(obj) === Date.name
 
 /**
  * Returns true if the type supplied evaluates to `[object Object]`
@@ -72,10 +72,10 @@ export const isDate = (obj) => typeOf(obj) === Date.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isObject = (obj) => typeOf(obj) === Object.name
+export const isObject = (obj: mixed) => typeOf(obj) === Object.name
 
 /**
  * Returns true if the type supplied evaluates to `[object String]`
@@ -84,10 +84,10 @@ export const isObject = (obj) => typeOf(obj) === Object.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isString = (obj) => typeOf(obj) === String.name
+export const isString = (obj: mixed) => typeOf(obj) === String.name
 
 /**
  * Returns true if the type supplied evaluates to `[object Number]`
@@ -96,10 +96,10 @@ export const isString = (obj) => typeOf(obj) === String.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isNumber = (obj) => typeOf(obj) === isNumber.name
+export const isNumber = (obj: mixed) => typeOf(obj) === isNumber.name
 
 /**
  * Returns true if the type supplied evaluates to `[object RegExp]`
@@ -108,10 +108,10 @@ export const isNumber = (obj) => typeOf(obj) === isNumber.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isRegExp = (obj) => typeOf(obj) === RegExp.name
+export const isRegExp = (obj: mixed) => typeOf(obj) === RegExp.name
 
 /**
  * Returns true if the type supplied evaluates to `[object Null]`
@@ -120,10 +120,10 @@ export const isRegExp = (obj) => typeOf(obj) === RegExp.name
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isNull = (obj) => typeOf(obj) === NULL
+export const isNull = (obj: mixed) => typeOf(obj) === NULL
 
 /**
  * Returns true if the type supplied evaluates to `[object Undefined]`
@@ -132,10 +132,10 @@ export const isNull = (obj) => typeOf(obj) === NULL
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isUndefined = (obj) => typeOf(obj) === UNDEFINED
+export const isUndefined = (obj: mixed) => typeOf(obj) === UNDEFINED
 
 /**
  * Determines if the resulting type is one of the six types of primitives
@@ -145,11 +145,13 @@ export const isUndefined = (obj) => typeOf(obj) === UNDEFINED
  * @method ⌾⠀isPrimitive
  * @memberof types
  * @inner
- * 
+ *
+ * @param {mixed} obj given any value, it will return true if it is a primitive 
  * @return {Boolean} true if not one of Boolean, Null, Undefined, Number, 
  * String or Symbol. 
  */
-export const isPrimitive = (obj) => PRIMITIVES.has(obj)
+// $ComputedType
+export const isPrimitive = (obj: mixed) => PRIMITIVES.has(obj) 
 
 /**
  * Returns true if the type supplied evaluates to neither `[object Object]`
@@ -159,10 +161,10 @@ export const isPrimitive = (obj) => PRIMITIVES.has(obj)
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isValue = (obj) => !isObject(obj) && !isArray(obj)
+export const isValue = (obj: mixed) => (!isObject(obj) && !isArray(obj))
 
 /**
  * A shorthand way to test an object's declared toString type to a supplied 
@@ -173,10 +175,15 @@ export const isValue = (obj) => !isObject(obj) && !isArray(obj)
  * @memberof types
  * @inner
  * 
- * @param {any} obj any object that can be passed to Object.prototype.toString
+ * @param {mixed} obj any object that can be passed to Object.prototype.toString
+ * @param {Function} T the type you wish to test for. Ideally this should be 
+ * a class/function 
  * @return {Boolean} true if it passes the test, false otherwise
  */
-export const isOfType = (obj, T) => typeOf(obj) === T || typeOf(obj) === T.name
+export const isOfType = (
+  obj: mixed, 
+  T: Function
+) => (typeOf(obj) === T || typeOf(obj) === T.name)
 
 /**
  * Returns true if the supplied obj is a ECMAScript class definition. It first 
@@ -199,7 +206,7 @@ export const isOfType = (obj, T) => typeOf(obj) === T || typeOf(obj) === T.name
  * @see #isNativeClassByProps
  * @see #isNativeClassByString
  */
-export const isClass = (obj) => (
+export const isClass = (obj: mixed) => (
   isNativeClassByProps(obj) || 
   isNativeClassByString(obj))
    
@@ -303,6 +310,8 @@ export function extendsFrom(
 
   RootClass = RootClass.constructor && typeof RootClass !== 'function'
     ? RootClass.constructor : RootClass
+
+  let ParentClass = TestedClass;
   
   if (parseInt(process.version.substring(1)) < 6) {
     throw new Error(`
@@ -323,19 +332,16 @@ export function extendsFrom(
   }
     
   if (!TestedClass || !RootClass) { return false; }
+  if (TestedClass === RootClass) { return true; }
   
-  let proto = TestedClass;
-  
-  while (true) {
-    try {
-      if (proto === RootClass) return true;
-      if (proto === Function) break;      
-      proto = Reflect.getPrototypeOf(proto);
-    }
-    catch (ignore) {
-      return false;
+  do { 
+    ParentClass = Reflect.getPrototypeOf(ParentClass);
+    
+    if (ParentClass === RootClass) {
+      return true;
     }
   }
+  while (ParentClass);
   
   return false;
 }
@@ -372,7 +378,7 @@ const PRIMITIVES: Set<string> = new Set([
   NULL, UNDEFINED, Boolean.name, Number.name, String.name, Symbol.name
 ]);
 
-/** Store the original has() method and bind it to PRIMITIVES */
+/** Store the original has() method and bind it to PRIMITIVES; $ComputedType */
 PRIMITIVES[Symbol.for('original_has')] = PRIMITIVES.has.bind(PRIMITIVES)
 
 /**
@@ -387,7 +393,8 @@ PRIMITIVES[Symbol.for('original_has')] = PRIMITIVES.has.bind(PRIMITIVES)
  * @param {mixed} o any value to test to see if it qualifies as a primitive
  * @return {Boolean} true if the supplied value is a primitive, false otherwise
  */
-PRIMITIVES.has = (o) => PRIMITIVES[Symbol.for('original_has')](typeOf(o))
+// $ComputedType
+PRIMITIVES.has = (o: mixed) => PRIMITIVES[Symbol.for('original_has')](typeOf(o))
 
 /**
  * When testing if a type is a primitive, it is often easier to simply verify 

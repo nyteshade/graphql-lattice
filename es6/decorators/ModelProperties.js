@@ -1,5 +1,4 @@
 /** @namespace decorators */
-// @flow
 
 import { GQLBase, MODEL_KEY } from '../GQLBase'
 import { isArray, extendsFrom } from '../types'

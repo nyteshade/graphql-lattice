@@ -2,10 +2,10 @@
   "name": "graphql-lattice",
   "version": "2.6.0",
   "description": "OO Underpinnings for ease of GraphQL Implementation",
-  "main": "dist/lattice.min.js",
+  "main": "dist/lattice.js",
   "scripts": {
     "test": "jest --verbose",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js && uglifyjs dist/lattice.js -o dist/lattice.min.js --source-map",
     "docs": "rm -rf ./docs && jsdoc -c conf.json"
   },
   "repository": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "@std/esm": "^0.7.1",
     "express-graphql": "^0.6.6",
+    "flow-bin": "^0.54.0",
     "graphql": "^0.10.3"
   },
   "devDependencies": {
@@ -53,8 +54,9 @@
     "jsdoc-babel": "^0.3.0",
     "kitsune-jsdoc-template": "^1.0.3",
     "regenerator-runtime": "^0.10.5",
+    "uglify-es": "^3.0.28",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "unminified-webpack-plugin": "^1.2.0",
-    "webpack": "^3.3.0"
+    "webpack": "^3.5.5"
   }
 }

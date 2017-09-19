@@ -25,15 +25,16 @@ import { GQLBase } from '../GQLBase'
  * class object being modified
  */
 export default function FileSchema(
-  path: String, 
-  extension: String = ".graphql"
+  path: string, 
+  extension: string = ".graphql"
 ): mixed {
-  return function(target: mixed): mixed {
+  return function(target: Object): Object {
     // Attempt to remove the SCHEMA property or function from the class 
     // being decorated. This is not guaranteed to work but should increase 
     // compatibilty and success rates.
     delete target.SCHEMA;
 
+    // @ComputedType
     return Object.defineProperties(target, {
       SCHEMA: {
         get: () => GQLBase.IDLFilePath(path, extension)

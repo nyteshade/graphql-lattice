@@ -1,11 +1,13 @@
 // @flow
 
+import path from 'path'
 import { SyntaxTree } from './SyntaxTree'
 import { GQLBase } from './GQLBase'
+import { GQLEnum } from './GQLEnum'
 import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
-import { EventEmitter } from 'events'
+import EventEmitter from 'events'
 import {
   parse,
   print,
@@ -43,7 +45,7 @@ export class SchemaUtils extends EventEmitter {
    * @param {Function[]} Classes these are GQLBase extended classes used to 
    * manipulate the schema with.
    */
-  static injectComments(schema: Object, Classes: Function[]) {
+  static injectComments(schema: Object, Classes: Array<GQLBase>) {
     const {
       DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS
     } = GQLBase;
@@ -112,7 +114,7 @@ export class SchemaUtils extends EventEmitter {
    * @param {Function[]} Classes these are GQLBase extended classes used to 
    * manipulate the schema with.
    */
-  static injectInterfaceResolvers(schema: Object, Classes: Function[]) {
+  static injectInterfaceResolvers(schema: Object, Classes: Array<GQLBase>) {
     for (let Class of Classes) {
       if (Class.GQL_TYPE === GraphQLInterfaceType) {
         schema._typeMap[Class.name].resolveType =
@@ -137,7 +139,7 @@ export class SchemaUtils extends EventEmitter {
    * @param {Function[]} Classes these are GQLBase extended classes used to 
    * manipulate the schema with.
    */
-  static injectEnums(schema: Object, Classes: Function[]) {
+  static injectEnums(schema: Object, Classes: Array<GQLBase>) {
     for (let Class of Classes) {
       if (Class.GQL_TYPE === GraphQLEnumType) {
         const __enum = schema._typeMap[Class.name];
@@ -169,15 +171,20 @@ export class SchemaUtils extends EventEmitter {
    * @param {Function[]} Classes these are GQLBase extended classes used to 
    * manipulate the schema with.
    */
-  static injectScalars(schema: Object, Classes: Function[]) {
+  static injectScalars(schema: Object, Classes: Array<GQLBase>) {
     for (let Class of Classes) {
       if (Class.GQL_TYPE === GraphQLScalarType) {
+        // @ComputedType
         const type = schema._typeMap[Class.name];
-        const { serialize, parseValue, parseLiteral } = Class;
         
+        // @ComputedType
+        const { serialize, parseValue, parseLiteral } = Class;
+
+        // @ComputedType
         console.dir(Class.name, type);
         
         if (!serialize || !parseValue || !parseLiteral) {
+          // @ComputedType
           console.error(`Scalar type ${Class.name} has invaild impl.`);
           continue;
         }
@@ -202,7 +209,7 @@ export class SchemaUtils extends EventEmitter {
    * @return {string} a dynamically generated GraphQL IDL schema string
    */
   static generateSchemaSDL(
-    Classes: Function[], 
+    Classes: Array<GQLBase>, 
     logOutput: boolean = true
   ): string {
     let schema = SyntaxTree.EmptyDocument();

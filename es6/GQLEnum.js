@@ -23,19 +23,22 @@ const ENUMS = Symbol();
  */
 @Getters(['value', String])
 export class GQLEnum extends GQLBase {
-  constructor(enumValueOrKey: ?mixed, requestData: ?Object) {
+  constructor(enumValueOrKey: ?Object, requestData: ?Object) {
     super({}, requestData)
 
     const Class = this.constructor
     const enums = Class.enums;
     let symbol;
+    let enumVK: (Object | string) = enumValueOrKey || 'undefined'
 
     for (let property of [
-      enumValueOrKey,
-      String(enumValueOrKey && enumValueOrKey.value),
-      String(enumValueOrKey && enumValueOrKey.toString())
-    ]) {
+      enumVK,
+      String(enumVK && enumVK.value && enumVK.value),
+      String(enumVK)
+    ]) {      
+      // @ComputedType
       if (property in enums) {        
+        // @ComputedType
         symbol = enums[property]
         break;
       }
@@ -113,7 +116,7 @@ export class GQLEnum extends GQLBase {
     deprecationReason: ?string,
     description: ?string
   ): Object {
-    const result = { value }
+    const result: Object = { value }
 
     if (deprecationReason) { result.deprecationReason = deprecationReason }
     if (description) { result.description = description }
@@ -135,17 +138,28 @@ export class GQLEnum extends GQLBase {
    * variation defined.
    */
   static get enums(): Array<Symbol> {
+    // @ComputedType
     if (!this[ENUMS]) {
-      const ast = parse(this.SCHEMA);
+      const ast = parse((this.SCHEMA: any));
       const array = [];
-      const values = this.values || {};
+      const values = this.values || {};      
+      let astValues: Array<any>;
+      
+      try {
+        // TODO: $FlowFixMe
+        astValues = ast.definitions[0].values; 
+      }
+      catch (error) {
+        console.error('Unable to discern the values from your enums SCHEMA')
+        throw error;
+      }
 
       // Walk the AST for the class' schema and extract the names (same as 
       // values when specified in GraphQL SDL) and build an object the has 
       // the actual defined value and the AST generated name/value. 
-      for (let enumDef of ast.definitions[0].values) {
+      for (let enumDef of astValues) {
         let defKey = enumDef.name.value;
-        let symObj = Object(Symbol.for(defKey));
+        let symObj: Object = Object(Symbol.for(defKey));
 
         symObj.value = (values[defKey] && values[defKey].value) || defKey;
         symObj.name = defKey;
@@ -155,13 +169,19 @@ export class GQLEnum extends GQLBase {
         // get the generated Object wrapped Symbol with keys and values by 
         // supplying either a key or value.
         array.push(symObj)
+        
+        // @ComputedType
         array[defKey] = symObj;
+        
+        // @ComputedType
         array[symObj.value] = symObj;
       }
       
+      // @ComputedType
       this[ENUMS] = array;
     }
 
+    // @ComputedType
     return this[ENUMS];
   }
 

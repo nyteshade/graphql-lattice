@@ -21,14 +21,17 @@ import { GQLBase } from '../GQLBase'
  * @param {Object} descriptor a standard Object.defineProperty style
  * descriptor object.
  */
-export default function AdjacentSchema(classModule) {
-  return function(target) {
+export default function AdjacentSchema(classModule: Object) {
+  return function(target: GQLBase) {
     // Attempt to remove the SCHEMA and module properties or functions from 
     // the class being decorated. This is not guaranteed to work but should 
     // increase compatibilty and success rates.
+    // @ComputedType
     delete target.SCHEMA;
+    // @ComputedType
     delete target.module;
 
+    // @ComputedType
     return Object.defineProperties(target, {
       module: {
         get: () => classModule

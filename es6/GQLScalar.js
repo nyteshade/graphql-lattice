@@ -1,3 +1,5 @@
+// @flow
+
 import { GraphQLScalarType } from 'graphql'
 import { GQLBase } from './GQLBase'
 

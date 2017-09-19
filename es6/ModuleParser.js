@@ -1,14 +1,16 @@
 // @flow
 
-import fs from 'fs'
+import fs, { readdirSync, statSync } from 'fs'
 import path from 'path'
 import * as types from './types'
 import { GQLBase } from './GQLBase'
 import { promisify, Deferred } from './utils'
 
+// Promisify some bits
 const readdirAsync = promisify(fs.readdir)
 const statAsync = promisify(fs.stat)
 
+// Fetch some type checking bits from 'types'
 const {
   typeOf,
   isString,
@@ -18,8 +20,6 @@ const {
   isObject,
   extendsFrom
 } = types;
-
-
 
 /**
  * The ModuleParser is a utility class designed to loop through and iterate
@@ -31,6 +31,32 @@ const {
  */
 export class ModuleParser {
   /**
+   * An internal array of `GQLBase` extended classes found during either a 
+   * `parse()` or `parseSync()` call.
+   *
+   * @memberof ModuleParser
+   * @type {Array<GQLBase>}
+   */
+  classes: Array<GQLBase>;
+  
+  /**
+   * A string denoting the directory on disk where `ModuleParser` should be
+   * searching for its classes.
+   * 
+   * @memberof ModuleParser
+   * @type {string}
+   */
+  directory: string;
+  
+  /**
+   * A boolean value denoting whether or not the `ModuleParser` instance is
+   * valid; i.e. the directory it points to actually exists and is a directory
+   *
+   * @type {boolean}
+   */
+  valid: boolean;
+  
+  /**
    * The constructor
    *
    * @constructor
@@ -41,8 +67,8 @@ export class ModuleParser {
    * @param {string} directory a string path to a directory containing the 
    * various GQLBase extended classes that should be gathered.
    */
-  constructor(directory: string): ModuleParser {
-    this.directory = directory;
+  constructor(directory: string) {
+    this.directory = path.resolve(directory);
     this.classes = [];
     
     try {
@@ -63,11 +89,11 @@ export class ModuleParser {
    * 
    * @param {string} filePath a path to pass to `require()` 
    * 
-   * @return {mixed} the object, or undefined, that was returned when 
+   * @return {Object} the object, or undefined, that was returned when 
    * it was `require()`'ed.
    */
-  importClass(filePath: string): mixed {
-    let moduleContents;
+  importClass(filePath: string): Object {
+    let moduleContents: Object = {};
     
     try { 
       // Long story short; webpack makes this somewhat difficult but since 
@@ -76,7 +102,7 @@ export class ModuleParser {
       // thing to do.
       moduleContents = eval(`(require("${filePath}"))`)
     }
-    catch(ignore) { }
+    catch(ignore) { console.log(`Skipping ${filePath}`, ignore) }
     
     return moduleContents;
   }
@@ -90,7 +116,7 @@ export class ModuleParser {
    * @method ModuleParser#⌾⠀findGQLBaseClasses
    * @since 2.7.0
    *
-   * @param {mixed} contents the object to parse for properties extending
+   * @param {Object} contents the object to parse for properties extending
    * from `GQLBase`
    * @param {Array<GQLBase>} gqlDefinitions the results, allowed as a second
    * parameter during recursion as a means to save state between calls
@@ -99,7 +125,7 @@ export class ModuleParser {
    * during recursion.
    */
   findGQLBaseClasses(
-    contents: mixed,
+    contents: Object,
     gqlDefinitions?: Array<GQLBase> = [],
     stack?: Set<GQLBase> = new Set()
   ): Array<GQLBase> {
@@ -144,33 +170,80 @@ export class ModuleParser {
    * array if none could be identified.
    */
   async parse(): Promise<Array<GQLBase>> {
-    let deferred = new Deferred();
-    let definitions
     let modules
     let files
     let set = new Set();
     
     if (!this.valid) {
-      deferred.reject(new Error(`
+      throw new Error(`
         ModuleParser instance is invalid for use with ${this.directory}. 
         The path is either a non-existent path or it does not represent a
         directory.
-      `))
-      return deferred.promise;
+      `)
     }
     
+    // @ComputedType
     files = await this.constructor.walk(this.directory)
     modules = files.map(file => this.importClass(file))
+    
+    // @ComputedType
+    (modules
+      .map(mod => this.findGQLBaseClasses(mod))
+      .reduce((last, cur) => (last || []).concat(cur || []), [])
+      .forEach(Class => set.add(Class)))
+      
+    // Convert the set back into an array
+    this.classes = Array.from(set);
+    
+    // We can ignore equality since we came from a set; @ComputedType
+    this.classes.sort((l,r) => l.name < r.name ? -1 : 1)
+      
+    return this.classes;
+  }
+  
+  /**
+   * This method takes a instance of ModuleParser, initialized with a directory,
+   * and walks its contents, importing files as they are found, and sorting 
+   * any exports that extend from GQLBase into an array of such classes
+   *
+   * @method ModuleParser#⌾⠀parseSync
+   * @async 
+   * @since 2.7.0
+   * 
+   * @return {Array<GQLBase>} an array GQLBase classes, or an empty 
+   * array if none could be identified.
+   */
+  parseSync(): Array<GQLBase> {
+    let modules: Array<Object>;
+    let files: Array<string>;
+    let set = new Set();
+
+    if (!this.valid) {
+      throw new Error(`
+        ModuleParser instance is invalid for use with ${this.directory}. 
+        The path is either a non-existent path or it does not represent a
+        directory.
+      `)
+    }
+        
+    files = this.constructor.walkSync(this.directory)
+    modules = files.map(file => {
+      return this.importClass(file)
+    })
+    
     modules
       .map(mod => this.findGQLBaseClasses(mod))
       .reduce((last, cur) => (last || []).concat(cur || []), [])
       .forEach(Class => set.add(Class))
       
+    // Convert the set back into an array
     this.classes = Array.from(set);
+    
+    // We can ignore equality since we came from a set; @ComputedType
     this.classes.sort((l,r) => l.name < r.name ? -1 : 1)
       
     return this.classes;
-  }
+  }  
 
   /**
    * Returns the `constructor` name. If invoked as the context, or `this`,
@@ -181,6 +254,7 @@ export class ModuleParser {
    * @memberof ModuleParser
    *
    * @return {string} the name of the class this is an instance of
+   * @ComputedType
    */
   get [Symbol.toStringTag]() { return this.constructor.name }
 
@@ -194,6 +268,7 @@ export class ModuleParser {
    * @static
    *
    * @return {string} the name of this class
+   * @ComputedType
    */
   static get [Symbol.toStringTag]() { return this.name }
   
@@ -201,20 +276,20 @@ export class ModuleParser {
    * Recursively walks a directory and returns an array of asbolute file paths 
    * to the files under the specified directory.
    *
-   * @method ModuleParser~walkSync
+   * @method ModuleParser~walk
    * @async
    * @since 2.7.0
    * 
    * @param {string} dir string path to the top level directory to parse
-   * @param {Array<string>} filelist an array of existing absolute file paths, or 
-   * if not parameter is supplied a default empty array will be used.
-   * @return {Array<string>} an array of existing absolute file paths found under 
-   * the supplied `dir` directory.
+   * @param {Array<string>} filelist an array of existing absolute file paths, 
+   * or if not parameter is supplied a default empty array will be used.
+   * @return {Promise<Array<string>>} an array of existing absolute file paths 
+   * found under the supplied `dir` directory.
    */
   static async walk(
     dir: string, 
     filelist: Array<string> = []
-  ): Array<string> {
+  ): Promise<Array<string>> {
     let files = await readdirAsync(dir);    
     let stats    
     
@@ -224,6 +299,43 @@ export class ModuleParser {
       stats = await statAsync(file)
       if (stats.isDirectory()) {
         filelist = await this.walk(file, filelist)
+      }
+      else {
+        filelist = filelist.concat(file);
+      }
+    }
+    
+    return filelist;
+  }
+  
+  /**
+   * Recursively walks a directory and returns an array of asbolute file paths 
+   * to the files under the specified directory. This version does this in a 
+   * synchronous fashion.
+   *
+   * @method ModuleParser~walkSync
+   * @async
+   * @since 2.7.0
+   * 
+   * @param {string} dir string path to the top level directory to parse
+   * @param {Array<string>} filelist an array of existing absolute file paths, 
+   * or if not parameter is supplied a default empty array will be used.
+   * @return {Array<string>} an array of existing absolute file paths found 
+   * under the supplied `dir` directory.
+   */
+  static walkSync(
+    dir: string, 
+    filelist: Array<string> = []
+  ): Array<string> {
+    let files = readdirSync(dir);    
+    let stats    
+    
+    files = files.map(file => path.resolve(path.join(dir, file)))
+    
+    for (let file of files) {
+      stats = statSync(file)
+      if (stats.isDirectory()) {
+        filelist = this.walkSync(file, filelist)
       }
       else {
         filelist = filelist.concat(file);

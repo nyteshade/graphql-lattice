@@ -7,7 +7,7 @@ import { GQLBase } from './GQLBase'
 import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
-import { EventEmitter } from 'events'
+import EventEmitter from 'events'
 import { SchemaUtils } from './SchemaUtils'
 import path from 'path'
 import {
@@ -32,6 +32,10 @@ import {
  */
 export class GQLExpressMiddleware extends EventEmitter
 {
+  handlers: Array<GQLBase>;
+  
+  schema: string;
+  
   /**
    * For now, takes an Array of classes extending from GQLBase. These are
    * parsed and a combined schema of all their individual schemas is generated
@@ -46,6 +50,20 @@ export class GQLExpressMiddleware extends EventEmitter
   constructor(handlers: Array<GQLBase>) {
     super();
     this.handlers = handlers;
+  }
+  
+  /**
+   * Generates the textual schema based on the registered `GQLBase` handlers 
+   * this instance represents.
+   * 
+   * @method GQLExpressMiddleware#⬇︎⠀schema
+   * @since 2.7.0
+   *
+   * @return {string} a generated schema string based on the handlers that 
+   * are registered with this `GQLExpressMiddleware` instance.
+   */
+  get schema(): string {
+    return SchemaUtils.generateSchemaSDL(this.handlers);
   }
 
   /**
@@ -108,12 +126,10 @@ export class GQLExpressMiddleware extends EventEmitter
    */
   customMiddleware(
     graphqlHttpOptions: Object = {graphiql: true},
-    patchFinalOpts: Function = null
+    patchFinalOpts?: Function
   ): Function {
-    const schema = this.schema = buildSchema(
-      SchemaUtils.generateSchemaSDL(this.handlers)
-    );
-
+    const schema = buildSchema(this.schema)
+  
     SchemaUtils.injectInterfaceResolvers(schema, this.handlers);
     SchemaUtils.injectEnums(schema, this.handlers);
     SchemaUtils.injectScalars(schema, this.handlers);
@@ -155,8 +171,8 @@ export class GQLExpressMiddleware extends EventEmitter
    * @type {Function}
    */
   get schemaMiddleware(): Function {
-    return (req: mixed, res: mixed, next: ?Function) => {
-      res.status(200).send(this.makeSchema());
+    return (req: Object, res: Object, next: ?Function) => {
+      res.status(200).send(this.schema);
     }
   }
 }

@@ -8,7 +8,7 @@ import { Deferred, joinLines } from './utils'
 import { typeOf } from './types'
 import { SyntaxTree } from './SyntaxTree'
 import { GraphQLObjectType } from 'graphql'
-import { EventEmitter } from 'events'
+import EventEmitter from 'events'
 
 /* Internal implementation to detect the existence of proxies. When present 
  * additional functionality is enabled. Proxies are native in Node >= 6 */ 
@@ -25,11 +25,11 @@ const _PROXY_HANDLER = Symbol.for('internal-base-proxy-handler')
  * choosing and that string is not a defined property on the instance 
  * passed to the check.
  * 
- * @method notDefined
+ * @method GQLBaseEnv~notDefined
  * @memberof GQLBaseEnv
  * @since 2.5.0
  * 
- * @param {String} keyToTest a String denoting the property you wish to test 
+ * @param {string} keyToTest a String denoting the property you wish to test 
  * @param {mixed} keySupplied a value, coerced `toString()`, to compare to 
  * `keyToTest`
  * @param {mixed} instance an object instance to check `hasOwnProperty` on for 
@@ -37,22 +37,16 @@ const _PROXY_HANDLER = Symbol.for('internal-base-proxy-handler')
  * @return {Boolean} true if the property matches the supplied key and that 
  * property is not an ownedProperty of the instance supplied.
  */
-export const notDefined: Function = (
-  keyToTest: String, 
-  keySupplied: mixed, 
-  instance: mixed
-): Boolean =>
-  new RegExp(`^${keyToTest}$`).test(keySupplied.toString())
-  && !instance.hasOwnProperty(keyToTest)
-
-/**
- * Constant referring to the nodejs module in which this code is defined.
- *
- * @memberof GQLBaseEnv
- * @type {Object}
- * @const
- */
-const GQLBaseModule = module;
+export function notDefined(
+  keyToTest: string, 
+  keySupplied: Object | string, 
+  instance: Object
+) {
+  return (
+    new RegExp("^" + keyToTest + "$").test(keySupplied.toString())
+    && !instance.hasOwnProperty(keyToTest)
+  );
+}
 
 /**
  * A `Symbol` used as a key to store the backing model data. Designed as a
@@ -83,6 +77,8 @@ export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
  * @class GQLBase
  */
 export class GQLBase extends EventEmitter {
+  fileHandler: ?IDLFileHandler;
+  
   /**
    * Request data is passed to this object when constructed. Typically these
    * objects, and their children, are instantiated by its own static MUTATORS
@@ -111,16 +107,17 @@ export class GQLBase extends EventEmitter {
    * instance.
    * @param {Object} requestData see description above
    */
-  constructor(modelData: Object = {}, requestData: Object = null) {
+  constructor(modelData: Object = {}, requestData: ?Object = null) {
     super();
 
     const Class = this.constructor;
 
     GQLBase.setupModel(this);
     this.setModel(modelData);
-    this.requestData = requestData;
+    this.requestData = requestData || {};
     this.fileHandler = new IDLFileHandler(this.constructor);
     
+    // @ComputedType
     return hasProxy ? new Proxy(this, GQLBase[_PROXY_HANDLER]) : this;
   }
 
@@ -137,6 +134,7 @@ export class GQLBase extends EventEmitter {
    * @param {Object} value any object you wish to use as a data store
    */
   getModel() {
+    // @ComputedType
     return this[MODEL_KEY];
   }
 
@@ -153,6 +151,7 @@ export class GQLBase extends EventEmitter {
    * @param {Object} value any object you wish to use as a data store
    */
   setModel(value: Object): GQLBase {
+    // @ComputedType
     this[MODEL_KEY] = value;
     return this;
   }
@@ -171,6 +170,7 @@ export class GQLBase extends EventEmitter {
    * @return {GQLBase} this is returned
    */
   extendModel(...extensions: Array<mixed>): GQLBase {
+    // $FlowFixMe
     Object.assign(this[MODEL_KEY], ...extensions);
     return this;
   }
@@ -185,7 +185,8 @@ export class GQLBase extends EventEmitter {
    *
    * @return {Object} an object, usually matching { req, res, gql }
    */
-  get requestData(): Object {
+  get requestData(): Object | null {
+    // @ComputedType
     return this[REQ_DATA_KEY];
   }
 
@@ -200,6 +201,7 @@ export class GQLBase extends EventEmitter {
    * @param {Object} value an object, usually matching { req, res, gql }
    */
   set requestData(value: Object): void {
+    // @ComputedType
     this[REQ_DATA_KEY] = value;
   }
   
@@ -211,7 +213,8 @@ export class GQLBase extends EventEmitter {
    * @method ⌾⠀[Symbol.toStringTag]
    * @memberof ModuleParser
    *
-   * @return {String} the name of the class this is an instance of
+   * @return {string} the name of the class this is an instance of
+   * @ComputedType
    */
   get [Symbol.toStringTag]() { return this.constructor.name }  
 
@@ -226,16 +229,16 @@ export class GQLBase extends EventEmitter {
    *
    * ```
    * // To define a description on the top level class 
-   * [this.DOC_CLASS]: String 
+   * [this.DOC_CLASS]: string 
    *
    * // To define a description on a field (getter, function or async function)
    * [this.DOC_FIELDS]: {
-   *   fieldName: String
+   *   fieldName: string
    * }
    *
    * // To define a description on a query, mutation or subscription field 
    * [this.DOC_QUERIES || this.DOC_MUTATORS || this.DOC_SUBSCRIPTIONS]: {
-   *   fieldName: String
+   *   fieldName: string
    * }
    * ```
    *
@@ -290,7 +293,7 @@ export class GQLBase extends EventEmitter {
    *
    * Example:
    * ```js
-   *   static get SCHEMA(): String | Symbol {
+   *   static get SCHEMA(): string | Symbol {
    *     return GQLBase.ADJACENT_FILE
    *   }
    * ```
@@ -306,7 +309,7 @@ export class GQLBase extends EventEmitter {
    *
    * Example:
    * ```js
-   *   static get SCHEMA(): String | Symbol {
+   *   static get SCHEMA(): string | Symbol {
    *     return GQLBase.IDLFilePath('/path/to/file', '.idl')
    *   }
    * ```
@@ -324,7 +327,7 @@ export class GQLBase extends EventEmitter {
    * @see {@link GQLBase#IDLFilePath}
    */
   static get SCHEMA(): string | Symbol {
-    // define in base class
+    return ''
   }
 
   /**
@@ -411,7 +414,7 @@ export class GQLBase extends EventEmitter {
    * @method ⌾⠀IDLFilePath
    *
    * @param {string} path a path to the IDL containing file
-   * @param {String} [extension='.graphql'] an extension, including the
+   * @param {string} [extension='.graphql'] an extension, including the
    * prefixed period, that will be added to the supplied path should it not
    * already exist.
    * @return Symbol
@@ -437,10 +440,13 @@ export class GQLBase extends EventEmitter {
   static get handler(): IDLFileHandler {
     const key = Symbol.for(`${IDLFileHandler.name}.${this.name}`);
 
+    // @ComputedType
     if (!this[key]) {
+      // @ComputedType
       this[key] = new IDLFileHandler(this);
     }
 
+    // @ComputedType
     return this[key];
   }
 
@@ -460,7 +466,7 @@ export class GQLBase extends EventEmitter {
    * @see https://nodejs.org/api/modules.html
    */
   static get module(): Object {
-    return GQLBaseModule;
+    return module;
   }
 
   /**
@@ -507,13 +513,13 @@ export class GQLBase extends EventEmitter {
    * the constructor
    */
   static setupModel(instance: GQLBase) {
-    const changeHandler = {
+    const changeHandler: Object = {
       /**
        * Proxy set() handler. This is where the change events are fired from
        *
        * @method set
        * @param {Object} target the `GQLBase` model object
-       * @param {String} key the property name
+       * @param {string} key the property name
        * @param {mixed} value the new property value
        */
       set(target, key, value) {
@@ -534,7 +540,7 @@ export class GQLBase extends EventEmitter {
        *
        * @method deleteProperty
        * @param {Object} target the `GQLBase` model object
-       * @param {String} key the property name
+       * @param {string} key the property name
        */
       deleteProperty(target, key) {
         const deleted = target[key];
@@ -609,6 +615,7 @@ export class GQLBase extends EventEmitter {
    * @since 2.5.0
    * 
    * @type {Object}
+   * @ComputedType
    */
   static get [_PROXY_HANDLER]() {    
     return {
@@ -636,7 +643,8 @@ export class GQLBase extends EventEmitter {
    * @memberof ModuleParser
    * @static
    *
-   * @return {String} the name of this class
+   * @return {string} the name of this class
+   * @ComputedType
    */
   static get [Symbol.toStringTag]() { return this.name }
 
@@ -651,7 +659,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀EVENT_MODEL_WILL_BE_SET
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get EVENT_MODEL_WILL_BE_SET() { return 'E: Int. model will be set' }
 
@@ -665,7 +673,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀EVENT_MODEL_HAS_BEEN_SET
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get EVENT_MODEL_HAS_BEEN_SET() { return 'E: Int. model has been set' }
 
@@ -678,7 +686,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀EVENT_MODEL_PROP_CHANGE
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get EVENT_MODEL_PROP_CHANGE() { return 'E: Int. model prop changed' }
 
@@ -692,7 +700,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀EVENT_MODEL_PROP_DELETE
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get EVENT_MODEL_PROP_DELETE() { return 'E: Int. model prop deleted' }  
   
@@ -704,7 +712,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀DOC_CLASS
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get DOC_CLASS() { return 'class' }
   
@@ -716,7 +724,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀DOC_FIELDS
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get DOC_FIELDS() { return 'fields' }
   
@@ -728,7 +736,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀DOC_QUERIES
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get DOC_QUERIES() { return 'queries' }
   
@@ -740,7 +748,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀DOC_MUTATORS
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get DOC_MUTATORS() { return 'mutators' }
   
@@ -752,7 +760,7 @@ export class GQLBase extends EventEmitter {
    * @method ⬇︎⠀DOC_SUBSCRIPTIONS
    * @const
    *
-   * @type {String}
+   * @type {string}
    */
   static get DOC_SUBSCRIPTIONS() { return 'subscriptions' }
   
@@ -778,6 +786,10 @@ export class GQLBase extends EventEmitter {
  * @class IDLFileHandler
  */
 export class IDLFileHandler {
+  path: ?string;
+  
+  extension: ?string;
+  
   /**
    * The IDLFileHandler checks the SCHEMA value returned by the class type
    * of the supplied instance. If the resulting value is a Symbol, then the
@@ -793,6 +805,7 @@ export class IDLFileHandler {
    * extends from GQLBase were it an instance.
    */
   constructor(Class: Function) {
+    // $FlowFixMe
     const symbol = typeof Class.SCHEMA === 'symbol' && Class.SCHEMA || null;
     const pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
 
@@ -800,7 +813,7 @@ export class IDLFileHandler {
       let symbolString = symbol.toString();
 
       if (symbol === Class.ADJACENT_FILE) {
-        if (Class.module === GQLBaseModule) {
+        if (Class.module === module) {
           throw new Error(`
             The a static getter for 'module' on ${Class.name} must be present
             that returns the module object where the Class is defined. Try the
@@ -861,7 +874,7 @@ export class IDLFileHandler {
    * by the SCHEMA property
    */
   getFile(): Buffer {
-    return fs.readFileSync(this.path);
+    return fs.readFileSync(String(this.path));
   }
 
   /**
@@ -876,7 +889,7 @@ export class IDLFileHandler {
    * @return {string|null} the string contents of the Buffer containing the
    * file based IDL schema.
    */
-  getSchema(): string {
+  getSchema(): ?string {
     if (!this.path) { return null; }
 
     const tree = this.getSyntaxTree();
@@ -911,7 +924,8 @@ export class IDLFileHandler {
    * @method ⌾⠀[Symbol.toStringTag]
    * @memberof IDLFileHandler
    *
-   * @return {String} the name of the class this is an instance of
+   * @return {string} the name of the class this is an instance of
+   * @ComputedType
    */
   get [Symbol.toStringTag]() { return this.constructor.name }
 
@@ -924,7 +938,8 @@ export class IDLFileHandler {
    * @memberof IDLFileHandler
    * @static
    *
-   * @return {String} the name of this class
+   * @return {string} the name of this class
+   * @ComputedType
    */
   static get [Symbol.toStringTag]() { return this.name }
 }

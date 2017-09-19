@@ -1,12 +1,9 @@
 {
   "presets": [
-    "es2015",
-    "es2016",
-    "es2017",
     "stage-1",
     "flow",
     ["env", {
-      "targets": { "node": "current" },
+      "targets": { "node": 6 },
       "modules": "commonjs",
       "useBuiltIns": true,
       "debug": false

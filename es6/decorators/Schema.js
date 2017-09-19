@@ -21,11 +21,12 @@
  * @memberof! decorators
  * @since 2.2.0
  * 
- * @param {String} schemaString a GraphQL IDL compliant string for defining a 
+ * @param {string} schemaString a GraphQL IDL compliant string for defining a 
  * GraphQL Object Schema.
  */
-export function Schema(schemaString) {
-  return function(target) {
+export function Schema(schemaString: string) {
+  return function(target: Object) {
+    // @ComputedType
     Object.defineProperties(target, {
       SCHEMA: {
         get: () => schemaString
