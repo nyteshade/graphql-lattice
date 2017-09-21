@@ -31,7 +31,7 @@ const ENUMS = Symbol();
  *
  * @class GQLEnum
  */
-@Getters(['value', String])
+@Getters('symbol')
 export class GQLEnum extends GQLBase {
   constructor(enumValueOrKey: ?Object, requestData: ?Object) {
     super({}, requestData)
@@ -39,28 +39,72 @@ export class GQLEnum extends GQLBase {
     const Class = this.constructor
     const enums = Class.enums;
     let symbol;
-    let enumVK: (Object | string) = enumValueOrKey || 'undefined'
+    let enumVK: (Object | string) = enumValueOrKey || null
 
-    for (let property of [
-      enumVK,
-      String(enumVK && enumVK.value && enumVK.value),
-      String(enumVK)
-    ]) {      
-      // @ComputedType
-      if (property in enums) {        
-        // @ComputedType
-        symbol = enums[property]
-        break;
-      }
-    }
+    symbol = enums[enumVK] || enumVK && enums[enumVK.value] || null
 
-    if (symbol) {
-      Object.assign(this.getModel(), {
-        name: symbol.name,
-        value: symbol.value,
-        symbol: symbol
-      })
-    }
+    Object.assign(this.getModel(), {
+      name: symbol ? symbol.name : null,
+      value: symbol ? symbol.value : null,
+      symbol: symbol ? symbol : null
+    })
+  }
+  
+  /**
+   * Retrieves the actual symbol stored name property from the internal 
+   * model object for this enum instance. That is a mouthfull, but it 
+   * basically means that if your enum is something like:
+   * 
+   * ```
+   * enum Person { TALL, SHORT }
+   * ```
+   * 
+   * and you create an instance using any of the following
+   * 
+   * ```
+   * p = new Person('TALL')
+   * p = new Person(valueFor('TALL'))
+   * p = new Person({value: 'TALL'})
+   * ```
+   * 
+   * that your response to `p.name` will equate to `TALL`.
+   *
+   * @method ⬇︎⠀name
+   * @return {mixed} typically a String but any valid type supplied
+   */
+  get name() {
+    const name = this.getModel().name
+    
+    return (
+      name !== undefined &&
+      name !== null && 
+      name !== NaN 
+    ) ? name : null;
+  }
+
+  /**
+   * Much like the `.name` getter, the `.value` getter will typically 
+   * retreive the name of the enum key you are requesting. In rare cases 
+   * where you have defined values that differ from the name, the `.value`
+   * getter will retrieve that custom value from the `.value` property on 
+   * the symbol in question.
+   *
+   * This should do the right thing even if you instantiated the instance 
+   * using the name. 
+   *
+   * @memberof GQLEnum
+   * @method ⬇︎⠀value
+   * @return {mixed} the value of the enum type; this in all likihood should 
+   * be a String or potentially an object
+   */
+  get value() {
+    const value = this.getModel().value
+    
+    return (
+      value !== undefined &&
+      value !== null && 
+      value !== NaN 
+    ) ? value : null;
   }
 
   /**
@@ -150,8 +194,9 @@ export class GQLEnum extends GQLBase {
   static get enums(): Array<Symbol> {
     // @ComputedType
     if (!this[ENUMS]) {
+      const map = new Map();
       const ast = parse((this.SCHEMA: any));
-      const array = [];
+      const array = new Proxy([], GQLEnum.GenerateEnumsProxyHandler(map));
       const values = this.values || {};      
       let astValues: Array<any>;
       
@@ -172,19 +217,16 @@ export class GQLEnum extends GQLBase {
         let symObj: Object = Object(Symbol.for(defKey));
 
         symObj.value = (values[defKey] && values[defKey].value) || defKey;
-        symObj.name = defKey;
+        symObj.name = defKey
         symObj.sym = symObj.valueOf()
+        
+        map.set(symObj.name, symObj)
+        map.set(symObj.value, symObj)
         
         // This bit of logic allows us to look into the "enums" property and 
         // get the generated Object wrapped Symbol with keys and values by 
         // supplying either a key or value.
         array.push(symObj)
-        
-        // @ComputedType
-        array[defKey] = symObj;
-        
-        // @ComputedType
-        array[symObj.value] = symObj;
       }
       
       // @ComputedType
@@ -193,6 +235,30 @@ export class GQLEnum extends GQLBase {
 
     // @ComputedType
     return this[ENUMS];
+  }
+  
+  /**
+   * Due to the complexity of being able to access both the keys and values 
+   * properly for an enum type, a Map is used as the backing store. The handler 
+   * returned by this method is to be passed to a Proxy.
+   *
+   * @method GenerateEnumsProxyHandler
+   * @static 
+   * 
+   * @param {Map} map the map containing the key<->value and 
+   * value<->key mappings; the true storage backing the array in question.
+   * @return {Object}
+   */
+  static GenerateEnumsProxyHandler(map: Map) {
+    return {
+      get(obj, key) {
+        if (map.has(key)) {
+          return map.get(key)
+        }
+
+        return obj[key]
+      } 
+    }
   }
 
   /** @inheritdoc */

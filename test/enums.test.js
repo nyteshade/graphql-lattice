@@ -1,13 +1,25 @@
 import { GQLEnum, Schema } from '../dist/lattice.min'
 
 describe('GQLEnums', () => {
-  @Schema('enum Ewok { SHORT, EXTRA_HAIRY, WOOKIE_SIZED }')
+  var objRef = { testMe: true }
+  
+  @Schema(`
+    enum Ewok { 
+      SHORT, 
+      EXTRA_HAIRY, 
+      WOOKIE_SIZED,
+      DANGER_ZONE,
+      OBJECT_ZONE
+    }
+  `)
   class Ewok extends GQLEnum {
     static get values() {
       const { valueFor } = this;
       
       return {
-        EXTRA_HAIRY: valueFor('HIRSUTE')
+        EXTRA_HAIRY: valueFor('HIRSUTE'),
+        DANGER_ZONE: valueFor(3),
+        OBJECT_ZONE: valueFor(objRef)
       }
     }
   }
@@ -60,18 +72,25 @@ describe('GQLEnums', () => {
     let name = 'EXTRA_HAIRY'
     let value = 'HIRSUTE'
 
-    expect(true).toBe(true)
+    e = new Ewok(value) 
+    expect(() => e.value).not.toThrow()
+    expect(e.name).toBe(name)
+    expect(e.value).toEqual(value)
     
-    // TODO: rethink the way this works. complex values do not work atm 
+    e = new Ewok({ value: value }) 
+    expect(() => e.value).not.toThrow()
+    expect(e.name).toBe(name)
+    expect(e.value).toEqual(value)
     
-    // e = new Ewok(value) 
-    // expect(() => e.value).not.toThrow()
-    // expect(e.name).toBe(name)
-    // expect(e.value).toEqual(value)
-    // 
-    // e = new Ewok({ value: value }) 
-    // expect(() => e.value).not.toThrow()
-    // expect(e.name).toBe(name)
-    // expect(e.value).toEqual(value)
+    e = new Ewok('DANGER_ZONE')
+    expect(() => e.value).not.toThrow()
+    expect(e.name).toBe('DANGER_ZONE')
+    expect(e.value).toBe(3)
+    
+    e = new Ewok('OBJECT_ZONE')
+    expect(() => e.value).not.toThrow()
+    expect(e.name).toBe('OBJECT_ZONE')
+    expect(e.value).toBe(objRef)
+    expect(e.value).not.toBe({ testMe: true })
   })
 })

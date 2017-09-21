@@ -276,6 +276,20 @@ export const DirectTypeManager = {
 }
 
 /**
+ * This decorator allows you to add a Class method to the DirectTypeManager 
+ * as a function that should not be invoked with the `new` keyword. For all 
+ * intents and purposes the function should be declared `static`.
+ *
+ * @method DirectTypeAdd
+ * @param {Function} target [description]
+ * @constructor
+ */
+export function DirectTypeAdd(target) {
+  DirectTypeManager.add(target);
+  return target;
+}
+
+/**
  * When working with `GQLBase` instances that expose properties
  * that have a 1:1 mapping to their own model property of the
  * same name, adding the getters manually can be annoying. This
