@@ -109,6 +109,7 @@ function extractBits(property) {
     return function() {
       const thisClass = this.constructor
       const model = this[MODEL_KEY] || null
+      let val
       
       if (!extendsFrom(thisClass, GQLBase)) {
         console.error(`${thisClass.name} is not derived from GQLBase`);
@@ -124,14 +125,14 @@ function extractBits(property) {
       }
             
       if (typeClass) {
-        const { meta } = SyntaxTree.findField(
+        const results = SyntaxTree.findField(
           parse(this.constructor.SCHEMA),
           this.constructor.name,
           modelPropertyName
-        );
+        )
+        const { meta } = results || { meta: null };
         
         let args = [model[modelPropertyName], this.requestData];
-        let val;
         
         if (meta && !meta.nullable && !model) {
           throw new Error(`
@@ -162,13 +163,17 @@ function extractBits(property) {
           }
           
           if (typeClass.GQL_TYPE === GraphQLEnumType) { return val.value; }
-        }
-        
-        return val;
+        }      
       }
       else {
-        return model[modelPropertyName];
-      }        
+        val = model[modelPropertyName];
+      }       
+      
+      if (val === 'undefined' || val === undefined) {
+        val = null;
+      }
+      
+      return val;       
     }
   }
   

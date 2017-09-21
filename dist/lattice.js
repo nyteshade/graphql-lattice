@@ -4424,6 +4424,7 @@ function extractBits(property) {
     return function () {
       const thisClass = this.constructor;
       const model = this[_GQLBase.MODEL_KEY] || null;
+      let val;
 
       if (!(0, _types.extendsFrom)(thisClass, _GQLBase.GQLBase)) {
         console.error(`${thisClass.name} is not derived from GQLBase`);
@@ -4439,13 +4440,14 @@ function extractBits(property) {
       }
 
       if (typeClass) {
-        var _SyntaxTree$findField = _SyntaxTree.SyntaxTree.findField((0, _graphql.parse)(this.constructor.SCHEMA), this.constructor.name, modelPropertyName);
+        const results = _SyntaxTree.SyntaxTree.findField((0, _graphql.parse)(this.constructor.SCHEMA), this.constructor.name, modelPropertyName);
 
-        const meta = _SyntaxTree$findField.meta;
+        var _ref = results || { meta: null };
+
+        const meta = _ref.meta;
 
 
         let args = [model[modelPropertyName], this.requestData];
-        let val;
 
         if (meta && !meta.nullable && !model) {
           throw new Error(`
@@ -4478,11 +4480,15 @@ function extractBits(property) {
             return val.value;
           }
         }
-
-        return val;
       } else {
-        return model[modelPropertyName];
+        val = model[modelPropertyName];
       }
+
+      if (val === 'undefined' || val === undefined) {
+        val = null;
+      }
+
+      return val;
     };
   };
 
@@ -4803,7 +4809,17 @@ const _PROXY_HANDLER = (0, _for2.default)('internal-base-proxy-handler');
 const ENUMS = (0, _symbol2.default)();
 
 /**
- * TODO finish comment
+ * GraphQL Enum types can be a bit picky when it comes to how scalar types 
+ * equate to enum values. Lattice makes this easier by allowing you to specify 
+ * a value or the key when your enum has a value other than the key; GraphQL 
+ * does not allow this by default.
+ *
+ * Further more, when instantiating a GQLEnum type, you can pass a string or 
+ * value matching the enum key or value or you can pass an object with key of 
+ * value and the value being either the enum key or value. If any of those
+ * things match, then your `instance.value` will equate to the enum's key. If,
+ * on the other hand, your supplied values do not match then `instance.value` 
+ * will be `null`.
  *
  * @class GQLEnum
  */

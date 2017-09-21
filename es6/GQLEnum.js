@@ -17,7 +17,17 @@ const _PROXY_HANDLER = Symbol.for('internal-base-proxy-handler')
 const ENUMS = Symbol();
 
 /**
- * TODO finish comment
+ * GraphQL Enum types can be a bit picky when it comes to how scalar types 
+ * equate to enum values. Lattice makes this easier by allowing you to specify 
+ * a value or the key when your enum has a value other than the key; GraphQL 
+ * does not allow this by default.
+ *
+ * Further more, when instantiating a GQLEnum type, you can pass a string or 
+ * value matching the enum key or value or you can pass an object with key of 
+ * value and the value being either the enum key or value. If any of those
+ * things match, then your `instance.value` will equate to the enum's key. If,
+ * on the other hand, your supplied values do not match then `instance.value` 
+ * will be `null`.
  *
  * @class GQLEnum
  */
@@ -68,7 +78,7 @@ export class GQLEnum extends GQLBase {
   static get GQL_TYPE(): Function {
     return GraphQLEnumType;
   }
-
+  
   /**
    * Each instance of GQLEnum must specify a map of keys and values. If this
    * method returns null or is not defined, the value of the enum will match
@@ -164,7 +174,7 @@ export class GQLEnum extends GQLBase {
         symObj.value = (values[defKey] && values[defKey].value) || defKey;
         symObj.name = defKey;
         symObj.sym = symObj.valueOf()
-
+        
         // This bit of logic allows us to look into the "enums" property and 
         // get the generated Object wrapped Symbol with keys and values by 
         // supplying either a key or value.
