@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>decorators/Schema.js</title>
+  <title>DirectTypeAdd</title>
 
 
 
@@ -47,60 +47,184 @@
 
     <div id="main">
         
-        <h1 class="page-title">decorators/Schema.js</h1>
+        <h1 class="page-title">DirectTypeAdd</h1>
         
 
         
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        DirectTypeAdd
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="DirectTypeAdd"><a class="anchor" href="#DirectTypeAdd"></a>
+      <span class="type-name"><span class="type-signature type-attrib"></span>new DirectTypeAdd<span class="signature">(target)</span><span class="type-signature"></span></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This decorator allows you to add a Class method to the DirectTypeManager<br>as a function that should not be invoked with the <code>new</code> keyword. For all<br>intents and purposes the function should be declared <code>static</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params compact">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>[description]</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source">
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line290">line 290</a>
+    </dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     
-    <section>
-        <article>
-            <pre class="source linenums"><code class="hljs js">/** @namespace decorators */
-/** @flow */
+    </div>
 
-/**
- * This decorator allows you to specify the SCHEMA getter and associated 
- * string as a parameter to the decorator itself. So, for example:
- * 
- * &lt;code>
- * @Schema(`
- *   type Item {
- *     name: String 
- *     cost: String 
- *   }
- * `)
- * export class Item extends GQLBase {
- *   // ...
- * }
- * &lt;/code>
- * 
- * @function Schema
- * @memberof! decorators
- * @since 2.2.0
- * 
- * @param {string} schemaString a GraphQL IDL compliant string for defining a 
- * GraphQL Object Schema.
- */
-export function Schema(schemaString: string) {
-  return function(target: Object) {
-    // @ComputedType
-    Object.defineProperties(target, {
-      SCHEMA: {
-        get: () => schemaString
-      }
-    });
-  }
-}
+    
 
-export default Schema;</code></pre>
-        </article>
-    </section>
-    <script type="text/javascript">
-      hljs.lineNumbersBlock(d3.select('.source .hljs').node())
-    </script>
+    
 
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

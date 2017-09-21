@@ -5107,7 +5107,7 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
    * that your response to `p.name` will equate to `TALL`.
    *
    * @method ⬇︎⠀name
-   * @return {[type]} [description]
+   * @return {mixed} typically a String but any valid type supplied
    */
   get name() {
     const name = this.getModel().name;
@@ -5295,7 +5295,7 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
    * @method GenerateEnumsProxyHandler
    * @static 
    * 
-   * @param {Map<mixed, Symbol} map the map containing the key<->value and 
+   * @param {Map} map the map containing the key<->value and 
    * value<->key mappings; the true storage backing the array in question.
    * @return {Object}
    */
@@ -5307,6 +5307,20 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
         }
 
         return obj[key];
+      },
+
+      set(obj, key, value) {
+        if (isFinite(key) && value instanceof _symbol2.default) {
+          map.set(value.name, value);
+          map.set(value.value, value);
+        }
+
+        // Some accessor on the receiving array 
+        obj[key] = value;
+
+        // Arrays return length when pushing. Assume value as return 
+        // otherwise. ¯\_(ツ)_/¯
+        return isFinite(key) ? obj.length : obj[key];
       }
     };
   }

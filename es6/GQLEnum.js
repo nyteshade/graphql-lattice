@@ -39,8 +39,9 @@ export class GQLEnum extends GQLBase {
     const Class = this.constructor
     const enums = Class.enums;
     let symbol;
-    let enumVK: (Object | string) = enumValueOrKey || null
+    let enumVK: (Object | string | null) = enumValueOrKey || null
 
+    @ComputedType
     symbol = enums[enumVK] || enumVK && enums[enumVK.value] || null
 
     Object.assign(this.getModel(), {
@@ -242,7 +243,7 @@ export class GQLEnum extends GQLBase {
    * properly for an enum type, a Map is used as the backing store. The handler 
    * returned by this method is to be passed to a Proxy.
    *
-   * @method GenerateEnumsProxyHandler
+   * @method GQLEnum#GenerateEnumsProxyHandler
    * @static 
    * 
    * @param {Map} map the map containing the key<->value and 
@@ -251,13 +252,47 @@ export class GQLEnum extends GQLBase {
    */
   static GenerateEnumsProxyHandler(map: Map) {
     return {
+      /**
+       * Get handler for the Map backed Array Proxy
+       *
+       * @memberof! GQLEnum
+       * @method get
+       * 
+       * @param {mixed} obj the object targeted by the Proxy
+       * @param {string} key `key` of the value being requested
+       * @return {mixed} the `value` being requested
+       */
       get(obj, key) {
         if (map.has(key)) {
           return map.get(key)
         }
 
         return obj[key]
-      } 
+      },
+      
+      /** 
+       * Set handler for the Map backed Array Proxy.
+       * 
+       * @memberof! GQLEnum
+       * @method set
+       * 
+       * @param {mixed} obj the object the Proxy is targeting
+       * @param {string} key a string `key` being set
+       * @param {mixed} value the `value` being assigned to `key`
+       */
+      set(obj, key, value) {
+        if (isFinite(key) && value instanceof Symbol) {
+          map.set(value.name, value)
+          map.set(value.value, value)
+        }
+        
+        // Some accessor on the receiving array 
+        obj[key] = value;
+        
+        // Arrays return length when pushing. Assume value as return 
+        // otherwise. ¯\_(ツ)_/¯
+        return isFinite(key) ? obj.length : obj[key];
+      }
     }
   }
 
