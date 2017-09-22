@@ -52,8 +52,8 @@
     }
   },
   "opts": {
-    "_template": "./node_modules/kitsune-jsdoc-template",
-    "template": "./node_modules/kitsune-jsdoc-template",
+    "_template": "./node_modules/minami",
+    "template": "./node_modules/minami",
     "encoding": "utf8",
     "destination": "./docs/",
     "private": true,

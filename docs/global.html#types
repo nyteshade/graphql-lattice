@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>types</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>types - Documentation</title>
 
-
-
-
-
-    <link type="text/css" rel="stylesheet" href="github.css">
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
-    <script src="scripts/highlight.js"></script>
-    <script src="scripts/linenumber.js"></script>
-    
-
-    <script>hljs && hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 
@@ -23,34 +20,19 @@
 <label for="nav-trigger" class="navicon-button x">
   <div class="navicon"></div>
 </label>
+
 <label for="nav-trigger" class="overlay"></label>
 
-<div class="page">
-  <header class="page-header">
-    <h1 class="project-name">
-  <a href="/">graphql-lattice</a>
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="DirectTypeAdd.html">DirectTypeAdd</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLBase.html">GQLBase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLBase.html#.%25E2%258C%25BE%25E2%25A0%2580IDLFilePath">⌾⠀IDLFilePath</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLBase.html#.%25E2%258C%25BE%25E2%25A0%2580MUTATORS">⌾⠀MUTATORS</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLBase.html#.%25E2%258C%25BE%25E2%25A0%2580setupModel">⌾⠀setupModel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLBase.html#%25E2%258C%25BE%25E2%25A0%2580getModel">⌾⠀getModel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLBase.html#%25E2%25AC%2586%25EF%25B8%258E%25E2%25A0%2580requestData">⬆︎⠀requestData</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLBase.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLEnum.html">GQLEnum</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLEnum.html#..get">.get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLEnum.html#..set">.set</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLEnum.html#.valueFor">valueFor</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLEnum.html#GenerateEnumsProxyHandler">GenerateEnumsProxyHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLExpressMiddleware.html">GQLExpressMiddleware</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLExpressMiddleware.html#%25E2%258C%25BE%25E2%25A0%2580customMiddleware">⌾⠀customMiddleware</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLExpressMiddleware.html#%25E2%25AC%2587%25EF%25B8%258E%25E2%25A0%2580schema">⬇︎⠀schema</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLExpressMiddleware.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLInterface.html">GQLInterface</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLInterface.html#.%25E2%258C%25BE%25E2%25A0%2580resolveType">⌾⠀resolveType</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GQLScalar.html">GQLScalar</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLScalar.html#.serialize">serialize</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="IDLFileHandler.html">IDLFileHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="IDLFileHandler.html#%25E2%258C%25BE%25E2%25A0%2580getFile">⌾⠀getFile</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="IDLFileHandler.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModuleParser.html">ModuleParser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModuleParser.html#.ModuleParser">ModuleParser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModuleParser.html#%25E2%258C%25BE%25E2%25A0%2580importClass">⌾⠀importClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModuleParser.html#~walk">walk</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModuleParser.html#~%25E2%258E%2586%25E2%25A0%2580constructor">⎆⠀constructor</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SchemaUtils.html">SchemaUtils</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SchemaUtils.html#.%25E2%258C%25BE%25E2%25A0%2580injectComments">⌾⠀injectComments</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SyntaxTree.html">SyntaxTree</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SyntaxTree.html#.%25E2%258C%25BE%25E2%25A0%2580from">⌾⠀from</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SyntaxTree.html#.%25E2%258E%2586%25E2%25A0%2580constructor">⎆⠀constructor</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SyntaxTree.html#%25E2%258C%25BE%25E2%25A0%2580setAST">⌾⠀setAST</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SyntaxTree.html#%25E2%25AC%2586%25EF%25B8%258E%25E2%25A0%2580ast">⬆︎⠀ast</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="SyntaxTree.html#%25E2%25AC%2587%25EF%25B8%258E%25E2%25A0%2580ast">⬇︎⠀ast</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="utils.Deferred.html">Deferred</a></span></li><li class="nav-heading">Namespaces</li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="decorators.html">decorators</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#..AdjacentSchema">.AdjacentSchema</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#..FileSchema">.FileSchema</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#..Schema">.Schema</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#.%25E2%258C%25BE%25E2%25A0%2580extractBits">⌾⠀extractBits</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#..%25F0%259F%258F%25B7%25E2%25A0%2580Getters">.🏷⠀Getters</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#..%25F0%259F%258F%25B7%25E2%25A0%2580Properties">.🏷⠀Properties</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="decorators.html#..%25F0%259F%258F%25B7%25E2%25A0%2580Setters">.🏷⠀Setters</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="GQLBaseEnv.html">GQLBaseEnv</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GQLBaseEnv.html#~notDefined">notDefined</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="global.html#types">types</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580extendsFrom">⌾⠀extendsFrom</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isArray">⌾⠀isArray</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isClass">⌾⠀isClass</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isDate">⌾⠀isDate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isFunction">⌾⠀isFunction</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNativeClassByProps">⌾⠀isNativeClassByProps</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNativeClassByString">⌾⠀isNativeClassByString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNull">⌾⠀isNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNumber">⌾⠀isNumber</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isObject">⌾⠀isObject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isOfType">⌾⠀isOfType</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isPrimitive">⌾⠀isPrimitive</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isRegExp">⌾⠀isRegExp</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isString">⌾⠀isString</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isUndefined">⌾⠀isUndefined</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isValue">⌾⠀isValue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580typeOf">⌾⠀typeOf</a></span></li><li class="nav-heading"><span class="nav-item-type type-namespace">N</span><span class="nav-item-name"><a href="utils.html">utils</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="utils.html#.joinLines">joinLines</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="utils.html#~promisify">promisify</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#deleteProperty">deleteProperty</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#set">set</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#%25E2%25AC%2587%25EF%25B8%258E%25E2%25A0%2580name">⬇︎⠀name</a></span></li>
+</nav>
 
-</h1>
-<h2 class="project-tagline">
-  OO Underpinnings for ease of GraphQL Implementation
-</h2>
+<div id="main">
+    
+    <h1 class="page-title">types</h1>
+    
 
-<h2 class="project-version">
-  2.7.0
-</h2>
-
-  </header>
-  <div class="page-contents">
-    <nav class="sidebar">
-        <h2 class="home"><a href="index.html">Home</a></h2><h3 data-name="Classes">Classes</h3><ul><li><a href="DirectTypeAdd.html">DirectTypeAdd</a></li><li><a href="GQLBase.html">GQLBase</a><ul class='methods'><li data-type='method'><a href="GQLBase.html#.%25E2%258C%25BE%25E2%25A0%2580IDLFilePath">⌾⠀IDLFilePath</a></li><li data-type='method'><a href="GQLBase.html#.%25E2%258C%25BE%25E2%25A0%2580MUTATORS">⌾⠀MUTATORS</a></li><li data-type='method'><a href="GQLBase.html#.%25E2%258C%25BE%25E2%25A0%2580setupModel">⌾⠀setupModel</a></li><li data-type='method'><a href="GQLBase.html#%25E2%258C%25BE%25E2%25A0%2580getModel">⌾⠀getModel</a></li><li data-type='method'><a href="GQLBase.html#%25E2%25AC%2586%25EF%25B8%258E%25E2%25A0%2580requestData">⬆︎⠀requestData</a></li></ul></li><li><a href="GQLBase.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></li><li><a href="GQLEnum.html">GQLEnum</a><ul class='methods'><li data-type='method'><a href="GQLEnum.html#.valueFor">valueFor</a></li><li data-type='method'><a href="GQLEnum.html#GenerateEnumsProxyHandler">GenerateEnumsProxyHandler</a></li><li data-type='method'><a href="GQLEnum.html#~get">get</a></li><li data-type='method'><a href="GQLEnum.html#~set">~set</a></li></ul></li><li><a href="GQLExpressMiddleware.html">GQLExpressMiddleware</a><ul class='methods'><li data-type='method'><a href="GQLExpressMiddleware.html#%25E2%258C%25BE%25E2%25A0%2580customMiddleware">⌾⠀customMiddleware</a></li><li data-type='method'><a href="GQLExpressMiddleware.html#%25E2%25AC%2587%25EF%25B8%258E%25E2%25A0%2580schema">⬇︎⠀schema</a></li></ul></li><li><a href="GQLExpressMiddleware.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></li><li><a href="GQLInterface.html">GQLInterface</a><ul class='methods'><li data-type='method'><a href="GQLInterface.html#.%25E2%258C%25BE%25E2%25A0%2580resolveType">⌾⠀resolveType</a></li></ul></li><li><a href="GQLScalar.html">GQLScalar</a><ul class='methods'><li data-type='method'><a href="GQLScalar.html#.serialize">serialize</a></li></ul></li><li><a href="IDLFileHandler.html">IDLFileHandler</a><ul class='methods'><li data-type='method'><a href="IDLFileHandler.html#%25E2%258C%25BE%25E2%25A0%2580getFile">⌾⠀getFile</a></li></ul></li><li><a href="IDLFileHandler.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></li><li><a href="ModuleParser.html">ModuleParser</a><ul class='methods'><li data-type='method'><a href="ModuleParser.html#.ModuleParser">ModuleParser</a></li><li data-type='method'><a href="ModuleParser.html#%25E2%258C%25BE%25E2%25A0%2580importClass">⌾⠀importClass</a></li><li data-type='method'><a href="ModuleParser.html#~walk">walk</a></li><li data-type='method'><a href="ModuleParser.html#~%25E2%258E%2586%25E2%25A0%2580constructor">⎆⠀constructor</a></li></ul></li><li><a href="SchemaUtils.html">SchemaUtils</a><ul class='methods'><li data-type='method'><a href="SchemaUtils.html#.%25E2%258C%25BE%25E2%25A0%2580injectComments">⌾⠀injectComments</a></li></ul></li><li><a href="SyntaxTree.html">SyntaxTree</a><ul class='methods'><li data-type='method'><a href="SyntaxTree.html#.%25E2%258C%25BE%25E2%25A0%2580from">⌾⠀from</a></li><li data-type='method'><a href="SyntaxTree.html#.%25E2%258E%2586%25E2%25A0%2580constructor">⎆⠀constructor</a></li><li data-type='method'><a href="SyntaxTree.html#%25E2%258C%25BE%25E2%25A0%2580setAST">⌾⠀setAST</a></li><li data-type='method'><a href="SyntaxTree.html#%25E2%25AC%2586%25EF%25B8%258E%25E2%25A0%2580ast">⬆︎⠀ast</a></li><li data-type='method'><a href="SyntaxTree.html#%25E2%25AC%2587%25EF%25B8%258E%25E2%25A0%2580ast">⬇︎⠀ast</a></li></ul></li><li><a href="utils.Deferred.html">Deferred</a></li></ul><h3 data-name="Namespaces">Namespaces</h3><ul><li><a href="decorators.html">decorators</a><ul class='methods'><li data-type='method'><a href="decorators.html#..AdjacentSchema">.AdjacentSchema</a></li><li data-type='method'><a href="decorators.html#..FileSchema">.FileSchema</a></li><li data-type='method'><a href="decorators.html#..Schema">.Schema</a></li><li data-type='method'><a href="decorators.html#.%25E2%258C%25BE%25E2%25A0%2580extractBits">⌾⠀extractBits</a></li><li data-type='method'><a href="decorators.html#..%25F0%259F%258F%25B7%25E2%25A0%2580Getters">.🏷⠀Getters</a></li><li data-type='method'><a href="decorators.html#..%25F0%259F%258F%25B7%25E2%25A0%2580Properties">.🏷⠀Properties</a></li><li data-type='method'><a href="decorators.html#..%25F0%259F%258F%25B7%25E2%25A0%2580Setters">.🏷⠀Setters</a></li></ul></li><li><a href="GQLBaseEnv.html">GQLBaseEnv</a><ul class='methods'><li data-type='method'><a href="GQLBaseEnv.html#~notDefined">notDefined</a></li></ul></li><li><a href="global.html#types">types</a><ul class='methods'><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580extendsFrom">⌾⠀extendsFrom</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isArray">⌾⠀isArray</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isClass">⌾⠀isClass</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isDate">⌾⠀isDate</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isFunction">⌾⠀isFunction</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNativeClassByProps">⌾⠀isNativeClassByProps</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNativeClassByString">⌾⠀isNativeClassByString</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNull">⌾⠀isNull</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isNumber">⌾⠀isNumber</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isObject">⌾⠀isObject</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isOfType">⌾⠀isOfType</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isPrimitive">⌾⠀isPrimitive</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isRegExp">⌾⠀isRegExp</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isString">⌾⠀isString</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isUndefined">⌾⠀isUndefined</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580isValue">⌾⠀isValue</a></li><li data-type='method'><a href="global.html#types#~%25E2%258C%25BE%25E2%25A0%2580typeOf">⌾⠀typeOf</a></li></ul></li><li><a href="utils.html">utils</a><ul class='methods'><li data-type='method'><a href="utils.html#.joinLines">joinLines</a></li><li data-type='method'><a href="utils.html#~promisify">promisify</a></li></ul></li></ul><h3>global</h3><ul><li><a href="global.html#deleteProperty">deleteProperty</a></li><li><a href="global.html#set">set</a></li><li><a href="global.html#%25E2%25AC%2587%25EF%25B8%258E%25E2%25A0%2580name">⬇︎⠀name</a></li></ul>
-    </nav>
-
-    <div id="main">
-        
-        <h1 class="page-title">types</h1>
-        
-
-        
+    
 
 
 
@@ -102,9 +84,9 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line31">line 31</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -134,9 +116,8 @@
 
         
             
-<h4 class="name" id=".exports.PRIMITIVES">
-  <a class="anchor" href="#exports.PRIMITIVES"></a>
-  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>exports.PRIMITIVES<span class="type-signature"> :Set.&lt;string></span></span></h4>
+<div class="section-members">
+<h4 class="name" id=".exports.PRIMITIVES"><span class="type-signature">(static, constant) </span>exports.PRIMITIVES<span class="type-signature"> :Set.&lt;string></span></h4>
 
 
 
@@ -148,18 +129,6 @@
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Set.&lt;string></span>
-
-
-        </li>
-    </ul>
-
-
-
 
 
 <dl class="details">
@@ -190,9 +159,9 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line451">line 451</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -204,15 +173,26 @@
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Set.&lt;string></code></span>
+
+
+        </li>
+    </ul>
 
 
 
+
+
+</div>
 
         
             
-<h4 class="name" id=".NULL">
-  <a class="anchor" href="#NULL"></a>
-  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>NULL<span class="type-signature"> :string</span></span></h4>
+<div class="section-members">
+<h4 class="name" id=".NULL"><span class="type-signature">(static, constant) </span>NULL<span class="type-signature"> :string</span></h4>
 
 
 
@@ -223,18 +203,6 @@
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
 
 
 <dl class="details">
@@ -265,9 +233,9 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line405">line 405</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -279,15 +247,26 @@
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>string</code></span>
+
+
+        </li>
+    </ul>
 
 
 
+
+
+</div>
 
         
             
-<h4 class="name" id=".UNDEFINED">
-  <a class="anchor" href="#UNDEFINED"></a>
-  <span class="type-name"><span class="type-signature type-attrib">(static, constant) </span>UNDEFINED<span class="type-signature"> :string</span></span></h4>
+<div class="section-members">
+<h4 class="name" id=".UNDEFINED"><span class="type-signature">(static, constant) </span>UNDEFINED<span class="type-signature"> :string</span></h4>
 
 
 
@@ -298,18 +277,6 @@
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
 
 
 <dl class="details">
@@ -340,9 +307,9 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line395">line 395</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -354,15 +321,26 @@
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>string</code></span>
+
+
+        </li>
+    </ul>
 
 
 
+
+
+</div>
 
         
             
-<h4 class="name" id="~PRIMITIVES">
-  <a class="anchor" href="#PRIMITIVES"></a>
-  <span class="type-name"><span class="type-signature type-attrib">(inner) </span>PRIMITIVES<span class="type-signature"> :Set.&lt;String></span></span></h4>
+<div class="section-members">
+<h4 class="name" id="~PRIMITIVES"><span class="type-signature">(inner) </span>PRIMITIVES<span class="type-signature"> :Set.&lt;String></span></h4>
 
 
 
@@ -373,18 +351,6 @@
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Set.&lt;String></span>
-
-
-        </li>
-    </ul>
-
-
-
 
 
 <dl class="details">
@@ -415,9 +381,9 @@
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line415">line 415</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -429,9 +395,21 @@
 
 
 
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Set.&lt;String></code></span>
+
+
+        </li>
+    </ul>
 
 
 
+
+
+</div>
 
         
     
@@ -441,11 +419,11 @@
 
         
             
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80extendsFrom"><a class="anchor" href="#⌾⠀extendsFrom"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀extendsFrom<span class="signature">(TestedClass, RootClass, enforceClasses)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80extendsFrom"><span class="type-signature">(inner) </span>⌾⠀extendsFrom<span class="signature">(TestedClass, RootClass, enforceClasses)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -480,6 +458,57 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line301">line 301</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>types#isClass</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
 
 
 
@@ -487,7 +516,7 @@ extendsFrom(B, null); // false</code></pre>
     <h5>Parameters:</h5>
     
 
-<table class="params compact">
+<table class="params">
     <thead>
     <tr>
         
@@ -515,7 +544,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><code>function</code></span>
 
 
             
@@ -525,7 +554,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>the class of which to test heredity</p></td>
+            <td class="description last">
+                <p>the class of which to test heredity</p>
+                
+            </td>
         </tr>
 
     
@@ -538,7 +570,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type"><code>function</code></span>
 
 
             
@@ -548,7 +580,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>the ancestor to test for</p></td>
+            <td class="description last">
+                <p>the ancestor to test for</p>
+                
+            </td>
         </tr>
 
     
@@ -561,7 +596,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">Boolean</span>
+<span class="param-type"><code>Boolean</code></span>
 
 
             
@@ -571,7 +606,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>if true, false by default, an additional<br>runtime check for the type of the supplied Class objects will be made. If<br>either is not a Function, an error is thrown.</p></td>
+            <td class="description last">
+                <p>if true, false by default, an additional<br>runtime check for the type of the supplied Class objects will be made. If<br>either is not a Function, an error is thrown.</p>
+                
+            </td>
         </tr>
 
     
@@ -581,22 +619,60 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
 <h5>Returns:</h5>
 
         
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
 
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
 
-)</code></div>
-
+    </dd>
+</dl>
 
 
-<span class="returns-description"><p>true if the lineage exists; false otherwise</p></span>
-
+<div class="param-desc">
+    <p>true if the lineage exists; false otherwise</p>
+</div>
 
     
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isArray"><span class="type-signature">(inner) </span>⌾⠀isArray<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Returns true if the type supplied evaluates to <code>[object Array]</code></p>
+</div>
+
 
 
 
@@ -629,18 +705,13 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line301">line 301</a>
-    </dd>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line77">line 77</a>
+    </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    
-    <dd class="tag-see">types#isClass</dd>
-    
     
 
     
@@ -654,41 +725,10 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isArray"><a class="anchor" href="#⌾⠀isArray"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isArray<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Returns true if the type supplied evaluates to <code>[object Array]</code></p>
-</div>
-
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
     
 
-<table class="params compact">
+<table class="params">
     <thead>
     <tr>
         
@@ -716,7 +756,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">mixed</span>
+<span class="param-type"><code>mixed</code></span>
 
 
             
@@ -726,7 +766,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
         </tr>
 
     
@@ -736,88 +779,51 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
 <h5>Returns:</h5>
 
         
 
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
 
 
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line77">line 77</a>
     </dd>
-    
-
-    
-
-    
-
-    
 </dl>
 
 
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+</div>
         
             
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isClass"><a class="anchor" href="#⌾⠀isClass"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isClass<span class="signature">(obj)</span><span class="type-signature"> &rarr; {boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isClass"><span class="type-signature">(inner) </span>⌾⠀isClass<span class="signature">(obj)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -832,81 +838,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object who's type is to be compared as a class</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if the obj is an ECMAScript class object; not an<br>instance. False otherwise.</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -935,20 +866,22 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line240">line 240</a>
-    </dd>
+    </li></ul></dd>
     
 
     
 
     
     <dt class="tag-see">See:</dt>
-    
-    <dd class="tag-see"><a href="types.html#isNativeClassByProps">#isNativeClassByProps</a></dd>
-    
-    <dd class="tag-see"><a href="types.html#isNativeClassByString">#isNativeClassByString</a></dd>
-    
+    <dd class="tag-see">
+        <ul>
+            <li><a href="types.html#isNativeClassByProps">#isNativeClassByProps</a></li>
+        
+            <li><a href="types.html#isNativeClassByString">#isNativeClassByString</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -962,20 +895,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object who's type is to be compared as a class</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if the obj is an ECMAScript class object; not an<br>instance. False otherwise.</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isDate"><a class="anchor" href="#⌾⠀isDate"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isDate<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isDate"><span class="type-signature">(inner) </span>⌾⠀isDate<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -989,81 +1007,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -1092,9 +1035,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line91">line 91</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -1112,20 +1055,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isFunction"><a class="anchor" href="#⌾⠀isFunction"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isFunction<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isFunction"><span class="type-signature">(inner) </span>⌾⠀isFunction<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1139,6 +1167,50 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
 
 
 
@@ -1146,7 +1218,7 @@ extendsFrom(B, null); // false</code></pre>
     <h5>Parameters:</h5>
     
 
-<table class="params compact">
+<table class="params">
     <thead>
     <tr>
         
@@ -1174,7 +1246,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">mixed</span>
+<span class="param-type"><code>mixed</code></span>
 
 
             
@@ -1184,7 +1256,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
         </tr>
 
     
@@ -1194,88 +1269,51 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
 <h5>Returns:</h5>
 
         
 
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
 
 
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line63">line 63</a>
     </dd>
-    
-
-    
-
-    
-
-    
 </dl>
 
 
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+</div>
         
             
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNativeClassByProps"><a class="anchor" href="#⌾⠀isNativeClassByProps"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isNativeClassByProps<span class="signature">(thing)</span><span class="type-signature"> &rarr; {boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNativeClassByProps"><span class="type-signature">(inner) </span>⌾⠀isNativeClassByProps<span class="signature">(thing)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
@@ -1289,81 +1327,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>thing</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any type of JavaScript value to test</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it is a ECMAScript class by testing properties;<br>false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -1392,18 +1355,20 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line265">line 265</a>
-    </dd>
+    </li></ul></dd>
     
 
     
 
     
     <dt class="tag-see">See:</dt>
-    
-    <dd class="tag-see"><a href="https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645">https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645</a></dd>
-    
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645">https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -1417,41 +1382,10 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNativeClassByString"><a class="anchor" href="#⌾⠀isNativeClassByString"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isNativeClassByString<span class="signature">(thing)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>isNativeClass method taken from code submitted on stackoverflow. Logic and<br>basis for the test appears there. See URL below for follow up if desired.</p>
-</div>
-
-
-
-
-
-
-
-
-
     <h5>Parameters:</h5>
     
 
-<table class="params compact">
+<table class="params">
     <thead>
     <tr>
         
@@ -1479,7 +1413,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">mixed</span>
+<span class="param-type"><code>mixed</code></span>
 
 
             
@@ -1489,7 +1423,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>any type of JavaScript value to test</p></td>
+            <td class="description last">
+                <p>any type of JavaScript value to test</p>
+                
+            </td>
         </tr>
 
     
@@ -1499,22 +1436,60 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
 <h5>Returns:</h5>
 
         
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>boolean</code></span>
 
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
 
-)</code></div>
-
+    </dd>
+</dl>
 
 
-<span class="returns-description"><p>true if it is a ECMAScript class by testing properties;<br>false otherwise</p></span>
-
+<div class="param-desc">
+    <p>true if it is a ECMAScript class by testing properties;<br>false otherwise</p>
+</div>
 
     
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNativeClassByString"><span class="type-signature">(inner) </span>⌾⠀isNativeClassByString<span class="signature">(thing)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>isNativeClass method taken from code submitted on stackoverflow. Logic and<br>basis for the test appears there. See URL below for follow up if desired.</p>
+</div>
+
 
 
 
@@ -1547,18 +1522,20 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line283">line 283</a>
-    </dd>
+    </li></ul></dd>
     
 
     
 
     
     <dt class="tag-see">See:</dt>
-    
-    <dd class="tag-see"><a href="https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645">https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645</a></dd>
-    
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645">https://stackoverflow.com/questions/29093396/how-do-you-check-the-difference-between-an-ecmascript-6-class-and-function#32235645</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -1572,20 +1549,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>thing</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any type of JavaScript value to test</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it is a ECMAScript class by testing properties;<br>false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNull"><a class="anchor" href="#⌾⠀isNull"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isNull<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNull"><span class="type-signature">(inner) </span>⌾⠀isNull<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1599,81 +1661,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -1702,9 +1689,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line161">line 161</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -1722,20 +1709,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNumber"><a class="anchor" href="#⌾⠀isNumber"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isNumber<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isNumber"><span class="type-signature">(inner) </span>⌾⠀isNumber<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1749,81 +1821,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -1852,9 +1849,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line133">line 133</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -1872,20 +1869,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isObject"><a class="anchor" href="#⌾⠀isObject"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isObject<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isObject"><span class="type-signature">(inner) </span>⌾⠀isObject<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1899,81 +1981,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2002,9 +2009,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line105">line 105</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2022,20 +2029,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isOfType"><a class="anchor" href="#⌾⠀isOfType"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isOfType<span class="signature">(obj, T)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isOfType"><span class="type-signature">(inner) </span>⌾⠀isOfType<span class="signature">(obj, T)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -2049,104 +2141,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>T</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>the type you wish to test for. Ideally this should be<br>a class/function</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2175,9 +2169,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line222">line 222</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2195,20 +2189,131 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isPrimitive"><a class="anchor" href="#⌾⠀isPrimitive"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isPrimitive<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+        <tr>
+            
+                <td class="name"><code>T</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>function</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the type you wish to test for. Ideally this should be<br>a class/function</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isPrimitive"><span class="type-signature">(inner) </span>⌾⠀isPrimitive<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -2222,81 +2327,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>given any value, it will return true if it is a primitive</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if not one of Boolean, Null, Undefined, Number,<br>String or Symbol.</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2325,9 +2355,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line189">line 189</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2345,20 +2375,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>given any value, it will return true if it is a primitive</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if not one of Boolean, Null, Undefined, Number,<br>String or Symbol.</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isRegExp"><a class="anchor" href="#⌾⠀isRegExp"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isRegExp<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isRegExp"><span class="type-signature">(inner) </span>⌾⠀isRegExp<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -2372,81 +2487,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2475,9 +2515,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line147">line 147</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2495,20 +2535,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isString"><a class="anchor" href="#⌾⠀isString"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isString<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isString"><span class="type-signature">(inner) </span>⌾⠀isString<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -2522,81 +2647,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2625,9 +2675,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line119">line 119</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2645,20 +2695,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isUndefined"><a class="anchor" href="#⌾⠀isUndefined"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isUndefined<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isUndefined"><span class="type-signature">(inner) </span>⌾⠀isUndefined<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -2672,81 +2807,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2775,9 +2835,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line175">line 175</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2795,20 +2855,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isValue"><a class="anchor" href="#⌾⠀isValue"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀isValue<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80isValue"><span class="type-signature">(inner) </span>⌾⠀isValue<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -2822,81 +2967,6 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params compact">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>obj</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">mixed</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>any object that can be passed to Object.prototype.toString</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<h5>Returns:</h5>
-
-        
-
-
-<div class="returns-type"><code>(
-<span class="param-type">Boolean</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>true if it passes the test, false otherwise</p></span>
-
-
-    
-
-
-
-
 <dl class="details">
 
     
@@ -2925,9 +2995,9 @@ extendsFrom(B, null); // false</code></pre>
 
     
     <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="types.js.html">types.js</a>, <a href="types.js.html#line207">line 207</a>
-    </dd>
+    </li></ul></dd>
     
 
     
@@ -2945,20 +3015,105 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>any object that can be passed to Object.prototype.toString</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Boolean</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>true if it passes the test, false otherwise</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
 
     
 
-    <h4 class="name" id="~%E2%8C%BE%E2%A0%80typeOf"><a class="anchor" href="#⌾⠀typeOf"></a>
-      <span class="type-name"><span class="type-signature type-attrib">(inner) </span>⌾⠀typeOf<span class="signature">(object)</span><span class="type-signature"> &rarr; {string}</span></span></h4>
+    <h4 class="name" id="~%E2%8C%BE%E2%A0%80typeOf"><span class="type-signature">(inner) </span>⌾⠀typeOf<span class="signature">(object)</span><span class="type-signature"> &rarr; {string}</span></h4>
 
     
 
@@ -2974,6 +3129,50 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="types.js.html">types.js</a>, <a href="types.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
 
 
 
@@ -2981,7 +3180,7 @@ extendsFrom(B, null); // false</code></pre>
     <h5>Parameters:</h5>
     
 
-<table class="params compact">
+<table class="params">
     <thead>
     <tr>
         
@@ -3009,7 +3208,7 @@ extendsFrom(B, null); // false</code></pre>
             <td class="type">
             
                 
-<span class="param-type">mixed</span>
+<span class="param-type"><code>mixed</code></span>
 
 
             
@@ -3019,7 +3218,10 @@ extendsFrom(B, null); // false</code></pre>
 
             
 
-            <td class="description last"><p>any value is acceptable here, including null and<br>undefined</p></td>
+            <td class="description last">
+                <p>any value is acceptable here, including null and<br>undefined</p>
+                
+            </td>
         </tr>
 
     
@@ -3029,81 +3231,44 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
 <h5>Returns:</h5>
 
         
 
-
-<div class="returns-type"><code>(
-<span class="param-type">string</span>
-
-)</code></div>
-
-
-
-<span class="returns-description"><p>for objects of type [object String] the value &quot;String&quot;<br>will be returned.</p></span>
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>string</code></span>
 
 
-    
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source">
-        <a href="types.js.html">types.js</a>, <a href="types.js.html#line34">line 34</a>
     </dd>
-    
-
-    
-
-    
-
-    
 </dl>
 
 
+<div class="param-desc">
+    <p>for objects of type [object String] the value &quot;String&quot;<br>will be returned.</p>
+</div>
+
+    
+</div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+</div>
         
     
 
@@ -3117,16 +3282,15 @@ extendsFrom(B, null); // false</code></pre>
 
 
 
-    </div>
-  </div>
 </div>
 
 <br class="clear">
+
 <footer>
-    <span>graphql-lattice</span> docs generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Sep 21 2017 using the <a href="https://github.com/mere/kitsune">Kitsune</a> theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Sep 21 2017 16:07:07 GMT-0700 (PDT) using the Minami theme.
 </footer>
 
-
+<script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
 </body>
 </html>

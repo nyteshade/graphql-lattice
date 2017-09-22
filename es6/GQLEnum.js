@@ -41,7 +41,7 @@ export class GQLEnum extends GQLBase {
     let symbol;
     let enumVK: (Object | string | null) = enumValueOrKey || null
 
-    @ComputedType
+    // @ComputedType
     symbol = enums[enumVK] || enumVK && enums[enumVK.value] || null
 
     Object.assign(this.getModel(), {
