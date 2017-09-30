@@ -2143,12 +2143,6 @@ let SyntaxTree = exports.SyntaxTree = class SyntaxTree {
           let ours = this.find(name);
           let index = ours && this.ast.definitions.indexOf(ours) || -1;
 
-          if (!ours) {
-            console.error('Cannot find `ours`');
-            console.error(new Error('`ours` missing'));
-            continue;
-          }
-
           // We don't yet have one with that name
           if (!set.has(name)) {
             set.add(name);
@@ -5078,6 +5072,7 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
     let symbol;
     let enumVK = enumValueOrKey || null;
 
+    // @ComputedType
     symbol = enums[enumVK] || enumVK && enums[enumVK.value] || null;
 
     (0, _assign2.default)(this.getModel(), {
@@ -5292,7 +5287,7 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
    * properly for an enum type, a Map is used as the backing store. The handler 
    * returned by this method is to be passed to a Proxy.
    *
-   * @method GenerateEnumsProxyHandler
+   * @method GQLEnum#GenerateEnumsProxyHandler
    * @static 
    * 
    * @param {Map} map the map containing the key<->value and 
@@ -5301,6 +5296,16 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
    */
   static GenerateEnumsProxyHandler(map) {
     return {
+      /**
+       * Get handler for the Map backed Array Proxy
+       *
+       * @memberof! GQLEnum
+       * @method get
+       * 
+       * @param {mixed} obj the object targeted by the Proxy
+       * @param {string} key `key` of the value being requested
+       * @return {mixed} the `value` being requested
+       */
       get(obj, key) {
         if (map.has(key)) {
           return map.get(key);
@@ -5309,6 +5314,16 @@ let GQLEnum = exports.GQLEnum = (_dec = (0, _ModelProperties.Getters)('symbol'),
         return obj[key];
       },
 
+      /** 
+       * Set handler for the Map backed Array Proxy.
+       * 
+       * @memberof! GQLEnum
+       * @method set
+       * 
+       * @param {mixed} obj the object the Proxy is targeting
+       * @param {string} key a string `key` being set
+       * @param {mixed} value the `value` being assigned to `key`
+       */
       set(obj, key, value) {
         if (isFinite(key) && value instanceof _symbol2.default) {
           map.set(value.name, value);

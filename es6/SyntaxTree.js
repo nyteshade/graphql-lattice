@@ -188,12 +188,6 @@ export class SyntaxTree
         let ours = this.find(name);
         let index = ours && this.ast.definitions.indexOf(ours) || -1;
 
-        if (!ours) {
-          console.error('Cannot find `ours`')
-          console.error(new Error('`ours` missing'))
-          continue;
-        }
-
         // We don't yet have one with that name
         if (!set.has(name)) {
           set.add(name);
