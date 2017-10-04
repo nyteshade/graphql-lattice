@@ -70,6 +70,16 @@ export const MODEL_KEY = Symbol.for('data-model-contents-key');
 export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
 
 /**
+ * A nameless Symbol for use as a key to the internal decorator storage
+ *
+ * @type {Symbol}
+ * @const 
+ * @inner 
+ * @memberof GQLBaseEnv
+ */
+export const META_KEY = Symbol();
+
+/**
  * All GraphQL Type objects used in this system are assumed to have extended
  * from this class. An instance of this class can be used to wrap an existing
  * structure if you have one.
@@ -776,6 +786,21 @@ export class GQLBase extends EventEmitter {
    * @type {Function} 
    */
   static get joinLines(): Function { return joinLines }
+  
+  /**
+   * An object used to store data used by decorators and other internal 
+   * proccesses. 
+   * @ComputedType
+   */
+  static get [META_KEY]() { 
+    let storage = this[Symbol.for(this.name)]
+    
+    if (!storage) {
+      storage = (this[Symbol.for(this.name)] = {})
+    }
+    
+    return storage;
+  }  
 }
 
 /**

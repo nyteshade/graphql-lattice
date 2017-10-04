@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>GQLBase - Documentation</title>
+    <title>decorators/Resolvers.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,943 +29,166 @@
 
 <div id="main">
     
-    <h1 class="page-title">GQLBase</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        GQLBase
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="GQLBase"><span class="type-signature"></span>new GQLBase<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>All GraphQL Type objects used in this system are assumed to have extended<br>from this class. An instance of this class can be used to wrap an existing<br>structure if you have one.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line157">line 157</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="GQLBase.%25E2%258E%2586%25E2%25A0%2580constructor.html">⎆⠀constructor</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".%E2%8C%BE%E2%A0%80IDLFilePath"><span class="type-signature">(static) </span>⌾⠀IDLFilePath<span class="signature">(path, extension<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Creates an appropriate Symbol crafted with the right data for use by<br>the IDLFileHandler class below.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line539">line 539</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><code>GQLBase#SCHEMA</code></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>path</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>a path to the IDL containing file</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extension</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    '.graphql'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>an extension, including the<br>prefixed period, that will be added to the supplied path should it not<br>already exist.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-
-<div class="param-desc">
-    <p>Symbol</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".%E2%8C%BE%E2%A0%80MUTATORS"><span class="type-signature">(static) </span>⌾⠀MUTATORS<span class="signature">(requestData)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>This method should return a promise that resolves to an object of<br>functions matching the names of the mutation operations. These are to be<br>injected into the root object when used by <code>GQLExpressMiddleware</code>.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Place all resolvers in RESOLVERS()</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line440">line 440</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>requestData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>typically an object containing three<br>properties; {req, res, gql}</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a promise that resolves to an object; see above for more<br>information.</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".%E2%8C%BE%E2%A0%80setupModel"><span class="type-signature">(static) </span>⌾⠀setupModel<span class="signature">(instance)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>The internal data model has some custom <code>EventEmitter</code> code wrapped<br>it here. When the data model is set via <code>setModel</code> or by accessing it<br>via <code>instance[MODEL_KEY]</code>, an event <code>EVENT_MODEL_SET</code> is emitted. Any<br>listener listening for this event receives an object with two keys</p>
-<pre class="prettyprint source"><code>{
-  model: The actual model being set; changes are persisted
-  instance: The GQLBase instance the model is associated with
-}</code></pre><p>Subsequently, the events <code>EVENT_MODEL_PROP_CHANGE</code> and<br><code>EVENT_MODEL_PROP_DELETE</code> can be listened to if your version of node<br>supports Proxy objects. They allow you to be notified whenever your<br>model has a property changed or deleted, respectively.</p>
-<p>The callback for <code>change</code> receives an object with four properties</p>
-<pre class="prettyprint source"><code>{
-  model: The model object the value is being changed on
-  old: The old value being replaced; undefined if it is the first time
-  key: The property key for the value being changed
-  value: The new value being set
-}</code></pre><p>The callback for <code>delete</code> receives an object with four properties</p>
-<pre class="prettyprint source"><code>{
-  model: The model object the value is deleted from
-  key: The property key for the deleted value
-  deleted: The deleted value
+    <h1 class="page-title">decorators/Resolvers.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @namespace decorators */
+/** @flow */
+
+import { GQLBase, META_KEY } from '../GQLBase'
+
+/**
+ * Since the bulk functionality of @subscriptor, @mutator and 
+ * @resolver are almost identical, a single function can serve 
+ * the bulk of the functionality needed since they are so similar 
+ * in nature.
+ *
+ * @method decorate
+ * @param {string} metaProperty the name of the meta sub key under which to 
+ * store the modified decorated function. 
+ * @param {Object|Function} target either the Class itself, if defined 
+ * on a static method, or the prototype if defined on an instance method
+ * @param {string} key the property name of the function being decorated
+ * @param {Object} descriptor a decorator descriptor; see 
+ * `Object.defineProperty` for more information on descriptors
+ */
+function decorate(
+  metaProperty: string,
+  target: Object | Function, 
+  key: string,
+  descriptor: Object
+): Object {
+  const Class = typeof target === 'function' ? target : target.constructor;
+  const proto = typeof target === 'function' ? target.prototype : target;
+  const isClass = Class === target;
+  let fn: Function = target[key];
+  
+  if (!Class instanceof GQLBase) {
+    console.warn(`
+      Ignoring the transformation of @resolver for ${fn.name}. The reason
+      for this is that ${Class.name} is not an instance of GQLBase.
+    `)
+    return;
+  }
+  
+  if (!descriptor.value || (descriptor.get || descriptor.set)) {
+    console.warn(`
+      Ignoring the transformation of @resolver for ${fn.name}. The reason 
+      for this is that it should only be applied to a static or instance 
+      method of a class. It is not valid to apply this to a getter, setter, 
+      or property.
+    `)
+  }
+
+  // Remove the function from wherever it happens to be defined.
+  delete target[key];
+  delete descriptor.value;
+  
+  if (isClass) {
+    delete proto[key]
+  }
+  else {
+    delete Class[key]
+  }
+  
+  // Obtain a reference to the metadata storage area and create the resolver 
+  // portion if it does not yet exist.
+  Class[META_KEY][metaProperty] = Class[META_KEY][metaProperty] || []  
+  
+  // Ensure that the function name matches the key, if not, wrap it
+  // such that future uses of the .name property match the key of the
+  // decorated function 
+  if (fn.name !== key) {
+    let s = Symbol();
+    
+    global[s] = fn;
+    fn = eval(`(function ${key}(...args) { return global[s](...args) })`)
+  }
+    
+  // Store the key by name, overwritting if necessary, and assign the function 
+  Class[META_KEY][metaProperty].push(fn)  
+  
+  // Return a new decorator descriptor without the value function 
+  return descriptor;
+}
+
+/**
+ * The resolver function should perform the necessary insertion to place 
+ * the decorated function in question into a place that it can be merged 
+ * with the final list of query resolvers. Typically a resolver function, 
+ * as defined in `RESOLVERS()` receives a `requestData` object. Functions 
+ * decorated with `@resolver` receive this as their first parameter. Code 
+ * accordingly.
+ *
+ * @method resolver
+ * @param {Object|Function} target either the Class itself, if defined 
+ * on a static method, or the prototype if defined on an instance method
+ * @param {string} key the property name of the function being decorated
+ * @param {Object} descriptor a decorator descriptor; see 
+ * `Object.defineProperty` for more information on descriptors
+ */
+export function resolver(
+  target: Object | Function, 
+  key: string, 
+  descriptor: Object
+): void {
+  return decorate('resolvers', target, key, descriptor)
+}
+
+/**
+ * The mutator function should perform the necessary insertion to place 
+ * the decorated function in question into a place that it can be merged 
+ * with the final list of query resolvers. Typically a mutator function, 
+ * as defined in `RESOLVERS()` receives a `requestData` object. Functions 
+ * decorated with `@mutator` receive this as their first parameter. Code 
+ * accordingly.
+ *
+ * @method mutator
+ * @param {Object|Function} target either the Class itself, if defined 
+ * on a static method, or the prototype if defined on an instance method
+ * @param {string} key the property name of the function being decorated
+ * @param {Object} descriptor a decorator descriptor; see 
+ * `Object.defineProperty` for more information on descriptors
+ */
+export function mutator(
+  target: Object | Function, 
+  key: string, 
+  descriptor: Object
+): void {
+  return decorate('mutators', target, key, descriptor)
+}
+
+/**
+ * The subscriptor function should perform the necessary insertion to place 
+ * the decorated function in question into a place that it can be merged 
+ * with the final list of query resolvers. Typically a subscriptor function, 
+ * as defined in `RESOLVERS()` receives a `requestData` object. Functions 
+ * decorated with `@subscriptor` receive this as their first parameter. 
+ * Code accordingly.
+ *
+ * @method subscriptor
+ * @param {Object|Function} target either the Class itself, if defined 
+ * on a static method, or the prototype if defined on an instance method
+ * @param {string} key the property name of the function being decorated
+ * @param {Object} descriptor a decorator descriptor; see 
+ * `Object.defineProperty` for more information on descriptors
+ */
+export function subscriptor(
+  target: Object | Function, 
+  key: string, 
+  descriptor: Object
+): void {
+  return decorate('subscriptors', target, key, descriptor)
 }</code></pre>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line578">line 578</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>instance</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code><a href="GQLBase.html">GQLBase</a></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>typically <code>this</code> as passed in from a call in<br>the constructor</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="%E2%8C%BE%E2%A0%80getModel"><span class="type-signature"></span>⌾⠀getModel<span class="signature">(value)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Getter for the internally stored model data. The contents of this<br>object are abstracted away behind a <code>Symbol</code> key to prevent collision<br>between the underlying model and any GraphQL Object Definition properties.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.5</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line217">line 217</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>any object you wish to use as a data store</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="%E2%AC%86%EF%B8%8E%E2%A0%80requestData"><span class="type-signature"></span>⬆︎⠀requestData<span class="signature">(value)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>A setter that assigns a value to the inner request data object. When<br>used with GQLExpressMiddleware, this is an object matching {req, res, gql}.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line303">line 303</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>an object, usually matching { req, res, gql }</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+        </article>
+    </section>
 
 
 
@@ -975,7 +198,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 03 2017 17:35:22 GMT-0700 (PDT) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 03 2017 17:35:21 GMT-0700 (PDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

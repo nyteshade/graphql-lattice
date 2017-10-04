@@ -4,7 +4,8 @@ import { FileSchema } from './decorators/FileSchema'
 import { 
   Getters, Setters, Properties, DirectTypeManager 
 } from './decorators/ModelProperties'
-import { GQLBase, MODEL_KEY } from './GQLBase'
+import { resolver, mutator, subscriptor } from './decorators/Resolvers'
+import { GQLBase, MODEL_KEY, META_KEY } from './GQLBase'
 import { GQLEnum } from './GQLEnum'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { GQLInterface } from './GQLInterface'
@@ -35,16 +36,20 @@ const defaultPackage = {
   GQLJSON,
   GQLScalar,
   ModuleParser,
+  mutator,
   joinLines,
   promisify,
   Properties,
+  resolver,
   Schema,
   SchemaUtils,
   Setters,
+  subscriptor,
   SyntaxTree,
   typeOf,
   types,
 
+  META_KEY,
   MODEL_KEY,
   DOC_CLASS,
   DOC_FIELDS,
@@ -67,16 +72,20 @@ export {
   GQLJSON,
   GQLScalar,
   ModuleParser,
+  mutator,
   joinLines,
   promisify,
   Properties,
+  resolver,
   Schema,
   SchemaUtils,
   Setters,
+  subscriptor,
   SyntaxTree,
   typeOf,
   types,
 
+  META_KEY,
   MODEL_KEY,
   DOC_CLASS,
   DOC_FIELDS,

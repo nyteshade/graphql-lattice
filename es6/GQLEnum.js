@@ -73,7 +73,7 @@ export class GQLEnum extends GQLBase {
    * @method ⬇︎⠀name
    * @return {mixed} typically a String but any valid type supplied
    */
-  get name() {
+  get name(): mixed {
     const name = this.getModel().name
     
     return (
@@ -98,7 +98,7 @@ export class GQLEnum extends GQLBase {
    * @return {mixed} the value of the enum type; this in all likihood should 
    * be a String or potentially an object
    */
-  get value() {
+  get value(): mixed {
     const value = this.getModel().value
     
     return (

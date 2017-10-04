@@ -2,7 +2,7 @@
 
 import path from 'path'
 import { SyntaxTree } from './SyntaxTree'
-import { GQLBase } from './GQLBase'
+import { GQLBase, META_KEY } from './GQLBase'
 import { GQLEnum } from './GQLEnum'
 import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
@@ -267,10 +267,26 @@ export class SchemaUtils extends EventEmitter {
     const root = {};
 
     for (let Class of Classes) {
+      let _ = {
+        resolvers: Class[META_KEY].resolvers || [],
+        mutators: Class[META_KEY].mutators || [],
+        subscriptors: Class[META_KEY].subscriptors || []
+      }
+      
+      let convert = f => {return { [f.name]: f.bind(Class, requestData) }}
+      let reduce = (p, c) => Object.assign(p, c)
+      
+      _.resolvers = _.resolvers.map(convert).reduce(reduce, {})
+      _.mutators = _.mutators.map(convert).reduce(reduce, {})
+      _.subscriptors = _.subscriptors.map(convert).reduce(reduce, {})
+      
       Object.assign(
         root,
         await Class.RESOLVERS(requestData),
-        await Class.MUTATORS(requestData)
+        await Class.MUTATORS(requestData),
+        _.resolvers,
+        _.mutators,
+        _.subscriptors,
       );
     }
 

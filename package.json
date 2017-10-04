@@ -2,7 +2,7 @@
   "name": "graphql-lattice",
   "version": "2.7.3",
   "description": "OO Underpinnings for ease of GraphQL Implementation",
-  "main": "dist/lattice.js",
+  "main": "dist/lattice.min.js",
   "scripts": {
     "test": "jest --verbose",
     "build": "webpack --config webpack.config.js && uglifyjs dist/lattice.js -o dist/lattice.min.js --source-map",
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/nyteshade/graphql-lattice#readme",
   "dependencies": {
     "@std/esm": "^0.7.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "express-graphql": "^0.6.6",
     "flow-bin": "^0.54.0",
     "graphql": "^0.10.3"
