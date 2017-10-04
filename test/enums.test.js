@@ -1,4 +1,4 @@
-import { GQLEnum, Schema } from '../dist/lattice.min'
+import { GQLEnum, Schema } from '../es6/lattice'
 
 describe('GQLEnums', () => {
   var objRef = { testMe: true }

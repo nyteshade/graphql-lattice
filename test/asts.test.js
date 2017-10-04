@@ -1,4 +1,4 @@
-import { SyntaxTree } from '../dist/lattice.min'
+import { SyntaxTree } from '../es6/lattice'
 import { parse } from 'graphql'
 
 describe('validate IDL -> AST -> IDL works properly', () => {

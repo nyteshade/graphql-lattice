@@ -47,7 +47,8 @@ export class SchemaUtils extends EventEmitter {
    */
   static injectComments(schema: Object, Classes: Array<GQLBase>) {
     const {
-      DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS
+      DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS,
+      DOC_QUERY, DOC_MUTATION, DOC_SUBSCRIPTION
     } = GQLBase;
 
     for (let Class of Classes) {
@@ -77,16 +78,16 @@ export class SchemaUtils extends EventEmitter {
         }
       }
 
-      for (let [_type, _CONST] of [
-        [query, DOC_QUERIES],
-        [mutation, DOC_MUTATORS],
-        [subscription, DOC_SUBSCRIPTIONS]
+      for (let [_type, _CONST, _topCONST] of [
+        [query, DOC_QUERIES, DOC_QUERY],
+        [mutation, DOC_MUTATORS, DOC_MUTATION],
+        [subscription, DOC_SUBSCRIPTIONS, DOC_SUBSCRIPTION]
       ]) {
-        if (_type && Object.keys(docs[_CONST] || {}).length) {
+        if (_type && ((Object.keys(docs[_CONST] || {}).length) || (docs[_topCONST].length))) {
           let fields = _type._fields;
 
-          if (docs[_CONST][DOC_CLASS]) {
-            _type.description = docs[_CONST][DOC_CLASS]
+          if (docs[_topCONST]) {
+            _type.description = docs[_topCONST]
           }
 
           for (let field of Object.keys(docs[_CONST])) {

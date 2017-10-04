@@ -1,4 +1,4 @@
-import { GQLBase, Properties, Schema } from '../../dist/lattice.min'
+import { GQLBase, Properties, Schema } from '../../es6/lattice'
 
 @Schema(`
   type YabbaDabbaDo {

@@ -2,6 +2,7 @@
 /** @flow */
 
 import { GQLBase, META_KEY } from '../GQLBase'
+import { dedent } from 'ne-tag-fns'
 
 /**
  * Since the bulk functionality of @subscriptor, @mutator and 
@@ -30,7 +31,7 @@ function decorate(
   let fn: Function = target[key];
   
   if (!Class instanceof GQLBase) {
-    console.warn(`
+    console.warn(dedent`
       Ignoring the transformation of @resolver for ${fn.name}. The reason
       for this is that ${Class.name} is not an instance of GQLBase.
     `)
@@ -38,7 +39,7 @@ function decorate(
   }
   
   if (!descriptor.value || (descriptor.get || descriptor.set)) {
-    console.warn(`
+    console.warn(dedent`
       Ignoring the transformation of @resolver for ${fn.name}. The reason 
       for this is that it should only be applied to a static or instance 
       method of a class. It is not valid to apply this to a getter, setter, 
@@ -73,7 +74,10 @@ function decorate(
     
   // Store the key by name, overwritting if necessary, and assign the function 
   Class[META_KEY][metaProperty].push(fn)  
-  
+
+  // Pass the decorated function along for others to consume
+  descriptor[Symbol.for(metaProperty)] = fn
+
   // Return a new decorator descriptor without the value function 
   return descriptor;
 }

@@ -175,6 +175,38 @@ export class GQLExpressMiddleware extends EventEmitter
       res.status(200).send(this.schema);
     }
   }
+  
+  /**
+   * An optional express middleware function that can be mounted to return
+   * the JSON AST representation of the schema string being used by 
+   * GQLExpressMiddleware.
+   *
+   * @memberof GQLExpressMiddleware
+   * @method astMiddleware
+   * @instance
+   *
+   * @type {Function}
+   */
+  get astMiddleware(): Function {
+    return (req: Object, res: Object, next: ?Function) => {
+      const schema = buildSchema(this.schema)
+    
+      SchemaUtils.injectInterfaceResolvers(schema, this.handlers);
+      SchemaUtils.injectEnums(schema, this.handlers);
+      SchemaUtils.injectScalars(schema, this.handlers);
+      SchemaUtils.injectComments(schema, this.handlers);
+      
+      for (let typeKey of Object.keys(schema._typeMap)) {
+        let object = {}
+        for (let valKey of Object.keys(schema._typeMap[typeKey])) {
+          object[valKey] = schema._typeMap[typeKey][valKey]
+        }
+        schema._typeMap[typeKey] = object
+      }
+
+      res.status(200).json(schema)
+    }
+  }
 }
 
 export default GQLExpressMiddleware;

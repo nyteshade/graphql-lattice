@@ -271,6 +271,30 @@ export class GQLBase extends EventEmitter {
         this, the person using lattice failed to provide documentation for
         their type. :)
       `,
+      
+      [this.DOC_QUERY]: joinLines`
+        ## Welcome to GraphQL Lattice
+        **Query**
+        
+        You will want to define a \`DOC_QUERY\` apiDoc comment with something 
+        more meaningful to your particular Schema here. 
+      `,
+
+      [this.DOC_MUTATION]: joinLines`
+        ## Welcome to GraphQL Lattice
+        **Mutation**
+        
+        You will want to define a \`DOC_MUTATION\` apiDoc comment with 
+        something more meaningful to your particular Schema here. 
+      `,
+
+      [this.DOC_SUBSCRIPTION]: joinLines`
+        ## Welcome to GraphQL Lattice
+        **Subscription**
+        
+        You will want to define a \`DOC_SUBSCRIPTION\` apiDoc comment with 
+        something more meaningful to your particular Schema here. 
+      `,
 
       [this.DOC_FIELDS]: {
         // fieldName: `fieldDescription`,
@@ -739,6 +763,19 @@ export class GQLBase extends EventEmitter {
   static get DOC_FIELDS() { return 'fields' }
   
   /**
+   * A constant key used to identify a comment for the top level query
+   * description 
+   *
+   * @static
+   * @memberof GQLBase
+   * @method ⬇︎⠀DOC_QUERY
+   * @const
+   *
+   * @type {string}
+   */
+  static get DOC_QUERY() { return 'query' }
+
+  /**
    * A constant key used to identify a comment for a query description 
    *
    * @static
@@ -749,6 +786,19 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_QUERIES() { return 'queries' }
+  
+  /**
+   * A constant key used to identify a comment for the top level mutation
+   * description 
+   *
+   * @static
+   * @memberof GQLBase
+   * @method ⬇︎⠀DOC_MUTATION
+   * @const
+   *
+   * @type {string}
+   */
+  static get DOC_MUTATION() { return 'mutation' }
   
   /**
    * A constant key used to identify a comment for a mutator description 
@@ -762,6 +812,19 @@ export class GQLBase extends EventEmitter {
    */
   static get DOC_MUTATORS() { return 'mutators' }
   
+  /**
+   * A constant key used to identify a comment for the top level subscription 
+   * description 
+   *
+   * @static
+   * @memberof GQLBase
+   * @method ⬇︎⠀DOC_SUBSCRIPTION
+   * @const
+   *
+   * @type {string}
+   */
+  static get DOC_SUBSCRIPTION() { return 'subscription' }
+
   /**
    * A constant key used to identify a comment for a subscription description 
    *

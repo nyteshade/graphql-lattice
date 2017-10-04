@@ -30,7 +30,8 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "express-graphql": "^0.6.6",
     "flow-bin": "^0.54.0",
-    "graphql": "^0.10.3"
+    "graphql": "^0.10.3",
+    "ne-tag-fns": "^0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

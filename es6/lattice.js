@@ -19,7 +19,8 @@ import * as types from './types'
 
 const { typeOf } = types;
 const {
-  DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS
+  DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS,
+  DOC_QUERY, DOC_MUTATION, DOC_SUBSCRIPTION
 } = GQLBase;
 
 /* Create a friendly bundle to export all at once */
@@ -49,13 +50,16 @@ const defaultPackage = {
   typeOf,
   types,
 
-  META_KEY,
-  MODEL_KEY,
   DOC_CLASS,
   DOC_FIELDS,
-  DOC_QUERIES,
+  DOC_MUTATION, 
   DOC_MUTATORS,
-  DOC_SUBSCRIPTIONS
+  DOC_QUERIES,
+  DOC_QUERY, 
+  DOC_SUBSCRIPTION,
+  DOC_SUBSCRIPTIONS,
+  META_KEY,
+  MODEL_KEY
 };
 
 /* Also export each of the constructs individually */
@@ -85,13 +89,16 @@ export {
   typeOf,
   types,
 
-  META_KEY,
-  MODEL_KEY,
   DOC_CLASS,
   DOC_FIELDS,
-  DOC_QUERIES,
+  DOC_MUTATION, 
   DOC_MUTATORS,
-  DOC_SUBSCRIPTIONS
+  DOC_QUERIES,
+  DOC_QUERY, 
+  DOC_SUBSCRIPTION,
+  DOC_SUBSCRIPTIONS,
+  META_KEY,
+  MODEL_KEY
 }
 
 export default defaultPackage

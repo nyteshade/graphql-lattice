@@ -1,7 +1,7 @@
 import { YabbaDabbaDo } from './samples/YabbaDabbaDo'
 import { Yarp } from './samples/Yarp'
 
-import { ModuleParser } from '../dist/lattice.min'
+import { ModuleParser } from '../es6/lattice'
 
 import path from 'path'
 import fs from 'fs'

@@ -94,6 +94,8 @@ export class ModuleParser {
    */
   importClass(filePath: string): Object {
     let moduleContents: Object = {};
+    let yellow: string = '\x1b[33m'
+    let clear: string = '\x1b[0m'
     
     try { 
       // Long story short; webpack makes this somewhat difficult but since 
@@ -102,7 +104,7 @@ export class ModuleParser {
       // thing to do.
       moduleContents = eval(`(require("${filePath}"))`)
     }
-    catch(ignore) { console.log(`Skipping ${filePath}`, ignore) }
+    catch(ignore) { console.log(`${yellow}Skipping${clear} ${filePath}`) }
     
     return moduleContents;
   }

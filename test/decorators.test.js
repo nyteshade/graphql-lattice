@@ -18,7 +18,7 @@ import {
   typeOf,
   types,
   DirectTypeManager
-} from '../dist/lattice.min'
+} from '../es6/lattice'
 
 import { parse } from 'graphql'
 

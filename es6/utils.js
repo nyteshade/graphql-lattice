@@ -4,6 +4,7 @@
 import { typeOf } from './types'
 import fs from 'fs'
 import util from 'util'
+export { dedent as joinLines } from 'ne-tag-fns'
 
 const { Stats } = fs;
 
@@ -136,35 +137,6 @@ export class Deferred {
 
     return deferred;
   }
-}
-
-/**
- * A small helper for multiline template strings that allows you to
- * not worry about new lines and indentations within your code from
- * breaking up the format of the string. 
- *
- * @memberof utils
- * @since 2.5
- * 
- * @param {Array} strings an array of Strings from the template, broken up by
- * where the substitions are to be inserted.
- * @param {Array} values an array of values to be inserted after each string
- * of a matching index.
- * @return {String} a template String without any prefixed or postfixed tabs
- * and other whitespaced characters. 
- */
-export function joinLines(strings: Array<string>, ...values: Array<mixed>) {
-  let result = [];
-  for (let i = 0; i < strings.length; i++) {
-    let string = String(strings[i]).trim();
-    let value = values.length > i && `${String(values[i]).trim()} ` || '' 
-    result.push(string
-      .replace(/(\s+)/g, ' ')
-      .replace(/$/g, ' ')
-    );
-    result.push(value);
-  }
-  return result.join('').trim();
 }
 
 /**
