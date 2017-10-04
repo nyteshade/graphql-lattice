@@ -5702,7 +5702,7 @@ let SchemaUtils = exports.SchemaUtils = class SchemaUtils extends _events2.defau
           let _CONST = _ref2[1];
           let _topCONST = _ref2[2];
 
-          if (_type && ((0, _keys2.default)(docs[_CONST] || {}).length || docs[_topCONST].length)) {
+          if (_type && ((0, _keys2.default)(docs[_CONST] || {}).length || docs[_topCONST] && docs[_topCONST].length)) {
             let fields = _type._fields;
 
             if (docs[_topCONST]) {

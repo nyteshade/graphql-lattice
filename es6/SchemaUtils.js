@@ -83,7 +83,13 @@ export class SchemaUtils extends EventEmitter {
         [mutation, DOC_MUTATORS, DOC_MUTATION],
         [subscription, DOC_SUBSCRIPTIONS, DOC_SUBSCRIPTION]
       ]) {
-        if (_type && ((Object.keys(docs[_CONST] || {}).length) || (docs[_topCONST].length))) {
+        if (
+          _type 
+          && (
+            (Object.keys(docs[_CONST] || {}).length) 
+            || (docs[_topCONST] && docs[_topCONST].length)
+          )
+        ) {
           let fields = _type._fields;
 
           if (docs[_topCONST]) {
