@@ -5,6 +5,7 @@ import path from 'path'
 import * as types from './types'
 import { GQLBase } from './GQLBase'
 import { promisify, Deferred } from './utils'
+import { GQLJSON } from './types/GQLJSON'
 
 // Promisify some bits
 const readdirAsync = promisify(fs.readdir)
@@ -57,6 +58,16 @@ export class ModuleParser {
   valid: boolean;
   
   /**
+   * An object, optionally added during construction, that specifies some
+   * configuration about the ModuleParser and how it should do its job.
+   *
+   * Initially, the 
+   *
+   * @type {[type]}
+   */
+  options: Object = {};
+  
+  /**
    * The constructor
    *
    * @constructor
@@ -67,9 +78,11 @@ export class ModuleParser {
    * @param {string} directory a string path to a directory containing the 
    * various GQLBase extended classes that should be gathered.
    */
-  constructor(directory: string) {
+  constructor(directory: string, options: Object = {addLatticeTypes: true}) {
     this.directory = path.resolve(directory);
     this.classes = [];
+    
+    Object.assign(this.options, options);
     
     try {
       this.valid = fs.statSync(directory).isDirectory();
@@ -199,6 +212,11 @@ export class ModuleParser {
     
     // We can ignore equality since we came from a set; @ComputedType
     this.classes.sort((l,r) => l.name < r.name ? -1 : 1)
+    
+    // Add in any GraphQL Lattice types requested
+    if (this.options.addLatticeTypes) {
+      this.classes.push(GQLJSON)
+    }
       
     return this.classes;
   }
@@ -243,6 +261,11 @@ export class ModuleParser {
     
     // We can ignore equality since we came from a set; @ComputedType
     this.classes.sort((l,r) => l.name < r.name ? -1 : 1)
+    
+    // Add in any GraphQL Lattice types requested
+    if (this.options.addLatticeTypes) {
+      this.classes.push(GQLJSON)
+    }
       
     return this.classes;
   }  
