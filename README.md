@@ -24,7 +24,9 @@ Facebook provides an excellent source of information on learning GraphQL and int
 Until the new, under construction website is released, you can take a look at some of these quickstart boilerplate setups.
 
 **Server Only**
+
 https://github.com/nyteshade/lattice-quickstart
 
 **React Client with Lattice/Express Backend**
+
 https://github.com/nyteshade/lattice-markdown-server-client
