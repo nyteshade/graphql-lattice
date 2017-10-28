@@ -93,7 +93,7 @@ $exports.store = store;
 var global    = __webpack_require__(3)
   , core      = __webpack_require__(0)
   , ctx       = __webpack_require__(14)
-  , hide      = __webpack_require__(8)
+  , hide      = __webpack_require__(9)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -223,7 +223,7 @@ var _symbol = __webpack_require__(39);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -239,11 +239,11 @@ var _fs2 = _interopRequireDefault(_fs);
 
 var _utils = __webpack_require__(60);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var _SyntaxTree = __webpack_require__(29);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 var _events = __webpack_require__(62);
 
@@ -1318,6 +1318,12 @@ module.exports = function(it){
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(101), __esModule: true };
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var dP         = __webpack_require__(5)
   , createDesc = __webpack_require__(23);
 module.exports = __webpack_require__(4) ? function(object, key, value){
@@ -1328,7 +1334,7 @@ module.exports = __webpack_require__(4) ? function(object, key, value){
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1339,7 +1345,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PRIMITIVES = exports.NULL = exports.UNDEFINED = exports.isClass = exports.isOfType = exports.isValue = exports.isPrimitive = exports.isUndefined = exports.isNull = exports.isRegExp = exports.isNumber = exports.isString = exports.isObject = exports.isDate = exports.isArray = exports.isFunction = undefined;
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -1763,16 +1769,10 @@ PRIMITIVES.has = o => PRIMITIVES[(0, _for2.default)('original_has')](typeOf(o));
 exports.PRIMITIVES = PRIMITIVES;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("graphql");
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(101), __esModule: true };
 
 /***/ }),
 /* 12 */
@@ -1892,7 +1892,7 @@ module.exports = {};
 
 __webpack_require__(116);
 var global        = __webpack_require__(3)
-  , hide          = __webpack_require__(8)
+  , hide          = __webpack_require__(9)
   , Iterators     = __webpack_require__(20)
   , TO_STRING_TAG = __webpack_require__(1)('toStringTag');
 
@@ -2041,13 +2041,13 @@ var _assign = __webpack_require__(22);
 
 var _assign2 = _interopRequireDefault(_assign);
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2948,7 +2948,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GQLScalar = undefined;
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 var _GQLBase = __webpack_require__(6);
 
@@ -3254,7 +3254,7 @@ module.exports = { "default": __webpack_require__(108), __esModule: true };
 var LIBRARY        = __webpack_require__(32)
   , $export        = __webpack_require__(2)
   , redefine       = __webpack_require__(68)
-  , hide           = __webpack_require__(8)
+  , hide           = __webpack_require__(9)
   , has            = __webpack_require__(12)
   , Iterators      = __webpack_require__(20)
   , $iterCreate    = __webpack_require__(115)
@@ -3348,7 +3348,7 @@ module.exports = __webpack_require__(0).getIteratorMethod = function(it){
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hide = __webpack_require__(8);
+var hide = __webpack_require__(9);
 module.exports = function(target, src, safe){
   for(var key in src){
     if(safe && target[key])target[key] = src[key];
@@ -3398,7 +3398,7 @@ Object.defineProperty(exports, 'joinLines', {
 });
 exports.promisify = promisify;
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var _fs = __webpack_require__(59);
 
@@ -3615,7 +3615,7 @@ exports.GQLInterface = undefined;
 
 var _GQLBase = __webpack_require__(6);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 /**
  * Used by Lattice to implement interface types in the schema when necessary
@@ -4064,7 +4064,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function(){
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(8)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(9)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -4084,7 +4084,7 @@ module.exports = !__webpack_require__(4) && !__webpack_require__(13)(function(){
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(9);
 
 /***/ }),
 /* 69 */
@@ -4584,7 +4584,7 @@ var global         = __webpack_require__(3)
   , $export        = __webpack_require__(2)
   , meta           = __webpack_require__(45)
   , fails          = __webpack_require__(13)
-  , hide           = __webpack_require__(8)
+  , hide           = __webpack_require__(9)
   , redefineAll    = __webpack_require__(57)
   , forOf          = __webpack_require__(38)
   , anInstance     = __webpack_require__(55)
@@ -4671,6 +4671,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DirectTypeManager = undefined;
 
+var _for = __webpack_require__(8);
+
+var _for2 = _interopRequireDefault(_for);
+
 var _defineProperty = __webpack_require__(74);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
@@ -4686,62 +4690,62 @@ exports.Properties = Properties;
 
 var _GQLBase = __webpack_require__(6);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var _util = __webpack_require__(87);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 var _SyntaxTree = __webpack_require__(29);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * For each of the decorators, Getters, Setters, and Properties, we take a 
- * list of property names used to create the appropriate accessor types. In 
+ * For each of the decorators, Getters, Setters, and Properties, we take a
+ * list of property names used to create the appropriate accessor types. In
  * some cases, however, the instance of GQLBase's data model may have a
- * different name. Finally if the return type for the getter should be wrapped 
- * in a another GQLBase class type, we will need a way to specify those things 
- * too. 
+ * different name. Finally if the return type for the getter should be wrapped
+ * in a another GQLBase class type, we will need a way to specify those things
+ * too.
  *
- * The `extractBits()` takes a single argument value from the decorator as it 
- * parses them and converts it into an object, properly sorted, into values that 
+ * The `extractBits()` takes a single argument value from the decorator as it
+ * parses them and converts it into an object, properly sorted, into values that
  * allow the above described behavior.
  *
  * Examples:
- * 
+ *
  * ```
- * // Create a class with a name and age property that map directly to the 
+ * // Create a class with a name and age property that map directly to the
  * // underlying data model
  * @Getters('name', 'age')
  * class MyType extends GQLBase {...}
  *
- * // Create a class with a name property that maps to a different property 
- * // name in the underlying data model 
+ * // Create a class with a name property that maps to a different property
+ * // name in the underlying data model
  * @Getters(['name', '_fake_name'])
  * class MyMockType extends GQLBase {...}
  *
- * // Create a class with an employee property that returns an Employee 
+ * // Create a class with an employee property that returns an Employee
  * @Getters(['employee', Employee])
  * class MyRoleType extends GQLBase {...}
  *
- * // Finally create a class with an employe property that returns an Employee 
+ * // Finally create a class with an employe property that returns an Employee
  * // with data under a different name in the underlying data model.
  * @Getters(['employee', '_worker', Employee])
  * class MyMockRoleType extends GQLBase {...}
  * ```
- * 
+ *
  * @memberof decorators
  * @method ⌾⠀extractBits
  * @since 2.5
- * 
- * @param {String|Array<String|Function>} property name of a property, or list 
- * of property names and a Class. 
+ *
+ * @param {String|Array<String|Function>} property name of a property, or list
+ * of property names and a Class.
  * @return {Object} an object with the following format ```
  * {
- *   typePropertyName: name of root instance property to create 
- *   modelPropertyName: name of its associated internal model property 
- *   typeClass: an optional class to wrap around the results in a getter 
+ *   fieldName: name of root instance property to create
+ *   modelName: name of its associated internal model property
+ *   typeClass: an optional class to wrap around the results in a getter
  * }
  * ```
  */
@@ -4753,8 +4757,8 @@ function extractBits(property) {
     let error = new Error('Invalid property. Given\n  %o', (0, _util.inspect)(property, { depth: 2 }));
 
     return {
-      typePropertyName: 'anErrorOccurred',
-      modelPropertyName: 'anErrorOccurred',
+      fieldName: 'anErrorOccurred',
+      modelName: 'anErrorOccurred',
       typeClass: null,
       getterMaker: function getterMaker() {
         return () => error;
@@ -4768,8 +4772,8 @@ function extractBits(property) {
   //
   if (array.length === 3) {
     reply = {
-      typePropertyName: array[0],
-      modelPropertyName: array[1],
+      fieldName: array[0],
+      modelName: array[1],
       typeClass: typeof array[2] === 'function' && array[2] || null
     };
   }
@@ -4777,8 +4781,8 @@ function extractBits(property) {
   //
   else if (array.length === 2) {
       reply = {
-        typePropertyName: array[0],
-        modelPropertyName: typeof array[1] === 'string' ? array[1] : array[0],
+        fieldName: array[0],
+        modelName: typeof array[1] === 'string' ? array[1] : array[0],
         typeClass: typeof array[1] === 'function' && array[1] || null
       };
     }
@@ -4786,16 +4790,16 @@ function extractBits(property) {
     //
     else {
         reply = {
-          typePropertyName: array[0],
-          modelPropertyName: array[0],
+          fieldName: array[0],
+          modelName: array[0],
           typeClass: array[0]
         };
       }
 
   reply.getterMaker = function () {
     var _reply = reply;
-    let modelPropertyName = _reply.modelPropertyName,
-        typePropertyName = _reply.typePropertyName,
+    let modelName = _reply.modelName,
+        fieldName = _reply.fieldName,
         typeClass = _reply.typeClass;
 
 
@@ -4812,54 +4816,65 @@ function extractBits(property) {
       if (!thisClass.SCHEMA) {
         throw new Error(`
         All GQLBase extended classes should have a defined SCHEMA. Please
-        manually define a static get SCHEMA() in your class or use the 
+        manually define a static get SCHEMA() in your class or use the
         @Schema() decorator to do so.
         `);
       }
 
       if (typeClass) {
-        const results = _SyntaxTree.SyntaxTree.findField((0, _graphql.parse)(this.constructor.SCHEMA), this.constructor.name, modelPropertyName);
-
-        var _ref = results || { meta: null };
-
-        const meta = _ref.meta;
-
-
-        let args = [model[modelPropertyName], this.requestData];
-
-        if (meta && !meta.nullable && !model) {
-          throw new Error(`
-            Using @Getters or @Properties decorators with a null or 
-            undefined model when the schema states that this field 
-            cannot be null.
-            
-            Type      : ${typeClass.name}
-            Field (AST data)
-              name    : ${meta.name}
-              type    : ${meta.type}
-              nullable: ${meta.nullable}
-            [getter]  : ${typePropertyName}
-            [maps to] : ${modelPropertyName}
-            [model  ] : ${model}            
-          `);
+        // If the value of the model is already the type of class we expect
+        // we do not need to do any processing and we can just grab it and
+        // go.
+        if ((0, _types.extendsFrom)(model[modelName], typeClass)) {
+          val = model[modelName];
         }
 
-        // If the following is true, it means that despite allowing nulls 
-        // for this field in the schema, we do have a valid model and should 
-        // proceed.
-        if (model) {
-          if (extractBits.DIRECT_TYPES.includes(typeClass.name)) {
-            val = typeClass(...args);
-          } else {
-            val = new typeClass(...args);
-          }
+        // Otherwise we need to return an instance of the determined typeClass
+        // and pass that back instead; as requested.
+        else {
+            const results = _SyntaxTree.SyntaxTree.findField((0, _graphql.parse)(this.constructor.SCHEMA), this.constructor.name, modelName);
 
-          if (typeClass.GQL_TYPE === _graphql.GraphQLEnumType) {
-            return val.value;
+            var _ref = results || { meta: null };
+
+            const meta = _ref.meta;
+
+
+            let args = [model[modelName], this.requestData];
+
+            if (meta && !meta.nullable && !model) {
+              throw new Error(`
+              Using @Getters or @Properties decorators with a null or
+              undefined model when the schema states that this field
+              cannot be null.
+
+              Type      : ${typeClass.name}
+              Field (AST data)
+                name    : ${meta.name}
+                type    : ${meta.type}
+                nullable: ${meta.nullable}
+              [getter]  : ${fieldName}
+              [maps to] : ${modelName}
+              [model  ] : ${model}
+            `);
+            }
+
+            // If the following is true, it means that despite allowing nulls
+            // for this field in the schema, we do have a valid model and should
+            // proceed.
+            if (model) {
+              if (extractBits.DIRECT_TYPES.includes(typeClass.name)) {
+                val = typeClass(...args);
+              } else {
+                val = new typeClass(...args);
+              }
+
+              if (typeClass.GQL_TYPE === _graphql.GraphQLEnumType) {
+                return val.value;
+              }
+            }
           }
-        }
       } else {
-        val = model[modelPropertyName];
+        val = model[modelName];
       }
 
       if (val === 'undefined' || val === undefined) {
@@ -4872,10 +4887,10 @@ function extractBits(property) {
 
   reply.setterMaker = function () {
     var _reply2 = reply;
-    let modelPropertyName = _reply2.modelPropertyName;
+    let modelName = _reply2.modelName;
 
     return function (value) {
-      this[_GQLBase.MODEL_KEY][modelPropertyName] = value;
+      this[_GQLBase.MODEL_KEY][modelName] = value;
     };
   };
 
@@ -4883,7 +4898,7 @@ function extractBits(property) {
 }
 
 /**
- * An array of proper class names that are used to test for cases where the 
+ * An array of proper class names that are used to test for cases where the
  * proper usage of instantiating an instance should preclude the use of `new`
  *
  * @memberof decorators
@@ -4894,40 +4909,40 @@ function extractBits(property) {
 extractBits.DIRECT_TYPES = [String.name];
 
 /**
- * A small suite of functions a getter that allows easy manipulation of the 
- * the DIRECT_TYPES workaround needed for some types of complex class 
- * wrapping allowed by the @Getters and @Properties decorators. Namely the 
- * ability to do something like @Getters('name', String) which would wrap the 
- * contents of whatever is in the objects model in a String call. 
+ * A small suite of functions a getter that allows easy manipulation of the
+ * the DIRECT_TYPES workaround needed for some types of complex class
+ * wrapping allowed by the @Getters and @Properties decorators. Namely the
+ * ability to do something like @Getters('name', String) which would wrap the
+ * contents of whatever is in the objects model in a String call.
  *
- * Direct types are those that need to be called without `new` in order for the 
- * desired behavior to present itself. 
+ * Direct types are those that need to be called without `new` in order for the
+ * desired behavior to present itself.
  *
- * @memberof decorators 
+ * @memberof decorators
  * @type {Object}
  * @since 2.7.0
  */
 const DirectTypeManager = exports.DirectTypeManager = {
   /**
-   * A getter that retrieves the array of direct types 
+   * A getter that retrieves the array of direct types
    *
    * @method DirectTypeManager#types
    * @member {Array<String>} types
-   * 
-   * @return {Array<String>} an array of class name strings. 
+   *
+   * @return {Array<String>} an array of class name strings.
    */
   get types() {
     return extractBits.DIRECT_TYPES;
   },
 
   /**
-   * Appends the supplied class name to the list of registered direct types. If 
-   * a class or function is passed, rather than a String, 
+   * Appends the supplied class name to the list of registered direct types. If
+   * a class or function is passed, rather than a String,
    *
    * @method DirectTypeManager#types
    *
-   * @param {Function|string|RegExp} className the name of the class to append. 
-   * Typically it is best to pass the name property of the class in question 
+   * @param {Function|string|RegExp} className the name of the class to append.
+   * Typically it is best to pass the name property of the class in question
    * such as `RegExp.name` or `MyClass.name`.
    */
   add(className) {
@@ -4939,13 +4954,13 @@ const DirectTypeManager = exports.DirectTypeManager = {
   },
 
   /**
-   * Foricbly empties the contents of the extractBits.DIRECT_TYPES array. This 
-   * is not recommended as it can have unintended consequences. It is 
+   * Foricbly empties the contents of the extractBits.DIRECT_TYPES array. This
+   * is not recommended as it can have unintended consequences. It is
    * recommended to use `reset` instead
    *
    * @method DirectTypeManager#clear
    *
-   * @return {Array<string>} an array of class name Strings that were removed 
+   * @return {Array<string>} an array of class name Strings that were removed
    * when cleared.
    */
   clear() {
@@ -4953,12 +4968,12 @@ const DirectTypeManager = exports.DirectTypeManager = {
   },
 
   /**
-   * The recommended way to reset the DIRECT_TYPES list. This removes all 
+   * The recommended way to reset the DIRECT_TYPES list. This removes all
    * changed values, returns the removed bits, and adds back in the defaults.
    *
-   * @method DirectTypeManager#reset 
+   * @method DirectTypeManager#reset
    *
-   * @return {Array<string>} an array of class name Strings that were removed 
+   * @return {Array<string>} an array of class name Strings that were removed
    * during the reset process.
    */
   reset() {
@@ -4967,8 +4982,8 @@ const DirectTypeManager = exports.DirectTypeManager = {
 };
 
 /**
- * This decorator allows you to add a Class method to the DirectTypeManager 
- * as a function that should not be invoked with the `new` keyword. For all 
+ * This decorator allows you to add a Class method to the DirectTypeManager
+ * as a function that should not be invoked with the `new` keyword. For all
  * intents and purposes the function should be declared `static`.
  *
  * @method DirectTypeAdd
@@ -4990,7 +5005,7 @@ function DirectTypeAdd(target) {
  * @function 🏷⠀Getters
  * @memberof! decorators
  *
- * @param {Array<String|Array<String>>} propertyNames if the model has 'name' 
+ * @param {Array<String|Array<String>>} propertyNames if the model has 'name'
  * and 'age' as properties, then passing those two strings will result
  * in getters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method.s
@@ -5007,11 +5022,11 @@ function Getters(...propertyNames) {
 
         var _extractBits = extractBits(property);
 
-        let typePropertyName = _extractBits.typePropertyName,
+        let fieldName = _extractBits.fieldName,
             getterMaker = _extractBits.getterMaker;
 
 
-        (0, _defineProperty2.default)(target.prototype, typePropertyName, {
+        (0, _defineProperty2.default)(target.prototype, fieldName, {
           get: getterMaker()
         });
       }
@@ -5045,8 +5060,8 @@ function Getters(...propertyNames) {
  * @memberof! decorators
  * @since 2.1.0
  *
- * @param {Array<String|Array<String>>} propertyNames if the model has 
- * 'name' and 'age' as properties, then passing those two strings will 
+ * @param {Array<String|Array<String>>} propertyNames if the model has
+ * 'name' and 'age' as properties, then passing those two strings will
  * result in setters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method
  */
@@ -5062,11 +5077,11 @@ function Setters(...propertyNames) {
 
         var _extractBits2 = extractBits(property);
 
-        let typePropertyName = _extractBits2.typePropertyName,
+        let fieldName = _extractBits2.fieldName,
             setterMaker = _extractBits2.setterMaker;
 
 
-        (0, _defineProperty2.default)(target.prototype, typePropertyName, {
+        (0, _defineProperty2.default)(target.prototype, fieldName, {
           set: setterMaker()
         });
       }
@@ -5102,7 +5117,7 @@ function Setters(...propertyNames) {
  * @memberof! decorators
  * @since 2.1.0
  *
- * @param {Array<String|Array<String>>} propertyNames if the model has 'name' 
+ * @param {Array<String|Array<String>>} propertyNames if the model has 'name'
  * and 'age' as properties, then passing those two strings will result
  * in getters and setters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method
@@ -5119,14 +5134,22 @@ function Properties(...propertyNames) {
 
         var _extractBits3 = extractBits(property);
 
-        let typePropertyName = _extractBits3.typePropertyName,
+        let fieldName = _extractBits3.fieldName,
             getterMaker = _extractBits3.getterMaker,
             setterMaker = _extractBits3.setterMaker;
 
+        // Create a replaceable proxy-analog to allow the replacement of
+        // getters and setters that will be setup by default.
 
-        (0, _defineProperty2.default)(target.prototype, typePropertyName, {
+        target.prototype[(0, _for2.default)(fieldName)] = {
           set: setterMaker(),
           get: getterMaker()
+
+          // Point the getters/setters at the proxy analog. Changing a defined
+          // property is harder than a mere assignment.
+        };(0, _defineProperty2.default)(target.prototype, fieldName, {
+          set: target.prototype[(0, _for2.default)(fieldName)].set,
+          get: target.prototype[(0, _for2.default)(fieldName)].get
         });
       }
     } catch (err) {
@@ -5178,7 +5201,7 @@ var _symbol = __webpack_require__(39);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -5189,7 +5212,7 @@ var _dec, _class; /**
 
 var _GQLBase = __webpack_require__(6);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 var _ModelProperties = __webpack_require__(88);
 
@@ -5566,13 +5589,13 @@ var _GQLInterface = __webpack_require__(63);
 
 var _GQLScalar = __webpack_require__(41);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var _events = __webpack_require__(62);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7364,7 +7387,7 @@ var _SchemaUtils = __webpack_require__(91);
 
 var _SyntaxTree = __webpack_require__(29);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var types = _interopRequireWildcard(_types);
 
@@ -7469,7 +7492,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AdjacentSchema = undefined;
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -7765,7 +7788,7 @@ var create         = __webpack_require__(36)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(8)(IteratorPrototype, __webpack_require__(1)('iterator'), function(){ return this; });
+__webpack_require__(9)(IteratorPrototype, __webpack_require__(1)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -8557,7 +8580,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FileSchema = undefined;
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -8626,7 +8649,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _for = __webpack_require__(11);
+var _for = __webpack_require__(8);
 
 var _for2 = _interopRequireDefault(_for);
 
@@ -8863,7 +8886,7 @@ var _GQLInterface = __webpack_require__(63);
 
 var _GQLScalar = __webpack_require__(41);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var _events = __webpack_require__(62);
 
@@ -8875,7 +8898,7 @@ var _path = __webpack_require__(40);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _graphql = __webpack_require__(10);
+var _graphql = __webpack_require__(11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10906,7 +10929,7 @@ var _path = __webpack_require__(40);
 
 var _path2 = _interopRequireDefault(_path);
 
-var _types = __webpack_require__(9);
+var _types = __webpack_require__(10);
 
 var types = _interopRequireWildcard(_types);
 

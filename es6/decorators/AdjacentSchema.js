@@ -11,7 +11,7 @@ import { GQLBase } from '../GQLBase'
  * getter with the `Symbol`, `@adjacentSchema` so that other
  * can determine whether or not the decorator was used.
  *
- * @function AdjacentSchema
+ * @function 🏷⠀AdjacentSchema
  * @memberof! decorators
  * @since 2.1.0
  *
@@ -23,8 +23,8 @@ import { GQLBase } from '../GQLBase'
  */
 export default function AdjacentSchema(classModule: Object) {
   return function(target: GQLBase) {
-    // Attempt to remove the SCHEMA and module properties or functions from 
-    // the class being decorated. This is not guaranteed to work but should 
+    // Attempt to remove the SCHEMA and module properties or functions from
+    // the class being decorated. This is not guaranteed to work but should
     // increase compatibilty and success rates.
     // @ComputedType
     delete target.SCHEMA;

@@ -10,8 +10,8 @@ import { SyntaxTree } from './SyntaxTree'
 import { GraphQLObjectType } from 'graphql'
 import EventEmitter from 'events'
 
-/* Internal implementation to detect the existence of proxies. When present 
- * additional functionality is enabled. Proxies are native in Node >= 6 */ 
+/* Internal implementation to detect the existence of proxies. When present
+ * additional functionality is enabled. Proxies are native in Node >= 6 */
 const hasProxy = typeof global.Proxy !== 'undefined';
 
 /* Internal Symbol referring to real accessor to GQLBase model object */
@@ -21,25 +21,25 @@ const _MODEL_KEY = Symbol.for('data-model-contents-value');
 const _PROXY_HANDLER = Symbol.for('internal-base-proxy-handler')
 
 /**
- * Simple function to check if a supplied key matches a string of your 
- * choosing and that string is not a defined property on the instance 
+ * Simple function to check if a supplied key matches a string of your
+ * choosing and that string is not a defined property on the instance
  * passed to the check.
- * 
+ *
  * @method GQLBaseEnv~notDefined
  * @memberof GQLBaseEnv
  * @since 2.5.0
- * 
- * @param {string} keyToTest a String denoting the property you wish to test 
- * @param {mixed} keySupplied a value, coerced `toString()`, to compare to 
+ *
+ * @param {string} keyToTest a String denoting the property you wish to test
+ * @param {mixed} keySupplied a value, coerced `toString()`, to compare to
  * `keyToTest`
- * @param {mixed} instance an object instance to check `hasOwnProperty` on for 
- * the `keyToTest` supplied. 
- * @return {Boolean} true if the property matches the supplied key and that 
+ * @param {mixed} instance an object instance to check `hasOwnProperty` on for
+ * the `keyToTest` supplied.
+ * @return {Boolean} true if the property matches the supplied key and that
  * property is not an ownedProperty of the instance supplied.
  */
 export function notDefined(
-  keyToTest: string, 
-  keySupplied: Object | string, 
+  keyToTest: string,
+  keySupplied: Object | string,
   instance: Object
 ) {
   return (
@@ -73,8 +73,8 @@ export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
  * A nameless Symbol for use as a key to the internal decorator storage
  *
  * @type {Symbol}
- * @const 
- * @inner 
+ * @const
+ * @inner
  * @memberof GQLBaseEnv
  */
 export const META_KEY = Symbol();
@@ -88,7 +88,7 @@ export const META_KEY = Symbol();
  */
 export class GQLBase extends EventEmitter {
   fileHandler: ?IDLFileHandler;
-  
+
   /**
    * Request data is passed to this object when constructed. Typically these
    * objects, and their children, are instantiated by its own static MUTATORS
@@ -126,7 +126,7 @@ export class GQLBase extends EventEmitter {
     this.setModel(modelData);
     this.requestData = requestData || {};
     this.fileHandler = new IDLFileHandler(this.constructor);
-    
+
     // @ComputedType
     return hasProxy ? new Proxy(this, GQLBase[_PROXY_HANDLER]) : this;
   }
@@ -214,7 +214,7 @@ export class GQLBase extends EventEmitter {
     // @ComputedType
     this[REQ_DATA_KEY] = value;
   }
-  
+
   /**
    * Returns the `constructor` name. If invoked as the context, or `this`,
    * object of the `toString` method of `Object`'s `prototype`, the resulting
@@ -226,42 +226,42 @@ export class GQLBase extends EventEmitter {
    * @return {string} the name of the class this is an instance of
    * @ComputedType
    */
-  get [Symbol.toStringTag]() { return this.constructor.name }  
+  get [Symbol.toStringTag]() { return this.constructor.name }
 
   /**
-   * Until such time as the reference implementation of Facebook's GraphQL 
-   * SDL AST parser supports comments, or until we take advantage of Apollo's 
+   * Until such time as the reference implementation of Facebook's GraphQL
+   * SDL AST parser supports comments, or until we take advantage of Apollo's
    * AST parser, this is how comments will be applied to a built schema.
    *
-   * Several constants are defined on the GQLBase object itself, and thereby 
-   * all its subclasses. They pertain to how to define description fields 
+   * Several constants are defined on the GQLBase object itself, and thereby
+   * all its subclasses. They pertain to how to define description fields
    * for various parts of your GQL implementation.
    *
    * ```
-   * // To define a description on the top level class 
-   * [this.DOC_CLASS]: string 
+   * // To define a description on the top level class
+   * [this.DOC_CLASS]: string
    *
    * // To define a description on a field (getter, function or async function)
    * [this.DOC_FIELDS]: {
    *   fieldName: string
    * }
    *
-   * // To define a description on a query, mutation or subscription field 
+   * // To define a description on a query, mutation or subscription field
    * [this.DOC_QUERIES || this.DOC_MUTATORS || this.DOC_SUBSCRIPTIONS]: {
    *   fieldName: string
    * }
    * ```
    *
-   * To make writing code easier, the `joinLines()` template function is 
-   * available so your source code can look nice and neat and your descriptions 
+   * To make writing code easier, the `joinLines()` template function is
+   * available so your source code can look nice and neat and your descriptions
    * won't get annoying line breaks and spaces as part of that process.
-   * 
+   *
    * @static
    * @memberof GQLBase
-   * @method apiDocs 
+   * @method apiDocs
    *
    * @return {Object} an object with various keys and values denoting
-   * description fields that should be applied to the final schema object 
+   * description fields that should be applied to the final schema object
    */
   static apiDocs(): Object {
     return {
@@ -271,29 +271,29 @@ export class GQLBase extends EventEmitter {
         this, the person using lattice failed to provide documentation for
         their type. :)
       `,
-      
+
       [this.DOC_QUERY]: joinLines`
         ## Welcome to GraphQL Lattice
         **Query**
-        
-        You will want to define a \`DOC_QUERY\` apiDoc comment with something 
-        more meaningful to your particular Schema here. 
+
+        You will want to define a \`DOC_QUERY\` apiDoc comment with something
+        more meaningful to your particular Schema here.
       `,
 
       [this.DOC_MUTATION]: joinLines`
         ## Welcome to GraphQL Lattice
         **Mutation**
-        
-        You will want to define a \`DOC_MUTATION\` apiDoc comment with 
-        something more meaningful to your particular Schema here. 
+
+        You will want to define a \`DOC_MUTATION\` apiDoc comment with
+        something more meaningful to your particular Schema here.
       `,
 
       [this.DOC_SUBSCRIPTION]: joinLines`
         ## Welcome to GraphQL Lattice
         **Subscription**
-        
-        You will want to define a \`DOC_SUBSCRIPTION\` apiDoc comment with 
-        something more meaningful to your particular Schema here. 
+
+        You will want to define a \`DOC_SUBSCRIPTION\` apiDoc comment with
+        something more meaningful to your particular Schema here.
       `,
 
       [this.DOC_FIELDS]: {
@@ -551,7 +551,7 @@ export class GQLBase extends EventEmitter {
       /**
        * Proxy set() handler. This is where the change events are fired from
        *
-       * @method set
+       * @method GQLBase~set
        * @param {Object} target the `GQLBase` model object
        * @param {string} key the property name
        * @param {mixed} value the new property value
@@ -572,7 +572,7 @@ export class GQLBase extends EventEmitter {
        * Proxy deleteProperty() handler. This is where the delete property
        * events are fired from
        *
-       * @method deleteProperty
+       * @method GQLBase~deleteProperty
        * @param {Object} target the `GQLBase` model object
        * @param {string} key the property name
        */
@@ -634,36 +634,36 @@ export class GQLBase extends EventEmitter {
       }
     });
   }
-  
+
   /**
-   * If ES6 Proxies are supported in your execution environment, all GQLBase 
-   * extended classes are also proxies. By default the internal proxy handler 
-   * provides backwards compatibility with the removal of the default getters 
-   * and setters for the 'model' property as long as you do not define a 
+   * If ES6 Proxies are supported in your execution environment, all GQLBase
+   * extended classes are also proxies. By default the internal proxy handler
+   * provides backwards compatibility with the removal of the default getters
+   * and setters for the 'model' property as long as you do not define a
    * top level 'model' property of your own.
    *
    * @method ⬇︎⠀[_PROXY_HANDLER]
    * @memberof GQLBase
-   * @static 
-   * @const 
+   * @static
+   * @const
    * @since 2.5.0
-   * 
+   *
    * @type {Object}
    * @ComputedType
    */
-  static get [_PROXY_HANDLER]() {    
+  static get [_PROXY_HANDLER]() {
     return {
       get(target, key, lastResult) {
         const model = target[_MODEL_KEY];
-        
-        // Allow backwards compatibility for 'model' property if one is not 
-        // explicitly defined on your instance. 
+
+        // Allow backwards compatibility for 'model' property if one is not
+        // explicitly defined on your instance.
         if (notDefined('model', key, target)) {
           // Be sure to use the public MODEL_KEY to ensure events fire
           return target[MODEL_KEY];
         }
-        
-        return target[key]      
+
+        return target[key]
       }
     }
   }
@@ -736,10 +736,10 @@ export class GQLBase extends EventEmitter {
    *
    * @type {string}
    */
-  static get EVENT_MODEL_PROP_DELETE() { return 'E: Int. model prop deleted' }  
-  
+  static get EVENT_MODEL_PROP_DELETE() { return 'E: Int. model prop deleted' }
+
   /**
-   * A constant key used to identify a comment for a class description 
+   * A constant key used to identify a comment for a class description
    *
    * @static
    * @memberof GQLBase
@@ -749,9 +749,9 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_CLASS() { return 'class' }
-  
+
   /**
-   * A constant key used to identify a comment for a type field description 
+   * A constant key used to identify a comment for a type field description
    *
    * @static
    * @memberof GQLBase
@@ -761,10 +761,10 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_FIELDS() { return 'fields' }
-  
+
   /**
    * A constant key used to identify a comment for the top level query
-   * description 
+   * description
    *
    * @static
    * @memberof GQLBase
@@ -776,7 +776,7 @@ export class GQLBase extends EventEmitter {
   static get DOC_QUERY() { return 'query' }
 
   /**
-   * A constant key used to identify a comment for a query description 
+   * A constant key used to identify a comment for a query description
    *
    * @static
    * @memberof GQLBase
@@ -786,10 +786,10 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_QUERIES() { return 'queries' }
-  
+
   /**
    * A constant key used to identify a comment for the top level mutation
-   * description 
+   * description
    *
    * @static
    * @memberof GQLBase
@@ -799,9 +799,9 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_MUTATION() { return 'mutation' }
-  
+
   /**
-   * A constant key used to identify a comment for a mutator description 
+   * A constant key used to identify a comment for a mutator description
    *
    * @static
    * @memberof GQLBase
@@ -811,10 +811,10 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_MUTATORS() { return 'mutators' }
-  
+
   /**
-   * A constant key used to identify a comment for the top level subscription 
-   * description 
+   * A constant key used to identify a comment for the top level subscription
+   * description
    *
    * @static
    * @memberof GQLBase
@@ -826,7 +826,7 @@ export class GQLBase extends EventEmitter {
   static get DOC_SUBSCRIPTION() { return 'subscription' }
 
   /**
-   * A constant key used to identify a comment for a subscription description 
+   * A constant key used to identify a comment for a subscription description
    *
    * @static
    * @memberof GQLBase
@@ -836,9 +836,9 @@ export class GQLBase extends EventEmitter {
    * @type {string}
    */
   static get DOC_SUBSCRIPTIONS() { return 'subscriptions' }
-  
+
   /**
-   * A shortcut to the utils/joinLines function to make it easier to get 
+   * A shortcut to the utils/joinLines function to make it easier to get
    * the tools to write docs for your types in a friendly fashion.
    *
    * @memberof GQLBase
@@ -846,24 +846,24 @@ export class GQLBase extends EventEmitter {
    * @static
    * @const
    *
-   * @type {Function} 
+   * @type {Function}
    */
   static get joinLines(): Function { return joinLines }
-  
+
   /**
-   * An object used to store data used by decorators and other internal 
-   * proccesses. 
+   * An object used to store data used by decorators and other internal
+   * proccesses.
    * @ComputedType
    */
-  static get [META_KEY]() { 
+  static get [META_KEY]() {
     let storage = this[Symbol.for(this.name)]
-    
+
     if (!storage) {
       storage = (this[Symbol.for(this.name)] = {})
     }
-    
+
     return storage;
-  }  
+  }
 }
 
 /**
@@ -875,9 +875,9 @@ export class GQLBase extends EventEmitter {
  */
 export class IDLFileHandler {
   path: ?string;
-  
+
   extension: ?string;
-  
+
   /**
    * The IDLFileHandler checks the SCHEMA value returned by the class type
    * of the supplied instance. If the resulting value is a Symbol, then the
