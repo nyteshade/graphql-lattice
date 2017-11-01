@@ -5,6 +5,7 @@ import {
   Getters, Setters, Properties, DirectTypeManager 
 } from './decorators/ModelProperties'
 import { resolver, mutator, subscriptor } from './decorators/Resolvers'
+import { IDLFileHandler } from './IDLFileHandler'
 import { GQLBase, MODEL_KEY, META_KEY } from './GQLBase'
 import { GQLEnum } from './GQLEnum'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
@@ -36,6 +37,7 @@ const defaultPackage = {
   GQLInterface,
   GQLJSON,
   GQLScalar,
+  IDLFileHandler,
   ModuleParser,
   mutator,
   joinLines,
@@ -75,6 +77,7 @@ export {
   GQLInterface,
   GQLJSON,
   GQLScalar,
+  IDLFileHandler,
   ModuleParser,
   mutator,
   joinLines,

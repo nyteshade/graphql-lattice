@@ -3,6 +3,7 @@
 
 import { typeOf } from './types'
 import { print, parse } from 'graphql'
+import { merge } from 'lodash'
 
 // Shorthand for the key storing the internal AST
 // @prop
@@ -95,7 +96,7 @@ export class SyntaxTree
         try {
           ast = parse((schemaOrASTOrST: any));
 
-          Object.assign(this.ast, ast);
+          merge(this.ast, ast);
         }
         catch (ignore) { /* Ignore this error */ }
 
@@ -105,7 +106,7 @@ export class SyntaxTree
 
         try {
           ast = parse(print(ast));
-          Object.assign(this.ast, ast);
+          merge(this.ast, ast);
         }
         catch (ignore) { /* Ignore this error */ }
 
@@ -113,7 +114,7 @@ export class SyntaxTree
       case SyntaxTree.name:
         st = (schemaOrASTOrST: any);
 
-        Object.assign(this.ast, st.ast);
+        merge(this.ast, st.ast);
 
         break;
     }
@@ -132,16 +133,16 @@ export class SyntaxTree
    * @method ⌾⠀updateAST
    *
    * @param {Object} ast an existing GraphQL IDL AST object that will be
-   * merged on top of the existing tree using Object.assign()
+   * merged on top of the existing tree using _.merge()
    * @return {SyntaxTree} this for inlining.
    */
   updateAST(ast: Object): SyntaxTree {
     if (typeOf(ast) === Object.name) {
-      let newAST = Object.assign({}, this.ast, ast);
+      let newAST = merge({}, this.ast, ast);
 
       try {
         print(newAST);
-        this.ast = Object.assign(this.ast, ast);
+        this.ast = merge(this.ast, ast);
       }
       catch (error) {
         console.error('[SyntaxTree] Failed to updateAST with %o', ast);

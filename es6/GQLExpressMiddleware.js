@@ -2,22 +2,27 @@
 // @module GQLExpressMiddleware
 
 import { SyntaxTree } from './SyntaxTree'
-import graphqlHTTP from 'express-graphql'
 import { GQLBase } from './GQLBase'
 import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
-import EventEmitter from 'events'
 import { SchemaUtils } from './SchemaUtils'
-import path from 'path'
+import { merge } from 'lodash'
+
 import {
   parse,
   print,
   buildSchema,
+  GraphQLSchema,
   GraphQLInterfaceType,
   GraphQLEnumType,
   GraphQLScalarType
 } from 'graphql'
+
+import bodyParser from 'body-parser'
+import graphqlHTTP from 'express-graphql'
+import EventEmitter from 'events'
+import path from 'path'
 
 /**
  * A handler that exposes an express middleware function that mounts a
@@ -33,9 +38,11 @@ import {
 export class GQLExpressMiddleware extends EventEmitter
 {
   handlers: Array<GQLBase>;
-  
+
   schema: string;
-  
+
+  cache: Map<any, any> = new Map()
+
   /**
    * For now, takes an Array of classes extending from GQLBase. These are
    * parsed and a combined schema of all their individual schemas is generated
@@ -48,22 +55,87 @@ export class GQLExpressMiddleware extends EventEmitter
    * @param {Array<GQLBase>} handlers an array of GQLBase extended classes
    */
   constructor(handlers: Array<GQLBase>) {
-    super();
-    this.handlers = handlers;
+    super()
+
+    this.handlers = handlers
+    
+    // Generate and cache the schema SDL/IDL string and ast obj (GraphQLSchema)
+    this.ast 
   }
-  
+
   /**
-   * Generates the textual schema based on the registered `GQLBase` handlers 
-   * this instance represents.
+   * The Schema String and Schema AST/GraphQLSchema JavaScript objects are 
+   * cached after being processed once. If there is a runtime need to rebuild 
+   * these objects, calling `clearCache()` will allow their next usage to 
+   * rebuild them dynamically.
+   *
+   * @method clearCache
+   * @memberof GQLExpressMiddleware
    * 
+   * @return {GQLExpressMiddleware} returns this so that it can be inlined; ala 
+   * `gqlExpressMiddleware.clearCache().ast`, for example
+   */
+  clearCache(): GQLExpressMiddleware {
+    this.cache.clear()
+    return this
+  }
+
+  /**
+   * The schema property returns the textual Schema as it is generated based
+   * on the various Lattice types, interfaces and enums defined in your
+   * project. The ast property returns the JavaScript AST represenatation of
+   * that schema with all injected modificiations detailed in your classes.
+   */
+  get ast(): GraphQLSchema {
+    let cached: ?GraphQLSchema = this.cache.get('ast')
+
+    if (cached) {
+      return cached
+    }
+
+    let ast: GraphQLSchema = buildSchema(this.schema)
+
+    SchemaUtils.injectInterfaceResolvers(ast, this.handlers);
+    SchemaUtils.injectEnums(ast, this.handlers);
+    SchemaUtils.injectScalars(ast, this.handlers);
+    SchemaUtils.injectComments(ast, this.handlers);
+
+    this.cache.set('ast', ast)
+
+    return ast;
+  }
+
+  /**
+   * Generates the textual schema based on the registered `GQLBase` handlers
+   * this instance represents.
+   *
    * @method GQLExpressMiddleware#⬇︎⠀schema
    * @since 2.7.0
    *
-   * @return {string} a generated schema string based on the handlers that 
+   * @return {string} a generated schema string based on the handlers that
    * are registered with this `GQLExpressMiddleware` instance.
    */
   get schema(): string {
-    return SchemaUtils.generateSchemaSDL(this.handlers);
+    let cached = this.cache.get('schema')
+    let schema
+
+    if (cached) return cached
+
+    schema = SchemaUtils.generateSchemaSDL(this.handlers);
+    this.cache.set('schema', schema)
+
+    return schema
+  }
+
+  async rootValue(
+    requestData: Object, 
+    separateByType: boolean = false
+  ): Object {
+    let root = await SchemaUtils.createMergedRoot(
+      this.handlers, requestData, separateByType
+    )
+        
+    return root;
   }
 
   /**
@@ -98,6 +170,135 @@ export class GQLExpressMiddleware extends EventEmitter
   }
 
   /**
+   * In order to ensure that Lattice functions receive the request data,
+   * it is important to use the options function feature of both
+   * `express-graphql` and `apollo-server-express`. This function will create
+   * an options function that reflects that schema and Lattice types defined
+   * in your project.
+   *
+   * Should you need to tailor the response before it is sent out, you may
+   * supply a function as a second parameter that takes two parameters and
+   * returns an options object. The patchFn callback signature looks like this
+   *
+   * ```patchFn(options, {req, res, next|gql})```
+   *
+   * When using the reference implementation, additional graphql request info
+   * can be obtained in lieu of the `next()` function so typically found in
+   * Express middleware. Apollo Server simply provides the next function in
+   * this location.
+   *
+   * @param {Object} options any options, to either engine, that make the most
+   * sense
+   * @param {Function} patchFn see above
+   */
+  generateOptions(
+    options: Object = { graphiql: true },
+    patchFn: ?Function = null
+  ): Function {
+    const optsFn = async (req: mixed, res: mixed, gql: mixed) => {
+      let schema = this.ast;
+      let opts = {
+        schema,
+        rootValue: await this.rootValue({req, res, gql}),
+        formatError: error => ({
+          message: error.message,
+          locations: error.locations,
+          stack: error.stack,
+          path: error.path
+        })
+      }
+
+      merge(opts, options);
+      if (patchFn && typeof patchFn === 'function') {
+        merge(
+          opts,
+          (patchFn.bind(this)(opts, {req, res, gql})) || opts
+        );
+      }
+
+      return opts;
+    }
+
+    return optsFn
+  }
+
+    /**
+   * In order to ensure that Lattice functions receive the request data,
+   * it is important to use the options function feature of both
+   * `express-graphql` and `apollo-server-express`. This function will create
+   * an options function that reflects that schema and Lattice types defined
+   * in your project.
+   *
+   * Should you need to tailor the response before it is sent out, you may
+   * supply a function as a second parameter that takes two parameters and
+   * returns an options object. The patchFn callback signature looks like this
+   *
+   * ```patchFn(options, {req, res, next|gql})```
+   *
+   * When using the reference implementation, additional graphql request info
+   * can be obtained in lieu of the `next()` function so typically found in
+   * Express middleware. Apollo Server simply provides the next function in
+   * this location.
+   *
+   * @param {Object} options any options, to either engine, that make the most
+   * sense
+   * @param {Function} patchFn see above
+   */
+  generateApolloOptions(
+    options: Object = {
+      formatError: error => ({
+        message: error.message,
+        locations: error.locations,
+        stack: error.stack,
+        path: error.path
+      }),
+      debug: true
+    },
+    patchFn: ?Function = null
+  ): Function {
+    const optsFn = async (req: mixed) => {
+      let opts = {
+        schema: this.ast,
+        resolvers: await this.rootValue({req}, true)
+      }
+
+      merge(opts, options);
+      if (patchFn && typeof patchFn === 'function') {
+        merge(
+          opts,
+          (patchFn.bind(this)(opts, {req})) || opts
+        );
+      }
+      
+      console.log('[generateApolloOptions]', opts.schema instanceof GraphQLSchema, opts)
+
+      return opts;
+    }
+
+    return optsFn
+  }
+
+  apolloMiddleware(
+    apolloFn: Function,
+    apolloOpts: Object = {},
+    patchFn: ?Function = null
+  ): Array<Function> {
+    let opts = this.generateApolloOptions(apolloOpts, patchFn)
+
+    return [
+      bodyParser.json(),
+      bodyParser.text({ type: 'application/graphql' }),
+      (req, res, next) => {
+          if (req.is('application/graphql')) {
+              req.body = { query: req.body };
+          }
+          next();
+      },
+      apolloFn(opts)
+    ]
+  }
+
+  /**
    * If your needs require you to specify different values to `graphqlHTTP`,
    * part of the `express-graphql` package, you can use the `customMiddleware`
    * function to do so.
@@ -120,44 +321,16 @@ export class GQLExpressMiddleware extends EventEmitter
    *
    * @param {Object} [graphqlHttpOptions={graphiql: true}] standard set of
    * `express-graphql` options. See above.
-   * @param {Function} patchFinalOpts see above
+   * @param {Function} patchFn see above
 
    * @return {Function} a middleware function compatible with Express
    */
   customMiddleware(
     graphqlHttpOptions: Object = {graphiql: true},
-    patchFinalOpts?: Function
+    patchFn?: Function
   ): Function {
-    const schema = buildSchema(this.schema)
-  
-    SchemaUtils.injectInterfaceResolvers(schema, this.handlers);
-    SchemaUtils.injectEnums(schema, this.handlers);
-    SchemaUtils.injectScalars(schema, this.handlers);
-    SchemaUtils.injectComments(schema, this.handlers);
-
-    // See if there is a way abstract the passing req, res, gql to each
-    // makeRoot resolver without invoking makeRoot again every time.
-    return graphqlHTTP(async (req, res, gql) => {
-      let opts = {
-        schema,
-        rootValue: await SchemaUtils.createMergedRoot(
-          this.handlers, {req, res, gql}
-        ),
-        formatError: error => ({
-          message: error.message,
-          locations: error.locations,
-          stack: error.stack,
-          path: error.path
-        })
-      };
-
-      Object.assign(opts, graphqlHttpOptions);
-      if (patchFinalOpts) {
-        Object.assign(opts, patchFinalOpts.bind(this)(opts) || opts);
-      }
-
-      return opts;
-    });
+    const optsFn = this.generateOptions(graphqlHttpOptions, patchFn)
+    return graphqlHTTP(optsFn)
   }
 
   /**
@@ -175,10 +348,10 @@ export class GQLExpressMiddleware extends EventEmitter
       res.status(200).send(this.schema);
     }
   }
-  
+
   /**
    * An optional express middleware function that can be mounted to return
-   * the JSON AST representation of the schema string being used by 
+   * the JSON AST representation of the schema string being used by
    * GQLExpressMiddleware.
    *
    * @memberof GQLExpressMiddleware
@@ -189,18 +362,18 @@ export class GQLExpressMiddleware extends EventEmitter
    */
   get astMiddleware(): Function {
     return (req: Object, res: Object, next: ?Function) => {
-      const schema = buildSchema(this.schema)
-    
-      SchemaUtils.injectInterfaceResolvers(schema, this.handlers);
-      SchemaUtils.injectEnums(schema, this.handlers);
-      SchemaUtils.injectScalars(schema, this.handlers);
-      SchemaUtils.injectComments(schema, this.handlers);
-      
+      const schema: GraphQLSchema = this.ast
+
       for (let typeKey of Object.keys(schema._typeMap)) {
         let object = {}
+
+        // $FlowFixMe
         for (let valKey of Object.keys(schema._typeMap[typeKey])) {
+          // $FlowFixMe
           object[valKey] = schema._typeMap[typeKey][valKey]
         }
+
+        // $FlowFixMe
         schema._typeMap[typeKey] = object
       }
 

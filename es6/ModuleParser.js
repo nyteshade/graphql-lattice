@@ -6,6 +6,7 @@ import * as types from './types'
 import { GQLBase } from './GQLBase'
 import { promisify, Deferred } from './utils'
 import { GQLJSON } from './types/GQLJSON'
+import { merge } from 'lodash'
 
 // Promisify some bits
 const readdirAsync = promisify(fs.readdir)
@@ -82,7 +83,7 @@ export class ModuleParser {
     this.directory = path.resolve(directory);
     this.classes = [];
 
-    Object.assign(this.options, options);
+    merge(this.options, options);
 
     try {
       this.valid = fs.statSync(directory).isDirectory();

@@ -196,7 +196,7 @@ export class GQLEnum extends GQLBase {
   static get enums(): Array<Symbol> {
     // @ComputedType
     if (!this[ENUMS]) {
-      const map = new Map();
+      const map: Map<*,*> = new Map();
       const ast = parse((this.SCHEMA: any));
       const array = new Proxy([], GQLEnum.GenerateEnumsProxyHandler(map));
       const values = this.values || {};
@@ -251,7 +251,7 @@ export class GQLEnum extends GQLBase {
    * value<->key mappings; the true storage backing the array in question.
    * @return {Object}
    */
-  static GenerateEnumsProxyHandler(map: Map) {
+  static GenerateEnumsProxyHandler(map: Map<*, *>) {
     return {
       /**
        * Get handler for the Map backed Array Proxy

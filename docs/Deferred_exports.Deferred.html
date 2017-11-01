@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>types/GQLJSON.js - Documentation</title>
+    <title>Deferred - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,121 +29,211 @@
 
 <div id="main">
     
-    <h1 class="page-title">types/GQLJSON.js</h1>
+    <h1 class="page-title">Deferred</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import { GQLScalar } from '../GQLScalar'
-import { Schema } from '../decorators/Schema'
-import { Kind } from 'graphql/language'
+        <h2>
+        Deferred
+        </h2>
+        
+    
+</header>
 
-@Schema('scalar JSON')
-export class GQLJSON extends GQLScalar {
-  /**
-   * Since JSON stands for JavaScript Object Notation, its values need no
-   * direct conversion. Simply pass back what is passed in.
-   *
-   * @memberof GQLJSON
-   * @method serialize
-   * @static
-   *
-   * @param {mixed|Null} value a valid JavaScript object
-   * @return {mixed|Null} the same value that was passed in.
-   */
-  static serialize(value: mixed): mixed {
-    return value;
-  }
-  
-  /**
-   * All processing by GraphQL Lattice uses the Class.name property. We want 
-   * to report JSON and not GQLJSON so this is what we do.
-   *
-   * @memberof GQLJSON
-   * @method name 
-   * @static
-   * @type {String}
-   */
-  static get name() {
-    return 'JSON';
-  }
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-  /**
-   * Since JSON stands for JavaScript Object Notation, its values need no
-   * direct conversion. Simply pass back what is passed in.
-   *
-   * @memberof GQLJSON
-   * @method parseValue
-   * @static
-   *
-   * @param {mixed|Null} value a valid JavaScript object
-   * @return {mixed|Null} the same value that was passed in.
-   */
-  static parseValue(value: ?mixed): ?mixed {
-    return value;
-  }
+    
 
-  /**
-   * Given literal values, `parseLiteral` will walk the object and build
-   * up an equivalent version of itself as an object that should `parse()`
-   * and `stringify()` accordingly.
-   *
-   * @memberof GQLJSON
-   * @method parseLiteral
-   * @static
-   *
-   * @param {Object} ast the Abstract Syntax Tree representing the JSON
-   * type to parse.
-   * @return {String|Array|Object|Number|Null} valid JSON types converted as
-   * expected.
-   */
-  static parseLiteral(ast: Object): ?mixed {
-    switch (ast.kind) {
-      case Kind.STRING:
-      case Kind.BOOLEAN:
-        return ast.value;
+    <h4 class="name" id="Deferred"><span class="type-signature"></span>new Deferred<span class="signature">()</span><span class="type-signature"></span></h4>
 
-      case Kind.INT:
-        return parseInt(ast.value, 10);
-      case Kind.FLOAT:
-        return parseFloat(ast.value);
+    
 
-      case Kind.OBJECT: {
-        const value = Object.create(null);
-        ast.fields.forEach(field => {
-          value[field.name.value] = GQLJSON.parseLiteral(field.value)
-        })
 
-        return value;
-      }
 
-      case Kind.LIST:
-        return ast.values.map(GQLJSON.parseLiteral)
+<div class="description">
+    <p>This property holds a <code>resolve</code> function from within the promise this<br>deferred inverts.</p>
+</div>
 
-      default:
-        return null;
-    }
-  }
 
-  /** @inheritdoc */
-  static apiDocs(): Object {
-    const { DOC_CLASS, joinLines } = this;
 
-    return joinLines`
-      The \`JSON\` scalar type represents JSON values as specified by
-      [ECMA-404](http://www.ecma-international.org/publications/files${
-      'ECMA-ST/ECMA-404.pdf'})
-    `
-  }
-}
-</code></pre>
-        </article>
-    </section>
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line86">line 86</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id="pending"><span class="type-signature"></span>pending<span class="type-signature"> :function</span></h4>
+
+
+
+
+<div class="description">
+    <p>This property holds a <code>reject</code> function from within the promise this<br>deferred inverts</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils.js.html">utils.js</a>, <a href="utils.js.html#line138">line 138</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>function</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

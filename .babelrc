@@ -3,7 +3,7 @@
     "stage-1",
     "flow",
     ["env", {
-      "targets": { "node": 6 },
+      "targets": { "node": "current" },
       "modules": "commonjs",
       "useBuiltIns": true,
       "debug": false

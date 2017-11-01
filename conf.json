@@ -11,7 +11,7 @@
   "plugins": [
     "plugins/markdown",
     "node_modules/jsdoc-babel"        
-  ],
+  ],    
   "babel": {
     "extensions": ["js", "es6", "jsx"],
     "presets": [
@@ -27,10 +27,10 @@
     "plugins": ["transform-runtime", "transform-decorators-legacy"]
   },    
   "markdown": {
-    "parser": "gfm",
-    "hardwrap": true,
-    "excludeTags": []
-  },
+		"parser": "gfm",
+		"hardwrap": true,
+		"excludeTags": []
+	},
   "templates": {
     "cleverLinks": true,
     "monospaceLinks": true,

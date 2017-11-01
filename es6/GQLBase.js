@@ -8,6 +8,9 @@ import { Deferred, joinLines } from './utils'
 import { typeOf } from './types'
 import { SyntaxTree } from './SyntaxTree'
 import { GraphQLObjectType } from 'graphql'
+import { IDLFileHandler } from './IDLFileHandler'
+import { merge } from 'lodash'
+
 import EventEmitter from 'events'
 
 /* Internal implementation to detect the existence of proxies. When present
@@ -167,21 +170,21 @@ export class GQLBase extends EventEmitter {
   }
 
   /**
-   * Uses `Object.assign` to modify the internal backing data store for the
+   * Uses `_.merge()` to modify the internal backing data store for the
    * object instance. This is a shortcut for
-   * `Object.assign(instance[MODEL_KEY], ...extensions)`
+   * `_.merge()(instance[MODEL_KEY], ...extensions)`
    *
    * @instance
    * @memberof GQLBase
    * @method ⌾⠀extendModel
    * @since 2.5
    *
-   * @param {mixed} extensions n-number of valid `Object.assign` parameters
+   * @param {mixed} extensions n-number of valid `_.merge()` parameters
    * @return {GQLBase} this is returned
    */
   extendModel(...extensions: Array<mixed>): GQLBase {
     // $FlowFixMe
-    Object.assign(this[MODEL_KEY], ...extensions);
+    merge(this[MODEL_KEY], ...extensions);
     return this;
   }
 
@@ -374,7 +377,6 @@ export class GQLBase extends EventEmitter {
    * @method ⌾⠀MUTATORS
    * @readonly
    * @static
-   * @deprecated Place all resolvers in RESOLVERS()
    *
    * @param {Object} requestData typically an object containing three
    * properties; {req, res, gql}
@@ -851,6 +853,63 @@ export class GQLBase extends EventEmitter {
   static get joinLines(): Function { return joinLines }
 
   /**
+   * An simple pass-thru method for fetching a types merged root object.
+   *
+   * @method ⌾⠀getMergedRoot
+   * @memberof GQLBase
+   * @static 
+   * 
+   * @param {Object} requestData an object containing the request data such as
+   * request, response or graphql context info that should be passed along to
+   * each of the resolver creators
+   * @return {Object} the merged root object with all the query, mutation and
+   * subscription resolvers defined and created within.
+   */
+  static async getMergedRoot(
+    requestData: Object, 
+    separateByType: boolean = false
+  ): Object {
+    const root = {};
+    const Class = this;
+
+    let _ = {
+      resolvers: Class[META_KEY].resolvers || [],
+      mutators: Class[META_KEY].mutators || [],
+      subscriptors: Class[META_KEY].subscriptors || []
+    }
+
+    let convert = f => {return { [f.name]: f.bind(Class, requestData) }}
+    let reduce = (p, c) => merge(p, c)
+
+    _.resolvers = _.resolvers.map(convert).reduce(reduce, {})
+    _.mutators = _.mutators.map(convert).reduce(reduce, {})
+    _.subscriptors = _.subscriptors.map(convert).reduce(reduce, {})
+
+    if (separateByType) {
+      merge(
+        root,
+        { Query: await Class.RESOLVERS(requestData) },
+        { Mutation: await Class.MUTATORS(requestData) },
+        { Query: _.resolvers },
+        { Mutation: _.mutators },
+        { Subscription: _.subscriptors }
+      );
+    }
+    else {
+      merge(
+        root,
+        await Class.RESOLVERS(requestData),
+        await Class.MUTATORS(requestData),
+        _.resolvers,
+        _.mutators,
+        _.subscriptors
+      );
+    }
+
+    return root;
+  }
+
+  /**
    * An object used to store data used by decorators and other internal
    * proccesses.
    * @ComputedType
@@ -864,172 +923,6 @@ export class GQLBase extends EventEmitter {
 
     return storage;
   }
-}
-
-/**
- * The handler, an instance of which is created for every instance of GQLBase.
- * The handler manages the fetching and decoding of files bearing the IDL
- * schema associated with the class represented by this instance of GQLBase.
- *
- * @class IDLFileHandler
- */
-export class IDLFileHandler {
-  path: ?string;
-
-  extension: ?string;
-
-  /**
-   * The IDLFileHandler checks the SCHEMA value returned by the class type
-   * of the supplied instance. If the resulting value is a Symbol, then the
-   * handler's responsibility is to find the file, load it from disk and
-   * provide various means of using its contents; i.e. as a Buffer, a String
-   * or wrapped in a SyntaxTree instance.
-   *
-   * @memberof IDLFileHandler
-   * @method ⎆⠀constructor
-   * @constructor
-   *
-   * @param {Function} Class a function or class definition that presumably
-   * extends from GQLBase were it an instance.
-   */
-  constructor(Class: Function) {
-    // $FlowFixMe
-    const symbol = typeof Class.SCHEMA === 'symbol' && Class.SCHEMA || null;
-    const pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
-
-    if (symbol) {
-      let symbolString = symbol.toString();
-
-      if (symbol === Class.ADJACENT_FILE) {
-        if (Class.module === module) {
-          throw new Error(`
-            The a static getter for 'module' on ${Class.name} must be present
-            that returns the module object where the Class is defined. Try the
-            following:
-
-            // your ${Class.name}.js file
-            import { GQLBase } from 'graphql-lattice'
-
-            const ${Class.name}Module = module;
-
-            class ${Class.name} extends GQLBase {
-              ...
-
-              static get module() {
-                return ${Class.name}Module;
-              }
-            }
-
-          `);
-        }
-
-        const filename = Class.module.filename;
-        const extension = Path.extname(filename)
-        const dir = Path.dirname(filename)
-        const filefixed = Path.basename(filename, extension)
-        const build = Path.resolve(Path.join(dir, `${filefixed}.graphql`))
-
-        this.path = build;
-        this.extension = '.graphql';
-      }
-      else if (pattern.test(symbolString)) {
-        const parsed = pattern.exec(symbolString);
-        const extension = parsed[2] || '.graphql'
-        const dir = Path.dirname(parsed[1])
-        const file = Path.basename(parsed[1], extension)
-        const build = Path.resolve(Path.join(dir, `${file}${extension}`))
-
-        this.path = build;
-        this.extension = extension;
-      }
-    }
-    else {
-      this.path = this.extension = null;
-    }
-  }
-
-  /**
-   * Loads the calculated file determined by the decoding of the meaning of
-   * the Symbol returned by the SCHEMA property of the instance supplied to
-   * the IDLFileHandler upon creation.
-   *
-   * @instance
-   * @memberof IDLFileHandler
-   * @method ⌾⠀getFile
-   *
-   * @return {Buffer|null} returns the Buffer containing the file base IDL
-   * schema or null if none was found or a direct string schema is returned
-   * by the SCHEMA property
-   */
-  getFile(): Buffer {
-    return fs.readFileSync(String(this.path));
-  }
-
-  /**
-   * If getFile() returns a Buffer, this is the string representation of the
-   * underlying file contents. As a means of validating the contents of the
-   * file, the string contents are parsed into an AST and back to a string.
-   *
-   * @instance
-   * @memberof IDLFileHandler
-   * @method ⌾⠀getSchema
-   *
-   * @return {string|null} the string contents of the Buffer containing the
-   * file based IDL schema.
-   */
-  getSchema(): ?string {
-    if (!this.path) { return null; }
-
-    const tree = this.getSyntaxTree();
-
-    return tree.toString();
-  }
-
-  /**
-   * If getFile() returns a Buffer, the string contents are passed to a new
-   * instance of SyntaxTree which parses this into an AST for manipulation.
-   *
-   * @instance
-   * @memberof IDLFileHandler
-   * @method ⌾⠀getSyntaxTree
-   *
-   * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
-   * schema contents loaded from disk. Null is returned if a calculated path
-   * cannot be found; always occurs when SCHEMA returns a string.
-   */
-  getSyntaxTree(): SyntaxTree {
-    const buffer = this.getFile();
-    const tree = new SyntaxTree(buffer.toString());
-
-    return tree;
-  }
-
-  /**
-   * Returns the `constructor` name. If invoked as the context, or `this`,
-   * object of the `toString` method of `Object`'s `prototype`, the resulting
-   * value will be `[object MyClass]`, given an instance of `MyClass`
-   *
-   * @method ⌾⠀[Symbol.toStringTag]
-   * @memberof IDLFileHandler
-   *
-   * @return {string} the name of the class this is an instance of
-   * @ComputedType
-   */
-  get [Symbol.toStringTag]() { return this.constructor.name }
-
-  /**
-   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static
-   * scale. So, if you perform `Object.prototype.toString.call(MyClass)`
-   * the result would be `[object MyClass]`.
-   *
-   * @method ⌾⠀[Symbol.toStringTag]
-   * @memberof IDLFileHandler
-   * @static
-   *
-   * @return {string} the name of this class
-   * @ComputedType
-   */
-  static get [Symbol.toStringTag]() { return this.name }
 }
 
 export default GQLBase;

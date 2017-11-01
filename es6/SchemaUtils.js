@@ -7,6 +7,7 @@ import { GQLEnum } from './GQLEnum'
 import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
+import { merge } from 'lodash'
 import EventEmitter from 'events'
 import {
   parse,
@@ -42,7 +43,7 @@ export class SchemaUtils extends EventEmitter {
    *
    * @param {Object} schema a built GraphQLSchema object created via buildSchema
    * or some other alternative but compatible manner
-   * @param {Function[]} Classes these are GQLBase extended classes used to 
+   * @param {Function[]} Classes these are GQLBase extended classes used to
    * manipulate the schema with.
    */
   static injectComments(schema: Object, Classes: Array<GQLBase>) {
@@ -84,9 +85,9 @@ export class SchemaUtils extends EventEmitter {
         [subscription, DOC_SUBSCRIPTIONS, DOC_SUBSCRIPTION]
       ]) {
         if (
-          _type 
+          _type
           && (
-            (Object.keys(docs[_CONST] || {}).length) 
+            (Object.keys(docs[_CONST] || {}).length)
             || (docs[_topCONST] && docs[_topCONST].length)
           )
         ) {
@@ -118,7 +119,7 @@ export class SchemaUtils extends EventEmitter {
    *
    * @param {Object} schema a built GraphQLSchema object created via buildSchema
    * or some other alternative but compatible manner
-   * @param {Function[]} Classes these are GQLBase extended classes used to 
+   * @param {Function[]} Classes these are GQLBase extended classes used to
    * manipulate the schema with.
    */
   static injectInterfaceResolvers(schema: Object, Classes: Array<GQLBase>) {
@@ -143,7 +144,7 @@ export class SchemaUtils extends EventEmitter {
    *
    * @param {Object} schema a built GraphQLSchema object created via buildSchema
    * or some other alternative but compatible manner
-   * @param {Function[]} Classes these are GQLBase extended classes used to 
+   * @param {Function[]} Classes these are GQLBase extended classes used to
    * manipulate the schema with.
    */
   static injectEnums(schema: Object, Classes: Array<GQLBase>) {
@@ -154,28 +155,28 @@ export class SchemaUtils extends EventEmitter {
 
         for (let value of __enum._values) {
           if (value.name in values) {
-            Object.assign(value, values[value.name])
+            merge(value, values[value.name])
           }
         }
       }
     }
   }
-  
+
   /**
    * GQLScalar types must define three methods to have a valid implementation.
-   * They are serialize, parseValue and parseLiteral. See their docs for more 
+   * They are serialize, parseValue and parseLiteral. See their docs for more
    * info on how to do so.
    *
-   * This code finds each scalar and adds their implementation details to the 
+   * This code finds each scalar and adds their implementation details to the
    * generated schema type config.
    *
    * @memberof SchemaUtils
    * @method ⌾⠀injectScalars
    * @static
-   * 
+   *
    * @param {Object} schema a built GraphQLSchema object created via buildSchema
    * or some other alternative but compatible manner
-   * @param {Function[]} Classes these are GQLBase extended classes used to 
+   * @param {Function[]} Classes these are GQLBase extended classes used to
    * manipulate the schema with.
    */
   static injectScalars(schema: Object, Classes: Array<GQLBase>) {
@@ -183,28 +184,28 @@ export class SchemaUtils extends EventEmitter {
       if (Class.GQL_TYPE === GraphQLScalarType) {
         // @ComputedType
         const type = schema._typeMap[Class.name];
-        
+
         // @ComputedType
         const { serialize, parseValue, parseLiteral } = Class;
 
         // @ComputedType
         console.dir(Class.name, type);
-        
+
         if (!serialize || !parseValue || !parseLiteral) {
           // @ComputedType
           console.error(`Scalar type ${Class.name} has invaild impl.`);
           continue;
         }
-        
-        Object.assign(type._scalarConfig, {
+
+        merge(type._scalarConfig, {
           serialize,
           parseValue,
           parseLiteral
         });
       }
     }
-  } 
-  
+  }
+
   /**
    * A function that combines the IDL schemas of all the supplied classes and
    * returns that value to the middleware getter.
@@ -216,7 +217,7 @@ export class SchemaUtils extends EventEmitter {
    * @return {string} a dynamically generated GraphQL IDL schema string
    */
   static generateSchemaSDL(
-    Classes: Array<GQLBase>, 
+    Classes: Array<GQLBase>,
     logOutput: boolean = true
   ): string {
     let schema = SyntaxTree.EmptyDocument();
@@ -249,7 +250,7 @@ export class SchemaUtils extends EventEmitter {
 
     return schema.toString();
   }
-  
+
   /**
    * An asynchronous function used to parse the supplied classes for each
    * ones resolvers and mutators. These are all combined into a single root
@@ -259,44 +260,30 @@ export class SchemaUtils extends EventEmitter {
    * @memberof SchemaUtils
    * @method ⌾⠀createMergedRoot
    *
-   * @param {Function[]} Classes the GQLBase extended class objects or 
+   * @param {Array<GQLBase>} Classes the GQLBase extended class objects or
    * functions from which to merge the RESOLVERS and MUTATORS functions.
-   * @param {Object} requestData for Express apss, this will be an object 
-   * containing { req, res, gql } where those are the Express request and 
-   * response object as well as the GraphQL parameters for the request. 
+   * @param {Object} requestData for Express apss, this will be an object
+   * containing { req, res, gql } where those are the Express request and
+   * response object as well as the GraphQL parameters for the request.
    * @return {Promise<Object>} a Promise resolving to an Object containing all
    * the functions described in both Query and Mutation types.
    */
   static async createMergedRoot(
-    Classes: Function[], 
-    requestData: Object
+    Classes: Array<GQLBase>,
+    requestData: Object,
+    separateByType: boolean = false
   ): Promise<Object> {
     const root = {};
 
     for (let Class of Classes) {
-      let _ = {
-        resolvers: Class[META_KEY].resolvers || [],
-        mutators: Class[META_KEY].mutators || [],
-        subscriptors: Class[META_KEY].subscriptors || []
-      }
-      
-      let convert = f => {return { [f.name]: f.bind(Class, requestData) }}
-      let reduce = (p, c) => Object.assign(p, c)
-      
-      _.resolvers = _.resolvers.map(convert).reduce(reduce, {})
-      _.mutators = _.mutators.map(convert).reduce(reduce, {})
-      _.subscriptors = _.subscriptors.map(convert).reduce(reduce, {})
-      
-      Object.assign(
+      merge(
         root,
-        await Class.RESOLVERS(requestData),
-        await Class.MUTATORS(requestData),
-        _.resolvers,
-        _.mutators,
-        _.subscriptors,
+        await Class.getMergedRoot(requestData, separateByType)
       );
     }
 
     return root;
-  }  
+  }
 }
+
+export default SchemaUtils

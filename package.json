@@ -2,11 +2,11 @@
   "name": "graphql-lattice",
   "version": "2.10.0",
   "description": "OO Underpinnings for ease of GraphQL Implementation",
-  "main": "dist/lattice.min.js",
+  "main": "dist/lattice.js",
   "scripts": {
-    "test": "jest --verbose",
-    "build": "webpack --config webpack.config.js && uglifyjs dist/lattice.js -o dist/lattice.min.js --source-map",
-    "docs": "rm -rf ./docs && jsdoc -c conf.json"
+    "test": "jest",
+    "build": "webpack --config webpack.config.js ; uglifyjs dist/lattice.js -o dist/lattice.min.js --source-map",
+    "docs": "rm -rf ./docs ; jsdoc -c conf.json"
   },
   "repository": {
     "type": "git",
@@ -26,15 +26,17 @@
   },
   "homepage": "https://github.com/nyteshade/graphql-lattice#readme",
   "dependencies": {
-    "@std/esm": "^0.7.1",
+    "apollo-server-express": "^1.2.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "body-parser": "^1.18.2",
     "express-graphql": "^0.6.6",
-    "flow-bin": "^0.54.0",
-    "graphql": "^0.10.3",
+    "graphql": "^0.11.7",
+    "graphql-server-express": "^1.2.0",
+    "lodash": "^4.17.4",
     "ne-tag-fns": "^0.1.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
+    "babel-cli": "^6.26.0",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -42,20 +44,24 @@
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-regenerator": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.5.2",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.24.1",
-    "flowtype": "^2.0.0",
+    "express": "^4.16.2",
+    "flow-bin": "^0.54.0",
     "jest": "^20.0.4",
     "jsdoc": "^3.5.5",
     "jsdoc-babel": "^0.3.0",
     "kitsune-jsdoc-template": "^1.0.3",
     "minami": "^1.2.3",
-    "regenerator-runtime": "^0.10.5",
+    "regenerator-runtime": "^0.11.0",
     "uglify-es": "^3.0.28",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "unminified-webpack-plugin": "^1.2.0",
     "webpack": "^3.5.5"
+  },
+  "jest": {
+    "verbose": true
   }
 }
