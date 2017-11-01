@@ -857,8 +857,8 @@ export class GQLBase extends EventEmitter {
    *
    * @method ⌾⠀getMergedRoot
    * @memberof GQLBase
-   * @static 
-   * 
+   * @static
+   *
    * @param {Object} requestData an object containing the request data such as
    * request, response or graphql context info that should be passed along to
    * each of the resolver creators
@@ -866,15 +866,18 @@ export class GQLBase extends EventEmitter {
    * subscription resolvers defined and created within.
    */
   static async getMergedRoot(
-    requestData: Object, 
+    requestData: Object,
     separateByType: boolean = false
   ): Object {
     const root = {};
     const Class = this;
 
     let _ = {
+      // $FlowFixMe
       resolvers: Class[META_KEY].resolvers || [],
+      // $FlowFixMe
       mutators: Class[META_KEY].mutators || [],
+      // $FlowFixMe
       subscriptors: Class[META_KEY].subscriptors || []
     }
 
@@ -886,6 +889,9 @@ export class GQLBase extends EventEmitter {
     _.subscriptors = _.subscriptors.map(convert).reduce(reduce, {})
 
     if (separateByType) {
+      // Apollo wants all the resolvers to grouped by top level type.
+      // The field resolvers aren't an issue in Lattice defined types
+      // but the root types do need to be sorted; so let's do that here
       merge(
         root,
         { Query: await Class.RESOLVERS(requestData) },
@@ -894,6 +900,12 @@ export class GQLBase extends EventEmitter {
         { Mutation: _.mutators },
         { Subscription: _.subscriptors }
       );
+
+      // When using lattice with apollo server, it is quite particular about
+      // empty Query, Mutation or Subscription resolver maps.
+      if (!Object.keys(root.Query).length) delete root.Query
+      if (!Object.keys(root.Mutation).length) delete root.Mutation
+      if (!Object.keys(root.Subscription).length) delete root.Subscription
     }
     else {
       merge(

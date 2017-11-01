@@ -15,7 +15,8 @@ import {
   buildSchema,
   GraphQLInterfaceType,
   GraphQLEnumType,
-  GraphQLScalarType
+  GraphQLScalarType,
+  GraphQLSchema
 } from 'graphql'
 
 /**
@@ -25,6 +26,21 @@ import {
  * @class SchemaUtils
  */
 export class SchemaUtils extends EventEmitter {
+  /**
+   * Calls all the Lattice post-schema creation routines on a given Schema
+   * using data from a supplied array of classes.
+   *
+   * @param {GraphQLSchema} schema the schema to post-process
+   * @param {Array<GQLBase>} Classes the Classes from which to drive post
+   * processing data from
+   */
+  static injectAll(schema: GraphQLSchema, Classes: Array<GQLBase>) {
+    SchemaUtils.injectInterfaceResolvers(schema, Classes);
+    SchemaUtils.injectEnums(schema, Classes);
+    SchemaUtils.injectScalars(schema, Classes);
+    SchemaUtils.injectComments(schema, Classes);
+  }
+
   /**
    * Until such time as I can get the reference Facebook GraphQL AST parser to
    * read and apply descriptions or until such time as I employ the Apollo

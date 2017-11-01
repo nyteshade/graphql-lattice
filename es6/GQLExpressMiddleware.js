@@ -7,7 +7,8 @@ import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
 import { SchemaUtils } from './SchemaUtils'
-import { merge } from 'lodash'
+import _, { merge } from 'lodash'
+import { makeExecutableSchema } from 'graphql-tools'
 
 import {
   parse,
@@ -58,21 +59,21 @@ export class GQLExpressMiddleware extends EventEmitter
     super()
 
     this.handlers = handlers
-    
+
     // Generate and cache the schema SDL/IDL string and ast obj (GraphQLSchema)
-    this.ast 
+    this.ast
   }
 
   /**
-   * The Schema String and Schema AST/GraphQLSchema JavaScript objects are 
-   * cached after being processed once. If there is a runtime need to rebuild 
-   * these objects, calling `clearCache()` will allow their next usage to 
+   * The Schema String and Schema AST/GraphQLSchema JavaScript objects are
+   * cached after being processed once. If there is a runtime need to rebuild
+   * these objects, calling `clearCache()` will allow their next usage to
    * rebuild them dynamically.
    *
    * @method clearCache
    * @memberof GQLExpressMiddleware
-   * 
-   * @return {GQLExpressMiddleware} returns this so that it can be inlined; ala 
+   *
+   * @return {GQLExpressMiddleware} returns this so that it can be inlined; ala
    * `gqlExpressMiddleware.clearCache().ast`, for example
    */
   clearCache(): GQLExpressMiddleware {
@@ -95,10 +96,7 @@ export class GQLExpressMiddleware extends EventEmitter
 
     let ast: GraphQLSchema = buildSchema(this.schema)
 
-    SchemaUtils.injectInterfaceResolvers(ast, this.handlers);
-    SchemaUtils.injectEnums(ast, this.handlers);
-    SchemaUtils.injectScalars(ast, this.handlers);
-    SchemaUtils.injectComments(ast, this.handlers);
+    SchemaUtils.injectAll(ast, this.handlers);
 
     this.cache.set('ast', ast)
 
@@ -128,13 +126,13 @@ export class GQLExpressMiddleware extends EventEmitter
   }
 
   async rootValue(
-    requestData: Object, 
+    requestData: Object,
     separateByType: boolean = false
   ): Object {
     let root = await SchemaUtils.createMergedRoot(
       this.handlers, requestData, separateByType
     )
-        
+
     return root;
   }
 
@@ -262,6 +260,13 @@ export class GQLExpressMiddleware extends EventEmitter
         resolvers: await this.rootValue({req}, true)
       }
 
+      opts.schema = makeExecutableSchema({
+        typeDefs: [this.schema],
+        resolvers: opts.resolvers
+      })
+
+      SchemaUtils.injectAll(opts.schema, this.handlers);
+
       merge(opts, options);
       if (patchFn && typeof patchFn === 'function') {
         merge(
@@ -269,8 +274,6 @@ export class GQLExpressMiddleware extends EventEmitter
           (patchFn.bind(this)(opts, {req})) || opts
         );
       }
-      
-      console.log('[generateApolloOptions]', opts.schema instanceof GraphQLSchema, opts)
 
       return opts;
     }
@@ -362,22 +365,101 @@ export class GQLExpressMiddleware extends EventEmitter
    */
   get astMiddleware(): Function {
     return (req: Object, res: Object, next: ?Function) => {
-      const schema: GraphQLSchema = this.ast
+      res.status(200).send('Temporarily disabled in this version')
 
-      for (let typeKey of Object.keys(schema._typeMap)) {
-        let object = {}
+      // let cachedOutput = this.cache.get('astMiddlewareOutput')
+      // if (cachedOutput) {
+      //   res
+      //     .status(302)
+      //     .set('Content-Type', 'application/json')
+      //     .send(cachedOutput)
+      // }
+      // else {
+      //   this.rootValue({req, res, next}, true)
+      //     .then(resolvers => {
+      //       let schema: GraphQLSchema = buildSchema(this.schema)
 
-        // $FlowFixMe
-        for (let valKey of Object.keys(schema._typeMap[typeKey])) {
-          // $FlowFixMe
-          object[valKey] = schema._typeMap[typeKey][valKey]
-        }
+      //       SchemaUtils.injectInterfaceResolvers(schema, this.handlers);
+      //       SchemaUtils.injectEnums(schema, this.handlers);
+      //       SchemaUtils.injectScalars(schema, this.handlers);
+      //       SchemaUtils.injectComments(schema, this.handlers);
 
-        // $FlowFixMe
-        schema._typeMap[typeKey] = object
-      }
+      //       function killToJSON(obj: any, path = 'obj.') {
+      //         for (let key in obj) {
+      //           try {
+      //             if (key == 'prev' || key == 'next' || key == 'ofType') continue;
 
-      res.status(200).json(schema)
+      //             if (key == 'toJSON') {
+      //               let success = delete obj.toJSON
+      //               //console.log(`Killing ${path}toJSON...${success ? 'success' : 'failure'}`)
+      //               continue
+      //             }
+
+      //             if (key == 'inspect') {
+      //               let success = delete obj.inspect
+      //               //console.log(`Killing ${path}inspect...${success ? 'success' : 'failure'}`)
+      //               continue
+      //             }
+
+      //             if (key == 'toString') {
+      //               obj.toString = Object.prototype.toString
+      //               //console.log(`Replacing ${path}toString with default`)
+      //               continue
+      //             }
+
+      //             if (typeof obj[key] == 'function') {
+      //               obj[key] = `[Function ${obj[key].name}]`
+      //               continue
+      //             }
+
+      //             if (typeof obj[key] == 'object') {
+      //               obj[key] = killToJSON(obj[key], `${path}${key}.`)
+      //               continue
+      //             }
+      //           }
+      //           catch (error) {
+      //             continue
+      //           }
+      //         }
+
+      //         return obj
+      //       }
+
+      //       // $FlowFixMe
+      //       schema = killToJSON(schema)
+
+      //       // Still do not know why/how they are preventing JSONifying the
+      //       // _typeMap keys. So aggravting
+      //       for (let typeKey of Object.keys(schema._typeMap)) {
+      //         let object = {}
+
+      //         // $FlowFixMe
+      //         for (let valKey of Object.keys(schema._typeMap[typeKey])) {
+      //           // $FlowFixMe
+      //           object[valKey] = schema._typeMap[typeKey][valKey]
+      //         }
+
+      //         // $FlowFixMe
+      //         schema._typeMap[typeKey] = object
+      //       }
+
+      //       let output = JSON.stringify(schema)
+      //       this.cache.delete('ast')
+      //       this.cache.set('astMiddlewareOutput', output)
+
+      //       res
+      //         .status(200)
+      //         .set('Content-Type', 'application/json')
+      //         .send(output)
+      //     })
+      //     .catch(error => {
+      //       console.error(error)
+
+      //       res
+      //         .status(500)
+      //         .json(error)
+      //     })
+      // }
     }
   }
 }
