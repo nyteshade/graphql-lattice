@@ -1,6 +1,6 @@
 /** @namespace decorators */
 
-import { GQLBase, MODEL_KEY } from '../GQLBase'
+import { GQLBase, MODEL_KEY, META_KEY } from '../GQLBase'
 import { isArray, extendsFrom } from '../types'
 import { inspect } from 'util'
 import { GraphQLEnumType, parse } from 'graphql'
@@ -322,9 +322,19 @@ export function Getters(
     for (let property of propertyNames) {
       let { fieldName, getterMaker } = extractBits(property);
 
-      Object.defineProperty(target.prototype, fieldName, {
-        get: getterMaker()
-      });
+      if (!target[META_KEY].getters) {
+        target[META_KEY].getters = []
+      }
+      target[META_KEY].getters.push(fieldName)
+
+      if (typeof target.prototype[fieldName] === 'undefined') {
+        Object.defineProperty(target.prototype, fieldName, {
+          get: getterMaker()
+        });
+      }
+      else {
+        console.warn(`Skipping the getter for ${target.name}.${fieldName}`)
+      }
     }
 
     return target;
@@ -354,9 +364,19 @@ export function Setters(
     for (let property of propertyNames) {
       let { fieldName, setterMaker } = extractBits(property);
 
-      Object.defineProperty(target.prototype, fieldName, {
-        set: setterMaker()
-      });
+      if (!target[META_KEY].setters) {
+        target[META_KEY].setters = []
+      }
+      target[META_KEY].setters.push(fieldName)
+
+      if (typeof target.prototype[fieldName] === 'undefined') {
+        Object.defineProperty(target.prototype, fieldName, {
+          set: setterMaker()
+        });
+      }
+      else {
+        console.warn(`Skipping the setter for ${target.name}.${fieldName}`)
+      }
     }
 
     return target;
@@ -392,19 +412,20 @@ export function Properties(
         setterMaker
       } = extractBits(property);
 
-      // Create a replaceable proxy-analog to allow the replacement of
-      // getters and setters that will be setup by default.
-      target.prototype[Symbol.for(fieldName)] = {
-        set: setterMaker(),
-        get: getterMaker()
+      if (!target[META_KEY].props) {
+        target[META_KEY].props = []
       }
+      target[META_KEY].props.push(fieldName)
 
-      // Point the getters/setters at the proxy analog. Changing a defined
-      // property is harder than a mere assignment.
-      Object.defineProperty(target.prototype, fieldName, {
-        set: target.prototype[Symbol.for(fieldName)].set,
-        get: target.prototype[Symbol.for(fieldName)].get
-      });
+      if (typeof target.prototype[fieldName] === 'undefined') {
+        Object.defineProperty(target.prototype, fieldName, {
+          set: setterMaker(),
+          get: getterMaker()
+        });
+      }
+      else {
+        console.warn(`Skipping the properties for ${target.name}.${fieldName}`)
+      }
     }
 
     return target;

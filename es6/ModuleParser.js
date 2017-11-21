@@ -4,9 +4,14 @@ import fs, { readdirSync, statSync } from 'fs'
 import path from 'path'
 import * as types from './types'
 import { GQLBase } from './GQLBase'
-import { promisify, Deferred } from './utils'
 import { GQLJSON } from './types/GQLJSON'
 import { merge } from 'lodash'
+import {
+  promisify,
+  Deferred,
+  getLatticePrefs,
+  LatticeLogs as ll
+} from './utils'
 
 // Promisify some bits
 const readdirAsync = promisify(fs.readdir)
@@ -40,6 +45,12 @@ export class ModuleParser {
    * @type {Array<GQLBase>}
    */
   classes: Array<GQLBase>;
+
+  /**
+   * A map of skipped items on the last pass and the associated error that
+   * accompanies it.
+   */
+  skipped: Map<string, Error>;
 
   /**
    * A string denoting the directory on disk where `ModuleParser` should be
@@ -82,6 +93,7 @@ export class ModuleParser {
   constructor(directory: string, options: Object = {addLatticeTypes: true}) {
     this.directory = path.resolve(directory);
     this.classes = [];
+    this.skipped = new Map();
 
     merge(this.options, options);
 
@@ -112,13 +124,13 @@ export class ModuleParser {
     let clear: string = '\x1b[0m'
 
     try {
-      // Long story short; webpack makes this somewhat difficult but since
-      // we are targeting node, we can make this work with eval. Webpack
-      // does funny things with require which, in most cases, is the right
-      // thing to do.
-      moduleContents = eval(`(require("${filePath}"))`)
+      moduleContents = require(filePath)
     }
-    catch(ignore) { console.log(`${yellow}Skipping${clear} ${filePath}`) }
+    catch(ignore) {
+      ll.log(`${yellow}Skipping${clear} ${filePath}`)
+      ll.trace(ignore)
+      this.skipped.set(filePath, ignore)
+    }
 
     return moduleContents;
   }
@@ -157,7 +169,7 @@ export class ModuleParser {
       if (isPrimitive(value)) { continue }
 
       if (extendsFrom(value, GQLBase)) {
-        gqlDefinitions.push(value);
+        gqlDefinitions.push(value)
       }
 
       if ((isObject(value) || isArray(value)) && !stack.has(value)) {
@@ -189,6 +201,7 @@ export class ModuleParser {
     let modules
     let files
     let set = new Set();
+    let opts = getLatticePrefs()
 
     if (!this.valid) {
       throw new Error(`
@@ -197,6 +210,8 @@ export class ModuleParser {
         directory.
       `)
     }
+
+    this.skipped.clear()
 
     // @ComputedType
     files = await this.constructor.walk(this.directory)
@@ -219,6 +234,14 @@ export class ModuleParser {
       this.classes.push(GQLJSON)
     }
 
+    // Stop flow and throw an error if some files failed to load and settings
+    // declare we should do so. After Lattice 3.x we should expect this to be
+    // the new default
+    if (opts.ModuleParser.failOnError && this.skipped.size) {
+      this.printSkipped()
+      throw new Error('Some files skipped due to errors')
+    }
+
     return this.classes;
   }
 
@@ -238,6 +261,7 @@ export class ModuleParser {
     let modules: Array<Object>;
     let files: Array<string>;
     let set = new Set();
+    let opts = getLatticePrefs()
 
     if (!this.valid) {
       throw new Error(`
@@ -246,6 +270,8 @@ export class ModuleParser {
         directory.
       `)
     }
+
+    this.skipped.clear()
 
     files = this.constructor.walkSync(this.directory)
     modules = files.map(file => {
@@ -268,7 +294,37 @@ export class ModuleParser {
       this.classes.push(GQLJSON)
     }
 
+    // Stop flow and throw an error if some files failed to load and settings
+    // declare we should do so. After Lattice 3.x we should expect this to be
+    // the new default
+    if (opts.ModuleParser.failOnError && this.skipped.size) {
+      this.printSkipped()
+      throw new Error('Some files skipped due to errors')
+    }
+
     return this.classes;
+  }
+
+  /**
+   * Prints the list of skipped files, their stack traces, and the errors
+   * denoting the reasons the files were skipped.
+   */
+  printSkipped() {
+    if (this.skipped.size) {
+      ll.outWrite('\x1b[1;91m')
+      ll.outWrite('Skipped\x1b[0;31m the following files\n')
+
+      for (let [key, value] of this.skipped) {
+        ll.log(`${path.basename(key)}: ${value.message}`)
+        if (value.stack)
+          ll.log(value.stack.replace(/(^)/m, '$1  '))
+      }
+
+      ll.outWrite('\x1b[0m')
+    }
+    else {
+      ll.log('\x1b[1;32mNo files skipped\x1b[0m')
+    }
   }
 
   /**
@@ -302,7 +358,7 @@ export class ModuleParser {
    * Recursively walks a directory and returns an array of asbolute file paths
    * to the files under the specified directory.
    *
-   * @method ModuleParser~walk
+   * @method ModuleParser~⌾⠀walk
    * @async
    * @since 2.7.0
    *
@@ -314,9 +370,12 @@ export class ModuleParser {
    */
   static async walk(
     dir: string,
-    filelist: Array<string> = []
+    filelist: Array<string> = [],
+    extensions: Array<string> = ['.js', '.jsx', '.ts', '.tsx']
   ): Promise<Array<string>> {
     let files = await readdirAsync(dir);
+    let exts = ModuleParser.checkForPackageExtensions() || extensions
+    let pattern = ModuleParser.arrayToPattern(exts)
     let stats
 
     files = files.map(file => path.resolve(path.join(dir, file)))
@@ -327,7 +386,8 @@ export class ModuleParser {
         filelist = await this.walk(file, filelist)
       }
       else {
-        filelist = filelist.concat(file);
+        if (pattern.test(path.extname(file)))
+          filelist = filelist.concat(file);
       }
     }
 
@@ -339,7 +399,7 @@ export class ModuleParser {
    * to the files under the specified directory. This version does this in a
    * synchronous fashion.
    *
-   * @method ModuleParser~walkSync
+   * @method ModuleParser~⌾⠀walkSync
    * @async
    * @since 2.7.0
    *
@@ -351,9 +411,12 @@ export class ModuleParser {
    */
   static walkSync(
     dir: string,
-    filelist: Array<string> = []
+    filelist: Array<string> = [],
+    extensions: Array<string> = ['.js', '.jsx', '.ts', '.tsx']
   ): Array<string> {
-    let files = readdirSync(dir);
+    let files = readdirSync(dir)
+    let exts = ModuleParser.checkForPackageExtensions() || extensions
+    let pattern = ModuleParser.arrayToPattern(exts)
     let stats
 
     files = files.map(file => path.resolve(path.join(dir, file)))
@@ -364,11 +427,87 @@ export class ModuleParser {
         filelist = this.walkSync(file, filelist)
       }
       else {
-        filelist = filelist.concat(file);
+        if (pattern.test(path.extname(file)))
+          filelist = filelist.concat(file);
       }
     }
 
     return filelist;
+  }
+
+  /**
+   * The ModuleParser should only parse files that match the default or
+   * supplied file extensions. The default list contains .js, .jsx, .ts
+   * and .tsx; so JavaScript or TypeScript files and their JSX React
+   * counterparts
+   *
+   * Since the list is customizable for a usage, however, it makes sense
+   * to have a function that will match what is supplied rather than
+   * creating a constant expression to use instead.
+   *
+   * @static
+   * @memberof ModuleParser
+   * @function ⌾⠀arrayToPattern
+   * @since 2.13.0
+   *
+   * @param {Array<string>} extensions an array of extensions to
+   * convert to a regular expression that would pass for each
+   * @param {string} flags the value passed to a new RegExp denoting the
+   * flags used in the pattern; defaults to 'i' for case insensitivity
+   * @return {RegExp} a regular expression object matching the contents
+   * of the array of extensions or the default extensions and that will
+   * also match those values in a case insensitive manner
+   */
+  static arrayToPattern(
+    extensions: Array<string> = ['.js', '.jsx', '.ts', '.tsx'],
+    flags: string = 'i'
+  ) {
+    return new RegExp(
+      extensions
+        .join('|')
+        .replace(/\./g, '\\.')
+        .replace(/([\|$])/g, '\\b$1'),
+      flags
+    )
+  }
+
+  /**
+   * Using the module `read-pkg-up`, finds the nearest package.json file
+   * and checks to see if it has a `.lattice.moduleParser.extensions'
+   * preference. If so, if the value is an array, that value is used,
+   * otherwise the value is wrapped in an array. If the optional parameter
+   * `toString` is `true` then `.toString()` will be invoked on any non
+   * Array values found; this behavior is the default
+   *
+   * @static
+   * @memberof ModuleParser
+   * @method ⌾⠀checkForPackageExtensions
+   * @since 2.13.0
+   *
+   * @param {boolean} toString true if any non-array values should have
+   * their `.toString()` method invoked before being wrapped in an Array;
+   * defaults to true
+   * @return {?Array<string>} null if no value is set for the property
+   * `lattice.ModuleParser.extensions` in `package.json` or the value
+   * of the setting if it is an array. Finally if the value is set but is
+   * not an array, the specified value wrapped in an array is returned
+   */
+  static checkForPackageExtensions(toString: boolean = true): ?Array<string> {
+    let pkg = getLatticePrefs()
+    let extensions = null
+
+    if (pkg.ModuleParser && pkg.ModuleParser.extensions) {
+      let packageExts = pkg.ModuleParser.extensions
+
+      if (Array.isArray(packageExts)) {
+        extensions = packageExts
+      }
+      else {
+        extensions = [toString ? packageExts.toString() : packageExts]
+      }
+    }
+
+    return extensions
   }
 }
 

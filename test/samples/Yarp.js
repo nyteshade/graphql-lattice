@@ -3,21 +3,20 @@ import { GQLBase, Properties, Schema } from '../../es6/lattice'
 @Schema(`
   type Yarp {
     description: String
-    count: Int 
+    count: Int
   }
-  
+
   type Query {
-    yarpaYarpaYarpa: Yarp 
+    yarpaYarpaYarpa: Yarp
   }
 `)
-@Properties('description', 'count')
 export class Yarp extends GQLBase {
   /**
-   * An example asynchronous RESOLVERS function 
+   * An example asynchronous RESOLVERS function
    *
    * @method RESOLVERS
    * @param {Object} ignored typically null in tests
-   * @return {Promise<Yarp>} a newly created Yarp object instance 
+   * @return {Promise<Yarp>} a newly created Yarp object instance
    */
   static async RESOLVERS(ignored) {
     return {

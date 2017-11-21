@@ -7,9 +7,11 @@ import fs from 'fs'
 import { Deferred, joinLines } from './utils'
 import { typeOf } from './types'
 import { SyntaxTree } from './SyntaxTree'
-import { GraphQLObjectType } from 'graphql'
+import { Properties } from './decorators/ModelProperties'
+import { GraphQLObjectType, GraphQLEnumType } from 'graphql'
 import { IDLFileHandler } from './IDLFileHandler'
 import { merge } from 'lodash'
+import { LatticeLogs as ll } from './utils'
 
 import EventEmitter from 'events'
 
@@ -120,7 +122,11 @@ export class GQLBase extends EventEmitter {
    * instance.
    * @param {Object} requestData see description above
    */
-  constructor(modelData: Object = {}, requestData: ?Object = null) {
+  constructor(
+    modelData: Object = {},
+    requestData: ?Object = null,
+    options: Object = { autoProps: true }
+  ) {
     super();
 
     const Class = this.constructor;
@@ -130,8 +136,69 @@ export class GQLBase extends EventEmitter {
     this.requestData = requestData || {};
     this.fileHandler = new IDLFileHandler(this.constructor);
 
+    if (options && !!options.autoProps !== false) {
+      this.applyAutoProps()
+    }
+
     // @ComputedType
     return hasProxy ? new Proxy(this, GQLBase[_PROXY_HANDLER]) : this;
+  }
+
+  /**
+   * Since reading the Schema for a given GraphQL Lattice type or
+   * interface is simple enough, we should be able to automatically
+   * apply one to one GraphQL:Model properties.
+   *
+   * @instance
+   * @method ⌾⠀applyAutoProps
+   * @memberof GQLBase
+   */
+  applyAutoProps() {
+    if (!this.constructor.SCHEMA || !this.constructor.SCHEMA.length) {
+      ll.warn(joinLines`
+        There is no SCHEMA for ${this.constructor.name}!! This will likely
+        end in an error. Proceed with caution. Skipping \`applyAutoProps\`
+      `)
+      return
+    }
+
+    // Individual property getters do not need to be auto-created for enum
+    // types. Potentially do some checks for Interfaces and Unions as well
+    if (this.constructor.GQL_TYPE === GraphQLEnumType) {
+      return
+    }
+
+    let Class = this.constructor
+    let tree = SyntaxTree.from(Class.SCHEMA)
+    let outline = tree ? tree.outline : {}
+    let props = []
+
+    // $FlowFixMe
+    for (let propName of Object.keys(outline[Class.name])) {
+      // $FlowFixMe
+      let hasCustomImpl = typeof this[propName] !== 'undefined'
+
+      if (!hasCustomImpl) {
+        props.push(propName)
+      }
+    }
+
+    if (props.length) {
+      ll.info(`Creating auto-props for [${Class.name}]: `, props)
+      try {
+        Properties(...props)(Class)
+      }
+      catch(error) {
+        let parsed = /Cannot redefine property: (\w+)/.exec(error.message)
+        if (parsed) {
+          ll.warn(`Skipping auto-prop '${Class.name}.${parsed[1]}'`)
+        }
+        else {
+          ll.error(`Failed to apply auto-properties\nReason: `)
+          ll.error(error);
+        }
+      }
+    }
   }
 
   /**
@@ -230,6 +297,122 @@ export class GQLBase extends EventEmitter {
    * @ComputedType
    */
   get [Symbol.toStringTag]() { return this.constructor.name }
+
+  /**
+   * Properties defined for GraphQL types in Lattice can be defined as
+   * a getter, a function or an async function. In the case of standard
+   * functions, if they return a promise they will be handled as though
+   * they were async
+   *
+   * Given the variety of things a GraphQL type can actually be, obtaining
+   * its value can annoying. This method tends to lessen that boilerplate.
+   * Errors raised will be thrown.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method ⌾⠀getProp
+   *
+   * @param {string} propName the name of the property in question
+   * @param {Array<mixed>} args the arguments array that will be passed
+   * to `.apply()` should the property evaluate to a `function`
+   * @return {mixed} the return value of any resulting function or
+   * value returned by a getter; wrapped in a promise as all async
+   * functions do.
+   *
+   * @throws {Error} errors raised in awaiting results will be thrown
+   */
+  async getProp(propName: string, ...args: Array<mixed>) {
+    // $FlowFixMe
+    let prop = this[propName]
+    let result
+
+    if (!prop) return null;
+
+    if (typeOf(prop) === 'AsyncFunction') {
+      try {
+        result = await prop.apply(this, args);
+      }
+      catch (error) {
+        throw error
+      }
+    }
+    else if (typeOf(prop) === Function.name) {
+      result = prop.apply(this, args)
+
+      if (typeOf(result) === Promise.name) {
+        try {
+          result = await result
+        }
+        catch (error) {
+          throw error
+        }
+      }
+    }
+    else {
+      result = prop
+    }
+
+    return result
+  }
+
+  /**
+   * A pass-thru method to the static function of the same name. The
+   * difference being that if `requestData` is not specified, the
+   * `requestData` object from this instance will be used to build the
+   * resolvers in question.
+   *
+   * @instance
+   * @method ⌾⠀getResolver
+   * @memberof GQLBase
+   *
+   * @param {string} resolverName the name of the resolver as a string
+   * @param {Object} requestData the requestData used to build the
+   * resolver methods from which to choose
+   * @return {Function} returns either a `function` representing the
+   * resolver requested or null if there wasn't one to be found
+   */
+  async getResolver(resolverName: string, requestData: Object) {
+    return this.constructor.getResolver(
+      resolverName,
+      requestData || this.requestData
+    )
+  }
+
+  /**
+   * Resolvers are created in a number of different ways. OOP design
+   * dictates that instances of a created class will handle field
+   * resolvers, but query, mutation and subscription resolvers are
+   * typically what creates these instances.
+   *
+   * Since a resolver can be created using `@mutator/@subscriptor/@resolver`
+   * or via method on a object returned from `RESOLVERS()`, `MUTATORS()` or
+   * `SUBSCRIPTIONS()`, there should be an easy to use way to fetch a
+   * resolver by name; if for nothing else, code reuse.
+   *
+   * Pass the name of the resolver to the function and optionally pass a
+   * requestData object. The `getMergedRoot()` method will build an object
+   * containing all the root resolvers for the type, bound to the supplied
+   * `requestData` object. It is from this object that `resolverName` will
+   * be used to fetch the function in question. If one exists, it will be
+   * returned, ready for use. Otherwise, null will be your answer.
+   *
+   *
+   * @static
+   * @method ⌾⠀getResolver
+   * @memberof GQLBase
+   *
+   * @param {string} resolverName the name of the resolver as a string
+   * @param {Object} requestData the requestData used to build the
+   * resolver methods from which to choose
+   * @return {Function} returns either a `function` representing the
+   * resolver requested or null if there wasn't one to be found
+   */
+  static async getResolver(resolverName: string, requestData: Object) {
+    const reqData = requestData || null
+    const rootObj = await this.getMergedRoot(reqData)
+
+    return rootObj[resolverName] || null
+  }
 
   /**
    * Until such time as the reference implementation of Facebook's GraphQL

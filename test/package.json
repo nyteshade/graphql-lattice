@@ -1,0 +1,9 @@
+{
+  "name": "graphql-lattice",
+  "description": "A sample package.json for use with `npm run test`",
+  "lattice": {
+    "ModuleParser": {
+      "failOnError": true
+    }
+  }
+}

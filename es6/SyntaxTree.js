@@ -4,6 +4,19 @@
 import { typeOf } from './types'
 import { print, parse } from 'graphql'
 import { merge } from 'lodash'
+import { LatticeLogs as ll } from './utils'
+
+import type { GraphQLObjectType } from 'graphql/type/definition'
+import type {
+  ObjectTypeDefinitionNode,
+  InterfaceTypeDefinitionNode,
+  EnumTypeDefinitionNode,
+  UnionTypeDefinitionNode,
+  FieldDefinitionNode,
+  TypeDefinitionNode,
+  TypeNode
+} from 'graphql/language/ast'
+
 
 // Shorthand for the key storing the internal AST
 // @prop
@@ -33,7 +46,7 @@ export class SyntaxTree
    */
   constructor(schemaOrASTOrST?: string | Object | SyntaxTree) {
     // $ComputedType
-    this[AST_KEY] = {}; 
+    this[AST_KEY] = {};
 
     if (schemaOrASTOrST) {
       this.setAST(schemaOrASTOrST);
@@ -145,10 +158,9 @@ export class SyntaxTree
         this.ast = merge(this.ast, ast);
       }
       catch (error) {
-        console.error('[SyntaxTree] Failed to updateAST with %o', ast);
-        console.error('Resulting object would be %o', newAST);
-        console.error(error.message);
-        console.error(error.stack);
+        ll.error('[SyntaxTree] Failed to updateAST with %o', ast);
+        ll.error('Resulting object would be %o', newAST);
+        ll.error(error);
       }
     }
 
@@ -256,10 +268,10 @@ export class SyntaxTree
       : SyntaxTree.from(astOrSyntaxTree);
     let left = this.find(definitionType);
     let right = tree && tree.find(definitionType) || null;
-    
+
     if (!tree) {
-      console.error('There seems to be something wrong with your tree')
-      console.error(new Error('Missing tree; continuing...'));
+      ll.error('There seems to be something wrong with your tree')
+      ll.error(new Error('Missing tree; continuing...'));
       return this;
     }
 
@@ -282,11 +294,11 @@ export class SyntaxTree
         if (left.interfaces && right.interfaces) {
           left.interfaces = [].concat(left.interfaces, right.interfaces);
         }
-        
+
         if (left.directives && right.directives) {
           left.directives = [].concat(left.directives, right.directives);
         }
-        
+
         if (left.fields && right.fields) {
           left.fields = [].concat(left.fields, right.fields);
         }
@@ -309,15 +321,100 @@ export class SyntaxTree
    * @instance
    * @memberof SyntaxTree
    * @method *[Symbol.iterator]
+   *
+   * @return {TypeDefinitionNode} an instance of a TypeDefinitionNode; see
+   * graphql/language/ast.js.flow for more information
    * @ComputedType
    */
-  *[Symbol.iterator](): any {
+  *[Symbol.iterator](): TypeDefinitionNode {
     if (this[AST_KEY].definitions) {
       return yield* this[AST_KEY].definitions;
     }
     else {
       return yield* this;
     }
+  }
+
+  /**
+   * Getter that builds a small outline object denoting the schema being
+   * processed. If you have a schema that looks like the following:
+   *
+   * ```javascript
+   * let st = SyntaxTree.from(`
+   *   type Contrived {
+   *     name: String
+   *     age: Int
+   *   }
+   *
+   *   type Query {
+   *     getContrived: Contrived
+   *   }
+   * `)
+   * let outline = st.outline
+   * ```
+   *
+   * You will end up with an object that looks like the following:
+   *
+   * ```javascript
+   * {
+   *   Contrived: { name: 'String', age: 'Int' },
+   *   Query: { getContrived: 'Contrived' }
+   * }
+   * ```
+   *
+   * As may be evidenced by the example above, the name of the type is
+   * represented by an object where the name of each field (sans arguments)
+   * is mapped to a string denoting the type.
+   */
+  get outline(): Object {
+    let outline = {}
+    let interfaces = Symbol.for('interfaces')
+
+    // $FlowFixMe
+    for (let definition of this) {
+      let out
+
+      switch (definition.kind) {
+        case 'InterfaceTypeDefinition':
+        case 'ObjectTypeDefinition':
+          out = outline[definition.name.value] = {}
+          definition.fields.forEach(
+            field => {
+              if (field.type.kind === 'NamedType')
+                out[field.name.value] = field.type.name.value
+              else if (field.type.kind === 'ListType')
+                out[field.name.value] = field.type.type.name.value
+            }
+          )
+
+          if (definition.interfaces) {
+            // $FlowFixMe
+            out = (out[interfaces] = out[interfaces] || [])
+
+            definition.interfaces.forEach(
+              _interface => out.push(_interface.name.value)
+            )
+          }
+
+          break;
+
+        case 'EnumTypeDefinition':
+          out = outline[definition.name.value] = []
+          definition.values.forEach(
+            value => out[value.name.value] = value.name.value
+          )
+          break;
+
+        case 'UnionTypeDefinition':
+          out = outline[definition.name.value] = []
+          definition.types.forEach(
+            type => out.push(type.name.value)
+          )
+          break;
+      }
+    }
+
+    return outline
   }
 
   /**
@@ -381,6 +478,18 @@ export class SyntaxTree
    */
   static get MUTATION(): string { return 'Mutation' }
 
+    /**
+   * A runtime constant denoting a subscription type.
+   *
+   * @type {string}
+   * @static
+   * @memberof SyntaxTree
+   * @method SUBSCRIPTION
+   * @readonly
+   * @const
+   */
+  static get SUBSCRIPTION(): string { return 'Subscription' }
+
   /**
    * Returns the `constructor` name. If invoked as the context, or `this`,
    * object of the `toString` method of `Object`'s `prototype`, the resulting
@@ -395,8 +504,8 @@ export class SyntaxTree
   get [Symbol.toStringTag]() { return this.constructor.name }
 
   /**
-   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static 
-   * scale. So, if you perform `Object.prototype.toString.call(MyClass)` 
+   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static
+   * scale. So, if you perform `Object.prototype.toString.call(MyClass)`
    * the result would be `[object MyClass]`.
    *
    * @method ⌾⠀[Symbol.toStringTag]
@@ -429,12 +538,12 @@ export class SyntaxTree
     switch (typeOf(mixed)) {
       case String.name:
         schema = (mixed: any);
-        try { parse(schema) } catch(error) { console.log(error); return null; }
+        try { parse(schema) } catch(error) { ll.error(error); return null; }
 
         return SyntaxTree.fromSchema(String(schema));
       case Object.name:
         ast = (mixed: any);
-        try { print(ast) } catch(error) { return null; }        
+        try { print(ast) } catch(error) { return null; }
 
         return SyntaxTree.fromAST(ast);
       case SyntaxTree.name:
@@ -486,7 +595,7 @@ export class SyntaxTree
 
     return source ? tree : null;
   }
-  
+
   /**
    * Iterate through the definitions of the AST if there are any. For each
    * definition the name property's value field is compared to the supplied
@@ -497,7 +606,7 @@ export class SyntaxTree
    * @memberof SyntaxTree
    * @method ⌾⠀findDefinition
    *
-   * @param {Object} ast an abstract syntax tree object created from a GQL SDL 
+   * @param {Object} ast an abstract syntax tree object created from a GQL SDL
    * @param {string|RegExp} definitionName a string or regular expression used
    * to match against the definition name field in a given AST.
    * @return {Object|null} a reference to the internal definition field or
@@ -513,11 +622,11 @@ export class SyntaxTree
   /**
    * Iterate through the fields of a definition AST if there are any. For each
    * field, the name property's value field is compared to the supplied
-   * fieldName. The fieldName can be a string or a regular expression if 
+   * fieldName. The fieldName can be a string or a regular expression if
    * finer granularity is desired.
    *
-   * Before iterating over the fields, however, the definition is found using 
-   * `SyntaxTree#findDefinition`. If either the field or definition are not 
+   * Before iterating over the fields, however, the definition is found using
+   * `SyntaxTree#findDefinition`. If either the field or definition are not
    * found, null is returned.
    *
    * @static
@@ -525,37 +634,37 @@ export class SyntaxTree
    * @method ⌾⠀findField
    * @since 2.7.0
    *
-   * @param {Object} ast an abstract syntax tree object created from a GQL SDL 
+   * @param {Object} ast an abstract syntax tree object created from a GQL SDL
    * @param {string|RegExp} definitionName a string or regular expression used
    * to match against the definition name field in a given AST.
    * @param {string|RegExp} fieldName a string or regular expression used
    * to match against the field name field in a given AST.
-   * @return {Object|null} an object containing two keys, the first being 
-   * `field` which points to the requested AST definition field. The second 
+   * @return {Object|null} an object containing two keys, the first being
+   * `field` which points to the requested AST definition field. The second
    * being `meta` which contains three commonly requested bits of data; `name`,
-   * `type` and `nullable`. Non-nullable fields have their actual type wrapped 
-   * in a `NonNullType` GraphQL construct. The actual field type is contained 
+   * `type` and `nullable`. Non-nullable fields have their actual type wrapped
+   * in a `NonNullType` GraphQL construct. The actual field type is contained
    * within. The meta object surfaces those values for easy use.
    */
   static findField(
-    ast: Object, 
-    definitionName: string | RegExp, 
+    ast: Object,
+    definitionName: string | RegExp,
     fieldName: string | RegExp
   ) {
     const definition = this.findDefinition(ast, definitionName)
     let meta;
-    
+
     if (!definition || !definition.fields) {
       return null;
     }
-    
+
     const field = this.findInASTArrayByNameValue(definition.fields, fieldName)
-    
+
     if (field) {
       meta = {
         name: field.name && field.name.value || null,
-        type: field.type && field.type.kind === 'NonNullType' 
-          ? field.type.type.name.value 
+        type: field.type && field.type.kind === 'NonNullType'
+          ? field.type.type.name.value
           : field.type && field.type.name && field.type.name.value || null,
         nullable: !!(field.type && field.type.kind !== 'NonNullType')
       }
@@ -563,52 +672,52 @@ export class SyntaxTree
 
     return { field, meta };
   }
-  
+
   /**
    * Enum AST definitions operate differently than object type definitions
    * do. Namely, they do not have a `fields` array but instead have a `values`
-   * array. This wrapper method, first finds the enum definition in the ast 
-   * and then searches the values for the named node desired and returns that 
+   * array. This wrapper method, first finds the enum definition in the ast
+   * and then searches the values for the named node desired and returns that
    * or null, if one could not be found.
    *
    * @method SyntaxTree#⌾⠀findEnumDefinition
    * @since 2.7.0
-   * 
-   * @param {Object} ast the abstract syntax tree parsed by graphql 
-   * @param {string|RegExp} enumDefinitionName a string or regular expression 
-   * used to locate the enum definition in the AST. 
-   * @param {string|RegExp} enumValueName a string or regular expression used 
+   *
+   * @param {Object} ast the abstract syntax tree parsed by graphql
+   * @param {string|RegExp} enumDefinitionName a string or regular expression
+   * used to locate the enum definition in the AST.
+   * @param {string|RegExp} enumValueName a string or regular expression used
    * to locate the value by name in the values of the enum definition.
    * @return {Object|null} the desired AST node or null if one does not exist
    */
   static findEnumDefinition(
-    ast: Object, 
-    enumDefinitionName: string | RegExp, 
+    ast: Object,
+    enumDefinitionName: string | RegExp,
     enumValueName: string | RegExp
   ): ?Object {
-    // Fetch the enum definition 
+    // Fetch the enum definition
     const definition = this.findDefinition(ast, enumDefinitionName);
-    
+
     // Ensure we have one or that it has a values array
-    if (!definition || !definition.values) { 
+    if (!definition || !definition.values) {
       return null;
     }
-    
-    // Return the results of an `findInASTArrayByNameValue()` search of the 
+
+    // Return the results of an `findInASTArrayByNameValue()` search of the
     // aforementioned 'values' array.
     return this.findInASTArrayByNameValue(
-      definition.values, 
+      definition.values,
       enumValueName
     )
   }
-  
+
   /**
-   * A lot of searching in ASTs is filtering through arrays and matching on 
-   * subobject properties on each iteration. A common theme is find something 
-   * by its `.name.value`. This method simplifies that by taking an array of 
-   * AST nodes and searching them for a `.name.value` property that exists 
+   * A lot of searching in ASTs is filtering through arrays and matching on
+   * subobject properties on each iteration. A common theme is find something
+   * by its `.name.value`. This method simplifies that by taking an array of
+   * AST nodes and searching them for a `.name.value` property that exists
    * within.
-   * 
+   *
    * @static
    * @memberof SyntaxTree
    * @method ⌾⠀findInASTArrayByNameValue
@@ -620,7 +729,7 @@ export class SyntaxTree
    * @return {Object|null} the AST leaf if one matches or null otherwise.
    */
   static findInASTArrayByNameValue(
-    array: Array<Object>, 
+    array: Array<Object>,
     name: string | RegExp
   ): ?Object {
     const isRegExp: boolean = /RegExp/.test(typeOf(name));
@@ -638,7 +747,7 @@ export class SyntaxTree
     }
     const index = array.reduce(reducer, -1);
 
-    return (~index) ? array[index] : null;    
+    return (~index) ? array[index] : null;
   }
 
   /**

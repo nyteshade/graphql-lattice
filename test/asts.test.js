@@ -8,18 +8,18 @@ describe('validate IDL -> AST -> IDL works properly', () => {
         name: String
         job: String
       }
-      
+
       type Query {
         person: Person
       }
     `
-    
+
     const tree = new SyntaxTree(IDL);
     const ast = tree.ast;
-    
+
     expect(Object.keys(ast).length).toBeGreaterThan(0)
-    expect(tree.toString().replace(/\s/g, '')).toEqual(IDL.replace(/\s/g, ''))    
-  })  
+    expect(tree.toString().replace(/\s/g, '')).toEqual(IDL.replace(/\s/g, ''))
+  })
 })
 
 describe('Validate search static methods of SyntaxTree work properly', () => {
@@ -29,7 +29,7 @@ describe('Validate search static methods of SyntaxTree work properly', () => {
         job: String
         status: Status
       }
-      
+
       enum Status {
         SINGLE,
         MARRIED,
@@ -42,16 +42,16 @@ describe('Validate search static methods of SyntaxTree work properly', () => {
     expect(node).not.toBeNull();
     expect(node.name.value).toBe('Person')
   })
-  
+
   it('should return null for a non-existent node', () => {
     const node = SyntaxTree.findDefinition(ast, 'Employee');
     expect(node).toBeNull();
   })
-  
+
   it('should be able to find an enum by value', () => {
     const node = SyntaxTree.findEnumDefinition(ast, 'Status', 'MARRIED')
     expect(node).not.toBeNull();
-    expect(node.name.value).toBe('MARRIED')    
+    expect(node.name.value).toBe('MARRIED')
   })
 })
 

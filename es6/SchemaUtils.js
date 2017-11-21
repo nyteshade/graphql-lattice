@@ -7,6 +7,7 @@ import { GQLEnum } from './GQLEnum'
 import { GQLInterface } from './GQLInterface'
 import { GQLScalar } from './GQLScalar'
 import { typeOf } from './types'
+import { LatticeLogs as ll } from './utils'
 import { merge } from 'lodash'
 import EventEmitter from 'events'
 import {
@@ -204,12 +205,9 @@ export class SchemaUtils extends EventEmitter {
         // @ComputedType
         const { serialize, parseValue, parseLiteral } = Class;
 
-        // @ComputedType
-        console.dir(Class.name, type);
-
         if (!serialize || !parseValue || !parseLiteral) {
           // @ComputedType
-          console.error(`Scalar type ${Class.name} has invaild impl.`);
+          ll.error(`Scalar type ${Class.name} has invaild impl.`);
           continue;
         }
 
@@ -294,6 +292,7 @@ export class SchemaUtils extends EventEmitter {
     for (let Class of Classes) {
       merge(
         root,
+        // $FlowFixMe
         await Class.getMergedRoot(requestData, separateByType)
       );
     }

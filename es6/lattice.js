@@ -1,8 +1,8 @@
 import { AdjacentSchema } from './decorators/AdjacentSchema'
-import { Deferred, joinLines, promisify } from './utils'
+import { Deferred, joinLines, promisify, getLatticePrefs } from './utils'
 import { FileSchema } from './decorators/FileSchema'
-import { 
-  Getters, Setters, Properties, DirectTypeManager 
+import {
+  Getters, Setters, Properties, DirectTypeManager
 } from './decorators/ModelProperties'
 import { resolver, mutator, subscriptor } from './decorators/Resolvers'
 import { IDLFileHandler } from './IDLFileHandler'
@@ -30,6 +30,7 @@ const defaultPackage = {
   Deferred,
   DirectTypeManager,
   FileSchema,
+  getLatticePrefs,
   Getters,
   GQLBase,
   GQLEnum,
@@ -54,10 +55,10 @@ const defaultPackage = {
 
   DOC_CLASS,
   DOC_FIELDS,
-  DOC_MUTATION, 
+  DOC_MUTATION,
   DOC_MUTATORS,
   DOC_QUERIES,
-  DOC_QUERY, 
+  DOC_QUERY,
   DOC_SUBSCRIPTION,
   DOC_SUBSCRIPTIONS,
   META_KEY,
@@ -70,6 +71,7 @@ export {
   Deferred,
   DirectTypeManager,
   FileSchema,
+  getLatticePrefs,
   Getters,
   GQLBase,
   GQLEnum,
@@ -94,10 +96,10 @@ export {
 
   DOC_CLASS,
   DOC_FIELDS,
-  DOC_MUTATION, 
+  DOC_MUTATION,
   DOC_MUTATORS,
   DOC_QUERIES,
-  DOC_QUERY, 
+  DOC_QUERY,
   DOC_SUBSCRIPTION,
   DOC_SUBSCRIPTIONS,
   META_KEY,

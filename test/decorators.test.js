@@ -1,6 +1,7 @@
 import {
   AdjacentSchema,
   GQLBase,
+  GQLEnum,
   Getters,
   Setters,
   Properties,
@@ -21,6 +22,7 @@ import {
 } from '../es6/lattice'
 
 import { parse } from 'graphql'
+import { inspect } from 'util'
 
 const { isOfType } = types;
 
@@ -58,10 +60,10 @@ describe('@Getters', () => {
   const firstName = 'Jane'
   const job = 'Engineer'
   const broken = 'It is just broke'
-  const instance = new Sample({test, fun})
-  const employee = new Employee({firstName, job})
-  const person = new Person({_emp: {firstName, job}})
-  const invalid = new InvalidGQLBase({broken})
+  const instance = new Sample({test, fun}, null, {autoProps: false})
+  const employee = new Employee({firstName, job}, null, {autoProps: false})
+  const person = new Person({_emp: {firstName, job}}, null, {autoProps: false})
+  const invalid = new InvalidGQLBase({broken}, null, {autoProps: false})
 
   it('should have a getter for "test"', () => {
     expect(instance.test).toEqual(test)
@@ -105,8 +107,8 @@ describe('@Setters', () => {
   const fun = 'always'
   const firstName = 'Brielle'
   const job = 'Engineer'
-  const instance = new Sample({test, fun})
-  const employee = new Employee({firstName, job})
+  const instance = new Sample({test, fun}, null, {autoProps: false})
+  const employee = new Employee({firstName, job}, null, {autoProps: false})
 
   it('should have a setter for "test"', () => {
     expect(() => {
@@ -127,7 +129,7 @@ describe('@Setters', () => {
 
   it('should not break if we create and set a complex type to null', () => {
     expect(() => {
-      const emptyPerson = new Person({_emp: null})
+      const emptyPerson = new Person({_emp: null}, null, {autoProps: false})
 
       emptyPerson.employee = null;
     }).not.toThrow()
@@ -155,9 +157,9 @@ describe('@Properties', () => {
   const firstName = 'Brielle'
   const job = 'Engineer'
   const broken = 'It is just broke'
-  const instance = new Sample({test, fun})
-  const employee = new Employee({firstName, job})
-  const invalid = new InvalidGQLBase({broken})
+  const instance = new Sample({test, fun}, null, {autoProps: false})
+  const employee = new Employee({firstName, job}, null, {autoProps: false})
+  const invalid = new InvalidGQLBase({broken}, null, {autoProps: false})
 
   it('should have a setter for "test"', () => {
     expect(instance.test).toEqual(test)
@@ -189,7 +191,7 @@ describe('@Properties', () => {
     let emptyPerson;
 
     expect(() => {
-      emptyPerson = new Person({_emp: null})
+      emptyPerson = new Person({_emp: null}, null, {autoProps: false})
     }).not.toThrow();
 
     expect(() => {
@@ -212,7 +214,7 @@ describe('@Schema', () => {
   @Schema(schema)
   class Sample extends GQLBase { }
 
-  let instance = new Sample()
+  let instance = new Sample(undefined, null, {autoProps: false})
 
   it('should have a schema matching ours', () => {
     expect(Sample.SCHEMA).toEqual(schema);
@@ -246,8 +248,6 @@ describe('DIRECT_TYPES', () => {
   @Getters(['name', String], ['job', Job])
   class Person extends GQLBase { }
 
-
-
   const answer1 = 'Harrison, Brielle'
   const answer2 = '5'
   const answer3 = 'David'
@@ -265,12 +265,12 @@ describe('DIRECT_TYPES', () => {
       get last() { return 'Harrison'},
 
       toString() { return `${this.last}, ${this.first}` }
-    }})
+    }}, null, {autoProps: false})
     expect(peep.name).toBe(answer1)
   })
 
   it('should run any value for name through as a String', () => {
-    peep = new Person({name: 5})
+    peep = new Person({name: 5}, null, {autoProps: false})
     expect(5).not.toBe(answer2);
     expect(peep.name).toBe(answer2);
   })
@@ -279,7 +279,7 @@ describe('DIRECT_TYPES', () => {
     DirectTypeManager.clear();
     expect(DirectTypeManager.types.length).toEqual(0);
 
-    peep = new Person({name: answer3})
+    peep = new Person({name: answer3}, null, {autoProps: false})
     expect(typeOf(peep.name)).toBe(String.name)
 
     // This is due to how `new String(...)` and `String(...)` differ. The use
@@ -291,7 +291,7 @@ describe('DIRECT_TYPES', () => {
   })
 
   it('should give me a job type when given model data for a Job', () => {
-    const peep = new Person(model1)
+    const peep = new Person(model1, null, {autoProps: false})
 
     expect(typeOf(peep.job)).toBe(Job.name)
     expect(peep.job).not.toBe(job)
@@ -304,7 +304,7 @@ describe('DIRECT_TYPES', () => {
   })
 
   it('should give me the job type when given a model with one already', () => {
-    const peep = new Person(model2)
+    const peep = new Person(model2, null, {autoProps: false})
 
     expect(typeOf(peep.job)).toBe(Job.name)
     expect(peep.job).toBe(job)
@@ -437,5 +437,61 @@ describe('@resolver/@mutator/@subscriptor', () => {
     let root = await SchemaUtils.createMergedRoot([Thing], express);
 
     expect(root.staticResolver).toBeDefined()
+  })
+})
+
+describe('Auto properties testing', () => {
+  @Schema(/* GraphQL */`
+    type Contrived {
+      name: String
+      job: String
+      age: Int
+    }
+  `)
+  class Contrived extends GQLBase {
+    job() {
+      return 'Sourceress'
+    }
+  }
+
+  @Schema(/* GraphQL */`
+    enum Car { SLOW, FAST, RED_ONE }
+  `)
+  class Car extends GQLEnum {}
+
+  it('should make instances that return Sourceresses', async () => {
+    let instance = new Contrived({name: 'Brie', job: 'Engineer', age: 21})
+    let autoProps = Contrived[META_KEY].props
+    let expected = ['name', 'age']
+
+    expect(autoProps).toEqual(expect.arrayContaining(expected))
+
+    expect(await instance.getProp('name')).toBe('Brie')
+    expect(await instance.getProp('age')).toBe(21)
+
+    // Note that we have a custom property resolver for 'job' that returns
+    // the value 'Sourceress' and does not look at the model value 'Engineer'
+    expect(await instance.getProp('job')).toBe('Sourceress')
+  })
+
+  it('should not create auto-props for enums', async () => {
+    let slowCar = new Car('SLOW')
+    let fastCar = new Car('FAST')
+    let redCar = new Car({ value: 'RED_ONE' })
+    let autoProps = Car[META_KEY].props
+
+    expect(autoProps).not.toEqual(expect.arrayContaining(['SLOW']))
+    expect(autoProps).not.toEqual(expect.arrayContaining(['FAST']))
+    expect(autoProps).not.toEqual(expect.arrayContaining(['RED_ONE']))
+
+    expect(slowCar.SLOW).toBeUndefined()
+    expect(slowCar.FAST).toBeUndefined()
+    expect(slowCar.RED_ONE).toBeUndefined()
+    expect(fastCar.SLOW).toBeUndefined()
+    expect(fastCar.FAST).toBeUndefined()
+    expect(fastCar.RED_ONE).toBeUndefined()
+    expect(redCar.SLOW).toBeUndefined()
+    expect(redCar.FAST).toBeUndefined()
+    expect(redCar.RED_ONE).toBeUndefined()
   })
 })

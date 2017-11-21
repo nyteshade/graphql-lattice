@@ -6,6 +6,7 @@
 import { GQLBase } from './GQLBase'
 import { GraphQLEnumType, parse } from 'graphql'
 import { Getters } from './decorators/ModelProperties'
+import { LatticeLogs as ll } from './utils'
 
 /* Internal Symbol referring to real accessor to GQLBase model object */
 const _MODEL_KEY = Symbol.for('data-model-contents-value');
@@ -207,7 +208,8 @@ export class GQLEnum extends GQLBase {
         astValues = ast.definitions[0].values;
       }
       catch (error) {
-        console.error('Unable to discern the values from your enums SCHEMA')
+        ll.error('Unable to discern the values from your enums SCHEMA')
+        ll.error(error)
         throw error;
       }
 
