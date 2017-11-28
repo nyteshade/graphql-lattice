@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GQLBase = exports.META_KEY = exports.REQ_DATA_KEY = exports.MODEL_KEY = undefined;
+exports.GQLBase = exports.PROPS = exports.SETTERS = exports.GETTERS = exports.AUTO_PROPS = exports.META_KEY = exports.REQ_DATA_KEY = exports.MODEL_KEY = undefined;
 
 var _defineProperty = require('babel-runtime/core-js/object/define-property');
 
@@ -20,6 +20,10 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 var _toStringTag = require('babel-runtime/core-js/symbol/to-string-tag');
 
 var _toStringTag2 = _interopRequireDefault(_toStringTag);
+
+var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-property-descriptor');
+
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
 
 var _keys = require('babel-runtime/core-js/object/keys');
 
@@ -129,6 +133,50 @@ const REQ_DATA_KEY = exports.REQ_DATA_KEY = (0, _for2.default)('request-data-obj
 const META_KEY = exports.META_KEY = (0, _symbol2.default)();
 
 /**
+ * A Symbol used to identify calls to @Properties for properties generated
+ * automatically upon instance creation.
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+const AUTO_PROPS = exports.AUTO_PROPS = (0, _for2.default)('auto-props');
+
+/**
+ * A Symbol used to identify calls to @Getters for properties generated
+ * via decorator. These are stored in <class>[META_KEY][GETTERS]
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+const GETTERS = exports.GETTERS = (0, _for2.default)('getters');
+
+/**
+ * A Symbol used to identify calls to @Setters for properties generated
+ * via decorator. These are stored in <class>[META_KEY][SETTERS]
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+const SETTERS = exports.SETTERS = (0, _for2.default)('setters');
+
+/**
+ * A Symbol used to identify calls to @Properties for properties generated
+ * via decorator. These are stored in <class>[META_KEY][PROPS]
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+const PROPS = exports.PROPS = (0, _for2.default)('props');
+
+/**
  * All GraphQL Type objects used in this system are assumed to have extended
  * from this class. An instance of this class can be used to wrap an existing
  * structure if you have one.
@@ -215,8 +263,16 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
     // $FlowFixMe
     for (let propName of (0, _keys2.default)(outline[Class.name])) {
       // $FlowFixMe
-      let hasCustomImpl = typeof this[propName] !== 'undefined';
+      let desc = (0, _getOwnPropertyDescriptor2.default)(Class.prototype, propName);
+      let hasCustomImpl = !!(
+      // We have a descriptor for the property name
+      desc && (
+      // We have a getter function defined
+      typeof desc.get !== 'undefined' ||
+      // ...or we have a function, async or not, defined
+      typeof desc.value === 'function'));
 
+      // Only create auto-props for non custom implementations
       if (!hasCustomImpl) {
         props.push(propName);
       }
@@ -225,7 +281,7 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
     if (props.length) {
       _utils.LatticeLogs.info(`Creating auto-props for [${Class.name}]: `, props);
       try {
-        (0, _ModelProperties.Properties)(...props)(Class);
+        (0, _ModelProperties.Properties)(...props)(Class, [AUTO_PROPS]);
       } catch (error) {
         let parsed = /Cannot redefine property: (\w+)/.exec(error.message);
         if (parsed) {

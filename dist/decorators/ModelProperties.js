@@ -9,7 +9,16 @@ var _defineProperty = require('babel-runtime/core-js/object/define-property');
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
+var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-property-descriptor');
+
+var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
+
+var _for = require('babel-runtime/core-js/symbol/for');
+
+var _for2 = _interopRequireDefault(_for);
+
 exports.DirectTypeAdd = DirectTypeAdd;
+exports.applyTags = applyTags;
 exports.Getters = Getters;
 exports.Setters = Setters;
 exports.Properties = Properties;
@@ -312,6 +321,31 @@ function DirectTypeAdd(target) {
 }
 
 /**
+ * When applying multiple property getters and setters, knowing some info
+ * about what was applied elsewhere can be important. "Tags" can be applied
+ * that store the fieldName and descriptor applied via one of these decorators.
+ *
+ * Multiple "tags" are supported to allow for detecting the difference between
+ * decorators applied by the developer using lattice and something auto
+ * generated such as auto-props.
+ *
+ * @param  {GQLBase} Class an instance of GQLBase to apply the tags tp
+ * @param  {Array<string|Symbol>} addTags an array of Symbols or strings to be
+ * wrapped in Symbols that will be used as tag keys
+ * @param  {string} fieldName the name of the field being decorated
+ * @param  {Object} descriptor the JavaScript descriptor object to associate
+ * with this tagged field.
+ */
+function applyTags(Class, addTags, fieldName, descriptor) {
+  let tags = (Array.isArray(addTags) && addTags || []).map(tag => typeof tag === 'string' && (0, _for2.default)(tag) || tag).filter(tag => typeof tag === 'symbol');
+
+  tags.forEach(tag => {
+    Class[_GQLBase.META_KEY][tag] = Class[_GQLBase.META_KEY][tag] || {};
+    Class[_GQLBase.META_KEY][tag][fieldName] = descriptor;
+  });
+}
+
+/**
  * When working with `GQLBase` instances that expose properties
  * that have a 1:1 mapping to their own model property of the
  * same name, adding the getters manually can be annoying. This
@@ -327,21 +361,22 @@ function DirectTypeAdd(target) {
  * @return {Function} a class decorator method.s
  */
 function Getters(...propertyNames) {
-  return function (target) {
+  return function (target, addTags = []) {
     for (let property of propertyNames) {
       let { fieldName, getterMaker } = extractBits(property);
+      let desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function');
+      let tags = [_GQLBase.GETTERS].concat(Array.isArray(addTags) && addTags || []);
 
-      if (!target[_GQLBase.META_KEY].getters) {
-        target[_GQLBase.META_KEY].getters = [];
-      }
-      target[_GQLBase.META_KEY].getters.push(fieldName);
-
-      if (typeof target.prototype[fieldName] === 'undefined') {
-        (0, _defineProperty2.default)(target.prototype, fieldName, {
+      if (!hasImpl) {
+        let descriptor = {
           get: getterMaker()
-        });
+        };
+
+        applyTags(target, tags, fieldName, descriptor);
+        (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
       } else {
-        console.warn(`Skipping the getter for ${target.name}.${fieldName}`);
+        console.warn(`Skipping getter for ${target.name}.${fieldName}; already exists`);
       }
     }
 
@@ -366,21 +401,22 @@ function Getters(...propertyNames) {
  * @return {Function} a class decorator method
  */
 function Setters(...propertyNames) {
-  return function (target) {
+  return function (target, addTags = []) {
     for (let property of propertyNames) {
       let { fieldName, setterMaker } = extractBits(property);
+      let desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function');
+      let tags = [_GQLBase.SETTERS].concat(Array.isArray(addTags) && addTags || []);
 
-      if (!target[_GQLBase.META_KEY].setters) {
-        target[_GQLBase.META_KEY].setters = [];
-      }
-      target[_GQLBase.META_KEY].setters.push(fieldName);
-
-      if (typeof target.prototype[fieldName] === 'undefined') {
-        (0, _defineProperty2.default)(target.prototype, fieldName, {
+      if (!hasImpl) {
+        let descriptor = {
           set: setterMaker()
-        });
+        };
+
+        applyTags(target, tags, fieldName, descriptor);
+        (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
       } else {
-        console.warn(`Skipping the setter for ${target.name}.${fieldName}`);
+        console.warn(`Skipping setter for ${target.name}.${fieldName}; already exists`);
       }
     }
 
@@ -407,26 +443,23 @@ function Setters(...propertyNames) {
  * @return {Function} a class decorator method
  */
 function Properties(...propertyNames) {
-  return function (target) {
+  return function (target, addTags = []) {
     for (let property of propertyNames) {
-      let {
-        fieldName,
-        getterMaker,
-        setterMaker
-      } = extractBits(property);
+      let { fieldName, getterMaker, setterMaker } = extractBits(property);
+      let desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function');
+      let tags = [_GQLBase.PROPS].concat(Array.isArray(addTags) && addTags || []);
 
-      if (!target[_GQLBase.META_KEY].props) {
-        target[_GQLBase.META_KEY].props = [];
-      }
-      target[_GQLBase.META_KEY].props.push(fieldName);
-
-      if (typeof target.prototype[fieldName] === 'undefined') {
-        (0, _defineProperty2.default)(target.prototype, fieldName, {
+      if (!hasImpl) {
+        let descriptor = {
           set: setterMaker(),
           get: getterMaker()
-        });
+        };
+
+        applyTags(target, tags, fieldName, descriptor);
+        (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
       } else {
-        console.warn(`Skipping the properties for ${target.name}.${fieldName}`);
+        console.warn(`Skipping properties for ${target.name}.${fieldName}; already exists`);
       }
     }
 

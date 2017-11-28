@@ -42,23 +42,26 @@ function decorate(metaProperty, target, key, descriptor) {
   const Class = typeof target === 'function' ? target : target.constructor;
   const proto = typeof target === 'function' ? target.prototype : target;
   const isClass = Class === target;
-  let fn = target[key];
+  let fn = descriptor.value;
 
   if (!Class instanceof _GQLBase.GQLBase) {
     console.warn(_neTagFns.dedent`
-      Ignoring the transformation of @resolver for ${fn.name}. The reason
-      for this is that ${Class.name} is not an instance of GQLBase.
+      Ignoring the transformation of @resolver for ${fn && fn.name || key}.
+      The reason for this is that ${Class.name} is not an instance of GQLBase.
     `);
+
     return descriptor;
   }
 
-  if (!descriptor.value || descriptor.get || descriptor.set) {
+  if (!descriptor.value || descriptor.get || descriptor.set || descriptor.initializer) {
     console.warn(_neTagFns.dedent`
-      Ignoring the transformation of @resolver for ${fn.name}. The reason
-      for this is that it should only be applied to a static or instance
+      Ignoring the transformation of @resolver for ${fn && fn.name || key}. The
+      reason for this is that it should only be applied to a static or instance
       method of a class. It is not valid to apply this to a getter, setter,
       or property.
     `);
+
+    return descriptor;
   }
 
   // Remove the function from wherever it happens to be defined.

@@ -324,7 +324,7 @@ const LatticeLogs = exports.LatticeLogs = {
     const ll = LatticeLogs;
 
     if (logLevel) {
-      let compareTo = lessThan || process.env.LATTICE_LOGLEVEL || ll.TRACE;
+      let compareTo = lessThan || process.env.LATTICE_LOGLEVEL || ll.ERROR;
       if (!ll.equalOrBelow(logLevel, compareTo)) return true;
     }
 
@@ -338,12 +338,6 @@ const LatticeLogs = exports.LatticeLogs = {
     console.log(...args.map(LatticeLogs.argMapper));
   },
 
-  /** Pass-thru to console.info; arguments parsed via `argMapper` */
-  info(...args) {
-    if (LatticeLogs.failFast(LatticeLogs.INFO)) return;
-    console.info(...args.map(LatticeLogs.argMapper));
-  },
-
   /** Pass-thru to console.warn; arguments parsed via `argMapper` */
   warn(...args) {
     if (LatticeLogs.failFast(LatticeLogs.WARN)) return;
@@ -354,6 +348,12 @@ const LatticeLogs = exports.LatticeLogs = {
   error(...args) {
     if (LatticeLogs.failFast(LatticeLogs.ERROR)) return;
     console.error(...args.map(LatticeLogs.argMapper));
+  },
+
+  /** Pass-thru to console.info; arguments parsed via `argMapper` */
+  info(...args) {
+    if (LatticeLogs.failFast(LatticeLogs.INFO)) return;
+    console.info(...args.map(LatticeLogs.argMapper));
   },
 
   /** Pass-thru to console.trace; arguments parsed via `argMapper` */
