@@ -1,6 +1,8 @@
 /** @namespace decorators */
 
-import { GQLBase, MODEL_KEY, META_KEY } from '../GQLBase'
+import {
+  GQLBase, MODEL_KEY, META_KEY, GETTERS, SETTERS, PROPS, AUTO_PROPS
+} from '../GQLBase'
 import { isArray, extendsFrom } from '../types'
 import { inspect } from 'util'
 import { GraphQLEnumType, parse } from 'graphql'
@@ -301,6 +303,38 @@ export function DirectTypeAdd(target) {
 }
 
 /**
+ * When applying multiple property getters and setters, knowing some info
+ * about what was applied elsewhere can be important. "Tags" can be applied
+ * that store the fieldName and descriptor applied via one of these decorators.
+ *
+ * Multiple "tags" are supported to allow for detecting the difference between
+ * decorators applied by the developer using lattice and something auto
+ * generated such as auto-props.
+ *
+ * @param  {GQLBase} Class an instance of GQLBase to apply the tags tp
+ * @param  {Array<string|Symbol>} addTags an array of Symbols or strings to be
+ * wrapped in Symbols that will be used as tag keys
+ * @param  {string} fieldName the name of the field being decorated
+ * @param  {Object} descriptor the JavaScript descriptor object to associate
+ * with this tagged field.
+ */
+export function applyTags(
+  Class:GQLBase,
+  addTags: Array<string|Symbol>,
+  fieldName: string,
+  descriptor: Object
+) {
+  let tags = (Array.isArray(addTags) && addTags || [])
+    .map(tag => typeof tag === 'string' && Symbol.for(tag) || tag)
+    .filter(tag => typeof tag === 'symbol')
+
+  tags.forEach(tag => {
+    Class[META_KEY][tag] = Class[META_KEY][tag] || {}
+    Class[META_KEY][tag][fieldName] = descriptor
+  })
+}
+
+/**
  * When working with `GQLBase` instances that expose properties
  * that have a 1:1 mapping to their own model property of the
  * same name, adding the getters manually can be annoying. This
@@ -318,22 +352,25 @@ export function DirectTypeAdd(target) {
 export function Getters(
   ...propertyNames: Array<String|Array<String|Function>>
 ): Function {
-  return function(target: mixed): mixed {
+  return function(target: mixed, addTags: Array<string|Symbol> = []): mixed {
     for (let property of propertyNames) {
       let { fieldName, getterMaker } = extractBits(property);
+      let desc = Object.getOwnPropertyDescriptor(target.prototype, fieldName)
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function')
+      let tags = [GETTERS].concat(Array.isArray(addTags) && addTags || [])
 
-      if (!target[META_KEY].getters) {
-        target[META_KEY].getters = []
-      }
-      target[META_KEY].getters.push(fieldName)
-
-      if (typeof target.prototype[fieldName] === 'undefined') {
-        Object.defineProperty(target.prototype, fieldName, {
+      if (!hasImpl) {
+        let descriptor = {
           get: getterMaker()
-        });
+        }
+
+        applyTags(target, tags, fieldName, descriptor)
+        Object.defineProperty(target.prototype, fieldName, descriptor);
       }
       else {
-        console.warn(`Skipping the getter for ${target.name}.${fieldName}`)
+        console.warn(
+          `Skipping getter for ${target.name}.${fieldName}; already exists`
+        )
       }
     }
 
@@ -360,22 +397,25 @@ export function Getters(
 export function Setters(
   ...propertyNames: Array<String|Array<String|Function>>
 ): Function {
-  return function(target: mixed): mixed {
+  return function(target: mixed, addTags: Array<String|Symbol> = []): mixed {
     for (let property of propertyNames) {
       let { fieldName, setterMaker } = extractBits(property);
+      let desc = Object.getOwnPropertyDescriptor(target.prototype, fieldName)
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function')
+      let tags = [SETTERS].concat(Array.isArray(addTags) && addTags || [])
 
-      if (!target[META_KEY].setters) {
-        target[META_KEY].setters = []
-      }
-      target[META_KEY].setters.push(fieldName)
-
-      if (typeof target.prototype[fieldName] === 'undefined') {
-        Object.defineProperty(target.prototype, fieldName, {
+      if (!hasImpl) {
+        let descriptor = {
           set: setterMaker()
-        });
+        }
+
+        applyTags(target, tags, fieldName, descriptor)
+        Object.defineProperty(target.prototype, fieldName, descriptor);
       }
       else {
-        console.warn(`Skipping the setter for ${target.name}.${fieldName}`)
+        console.warn(
+          `Skipping setter for ${target.name}.${fieldName}; already exists`
+        )
       }
     }
 
@@ -404,27 +444,26 @@ export function Setters(
 export function Properties(
   ...propertyNames: Array<String|Array<String|Function>>
 ): Function {
-  return function(target: mixed): mixed {
+  return function(target: mixed, addTags: Array<String|Symbol> = []): mixed {
     for (let property of propertyNames) {
-      let {
-        fieldName,
-        getterMaker,
-        setterMaker
-      } = extractBits(property);
+      let {fieldName, getterMaker, setterMaker } = extractBits(property);
+      let desc = Object.getOwnPropertyDescriptor(target.prototype, fieldName)
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function')
+      let tags = [PROPS].concat(Array.isArray(addTags) && addTags || [])
 
-      if (!target[META_KEY].props) {
-        target[META_KEY].props = []
-      }
-      target[META_KEY].props.push(fieldName)
-
-      if (typeof target.prototype[fieldName] === 'undefined') {
-        Object.defineProperty(target.prototype, fieldName, {
+      if (!hasImpl) {
+        let descriptor = {
           set: setterMaker(),
           get: getterMaker()
-        });
+        }
+
+        applyTags(target, tags, fieldName, descriptor)
+        Object.defineProperty(target.prototype, fieldName, descriptor);
       }
       else {
-        console.warn(`Skipping the properties for ${target.name}.${fieldName}`)
+        console.warn(
+          `Skipping properties for ${target.name}.${fieldName}; already exists`
+        )
       }
     }
 

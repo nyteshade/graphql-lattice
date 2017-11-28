@@ -1,12 +1,16 @@
 import { AdjacentSchema } from './decorators/AdjacentSchema'
-import { Deferred, joinLines, promisify, getLatticePrefs } from './utils'
+import {
+  Deferred, joinLines, promisify, getLatticePrefs, LatticeLogs
+} from './utils'
 import { FileSchema } from './decorators/FileSchema'
 import {
   Getters, Setters, Properties, DirectTypeManager
 } from './decorators/ModelProperties'
 import { resolver, mutator, subscriptor } from './decorators/Resolvers'
 import { IDLFileHandler } from './IDLFileHandler'
-import { GQLBase, MODEL_KEY, META_KEY } from './GQLBase'
+import {
+  GQLBase, MODEL_KEY, META_KEY, AUTO_PROPS, GETTERS, SETTERS, PROPS
+} from './GQLBase'
 import { GQLEnum } from './GQLEnum'
 import { GQLExpressMiddleware } from './GQLExpressMiddleware'
 import { GQLInterface } from './GQLInterface'
@@ -39,6 +43,7 @@ const defaultPackage = {
   GQLJSON,
   GQLScalar,
   IDLFileHandler,
+  LatticeLogs,
   ModuleParser,
   mutator,
   joinLines,
@@ -53,6 +58,7 @@ const defaultPackage = {
   typeOf,
   types,
 
+  AUTO_PROPS,
   DOC_CLASS,
   DOC_FIELDS,
   DOC_MUTATION,
@@ -61,8 +67,11 @@ const defaultPackage = {
   DOC_QUERY,
   DOC_SUBSCRIPTION,
   DOC_SUBSCRIPTIONS,
+  GETTERS,
   META_KEY,
-  MODEL_KEY
+  MODEL_KEY,
+  PROPS,
+  SETTERS
 };
 
 /* Also export each of the constructs individually */
@@ -80,6 +89,7 @@ export {
   GQLJSON,
   GQLScalar,
   IDLFileHandler,
+  LatticeLogs,
   ModuleParser,
   mutator,
   joinLines,
@@ -94,6 +104,7 @@ export {
   typeOf,
   types,
 
+  AUTO_PROPS,
   DOC_CLASS,
   DOC_FIELDS,
   DOC_MUTATION,
@@ -102,8 +113,11 @@ export {
   DOC_QUERY,
   DOC_SUBSCRIPTION,
   DOC_SUBSCRIPTIONS,
+  GETTERS,
   META_KEY,
-  MODEL_KEY
+  MODEL_KEY,
+  PROPS,
+  SETTERS
 }
 
 export default defaultPackage

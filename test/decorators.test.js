@@ -15,6 +15,10 @@ import {
 
   META_KEY,
   MODEL_KEY,
+  AUTO_PROPS,
+  PROPS,
+  GETTERS,
+  SETTERS,
 
   typeOf,
   types,
@@ -88,6 +92,19 @@ describe('@Getters', () => {
       invalid.broken
     }).toThrow()
   })
+
+  it('should have appropriately defined GETTERS tags', async () => {
+    const sampleGetters = Object.keys(Sample[META_KEY][GETTERS])
+    const sampleFields = ['test', 'fun']
+    const employeeGetters = Object.keys(Employee[META_KEY][GETTERS])
+    const employeeFields = ['name', 'job']
+    const personGetters = Object.keys(Person[META_KEY][GETTERS])
+    const personFields = ['employee']
+
+    expect(sampleGetters).toEqual(expect.arrayContaining(sampleFields))
+    expect(employeeGetters).toEqual(expect.arrayContaining(employeeFields))
+    expect(personGetters).toEqual(expect.arrayContaining(personFields))
+  })
 })
 
 describe('@Setters', () => {
@@ -133,6 +150,19 @@ describe('@Setters', () => {
 
       emptyPerson.employee = null;
     }).not.toThrow()
+  })
+
+  it('should have appropriately defined SETTERS tags', async () => {
+    const sampleSetters = Object.keys(Sample[META_KEY][SETTERS])
+    const sampleFields = ['test', 'fun']
+    const employeeSetters = Object.keys(Employee[META_KEY][SETTERS])
+    const employeeFields = ['name', 'job']
+    const personSetters = Object.keys(Person[META_KEY][SETTERS])
+    const personFields = ['employee']
+
+    expect(sampleSetters).toEqual(expect.arrayContaining(sampleFields))
+    expect(employeeSetters).toEqual(expect.arrayContaining(employeeFields))
+    expect(personSetters).toEqual(expect.arrayContaining(personFields))
   })
 })
 
@@ -200,6 +230,19 @@ describe('@Properties', () => {
 
     emptyPerson[MODEL_KEY]._emp = {name: 'Bubba', job: 'Monster Hunter'};
     expect(typeOf(emptyPerson.employee)).toEqual(Employee.name)
+  })
+
+  it('should have appropriately defined PROPS tags', async () => {
+    const sampleProps = Object.keys(Sample[META_KEY][PROPS])
+    const sampleFields = ['test', 'fun']
+    const employeeProps = Object.keys(Employee[META_KEY][PROPS])
+    const employeeFields = ['name', 'job']
+    const personProps = Object.keys(Person[META_KEY][PROPS])
+    const personFields = ['employee']
+
+    expect(sampleProps).toEqual(expect.arrayContaining(sampleFields))
+    expect(employeeProps).toEqual(expect.arrayContaining(employeeFields))
+    expect(personProps).toEqual(expect.arrayContaining(personFields))
   })
 })
 
@@ -361,6 +404,13 @@ describe('@resolver/@mutator/@subscriptor', () => {
       return new Thing({}, requestData)
     }
 
+    @resolver get invalidResolver() {
+      return true;
+    }
+
+    @resolver
+    invalidPropertyResolver;
+
     static async RESOLVERS(requestData) {
       return {
         // Potentially do something with requestData
@@ -411,6 +461,18 @@ describe('@resolver/@mutator/@subscriptor', () => {
     expect(thingInstance.getThing).not.toBeDefined()
   })
 
+  it ('should have ignored our invalidResolver getter', () => {
+    let thingInstance = new Thing({name: 'A thing'})
+
+    expect(thingInstance.invalidResolver).toBe(true)
+  })
+
+  it ('should have ignored our invalidPropertyResolver', () => {
+    let thingInstance = new Thing({name: 'A thing'})
+
+    expect(thingInstance.invalidPropertyResolver).not.toBeDefined()
+  })
+
   it('should also not be available in the static scope', () => {
     expect(Thing.getThing).not.toBeDefined()
   })
@@ -455,16 +517,52 @@ describe('Auto properties testing', () => {
   }
 
   @Schema(/* GraphQL */`
+    type Special {
+      id: ID
+      name(surname:String): String
+      ooh: Contrived
+      locale: String
+    }
+  `)
+  @Properties(['ooh', Contrived])
+  class Special extends GQLBase {
+    async name({surname}) {
+      return `My name is ${surname}`
+    }
+
+    get locale() {
+      return 'ja_JP'
+    }
+  }
+
+  @Schema(/* GraphQL */`
     enum Car { SLOW, FAST, RED_ONE }
   `)
   class Car extends GQLEnum {}
 
+  it('should have appropriately defined AUTO_PROPS tags', async () => {
+    // TODO move applyAutoProps to a non-instance locaation
+    new Contrived({})
+    new Special({})
+
+    let contrivedProps = Object.keys(Contrived[META_KEY][AUTO_PROPS])
+    let contrivedFields = ['name', 'age']
+    let specialProps = Object.keys(Special[META_KEY][AUTO_PROPS])
+    let specialFields = ['id']
+
+    expect(contrivedProps).toEqual(expect.arrayContaining(contrivedFields))
+    expect(specialProps).toEqual(expect.arrayContaining(specialFields))
+  })
+
   it('should make instances that return Sourceresses', async () => {
     let instance = new Contrived({name: 'Brie', job: 'Engineer', age: 21})
-    let autoProps = Contrived[META_KEY].props
+    let props = Contrived[META_KEY][PROPS]
+    let autoProps = Contrived[META_KEY][AUTO_PROPS]
     let expected = ['name', 'age']
 
-    expect(autoProps).toEqual(expect.arrayContaining(expected))
+    expect(Object.keys(props)).toEqual(expect.arrayContaining(expected))
+    expect(autoProps.name).toBeDefined()
+    expect(autoProps.age).toBeDefined()
 
     expect(await instance.getProp('name')).toBe('Brie')
     expect(await instance.getProp('age')).toBe(21)
@@ -478,11 +576,14 @@ describe('Auto properties testing', () => {
     let slowCar = new Car('SLOW')
     let fastCar = new Car('FAST')
     let redCar = new Car({ value: 'RED_ONE' })
-    let autoProps = Car[META_KEY].props
+    let props = Car[META_KEY].props
+    let autoProps = Car[META_KEY][AUTO_PROPS]
 
-    expect(autoProps).not.toEqual(expect.arrayContaining(['SLOW']))
-    expect(autoProps).not.toEqual(expect.arrayContaining(['FAST']))
-    expect(autoProps).not.toEqual(expect.arrayContaining(['RED_ONE']))
+    expect(props).not.toEqual(expect.arrayContaining(['SLOW']))
+    expect(props).not.toEqual(expect.arrayContaining(['FAST']))
+    expect(props).not.toEqual(expect.arrayContaining(['RED_ONE']))
+
+    expect(autoProps).toBeUndefined()
 
     expect(slowCar.SLOW).toBeUndefined()
     expect(slowCar.FAST).toBeUndefined()
@@ -493,5 +594,32 @@ describe('Auto properties testing', () => {
     expect(redCar.SLOW).toBeUndefined()
     expect(redCar.FAST).toBeUndefined()
     expect(redCar.RED_ONE).toBeUndefined()
+  })
+
+  it('should not create auto-props for custom implementations', async () => {
+    let special = new Special({
+      id: 'XELOK',
+      name: 'ignored',
+      ooh: {
+        name: 'Thing',
+        job: 'To be a thing',
+        age: 1
+      }
+    })
+    let autoProps = Special[META_KEY][AUTO_PROPS]
+    let props = Special[META_KEY][PROPS]
+
+    expect(special.id).toEqual('XELOK')
+    expect(await special.name({surname: 'Brie'})).toEqual('My name is Brie')
+    expect(special.ooh.name).toEqual('Thing')
+    expect(special.locale).toEqual('ja_JP')
+
+    expect(autoProps.ooh).toBeUndefined()
+    expect(autoProps.name).toBeUndefined()
+    expect(autoProps.locale).toBeUndefined()
+    expect(autoProps.id).toBeDefined()
+
+    expect(Object.keys(props)).toEqual(expect.arrayContaining(['ooh', 'id']))
+    expect(Object.keys(autoProps)).not.toEqual(expect.arrayContaining(['ooh']))
   })
 })

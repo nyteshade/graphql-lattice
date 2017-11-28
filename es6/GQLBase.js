@@ -85,6 +85,50 @@ export const REQ_DATA_KEY = Symbol.for('request-data-object-key');
 export const META_KEY = Symbol();
 
 /**
+ * A Symbol used to identify calls to @Properties for properties generated
+ * automatically upon instance creation.
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+export const AUTO_PROPS = Symbol.for('auto-props')
+
+/**
+ * A Symbol used to identify calls to @Getters for properties generated
+ * via decorator. These are stored in <class>[META_KEY][GETTERS]
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+export const GETTERS = Symbol.for('getters')
+
+/**
+ * A Symbol used to identify calls to @Setters for properties generated
+ * via decorator. These are stored in <class>[META_KEY][SETTERS]
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+export const SETTERS = Symbol.for('setters')
+
+/**
+ * A Symbol used to identify calls to @Properties for properties generated
+ * via decorator. These are stored in <class>[META_KEY][PROPS]
+ *
+ * @type {Symbol}
+ * @const
+ * @inner
+ * @memberOf GQLBaseEnv
+ */
+export const PROPS = Symbol.for('props')
+
+/**
  * All GraphQL Type objects used in this system are assumed to have extended
  * from this class. An instance of this class can be used to wrap an existing
  * structure if you have one.
@@ -176,8 +220,19 @@ export class GQLBase extends EventEmitter {
     // $FlowFixMe
     for (let propName of Object.keys(outline[Class.name])) {
       // $FlowFixMe
-      let hasCustomImpl = typeof this[propName] !== 'undefined'
+      let desc = Object.getOwnPropertyDescriptor(Class.prototype, propName)
+      let hasCustomImpl = !!(
+        // We have a descriptor for the property name
+        desc && (
+          // We have a getter function defined
+          typeof desc.get !== 'undefined'
+          ||
+          // ...or we have a function, async or not, defined
+          typeof desc.value === 'function'
+        )
+      )
 
+      // Only create auto-props for non custom implementations
       if (!hasCustomImpl) {
         props.push(propName)
       }
@@ -186,7 +241,7 @@ export class GQLBase extends EventEmitter {
     if (props.length) {
       ll.info(`Creating auto-props for [${Class.name}]: `, props)
       try {
-        Properties(...props)(Class)
+        Properties(...props)(Class, [AUTO_PROPS])
       }
       catch(error) {
         let parsed = /Cannot redefine property: (\w+)/.exec(error.message)
