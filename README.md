@@ -23,7 +23,7 @@ The primary goals of Lattice are
 Much of the newer Lattice code emphasizes the usage of ES7 Decorators and other advanced JavaScript features such as Proxies. While ES7 Decorators are **not required**, their usage reduces a lot of boilerplate and are the recommended way to write Lattice code.
 
 ### _Optionally Opininated Features_
-Some features of Lattice, while optional, are opininated and can make your life easier if you like the idea of how they work. One such feature is the `ModuleParser`. The `ModuleParser`, given a directory of `GQLBase` extend, or Lattice, classes, will automatically extract and build from this extraction your Schema. So, if you have a directory structure such as
+Some features of Lattice, while optional, are opininated and can make your life easier if you like the idea of how they work. One such feature is the `ModuleParser`. The `ModuleParser`, given a directory of `GQLBase` extended, or Lattice, classes, will automatically extract and build your Schema from this extraction. So, if you have a directory structure such as this
 
 ```sh
 gql
