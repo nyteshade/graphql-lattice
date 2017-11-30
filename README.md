@@ -3,7 +3,14 @@
 ## 🚧 Work in Progress 🚨
 Understand that GraphQL Lattice is still a work in progress and no assumptions about permanent usability should be made. Feedback and pull requests are welcome as is any desire to contribute.
 
-## About
+### _What is GraphQL?_
+Facebook's site on GraphQL states that GraphQL is, "A query language for your API." It goes on to say
+
+> GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.
+
+Facebook provides an excellent source of information on learning GraphQL and interfacing it with various server side language implementations that you might be using. To learn more about this, head over to [their site](https://www.graphql.org).
+
+### _What is Lattice?_
 Lattice for GraphQL is predominantly aimed to be a tool for managing and organizing your Schema and resolvers. It is somewhat Object Oriented but very much in same way that one might use `class Component extends React.Component`. Extensive inheritance and any over abundance of abstraction will likely lead you to a hole that will be hard to get out of, nor is the recommended way to use GraphQL Lattice.
 
 The primary goals of Lattice are
@@ -15,7 +22,7 @@ The primary goals of Lattice are
 
 Much of the newer Lattice code emphasizes the usage of ES7 Decorators and other advanced JavaScript features such as Proxies. While ES7 Decorators are **not required**, their usage reduces a lot of boilerplate and are the recommended way to write Lattice code.
 
-### Optionally Opininated Features
+### _Optionally Opininated Features_
 Some features of Lattice, while optional, are opininated and can make your life easier if you like the idea of how they work. One such feature is the `ModuleParser`. The `ModuleParser`, given a directory of `GQLBase` extend, or Lattice, classes, will automatically extract and build from this extraction your Schema. So, if you have a directory structure such as
 
 ```sh
@@ -42,38 +49,31 @@ const lattice = new GQLExpressMiddleware(parser.parseSync())
 router.use('/graphql', lattice.middleware)
 ```
 
-## What is GraphQL?
-Facebook's site on GraphQL states that GraphQL is, "A query language for your API." It goes on to say
-
-> GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.
-
-Facebook provides an excellent source of information on learning GraphQL and interfacing it with various server side language implementations that you might be using. To learn more about this, head over to [their site](https://www.graphql.org).
-
-## Roadmap 🛣
+## _Roadmap 🛣_
 GraphQL Lattice version map
 
-|Version|Changes|
-|-------|-------|
-|2.13.0 ✅|**Support `"lattice"` package.json entries**|
-||&emsp;• `ModuleParser` file extensions and failOnError flag|
-||&emsp;• Error handling; die or continue|
-||**GQLBase**|
-||&emsp;• AutoProps - automatically apply @Properties for fields missing resolvers (1:1 type/model mapping)|
-||**`utils/getLatticePrefs` fetches prefs from local package.json**
-||**`ModuleParser`**|
-||&emsp;• Capture errors as they occur decide whether to die or continue based on prefs|
-||&emsp;• Process only registered extensions|
-||&emsp;• Capture error for each file processed that throws for later processing|
-||**Additional unit tests**|
-||**`getProp` in GQLBase to fetch property resolver regardless of type**|
-||**`getResolver` in GQLBase to fetch a resolver from class or instance**|
-|2.13.1 ✅|**Fix overzealous auto-prop creation**
-||&emsp;• AutoProps were being created when they shouldn't due to how existing property existence was being tested|
-||&emsp;• Fixed the usage of `target[key]` to `descriptor.value` for @resolver/@mutator/@subscriptor usage|
-|2.14.0 🔜|**ModuleParser module import support**|
-||&emsp;• *Given `'gql-users'` as a module name, `ModuleParser` should be able to find this module in your `node_modules` directory and import the files from that location for you so you do not have to worry about things like your current working directory and so on.*|
+|Version| 🚧 |Changes|
+|-------|---|-------|
+|2.13.0|✅|**Support `"lattice"` package.json entries**|
+||✅|&emsp;• `ModuleParser` file extensions and failOnError flag|
+||✅|&emsp;• Error handling; die or continue|
+||✅|**GQLBase**|
+||✅|&emsp;• AutoProps - automatically apply @Properties for fields missing resolvers (1:1 type/model mapping)|
+||✅|**`utils/getLatticePrefs` fetches prefs from local package.json**
+||✅|**`ModuleParser`**|
+||✅|&emsp;• Capture errors as they occur decide whether to die or continue based on prefs|
+||✅|&emsp;• Process only registered extensions|
+||✅|&emsp;• Capture error for each file processed that throws for later processing|
+||✅|**Additional unit tests**|
+||✅|**`getProp` in GQLBase to fetch property resolver regardless of type**|
+||✅|**`getResolver` in GQLBase to fetch a resolver from class or instance**|
+|2.13.1|✅|**Fix overzealous auto-prop creation**
+||✅|&emsp;• AutoProps were being created when they shouldn't due to how existing property existence was being tested|
+||✅|&emsp;• Fixed the usage of `target[key]` to `descriptor.value` for @resolver/@mutator/@subscriptor usage|
+|2.14.0|🔜|**ModuleParser module import support**|
+||🔜|&emsp;• *Given `'gql-users'` as a module name, `ModuleParser` should be able to find this module in your `node_modules` directory and import the files from that location for you so you do not have to worry about things like your current working directory and so on.*|
 
-## Example projects
+## _Example projects_
 
 Until the new, under construction website is released, you can take a look at some of these quickstart boilerplate setups.
 
