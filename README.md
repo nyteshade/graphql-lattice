@@ -1,16 +1,46 @@
 # graphql-lattice ([www.graphql-lattice.com](https://www.graphql-lattice.com))
-![GraphQL Logo](http://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png)
+
+## !!Work in Progress!!
+Understand that GraphQL Lattice is still a work in progress and no assumptions about permanent usability should be made. Feedback and pull requests are welcome as is any desire to contribute.
 
 ## About
-Lattice for GraphQL is a lightweight implementation pattern/framework that is meant to provide a basis for your applications to fetch exactly the data that your needs demand; be they web, native mobile or desktop applications.
+Lattice for GraphQL is predominantly aimed to be a tool for managing and organizing your Schema and resolvers. It is somewhat Object Oriented but very much in same way that one might use `class Component extends React.Component`. Extensive inheritance and any over abundance of abstraction will likely lead you to a hole that will be hard to get out of, nor is the recommended way to use GraphQL Lattice.
 
-This is especially true for projects where your GraphQL object type definitions are better designed and served by not being muddled down on how to programmatically merge each type and its query and mutation types into a single GraphQL IDL document someplace.
+The primary goals of Lattice are
 
-Through the use of GraphQL's provided abstract syntax tree, or AST, toolkit, your object types can be automatically read from disk on server startup. Each type and their associated IDL definitions are calculated and merged for you. This results in a dynamically generated schema string that can be consumed easily by `express-graphql` or other similar libraries.
+ * Provide a consistent method of logically keeping your Schema for a given type next to the resolvers and implementation that make it up.
+ * Provide an easy way to add documentation to every level of your Schema, programmatically, while still using GraphQL SDL/IDL to define the structure of your Schema.
+ * Prevent any manual labor involved in merging the Query or Mutation types you've defined for all the GraphQL Object types you've put together in your application.
+   * _*Uses ASTs, not string parsing, in order to make this happen*_
 
-### _State of Things_
+Much of the newer Lattice code emphasizes the usage of ES7 Decorators and other advanced JavaScript features such as Proxies. While ES7 Decorators are **not required**, their usage reduces a lot of boilerplate and are the recommended way to write Lattice code.
 
-A new website for GraphQL Lattice with full documentation is in the works and should be available within a few days
+### Optionally Opininated Features
+Some features of Lattice, while optional, are opininated and can make your life easier if you like the idea of how they work. One such feature is the `ModuleParser`. The `ModuleParser`, given a directory of `GQLBase` extend, or Lattice, classes, will automatically extract and build from this extraction your Schema. So, if you have a directory structure such as
+
+```sh
+gql
+├── enums
+├── interfaces
+└── types
+    ├── Job.js
+    └── Person.js
+```
+
+You could write code like like the following and no matter how many types, enums, interfaces or more that you ended up writing in the future, as long as that code was placed under the `./src/gql` directory path passed to `ModuleParser`, it would automatically be loaded and ready for use going forward. 
+
+The idea of JavaScript dynamically loading this code on startup is contentious to some and this is why it is optional, but Lattice is focused on removing unnecessary boilerplate so that you can focus on getting your work done. This is one way that it can do so.
+
+```js
+import { Router } from 'express'
+import { GQLExpressMiddleware, ModuleParser } from 'graphql-lattice'
+
+const router = Router();
+const parser = new ModuleParser('./src/gql')
+const lattice = new GQLExpressMiddleware(parser.parseSync())
+
+router.use('/graphql', lattice.middleware)
+```
 
 ## What is GraphQL?
 Facebook's site on GraphQL states that GraphQL is, "A query language for your API." It goes on to say
@@ -25,7 +55,7 @@ GraphQL Lattice version map
 
 |Version|Changes|
 |-------|-------|
-|2.13.0|**Support `"lattice"` package.json entries**|
+|2.13.0 - √ *Done*|**Support `"lattice"` package.json entries**|
 ||&emsp;• `ModuleParser` file extensions and failOnError flag|
 ||&emsp;• Error handling; die or continue|
 ||**GQLBase**|
@@ -38,9 +68,13 @@ GraphQL Lattice version map
 ||**Additional unit tests**|
 ||**`getProp` in GQLBase to fetch property resolver regardless of type**|
 ||**`getResolver` in GQLBase to fetch a resolver from class or instance**|
-|2.14.0 (Pending)|**ModuleParser module import support**
-||*fetch GraphQL Lattice types from a node_modules dependency by name*|
-## Examples
+|2.13.1 - √ *Done*|**Fix overzealous auto-prop creation**
+||&emsp;• AutoProps were being created when they shouldn't due to how existing property existence was being tested|
+||&emsp;• Fixed the usage of `target[key]` to `descriptor.value` for @resolver/@mutator/@subscriptor usage|
+|2.14.0 (Pending)|**ModuleParser module import support**|
+||&emsp;• *Given `'gql-users'` as a module name, `ModuleParser` should be able to find this module in your `node_modules` directory and import the files from that location for you so you do not have to worry about things like your current working directory and so on.*|
+
+## Example projects
 
 Until the new, under construction website is released, you can take a look at some of these quickstart boilerplate setups.
 
