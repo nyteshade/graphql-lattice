@@ -350,7 +350,8 @@ describe('DIRECT_TYPES', () => {
     const peep = new Person(model2, null, {autoProps: false})
 
     expect(typeOf(peep.job)).toBe(Job.name)
-    expect(peep.job).toBe(job)
+    expect(peep.job === model2.job).toBe(true);
+    expect(peep.job).toEqual(job)
     expect(peep.name).toEqual(answer1)
     expect(peep.model.job.model.company).toEqual(answer4)
     expect(peep.model.job.company).toEqual(answer5)

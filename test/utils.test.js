@@ -2,9 +2,11 @@ import { stat } from 'fs'
 import {
   getLatticePrefs,
   Deferred,
-  promisify
+  promisify,
+  types
 } from '../es6/lattice'
 
+const { extendsFrom } = types;
 
 describe('getLatticePrefs should combine defaults with custom value', () => {
   it('should pick up local package.json "lattice" settings', () => {
@@ -142,3 +144,30 @@ describe('Sample promisify should work similar to node 8+ version', () => {
     }
   })
 })
+
+describe('extendsFrom', () => {
+  class A {}
+  class B extends A {}
+  class C {}
+  class D extends B {}
+
+  it('should determine if a class extends another', () => {
+    expect(extendsFrom(C, A)).toBe(false);
+    expect(extendsFrom(B, A)).toBe(true);
+    expect(extendsFrom(D, A)).toBe(true);
+  });
+
+  it('should not throw errors w/ nulls', () => {
+    expect(() => {
+      extendsFrom(null, A);
+    }).not.toThrow();
+
+    expect(() => {
+      extendsFrom(A, null);
+    }).not.toThrow();
+
+    expect(() => {
+      extendsFrom(null, null);
+    }).not.toThrow();
+  });
+});
