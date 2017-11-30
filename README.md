@@ -1,7 +1,7 @@
 # graphql-lattice ([www.graphql-lattice.com](https://www.graphql-lattice.com))
 
 ## 🚧 Work in Progress 🚨
-Understand that GraphQL Lattice is still a work in progress and no assumptions about permanent usability should be made. Feedback and pull requests are welcome as is any desire to contribute.
+Understand that GraphQL Lattice is still a work in progress and no assumptions about permanent usability should be made. Feedback and pull requests are welcome as is any desire to contribute. Documentation is noticeably sparse. It is a **known issue**, please be patient while this is worked on. Please feel free ask me or the contributors to the project should you have any specific questions. The source code should be well documented, as are the example apps listed below.
 
 ### _What is GraphQL?_
 Facebook's site on GraphQL states that GraphQL is, "A query language for your API." It goes on to say
