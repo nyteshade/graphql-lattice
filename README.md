@@ -1,6 +1,6 @@
 # graphql-lattice ([www.graphql-lattice.com](https://www.graphql-lattice.com))
 
-## !!Work in Progress!!
+## 🚧 Work in Progress 🚨
 Understand that GraphQL Lattice is still a work in progress and no assumptions about permanent usability should be made. Feedback and pull requests are welcome as is any desire to contribute.
 
 ## About
@@ -49,13 +49,12 @@ Facebook's site on GraphQL states that GraphQL is, "A query language for your AP
 
 Facebook provides an excellent source of information on learning GraphQL and interfacing it with various server side language implementations that you might be using. To learn more about this, head over to [their site](https://www.graphql.org).
 
-## Near term roadmap
-
+## Roadmap 🛣
 GraphQL Lattice version map
 
 |Version|Changes|
 |-------|-------|
-|2.13.0 - √ *Done*|**Support `"lattice"` package.json entries**|
+|2.13.0 ✅|**Support `"lattice"` package.json entries**|
 ||&emsp;• `ModuleParser` file extensions and failOnError flag|
 ||&emsp;• Error handling; die or continue|
 ||**GQLBase**|
@@ -68,10 +67,10 @@ GraphQL Lattice version map
 ||**Additional unit tests**|
 ||**`getProp` in GQLBase to fetch property resolver regardless of type**|
 ||**`getResolver` in GQLBase to fetch a resolver from class or instance**|
-|2.13.1 - √ *Done*|**Fix overzealous auto-prop creation**
+|2.13.1 ✅|**Fix overzealous auto-prop creation**
 ||&emsp;• AutoProps were being created when they shouldn't due to how existing property existence was being tested|
 ||&emsp;• Fixed the usage of `target[key]` to `descriptor.value` for @resolver/@mutator/@subscriptor usage|
-|2.14.0 (Pending)|**ModuleParser module import support**|
+|2.14.0 🔜|**ModuleParser module import support**|
 ||&emsp;• *Given `'gql-users'` as a module name, `ModuleParser` should be able to find this module in your `node_modules` directory and import the files from that location for you so you do not have to worry about things like your current working directory and so on.*|
 
 ## Example projects
