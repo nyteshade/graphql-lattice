@@ -305,6 +305,14 @@ export function extendsFrom(
  RootClass: Function,
  enforceClasses: boolean = false
 ): boolean {
+  if (!TestedClass || !RootClass) {
+    return false;
+  }
+
+  if (TestedClass === RootClass) {
+    return true;
+  }
+
   TestedClass = TestedClass.constructor && typeof TestedClass !== 'function'
     ? TestedClass.constructor : TestedClass
 

@@ -130,7 +130,7 @@ function extractBits(property) {
         // If the value of the model is already the type of class we expect
         // we do not need to do any processing and we can just grab it and
         // go.
-        if (extendsFrom(model[modelName], typeClass)) {
+        if (model[modelName] && extendsFrom(model[modelName], typeClass)) {
           val = model[modelName]
         }
 
