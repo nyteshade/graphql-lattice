@@ -1,4 +1,7 @@
 # graphql-lattice ([www.graphql-lattice.com](https://www.graphql-lattice.com))
+[![Build Status](https://travis-ci.org/nyteshade/graphql-lattice.svg?branch=master)](https://travis-ci.org/nyteshade/graphql-lattice) [![dependencies Status](https://david-dm.org/nyteshade/graphql-lattice/status.svg)](https://david-dm.org/nyteshade/graphql-lattice) [![devDependencies Status](https://david-dm.org/nyteshade/graphql-lattice/dev-status.svg)](https://david-dm.org/nyteshade/graphql-lattice?type=dev)
+
+![GraphQL Logo](http://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png)
 
 ## 🚧 Work in Progress 🚨
 Understand that GraphQL Lattice is still a work in progress and no assumptions about permanent usability should be made. Feedback and pull requests are welcome as is any desire to contribute. Documentation is noticeably sparse. It is a **known issue**, please be patient while this is worked on. Please feel free ask me or the contributors to the project should you have any specific questions. The source code should be well documented, as are the example apps listed below.
@@ -34,7 +37,7 @@ gql
     └── Person.js
 ```
 
-You could write code like like the following and no matter how many types, enums, interfaces or more that you ended up writing in the future, as long as that code was placed under the `./src/gql` directory path passed to `ModuleParser`, it would automatically be loaded and ready for use going forward. 
+You could write code like like the following and no matter how many types, enums, interfaces or more that you ended up writing in the future, as long as that code was placed under the `./src/gql` directory path passed to `ModuleParser`, it would automatically be loaded and ready for use going forward.
 
 The idea of JavaScript dynamically loading this code on startup is contentious to some and this is why it is optional, but Lattice is focused on removing unnecessary boilerplate so that you can focus on getting your work done. This is one way that it can do so.
 
