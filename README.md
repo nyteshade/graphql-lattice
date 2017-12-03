@@ -1,7 +1,6 @@
 # graphql-lattice ([www.graphql-lattice.com](https://www.graphql-lattice.com))
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mstuart/graphql-lattice.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/nyteshade/graphql-lattice.svg?branch=master)](https://travis-ci.org/nyteshade/graphql-lattice) [![dependencies Status](https://david-dm.org/nyteshade/graphql-lattice/status.svg)](https://david-dm.org/nyteshade/graphql-lattice) [![devDependencies Status](https://david-dm.org/nyteshade/graphql-lattice/dev-status.svg)](https://david-dm.org/nyteshade/graphql-lattice?type=dev)
+[![Build Status](https://travis-ci.org/nyteshade/graphql-lattice.svg?branch=master)](https://travis-ci.org/nyteshade/graphql-lattice) [![dependencies Status](https://david-dm.org/nyteshade/graphql-lattice/status.svg)](https://david-dm.org/nyteshade/graphql-lattice) [![devDependencies Status](https://david-dm.org/nyteshade/graphql-lattice/dev-status.svg)](https://david-dm.org/nyteshade/graphql-lattice?type=dev) [![greenkeeper enabled](https://badges.greenkeeper.io/mstuart/graphql-lattice.svg)](https://greenkeeper.io/)
 
 ![GraphQL Logo](http://www.graphql-lattice.com/assets/lattice/logo_circled_256x256.png)
 
