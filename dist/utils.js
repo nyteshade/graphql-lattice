@@ -5,6 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LatticeLogs = exports.Deferred = exports.joinLines = undefined;
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
@@ -13,11 +21,19 @@ var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
 var _neTagFns = require('ne-tag-fns');
 
 Object.defineProperty(exports, 'joinLines', {
   enumerable: true,
-  get: function () {
+  get: function get() {
     return _neTagFns.dedent;
   }
 });
@@ -40,7 +56,7 @@ var _lodash = require('lodash');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const { Stats } = _fs2.default;
+var Stats = _fs2.default.Stats;
 
 /**
  * Deferred is modeled after jQuery's deferred object. It inverts a promise
@@ -50,7 +66,8 @@ const { Stats } = _fs2.default;
  * @memberof utils
  * @class Deferred
  */
-let Deferred = exports.Deferred = class Deferred {
+
+var Deferred = exports.Deferred = function () {
 
   /**
    * Creates an object with four properties of note; promise, resolve, reject
@@ -88,25 +105,29 @@ let Deferred = exports.Deferred = class Deferred {
    * @memberof Deferred
    * @instance
    */
-  constructor(resolveWith, rejectWith) {
-    this.promise = new _promise2.default((resolve, reject) => {
-      this.complete = false;
+  function Deferred(resolveWith, rejectWith) {
+    var _this = this;
 
-      this.resolve = (...args) => {
-        this.complete = true;
-        return resolve(...args);
+    (0, _classCallCheck3.default)(this, Deferred);
+
+    this.promise = new _promise2.default(function (resolve, reject) {
+      _this.complete = false;
+
+      _this.resolve = function () {
+        _this.complete = true;
+        return resolve.apply(undefined, arguments);
       };
 
-      this.reject = (...args) => {
-        this.complete = true;
-        return reject(...args);
+      _this.reject = function () {
+        _this.complete = true;
+        return reject.apply(undefined, arguments);
       };
 
       if (resolveWith && !rejectWith) {
-        this.resolve(resolveWith);
+        _this.resolve(resolveWith);
       }
       if (rejectWith && !resolveWith) {
-        this.reject(rejectWith);
+        _this.reject(rejectWith);
       }
     });
   }
@@ -140,44 +161,59 @@ let Deferred = exports.Deferred = class Deferred {
    * @memberof Deferred
    * @instance
    */
-  get pending() {
-    return !this.complete;
-  }
 
-  /**
-   * Promises are great but if the code never resolves or rejects a deferred,
-   * then things will become eternal; in a bad way. This makes that less likely
-   * of an event.
-   *
-   * If the number of milliseconds elapses before a resolve or reject occur,
-   * then the deferred is rejected.
-   *
-   * @static
-   * @memberof Deferred
-   * @method ⌾⠀TimedDeferred
-   *
-   * @param {Number} timeOut a number of milliseconds to wait before rejecting
-   * the deferred.
-   * @param {Promise} proxyPromise a promise to proxy then/catch through to the
-   * deferreds resolve/reject.
-   * @return {Deferred} an instance of deferred that will timeout after
-   * `timeOut` milliseconds have elapsed. If `proxyPromise` is a `Promise`
-   * then the deferred's reject and resolve will be tied to the Promise's
-   * catch() and then() methods, respectively.
-   */
-  static TimedDeferred(timeOut, proxyPromise) {
-    const deferred = new Deferred();
 
-    if (proxyPromise && (0, _types.typeOf)(proxyPromise) === _promise2.default.name) {
-      proxyPromise.then((...args) => deferred.resolve(...args));
-      proxyPromise.catch(reason => deferred.reject(reason));
+  (0, _createClass3.default)(Deferred, [{
+    key: 'pending',
+    get: function get() {
+      return !this.complete;
     }
 
-    setTimeout(() => deferred.reject(new Error('Deferred timed out'), timeOut));
+    /**
+     * Promises are great but if the code never resolves or rejects a deferred,
+     * then things will become eternal; in a bad way. This makes that less likely
+     * of an event.
+     *
+     * If the number of milliseconds elapses before a resolve or reject occur,
+     * then the deferred is rejected.
+     *
+     * @static
+     * @memberof Deferred
+     * @method ⌾⠀TimedDeferred
+     *
+     * @param {Number} timeOut a number of milliseconds to wait before rejecting
+     * the deferred.
+     * @param {Promise} proxyPromise a promise to proxy then/catch through to the
+     * deferreds resolve/reject.
+     * @return {Deferred} an instance of deferred that will timeout after
+     * `timeOut` milliseconds have elapsed. If `proxyPromise` is a `Promise`
+     * then the deferred's reject and resolve will be tied to the Promise's
+     * catch() and then() methods, respectively.
+     */
 
-    return deferred;
-  }
-};
+  }], [{
+    key: 'TimedDeferred',
+    value: function TimedDeferred(timeOut, proxyPromise) {
+      var deferred = new Deferred();
+
+      if (proxyPromise && (0, _types.typeOf)(proxyPromise) === _promise2.default.name) {
+        proxyPromise.then(function () {
+          return deferred.resolve.apply(deferred, arguments);
+        });
+        proxyPromise.catch(function (reason) {
+          return deferred.reject(reason);
+        });
+      }
+
+      setTimeout(function () {
+        return deferred.reject(new Error('Deferred timed out'), timeOut);
+      });
+
+      return deferred;
+    }
+  }]);
+  return Deferred;
+}();
 
 /**
  * A simply promisify style function that returns an async function wrapped
@@ -196,26 +232,40 @@ let Deferred = exports.Deferred = class Deferred {
  * function.
  */
 
+
 function promisify(method, context) {
-  return (() => {
-    var _ref = (0, _asyncToGenerator3.default)(function* (...args) {
-      return new _promise2.default(function (resolve, reject) {
-        args.push(function (error, ...callbackArgs) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(...callbackArgs);
-          }
-        });
+  return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
 
-        method.apply(context, args);
-      });
-    });
+    return _regenerator2.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt('return', new _promise2.default(function (resolve, reject) {
+              args.push(function (error) {
+                if (error) {
+                  reject(error);
+                } else {
+                  for (var _len2 = arguments.length, callbackArgs = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+                    callbackArgs[_key2 - 1] = arguments[_key2];
+                  }
 
-    return function () {
-      return _ref.apply(this, arguments);
-    };
-  })();
+                  resolve.apply(undefined, callbackArgs);
+                }
+              });
+
+              method.apply(context, args);
+            }));
+
+          case 1:
+          case 'end':
+            return _context.stop();
+        }
+      }
+    }, _callee, this);
+  }));
 }
 
 /**
@@ -231,8 +281,10 @@ function promisify(method, context) {
  * values specified in `package.json`
  */
 function getLatticePrefs(readPkgUpOpts) {
-  let { pkg } = (0, _readPkgUp.sync)(readPkgUpOpts);
-  let options = {
+  var _readPkg = (0, _readPkgUp.sync)(readPkgUpOpts),
+      pkg = _readPkg.pkg;
+
+  var options = {
     ModuleParser: {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       failOnError: false
@@ -259,7 +311,7 @@ function getLatticePrefs(readPkgUpOpts) {
  * @type Object
  * @static
  */
-const LatticeLogs = exports.LatticeLogs = {
+var LatticeLogs = exports.LatticeLogs = {
   get LOG() {
     return 'log';
   },
@@ -286,19 +338,21 @@ const LatticeLogs = exports.LatticeLogs = {
    * `TRACE`
    */
   get LEVELS() {
-    const ll = LatticeLogs;
+    var ll = LatticeLogs;
 
     return [ll.LOG, ll.WARN, ll.ERROR, ll.INFO, ll.TRACE];
   },
 
-  equalOrBelow(testedLevel, lessThan = 'error') {
-    const ll = LatticeLogs;
+  equalOrBelow(testedLevel) {
+    var lessThan = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'error';
+
+    var ll = LatticeLogs;
 
     return ll.LEVELS.indexOf(testedLevel) <= ll.LEVELS.indexOf(lessThan);
   },
 
   atLeast(testedLevel, atLeastLevel) {
-    const ll = LatticeLogs;
+    var ll = LatticeLogs;
 
     return ll.LEVELS.indexOf(testedLevel) >= ll.LEVELS.indexOf(atLeastLevel);
   },
@@ -312,8 +366,8 @@ const LatticeLogs = exports.LatticeLogs = {
    * @param {Array<mixed>} array the array containing this element
    */
   argMapper(arg, index, array) {
-    let isError = (0, _types.typeOf)(arg) === Error.name;
-    let showStack = /\bSTACK\b/i.test(process.env.LATTICE_ERRORS || '');
+    var isError = (0, _types.typeOf)(arg) === Error.name;
+    var showStack = /\bSTACK\b/i.test(process.env.LATTICE_ERRORS || '');
 
     // $FlowFixMe
     return !isError ? arg : showStack ? arg : arg.message;
@@ -321,10 +375,10 @@ const LatticeLogs = exports.LatticeLogs = {
 
   /** A function that, when it returns true, will cause logging to be skipped */
   failFast(logLevel, lessThan) {
-    const ll = LatticeLogs;
+    var ll = LatticeLogs;
 
     if (logLevel) {
-      let compareTo = lessThan || process.env.LATTICE_LOGLEVEL || ll.ERROR;
+      var compareTo = lessThan || process.env.LATTICE_LOGLEVEL || ll.ERROR;
       if (!ll.equalOrBelow(logLevel, compareTo)) return true;
     }
 
@@ -333,33 +387,68 @@ const LatticeLogs = exports.LatticeLogs = {
   },
 
   /** Pass-thru to console.log; arguments parsed via `argMapper` */
-  log(...args) {
+  log() {
+    var _console;
+
     if (LatticeLogs.failFast(LatticeLogs.LOG)) return;
-    console.log(...args.map(LatticeLogs.argMapper));
+
+    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
+    }
+
+    (_console = console).log.apply(_console, (0, _toConsumableArray3.default)(args.map(LatticeLogs.argMapper)));
   },
 
   /** Pass-thru to console.warn; arguments parsed via `argMapper` */
-  warn(...args) {
+  warn() {
+    var _console2;
+
     if (LatticeLogs.failFast(LatticeLogs.WARN)) return;
-    console.warn(...args.map(LatticeLogs.argMapper));
+
+    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      args[_key4] = arguments[_key4];
+    }
+
+    (_console2 = console).warn.apply(_console2, (0, _toConsumableArray3.default)(args.map(LatticeLogs.argMapper)));
   },
 
   /** Pass-thru to console.error; arguments parsed via `argMapper` */
-  error(...args) {
+  error() {
+    var _console3;
+
     if (LatticeLogs.failFast(LatticeLogs.ERROR)) return;
-    console.error(...args.map(LatticeLogs.argMapper));
+
+    for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+      args[_key5] = arguments[_key5];
+    }
+
+    (_console3 = console).error.apply(_console3, (0, _toConsumableArray3.default)(args.map(LatticeLogs.argMapper)));
   },
 
   /** Pass-thru to console.info; arguments parsed via `argMapper` */
-  info(...args) {
+  info() {
+    var _console4;
+
     if (LatticeLogs.failFast(LatticeLogs.INFO)) return;
-    console.info(...args.map(LatticeLogs.argMapper));
+
+    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      args[_key6] = arguments[_key6];
+    }
+
+    (_console4 = console).info.apply(_console4, (0, _toConsumableArray3.default)(args.map(LatticeLogs.argMapper)));
   },
 
   /** Pass-thru to console.trace; arguments parsed via `argMapper` */
-  trace(...args) {
+  trace() {
+    var _console5;
+
     if (LatticeLogs.failFast(LatticeLogs.TRACE)) return;
-    console.trace(...args.map(LatticeLogs.argMapper));
+
+    for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+      args[_key7] = arguments[_key7];
+    }
+
+    (_console5 = console).trace.apply(_console5, (0, _toConsumableArray3.default)(args.map(LatticeLogs.argMapper)));
   },
 
   outWrite(chunk, encoding, callback) {

@@ -12,7 +12,7 @@ exports.Memoize = Memoize;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const cache = new _map2.default();
+var cache = new _map2.default();
 
 function isValidKey() {
   return false;
@@ -31,7 +31,7 @@ function Memoize(target, prop, descriptor) {
   }
 
   // Our passed arguments and function make our key
-  const key = {
+  var key = {
     target,
     prop,
     descriptor,
@@ -42,7 +42,11 @@ function Memoize(target, prop, descriptor) {
 
     // In order to determine if we have a match on key we must allow execution
     // of a wrapper function that does so
-  };const wrapper = (...args) => {
+  };var wrapper = function wrapper() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
     key.args = args;
 
     // TODO check for cache hit by comparing objects
@@ -50,11 +54,11 @@ function Memoize(target, prop, descriptor) {
     if (key.validate()) {
       return cache.get(key);
     } else {
-      let results;
+      var results = void 0;
 
       try {
-        let results = key.func.apply(target, key.args);
-        cache.set(key, results);
+        var _results = key.func.apply(target, key.args);
+        cache.set(key, _results);
       } catch (error) {
         results = error;
       }

@@ -40,7 +40,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {mixed} as per all class decorators, `FileSchema` returns the
  * class object being modified
  */
-function FileSchema(path, extension = ".graphql") {
+function FileSchema(path) {
+  var extension = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ".graphql";
+
   return function (target) {
     // Attempt to remove the SCHEMA property or function from the class
     // being decorated. This is not guaranteed to work but should increase
@@ -50,11 +52,15 @@ function FileSchema(path, extension = ".graphql") {
     // @ComputedType
     return (0, _defineProperties2.default)(target, {
       SCHEMA: {
-        get: () => _GQLBase.GQLBase.IDLFilePath(path, extension)
+        get: function get() {
+          return _GQLBase.GQLBase.IDLFilePath(path, extension);
+        }
       },
 
       [(0, _for2.default)('@fileSchema')]: {
-        get: () => true
+        get: function get() {
+          return true;
+        }
       }
     });
   };

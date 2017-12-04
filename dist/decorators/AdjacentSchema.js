@@ -50,15 +50,21 @@ function AdjacentSchema(classModule) {
     // @ComputedType
     return (0, _defineProperties2.default)(target, {
       module: {
-        get: () => classModule
+        get: function get() {
+          return classModule;
+        }
       },
 
       SCHEMA: {
-        get: () => _GQLBase.GQLBase.ADJACENT_FILE
+        get: function get() {
+          return _GQLBase.GQLBase.ADJACENT_FILE;
+        }
       },
 
       [(0, _for2.default)('@adjacentSchema')]: {
-        get: () => true
+        get: function get() {
+          return true;
+        }
       }
     });
   };
