@@ -43,19 +43,14 @@ var types = _interopRequireWildcard(_types);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var typeOf = types.typeOf;
-var DOC_CLASS = _GQLBase.GQLBase.DOC_CLASS,
-    DOC_FIELDS = _GQLBase.GQLBase.DOC_FIELDS,
-    DOC_QUERIES = _GQLBase.GQLBase.DOC_QUERIES,
-    DOC_MUTATORS = _GQLBase.GQLBase.DOC_MUTATORS,
-    DOC_SUBSCRIPTIONS = _GQLBase.GQLBase.DOC_SUBSCRIPTIONS,
-    DOC_QUERY = _GQLBase.GQLBase.DOC_QUERY,
-    DOC_MUTATION = _GQLBase.GQLBase.DOC_MUTATION,
-    DOC_SUBSCRIPTION = _GQLBase.GQLBase.DOC_SUBSCRIPTION;
+const { typeOf } = types;
+const {
+  DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS,
+  DOC_QUERY, DOC_MUTATION, DOC_SUBSCRIPTION
+} = _GQLBase.GQLBase;
 
 /* Create a friendly bundle to export all at once */
-
-var defaultPackage = {
+const defaultPackage = {
   AdjacentSchema: _AdjacentSchema.AdjacentSchema,
   Deferred: _utils.Deferred,
   DirectTypeManager: _ModelProperties.DirectTypeManager,

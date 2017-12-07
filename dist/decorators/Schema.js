@@ -43,9 +43,7 @@ function Schema(schemaString) {
     // @ComputedType
     (0, _defineProperties2.default)(target, {
       SCHEMA: {
-        get: function get() {
-          return schemaString;
-        }
+        get: () => schemaString
       }
     });
   };

@@ -13,10 +13,6 @@ var _getOwnPropertyDescriptor = require('babel-runtime/core-js/object/get-own-pr
 
 var _getOwnPropertyDescriptor2 = _interopRequireDefault(_getOwnPropertyDescriptor);
 
-var _getIterator2 = require('babel-runtime/core-js/get-iterator');
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
 var _for = require('babel-runtime/core-js/symbol/for');
 
 var _for2 = _interopRequireDefault(_for);
@@ -89,25 +85,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * ```
  */
 function extractBits(property) {
-  var array = (0, _types.isArray)(property) ? property : [property, property, null];
-  var reply = void 0;
+  let array = (0, _types.isArray)(property) ? property : [property, property, null];
+  let reply;
 
   if (!property) {
-    var error = new Error('Invalid property. Given\n  %o', (0, _util.inspect)(property, { depth: 2 }));
+    let error = new Error('Invalid property. Given\n  %o', (0, _util.inspect)(property, { depth: 2 }));
 
     return {
       fieldName: 'anErrorOccurred',
       modelName: 'anErrorOccurred',
       typeClass: null,
-      getterMaker: function getterMaker() {
-        return function () {
-          return error;
-        };
+      getterMaker: function () {
+        return () => error;
       },
-      setterMaker: function setterMaker() {
-        return function (v) {
-          return undefined;
-        };
+      setterMaker: function () {
+        return v => undefined;
       }
     };
   }
@@ -140,16 +132,12 @@ function extractBits(property) {
       }
 
   reply.getterMaker = function () {
-    var _reply = reply,
-        modelName = _reply.modelName,
-        fieldName = _reply.fieldName,
-        typeClass = _reply.typeClass;
-
+    let { modelName, fieldName, typeClass } = reply;
 
     return function () {
-      var thisClass = this.constructor;
-      var model = this[_GQLBase.MODEL_KEY] || null;
-      var val = void 0;
+      const thisClass = this.constructor;
+      const model = this[_GQLBase.MODEL_KEY] || null;
+      let val;
 
       if (!(0, _types.extendsFrom)(thisClass, _GQLBase.GQLBase)) {
         console.error(`${thisClass.name} is not derived from GQLBase`);
@@ -175,12 +163,10 @@ function extractBits(property) {
         // Otherwise we need to return an instance of the determined typeClass
         // and pass that back instead; as requested.
         else {
-            var results = _SyntaxTree.SyntaxTree.findField((0, _graphql.parse)(this.constructor.SCHEMA), this.constructor.name, modelName);
+            const results = _SyntaxTree.SyntaxTree.findField((0, _graphql.parse)(this.constructor.SCHEMA), this.constructor.name, modelName);
+            const { meta } = results || { meta: null };
 
-            var _ref = results || { meta: null },
-                meta = _ref.meta;
-
-            var args = [model[modelName], this.requestData];
+            let args = [model[modelName], this.requestData];
 
             if (meta && !meta.nullable && !model) {
               throw new Error(`
@@ -204,9 +190,9 @@ function extractBits(property) {
             // proceed.
             if (model) {
               if (extractBits.DIRECT_TYPES.includes(typeClass.name)) {
-                val = typeClass.apply(undefined, args);
+                val = typeClass(...args);
               } else {
-                val = new (Function.prototype.bind.apply(typeClass, [null].concat(args)))();
+                val = new typeClass(...args);
               }
 
               if (typeClass.GQL_TYPE === _graphql.GraphQLEnumType) {
@@ -227,9 +213,7 @@ function extractBits(property) {
   };
 
   reply.setterMaker = function () {
-    var _reply2 = reply,
-        modelName = _reply2.modelName;
-
+    let { modelName } = reply;
     return function (value) {
       this[_GQLBase.MODEL_KEY][modelName] = value;
     };
@@ -263,7 +247,7 @@ extractBits.DIRECT_TYPES = [String.name];
  * @type {Object}
  * @since 2.7.0
  */
-var DirectTypeManager = exports.DirectTypeManager = {
+const DirectTypeManager = exports.DirectTypeManager = {
   /**
    * A getter that retrieves the array of direct types
    *
@@ -353,13 +337,9 @@ function DirectTypeAdd(target) {
  * with this tagged field.
  */
 function applyTags(Class, addTags, fieldName, descriptor) {
-  var tags = (Array.isArray(addTags) && addTags || []).map(function (tag) {
-    return typeof tag === 'string' && (0, _for2.default)(tag) || tag;
-  }).filter(function (tag) {
-    return typeof tag === 'symbol';
-  });
+  let tags = (Array.isArray(addTags) && addTags || []).map(tag => typeof tag === 'string' && (0, _for2.default)(tag) || tag).filter(tag => typeof tag === 'symbol');
 
-  tags.forEach(function (tag) {
+  tags.forEach(tag => {
     Class[_GQLBase.META_KEY][tag] = Class[_GQLBase.META_KEY][tag] || {};
     Class[_GQLBase.META_KEY][tag][fieldName] = descriptor;
   });
@@ -380,52 +360,23 @@ function applyTags(Class, addTags, fieldName, descriptor) {
  * in getters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method.s
  */
-function Getters() {
-  for (var _len = arguments.length, propertyNames = Array(_len), _key = 0; _key < _len; _key++) {
-    propertyNames[_key] = arguments[_key];
-  }
+function Getters(...propertyNames) {
+  return function (target, addTags = []) {
+    for (let property of propertyNames) {
+      let { fieldName, getterMaker } = extractBits(property);
+      let desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function');
+      let tags = [_GQLBase.GETTERS].concat(Array.isArray(addTags) && addTags || []);
 
-  return function (target) {
-    var addTags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+      if (!hasImpl) {
+        let descriptor = {
+          get: getterMaker()
+        };
 
-    try {
-      for (var _iterator = (0, _getIterator3.default)(propertyNames), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var property = _step.value;
-
-        var _extractBits = extractBits(property),
-            fieldName = _extractBits.fieldName,
-            getterMaker = _extractBits.getterMaker;
-
-        var desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
-        var hasImpl = desc && (desc.get || typeof desc.value === 'function');
-        var tags = [_GQLBase.GETTERS].concat(Array.isArray(addTags) && addTags || []);
-
-        if (!hasImpl) {
-          var descriptor = {
-            get: getterMaker()
-          };
-
-          applyTags(target, tags, fieldName, descriptor);
-          (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
-        } else {
-          console.warn(`Skipping getter for ${target.name}.${fieldName}; already exists`);
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
+        applyTags(target, tags, fieldName, descriptor);
+        (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
+      } else {
+        console.warn(`Skipping getter for ${target.name}.${fieldName}; already exists`);
       }
     }
 
@@ -449,52 +400,23 @@ function Getters() {
  * result in setters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method
  */
-function Setters() {
-  for (var _len2 = arguments.length, propertyNames = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    propertyNames[_key2] = arguments[_key2];
-  }
+function Setters(...propertyNames) {
+  return function (target, addTags = []) {
+    for (let property of propertyNames) {
+      let { fieldName, setterMaker } = extractBits(property);
+      let desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function');
+      let tags = [_GQLBase.SETTERS].concat(Array.isArray(addTags) && addTags || []);
 
-  return function (target) {
-    var addTags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+      if (!hasImpl) {
+        let descriptor = {
+          set: setterMaker()
+        };
 
-    try {
-      for (var _iterator2 = (0, _getIterator3.default)(propertyNames), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var property = _step2.value;
-
-        var _extractBits2 = extractBits(property),
-            fieldName = _extractBits2.fieldName,
-            setterMaker = _extractBits2.setterMaker;
-
-        var desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
-        var hasImpl = desc && (desc.get || typeof desc.value === 'function');
-        var tags = [_GQLBase.SETTERS].concat(Array.isArray(addTags) && addTags || []);
-
-        if (!hasImpl) {
-          var descriptor = {
-            set: setterMaker()
-          };
-
-          applyTags(target, tags, fieldName, descriptor);
-          (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
-        } else {
-          console.warn(`Skipping setter for ${target.name}.${fieldName}; already exists`);
-        }
-      }
-    } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-          _iterator2.return();
-        }
-      } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
-        }
+        applyTags(target, tags, fieldName, descriptor);
+        (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
+      } else {
+        console.warn(`Skipping setter for ${target.name}.${fieldName}; already exists`);
       }
     }
 
@@ -520,54 +442,24 @@ function Setters() {
  * in getters and setters that surface those properties as GraphQL fields.
  * @return {Function} a class decorator method
  */
-function Properties() {
-  for (var _len3 = arguments.length, propertyNames = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-    propertyNames[_key3] = arguments[_key3];
-  }
+function Properties(...propertyNames) {
+  return function (target, addTags = []) {
+    for (let property of propertyNames) {
+      let { fieldName, getterMaker, setterMaker } = extractBits(property);
+      let desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
+      let hasImpl = desc && (desc.get || typeof desc.value === 'function');
+      let tags = [_GQLBase.PROPS].concat(Array.isArray(addTags) && addTags || []);
 
-  return function (target) {
-    var addTags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
+      if (!hasImpl) {
+        let descriptor = {
+          set: setterMaker(),
+          get: getterMaker()
+        };
 
-    try {
-      for (var _iterator3 = (0, _getIterator3.default)(propertyNames), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var property = _step3.value;
-
-        var _extractBits3 = extractBits(property),
-            fieldName = _extractBits3.fieldName,
-            getterMaker = _extractBits3.getterMaker,
-            setterMaker = _extractBits3.setterMaker;
-
-        var desc = (0, _getOwnPropertyDescriptor2.default)(target.prototype, fieldName);
-        var hasImpl = desc && (desc.get || typeof desc.value === 'function');
-        var tags = [_GQLBase.PROPS].concat(Array.isArray(addTags) && addTags || []);
-
-        if (!hasImpl) {
-          var descriptor = {
-            set: setterMaker(),
-            get: getterMaker()
-          };
-
-          applyTags(target, tags, fieldName, descriptor);
-          (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
-        } else {
-          console.warn(`Skipping properties for ${target.name}.${fieldName}; already exists`);
-        }
-      }
-    } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-          _iterator3.return();
-        }
-      } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
-        }
+        applyTags(target, tags, fieldName, descriptor);
+        (0, _defineProperty2.default)(target.prototype, fieldName, descriptor);
+      } else {
+        console.warn(`Skipping properties for ${target.name}.${fieldName}; already exists`);
       }
     }
 

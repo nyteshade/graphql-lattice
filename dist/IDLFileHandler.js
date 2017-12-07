@@ -9,14 +9,6 @@ var _toStringTag = require('babel-runtime/core-js/symbol/to-string-tag');
 
 var _toStringTag2 = _interopRequireDefault(_toStringTag);
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -26,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @class IDLFileHandler
  */
-var IDLFileHandler = exports.IDLFileHandler = function () {
+let IDLFileHandler = exports.IDLFileHandler = class IDLFileHandler {
 
   /**
    * The IDLFileHandler checks the SCHEMA value returned by the class type
@@ -42,15 +34,13 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
    * @param {Function} Class a function or class definition that presumably
    * extends from GQLBase were it an instance.
    */
-  function IDLFileHandler(Class) {
-    (0, _classCallCheck3.default)(this, IDLFileHandler);
-
+  constructor(Class) {
     // $FlowFixMe
-    var symbol = typeof Class.SCHEMA === 'symbol' && Class.SCHEMA || null;
-    var pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
+    const symbol = typeof Class.SCHEMA === 'symbol' && Class.SCHEMA || null;
+    const pattern = /Symbol\(Path (.*?) Extension (.*?)\)/;
 
     if (symbol) {
-      var symbolString = symbol.toString();
+      let symbolString = symbol.toString();
 
       if (symbol === Class.ADJACENT_FILE) {
         if (Class.module === module) {
@@ -75,23 +65,23 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
           `);
         }
 
-        var filename = Class.module.filename;
-        var extension = Path.extname(filename);
-        var dir = Path.dirname(filename);
-        var filefixed = Path.basename(filename, extension);
-        var build = Path.resolve(Path.join(dir, `${filefixed}.graphql`));
+        const filename = Class.module.filename;
+        const extension = Path.extname(filename);
+        const dir = Path.dirname(filename);
+        const filefixed = Path.basename(filename, extension);
+        const build = Path.resolve(Path.join(dir, `${filefixed}.graphql`));
 
         this.path = build;
         this.extension = '.graphql';
       } else if (pattern.test(symbolString)) {
-        var parsed = pattern.exec(symbolString);
-        var _extension = parsed[2] || '.graphql';
-        var _dir = Path.dirname(parsed[1]);
-        var file = Path.basename(parsed[1], _extension);
-        var _build = Path.resolve(Path.join(_dir, `${file}${_extension}`));
+        const parsed = pattern.exec(symbolString);
+        const extension = parsed[2] || '.graphql';
+        const dir = Path.dirname(parsed[1]);
+        const file = Path.basename(parsed[1], extension);
+        const build = Path.resolve(Path.join(dir, `${file}${extension}`));
 
-        this.path = _build;
-        this.extension = _extension;
+        this.path = build;
+        this.extension = extension;
       }
     } else {
       this.path = this.extension = null;
@@ -111,100 +101,81 @@ var IDLFileHandler = exports.IDLFileHandler = function () {
    * schema or null if none was found or a direct string schema is returned
    * by the SCHEMA property
    */
+  getFile() {
+    return fs.readFileSync(String(this.path));
+  }
 
-
-  (0, _createClass3.default)(IDLFileHandler, [{
-    key: 'getFile',
-    value: function getFile() {
-      return fs.readFileSync(String(this.path));
+  /**
+   * If getFile() returns a Buffer, this is the string representation of the
+   * underlying file contents. As a means of validating the contents of the
+   * file, the string contents are parsed into an AST and back to a string.
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method ⌾⠀getSchema
+   *
+   * @return {string|null} the string contents of the Buffer containing the
+   * file based IDL schema.
+   */
+  getSchema() {
+    if (!this.path) {
+      return null;
     }
 
-    /**
-     * If getFile() returns a Buffer, this is the string representation of the
-     * underlying file contents. As a means of validating the contents of the
-     * file, the string contents are parsed into an AST and back to a string.
-     *
-     * @instance
-     * @memberof IDLFileHandler
-     * @method ⌾⠀getSchema
-     *
-     * @return {string|null} the string contents of the Buffer containing the
-     * file based IDL schema.
-     */
+    const tree = this.getSyntaxTree();
 
-  }, {
-    key: 'getSchema',
-    value: function getSchema() {
-      if (!this.path) {
-        return null;
-      }
+    return tree.toString();
+  }
 
-      var tree = this.getSyntaxTree();
+  /**
+   * If getFile() returns a Buffer, the string contents are passed to a new
+   * instance of SyntaxTree which parses this into an AST for manipulation.
+   *
+   * @instance
+   * @memberof IDLFileHandler
+   * @method ⌾⠀getSyntaxTree
+   *
+   * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
+   * schema contents loaded from disk. Null is returned if a calculated path
+   * cannot be found; always occurs when SCHEMA returns a string.
+   */
+  getSyntaxTree() {
+    const buffer = this.getFile();
+    const tree = new SyntaxTree(buffer.toString());
 
-      return tree.toString();
-    }
+    return tree;
+  }
 
-    /**
-     * If getFile() returns a Buffer, the string contents are passed to a new
-     * instance of SyntaxTree which parses this into an AST for manipulation.
-     *
-     * @instance
-     * @memberof IDLFileHandler
-     * @method ⌾⠀getSyntaxTree
-     *
-     * @return {SyntaxTree|null} a SyntaxTree instance constructed from the IDL
-     * schema contents loaded from disk. Null is returned if a calculated path
-     * cannot be found; always occurs when SCHEMA returns a string.
-     */
+  /**
+   * Returns the `constructor` name. If invoked as the context, or `this`,
+   * object of the `toString` method of `Object`'s `prototype`, the resulting
+   * value will be `[object MyClass]`, given an instance of `MyClass`
+   *
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof IDLFileHandler
+   *
+   * @return {string} the name of the class this is an instance of
+   * @ComputedType
+   */
+  get [_toStringTag2.default]() {
+    return this.constructor.name;
+  }
 
-  }, {
-    key: 'getSyntaxTree',
-    value: function getSyntaxTree() {
-      var buffer = this.getFile();
-      var tree = new SyntaxTree(buffer.toString());
-
-      return tree;
-    }
-
-    /**
-     * Returns the `constructor` name. If invoked as the context, or `this`,
-     * object of the `toString` method of `Object`'s `prototype`, the resulting
-     * value will be `[object MyClass]`, given an instance of `MyClass`
-     *
-     * @method ⌾⠀[Symbol.toStringTag]
-     * @memberof IDLFileHandler
-     *
-     * @return {string} the name of the class this is an instance of
-     * @ComputedType
-     */
-
-  }, {
-    key: _toStringTag2.default,
-    get: function get() {
-      return this.constructor.name;
-    }
-
-    /**
-     * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static
-     * scale. So, if you perform `Object.prototype.toString.call(MyClass)`
-     * the result would be `[object MyClass]`.
-     *
-     * @method ⌾⠀[Symbol.toStringTag]
-     * @memberof IDLFileHandler
-     * @static
-     *
-     * @return {string} the name of this class
-     * @ComputedType
-     */
-
-  }], [{
-    key: _toStringTag2.default,
-    get: function get() {
-      return this.name;
-    }
-  }]);
-  return IDLFileHandler;
-}();
-
+  /**
+   * Applies the same logic as {@link #[Symbol.toStringTag]} but on a static
+   * scale. So, if you perform `Object.prototype.toString.call(MyClass)`
+   * the result would be `[object MyClass]`.
+   *
+   * @method ⌾⠀[Symbol.toStringTag]
+   * @memberof IDLFileHandler
+   * @static
+   *
+   * @return {string} the name of this class
+   * @ComputedType
+   */
+  static get [_toStringTag2.default]() {
+    return this.name;
+  }
+};
 exports.default = IDLFileHandler;
 //# sourceMappingURL=IDLFileHandler.js.map

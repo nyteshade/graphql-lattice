@@ -39,10 +39,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 /** @namespace decorators */
 function decorate(metaProperty, target, key, descriptor) {
-  var Class = typeof target === 'function' ? target : target.constructor;
-  var proto = typeof target === 'function' ? target.prototype : target;
-  var isClass = Class === target;
-  var fn = descriptor.value;
+  const Class = typeof target === 'function' ? target : target.constructor;
+  const proto = typeof target === 'function' ? target.prototype : target;
+  const isClass = Class === target;
+  let fn = descriptor.value;
 
   if (!Class instanceof _GQLBase.GQLBase) {
     console.warn(_neTagFns.dedent`
@@ -82,7 +82,7 @@ function decorate(metaProperty, target, key, descriptor) {
   // such that future uses of the .name property match the key of the
   // decorated function
   if (fn.name !== key) {
-    var s = (0, _symbol2.default)();
+    let s = (0, _symbol2.default)();
 
     global[s] = fn;
     fn = eval(`(function ${key}(...args) { return global[s](...args) })`);
