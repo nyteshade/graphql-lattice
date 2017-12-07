@@ -254,10 +254,10 @@ export class GQLExpressMiddleware extends EventEmitter
     },
     patchFn: ?Function = null
   ): Function {
-    const optsFn = async (req: mixed) => {
+    const optsFn = async (req: mixed, res: mixed) => {
       let opts = {
         schema: this.ast,
-        resolvers: await this.rootValue({req}, true)
+        resolvers: await this.rootValue({req, res}, true)
       }
 
       opts.schema = makeExecutableSchema({
@@ -271,7 +271,7 @@ export class GQLExpressMiddleware extends EventEmitter
       if (patchFn && typeof patchFn === 'function') {
         merge(
           opts,
-          (patchFn.bind(this)(opts, {req})) || opts
+          (patchFn.bind(this)(opts, {req, res})) || opts
         );
       }
 
