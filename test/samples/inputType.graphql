@@ -1,0 +1,4 @@
+input SomeRandomInput {
+  string: String
+  number: Int
+}

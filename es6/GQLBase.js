@@ -13,6 +13,10 @@ import { IDLFileHandler } from './IDLFileHandler'
 import { merge } from 'lodash'
 import { LatticeLogs as ll } from './utils'
 
+import AsyncFunctionExecutionError from './errors/AsyncFunctionExecutionError'
+import FunctionExecutionError from './errors/FunctionExecutionError'
+import AwaitingPromiseError from './errors/AwaitingPromiseError'
+
 import EventEmitter from 'events'
 
 /* Internal implementation to detect the existence of proxies. When present
@@ -367,6 +371,61 @@ export class GQLBase extends EventEmitter {
    * @memberof GQLBase
    * @method ⌾⠀getProp
    *
+   * @param {string|Symbol} propName the name of the property in question
+   * @param {boolean} bindGetters true, by default, if the `get` or
+   * `initializer` descriptor values should be bound to the current instance
+   * or an object of the programmers choice before returning
+   * @param {mixed} bindTo the `this` object to use for binding when
+   * `bindGetters` is set to true.
+   * @return {mixed} the value of the `propName` as a Function or something
+   * else when the requested property name exists
+   *
+   * @throws {Error} errors raised in awaiting results will be thrown
+   */
+  getProp(propName: string, bindGetters: boolean = true, bindTo: mixed) {
+    // $FlowFixMe
+    let proto = Object.getPrototypeOf(this)
+    let descriptor = Object.getOwnPropertyDescriptor(proto, propName)
+    let result
+
+    if (!descriptor) {
+      return null;
+    }
+
+    if (descriptor) {
+      if (descriptor.initializer || descriptor.get) {
+        let what = descriptor.initializer || descriptor.get
+
+        if (bindGetters) {
+          result = what.bind(bindTo || this)
+        }
+        else {
+          result = what
+        }
+      }
+      else if (descriptor.value) {
+        result = descriptor.value
+      }
+    }
+
+    return result
+  }
+
+  /**
+   * Properties defined for GraphQL types in Lattice can be defined as
+   * a getter, a function or an async function. In the case of standard
+   * functions, if they return a promise they will be handled as though
+   * they were async. In addition to fetching the property, or field
+   * resolver, its resulting function or getter will be invoked.
+   *
+   * Given the variety of things a GraphQL type can actually be, obtaining
+   * its value can annoying. This method tends to lessen that boilerplate.
+   * Errors raised will be thrown.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method ⌾⠀callProp
+   *
    * @param {string} propName the name of the property in question
    * @param {Array<mixed>} args the arguments array that will be passed
    * to `.apply()` should the property evaluate to a `function`
@@ -376,35 +435,35 @@ export class GQLBase extends EventEmitter {
    *
    * @throws {Error} errors raised in awaiting results will be thrown
    */
-  async getProp(propName: string, ...args: Array<mixed>) {
+  async callProp(propName: string, ...args: Array<mixed>) {
     // $FlowFixMe
-    let prop = this[propName]
+    let prop = this.getProp(propName, ...args);
     let result
 
-    if (!prop) return null;
-
-    if (typeOf(prop) === 'AsyncFunction') {
+    if (prop && typeOf(prop) === 'AsyncFunction') {
       try {
         result = await prop.apply(this, args);
       }
       catch (error) {
-        throw error
+        throw new AsyncFunctionExecutionError(error, prop, args, result)
       }
     }
-    else if (typeOf(prop) === Function.name) {
-      result = prop.apply(this, args)
+    else if (prop && typeOf(prop) === Function.name) {
+      try {
+        result = prop.apply(this, args)
+      }
+      catch (error) {
+        throw new FunctionExecutionError(error, prop, args, result)
+      }
 
       if (typeOf(result) === Promise.name) {
         try {
           result = await result
         }
         catch (error) {
-          throw error
+          throw new AwaitingPromiseError(error).setPromise(result)
         }
       }
-    }
-    else {
-      result = prop
     }
 
     return result
@@ -427,7 +486,7 @@ export class GQLBase extends EventEmitter {
    * resolver requested or null if there wasn't one to be found
    */
   async getResolver(resolverName: string, requestData: Object) {
-    return this.constructor.getResolver(
+    return await this.constructor.getResolver(
       resolverName,
       requestData || this.requestData
     )
@@ -467,6 +526,54 @@ export class GQLBase extends EventEmitter {
     const rootObj = await this.getMergedRoot(reqData)
 
     return rootObj[resolverName] || null
+  }
+
+  /**
+   * The static version of getProp reads into the prototype to find the field
+   * that is desired. If the field is either a getter or a initializer (see
+   * class properties descriptors), then the option to bind that to either the
+   * prototype object or one of your choosing is available.
+   *
+   * @memberof GQLBase
+   * @method ⌾⠀getProp
+   * @static
+   *
+   * @param {string|Symbol} propName a string or Symbol denoting the name of
+   * the property or field you desire
+   * @param {boolean} bindGetters true if a resulting `getter` or `initializer`
+   * should be bound to the prototype or other object
+   * @param {mixed} bindTo the object to which to bind the `getter` or
+   * `initializer` functions to if other than the class prototype.
+   * @return {mixed} a `Function` or other mixed value making up the property
+   * name requested
+   */
+  static getProp(
+    propName: string,
+    bindGetters: boolean = false,
+    bindTo: mixed
+  ) {
+    let descriptor = Object.getOwnPropertyDescriptor(this.prototype, propName)
+
+    if (descriptor) {
+      if (descriptor.get || descriptor.initializer) {
+        let what = descriptor.initializer || descriptor.get
+
+        if (bindGetters) {
+          bindTo = bindTo || this.prototype
+
+          return what.bind(bindTo)
+        }
+        else {
+          return what
+        }
+      }
+      else {
+        return descriptor.value
+      }
+    }
+    else {
+      return null
+    }
   }
 
   /**
@@ -1047,10 +1154,23 @@ export class GQLBase extends EventEmitter {
    * @memberof GQLBase
    * @method ⬇︎⠀DOC_MUTATORS
    * @const
+   * @deprecated Use `DOC_MUTATIONS` instead
    *
    * @type {string}
    */
   static get DOC_MUTATORS() { return 'mutators' }
+
+  /**
+   * A constant key used to identify a comment for a mutator description
+   *
+   * @static
+   * @memberof GQLBase
+   * @method ⬇︎⠀DOC_MUTATORS
+   * @const
+   *
+   * @type {string}
+   */
+  static get DOC_MUTATIONS() { return 'mutators' }
 
   /**
    * A constant key used to identify a comment for the top level subscription
@@ -1119,7 +1239,26 @@ export class GQLBase extends EventEmitter {
       subscriptors: Class[META_KEY].subscriptors || []
     }
 
-    let convert = f => {return { [f.name]: f.bind(Class, requestData) }}
+    let convert = f => {
+      let isFactoryClass = (c) => {
+        return !!Class[META_KEY][Symbol.for('Factory Class')]
+      }
+
+      if (isFactoryClass(Class)) {
+        return {
+          [f.name]: function(...args) {
+            return f.apply(Class, [Class, requestData, ...args])
+          }
+        }
+      }
+      else {
+        return {
+          [f.name]: function(...args) {
+            return f.apply(Class, [requestData, ...args])
+          }
+        }
+      }
+    }
     let reduce = (p, c) => merge(p, c)
 
     _.resolvers = _.resolvers.map(convert).reduce(reduce, {})

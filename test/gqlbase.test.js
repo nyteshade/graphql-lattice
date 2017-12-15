@@ -64,10 +64,10 @@ describe('Test getProps for testing various prop fields', async () => {
 
   it('should allow the fetching of all props via getProps', async () => {
     let instance = new Contrived({ loc: 'SF'})
-    let name = await instance.getProp('name')
-    let age = await instance.getProp('age')
-    let job = await instance.getProp('job')
-    let location = await instance.getProp('location')
+    let name = await instance.callProp('name')
+    let age = await instance.callProp('age')
+    let job = await instance.callProp('job')
+    let location = await instance.callProp('location')
 
     expect(name).toBe('Jane')
     expect(age).toBe(21)
@@ -152,7 +152,7 @@ describe('Check getResolver usage in instance and static forms', async () => {
     // Ensure that the requestData.pwrColor value was used as per our
     // mutator's code. (Contrived but easy way to test the request
     // data was bound in the call to getResolver())
-    expect(await _inst.getProp('pwrColor')).toBe(Violet)
+    expect(await _inst.callProp('pwrColor')).toBe(Violet)
   })
 
   it('should work with the class as a static function', async () => {
@@ -172,7 +172,7 @@ describe('Check getResolver usage in instance and static forms', async () => {
     // Ensure that the requestData.pwrColor value was used as per our
     // mutator's code. (Contrived but easy way to test the request
     // data was bound in the call to getResolver())
-    expect(await _inst.getProp('pwrColor')).toBe(Violet)
+    expect(await _inst.callProp('pwrColor')).toBe(Violet)
   })
 
 })

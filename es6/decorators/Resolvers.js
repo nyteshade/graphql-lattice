@@ -72,10 +72,7 @@ function decorate(
   // such that future uses of the .name property match the key of the
   // decorated function
   if (fn.name !== key) {
-    let s = Symbol();
-
-    global[s] = fn;
-    fn = eval(`(function ${key}(...args) { return global[s](...args) })`)
+    Object.defineProperty(fn, 'name', { get: function() { return key } })
   }
 
   // Store the key by name, overwritting if necessary, and assign the function

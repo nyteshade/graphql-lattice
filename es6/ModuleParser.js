@@ -47,6 +47,14 @@ export class ModuleParser {
   classes: Array<GQLBase>;
 
   /**
+   * An array of strings holding loose GraphQL schema documents.
+   *
+   * @memberof ModuleParser
+   * @type {Array<string>}
+   */
+  looseGraphQL: Array<string> = [];
+
+  /**
    * A map of skipped items on the last pass and the associated error that
    * accompanies it.
    */
@@ -127,9 +135,16 @@ export class ModuleParser {
       moduleContents = require(filePath)
     }
     catch(ignore) {
-      ll.log(`${yellow}Skipping${clear} ${filePath}`)
-      ll.trace(ignore)
-      this.skipped.set(filePath, ignore)
+      if (/\.graphql/i.test(path.extname(filePath))) {
+        ll.log(`Ingesting .graphql file ${filePath}`)
+        let buffer = fs.readFileSync(filePath)
+        this.looseGraphQL.push(fs.readFileSync(filePath).toString())
+      }
+      else {
+        ll.log(`${yellow}Skipping${clear} ${filePath}`)
+        ll.trace(ignore)
+        this.skipped.set(filePath, ignore)
+      }
     }
 
     return moduleContents;

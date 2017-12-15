@@ -565,12 +565,12 @@ describe('Auto properties testing', () => {
     expect(autoProps.name).toBeDefined()
     expect(autoProps.age).toBeDefined()
 
-    expect(await instance.getProp('name')).toBe('Brie')
-    expect(await instance.getProp('age')).toBe(21)
+    expect(await instance.callProp('name')).toBe('Brie')
+    expect(await instance.callProp('age')).toBe(21)
 
     // Note that we have a custom property resolver for 'job' that returns
     // the value 'Sourceress' and does not look at the model value 'Engineer'
-    expect(await instance.getProp('job')).toBe('Sourceress')
+    expect(await instance.callProp('job')).toBe('Sourceress')
   })
 
   it('should not create auto-props for enums', async () => {

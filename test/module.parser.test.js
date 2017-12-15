@@ -1,4 +1,5 @@
 import { GQLBase, ModuleParser } from '../es6/lattice'
+import { SchemaUtils } from '../es6/SchemaUtils'
 
 import { YabbaDabbaDo } from './samples/YabbaDabbaDo'
 import { Yarp } from './samples/Yarp'
@@ -53,7 +54,8 @@ describe('ModuleParser Tests', () => {
       parser.parseSync();
     }).not.toThrow();
 
-    classes = parser.classes.map(Class => Class.name)
+    classes = parser.classes.map(Class => Class.name && Class.name : null)
+    classes = classes.filter(Class => !!Class)
     expect(classes).toEqual(expect.arrayContaining([
       'Yarp', 'YabbaDabbaDo'
     ]))
