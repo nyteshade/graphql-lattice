@@ -8,10 +8,6 @@ var _for = require('babel-runtime/core-js/symbol/for');
 
 var _for2 = _interopRequireDefault(_for);
 
-var _symbol = require('babel-runtime/core-js/symbol');
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
 exports.resolver = resolver;
 exports.mutator = mutator;
 exports.subscriptor = subscriptor;
@@ -82,10 +78,9 @@ function decorate(metaProperty, target, key, descriptor) {
   // such that future uses of the .name property match the key of the
   // decorated function
   if (fn.name !== key) {
-    let s = (0, _symbol2.default)();
-
-    global[s] = fn;
-    fn = eval(`(function ${key}(...args) { return global[s](...args) })`);
+    Object.defineProperty(fn, 'name', { get: function () {
+        return key;
+      } });
   }
 
   // Store the key by name, overwritting if necessary, and assign the function

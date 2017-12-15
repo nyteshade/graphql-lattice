@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SETTERS = exports.PROPS = exports.MODEL_KEY = exports.META_KEY = exports.GETTERS = exports.DOC_SUBSCRIPTIONS = exports.DOC_SUBSCRIPTION = exports.DOC_QUERY = exports.DOC_QUERIES = exports.DOC_MUTATORS = exports.DOC_MUTATION = exports.DOC_FIELDS = exports.DOC_CLASS = exports.AUTO_PROPS = exports.types = exports.typeOf = exports.SyntaxTree = exports.subscriptor = exports.Setters = exports.SchemaUtils = exports.Schema = exports.resolver = exports.Properties = exports.promisify = exports.joinLines = exports.mutator = exports.ModuleParser = exports.LatticeLogs = exports.IDLFileHandler = exports.GQLScalar = exports.GQLJSON = exports.GQLInterface = exports.GQLExpressMiddleware = exports.GQLEnum = exports.GQLBase = exports.Getters = exports.getLatticePrefs = exports.FileSchema = exports.DirectTypeManager = exports.Deferred = exports.AdjacentSchema = undefined;
+exports.SETTERS = exports.PROPS = exports.MODEL_KEY = exports.META_KEY = exports.GETTERS = exports.DOC_SUBSCRIPTIONS = exports.DOC_SUBSCRIPTION = exports.DOC_QUERY = exports.DOC_QUERIES = exports.DOC_MUTATORS = exports.DOC_MUTATION = exports.DOC_FIELDS = exports.DOC_CLASS = exports.AUTO_PROPS = exports.types = exports.typeOf = exports.SyntaxTree = exports.subscriptor = exports.Setters = exports.SchemaUtils = exports.Schema = exports.resolver = exports.Properties = exports.promisify = exports.joinLines = exports.mutator = exports.gql = exports.ModuleParser = exports.LatticeLogs = exports.LatticeFactory = exports.IDLFileHandler = exports.GQLScalar = exports.GQLJSON = exports.GQLInterface = exports.GQLExpressMiddleware = exports.GQLEnum = exports.GQLBase = exports.Getters = exports.getLatticePrefs = exports.FileSchema = exports.DirectTypeManager = exports.Deferred = exports.AdjacentSchema = undefined;
 
 var _AdjacentSchema = require('./decorators/AdjacentSchema');
 
@@ -29,6 +29,8 @@ var _GQLJSON = require('./types/GQLJSON');
 
 var _GQLScalar = require('./GQLScalar');
 
+var _LatticeFactory = require('./LatticeFactory');
+
 var _ModuleParser = require('./ModuleParser');
 
 var _Schema = require('./decorators/Schema');
@@ -41,6 +43,8 @@ var _types = require('./types');
 
 var types = _interopRequireWildcard(_types);
 
+var _neTagFns = require('ne-tag-fns');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 const { typeOf } = types;
@@ -48,6 +52,8 @@ const {
   DOC_CLASS, DOC_FIELDS, DOC_QUERIES, DOC_MUTATORS, DOC_SUBSCRIPTIONS,
   DOC_QUERY, DOC_MUTATION, DOC_SUBSCRIPTION
 } = _GQLBase.GQLBase;
+
+const gql = (0, _neTagFns.customDedent)({ dropLowest: true });
 
 /* Create a friendly bundle to export all at once */
 const defaultPackage = {
@@ -64,8 +70,10 @@ const defaultPackage = {
   GQLJSON: _GQLJSON.GQLJSON,
   GQLScalar: _GQLScalar.GQLScalar,
   IDLFileHandler: _IDLFileHandler.IDLFileHandler,
+  LatticeFactory: _LatticeFactory.LatticeFactory,
   LatticeLogs: _utils.LatticeLogs,
   ModuleParser: _ModuleParser.ModuleParser,
+  gql,
   mutator: _Resolvers.mutator,
   joinLines: _utils.joinLines,
   promisify: _utils.promisify,
@@ -109,8 +117,10 @@ exports.GQLInterface = _GQLInterface.GQLInterface;
 exports.GQLJSON = _GQLJSON.GQLJSON;
 exports.GQLScalar = _GQLScalar.GQLScalar;
 exports.IDLFileHandler = _IDLFileHandler.IDLFileHandler;
+exports.LatticeFactory = _LatticeFactory.LatticeFactory;
 exports.LatticeLogs = _utils.LatticeLogs;
 exports.ModuleParser = _ModuleParser.ModuleParser;
+exports.gql = gql;
 exports.mutator = _Resolvers.mutator;
 exports.joinLines = _utils.joinLines;
 exports.promisify = _utils.promisify;

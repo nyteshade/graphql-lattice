@@ -100,7 +100,20 @@ let ModuleParser = exports.ModuleParser = class ModuleParser {
    * A map of skipped items on the last pass and the associated error that
    * accompanies it.
    */
+
+  /**
+   * An internal array of `GQLBase` extended classes found during either a
+   * `parse()` or `parseSync()` call.
+   *
+   * @memberof ModuleParser
+   * @type {Array<GQLBase>}
+   */
   constructor(directory, options = { addLatticeTypes: true }) {
+    Object.defineProperty(this, 'looseGraphQL', {
+      enumerable: true,
+      writable: true,
+      value: []
+    });
     Object.defineProperty(this, 'options', {
       enumerable: true,
       writable: true,
@@ -153,12 +166,12 @@ let ModuleParser = exports.ModuleParser = class ModuleParser {
    * @type {string}
    */
 
+
   /**
-   * An internal array of `GQLBase` extended classes found during either a
-   * `parse()` or `parseSync()` call.
+   * An array of strings holding loose GraphQL schema documents.
    *
    * @memberof ModuleParser
-   * @type {Array<GQLBase>}
+   * @type {Array<string>}
    */
   importClass(filePath) {
     let moduleContents = {};
@@ -168,9 +181,15 @@ let ModuleParser = exports.ModuleParser = class ModuleParser {
     try {
       moduleContents = require(filePath);
     } catch (ignore) {
-      _utils.LatticeLogs.log(`${yellow}Skipping${clear} ${filePath}`);
-      _utils.LatticeLogs.trace(ignore);
-      this.skipped.set(filePath, ignore);
+      if (/\.graphql/i.test(_path2.default.extname(filePath))) {
+        _utils.LatticeLogs.log(`Ingesting .graphql file ${filePath}`);
+        let buffer = _fs2.default.readFileSync(filePath);
+        this.looseGraphQL.push(_fs2.default.readFileSync(filePath).toString());
+      } else {
+        _utils.LatticeLogs.log(`${yellow}Skipping${clear} ${filePath}`);
+        _utils.LatticeLogs.trace(ignore);
+        this.skipped.set(filePath, ignore);
+      }
     }
 
     return moduleContents;

@@ -17,6 +17,10 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
 var _toStringTag = require('babel-runtime/core-js/symbol/to-string-tag');
 
 var _toStringTag2 = _interopRequireDefault(_toStringTag);
@@ -61,6 +65,18 @@ var _IDLFileHandler = require('./IDLFileHandler');
 
 var _lodash = require('lodash');
 
+var _AsyncFunctionExecutionError = require('./errors/AsyncFunctionExecutionError');
+
+var _AsyncFunctionExecutionError2 = _interopRequireDefault(_AsyncFunctionExecutionError);
+
+var _FunctionExecutionError = require('./errors/FunctionExecutionError');
+
+var _FunctionExecutionError2 = _interopRequireDefault(_FunctionExecutionError);
+
+var _AwaitingPromiseError = require('./errors/AwaitingPromiseError');
+
+var _AwaitingPromiseError2 = _interopRequireDefault(_AwaitingPromiseError);
+
 var _events = require('events');
 
 var _events2 = _interopRequireDefault(_events);
@@ -69,12 +85,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* Internal implementation to detect the existence of proxies. When present
  * additional functionality is enabled. Proxies are native in Node >= 6 */
+/** @namespace GQLBaseEnv */
 const hasProxy = typeof global.Proxy !== 'undefined';
 
 /* Internal Symbol referring to real accessor to GQLBase model object */
-/** @namespace GQLBaseEnv */
-
-
 const _MODEL_KEY = (0, _for2.default)('data-model-contents-value');
 
 /* Internal Symbol referring to the static object containing a proxy handler */
@@ -407,6 +421,59 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
    * @memberof GQLBase
    * @method ⌾⠀getProp
    *
+   * @param {string|Symbol} propName the name of the property in question
+   * @param {boolean} bindGetters true, by default, if the `get` or
+   * `initializer` descriptor values should be bound to the current instance
+   * or an object of the programmers choice before returning
+   * @param {mixed} bindTo the `this` object to use for binding when
+   * `bindGetters` is set to true.
+   * @return {mixed} the value of the `propName` as a Function or something
+   * else when the requested property name exists
+   *
+   * @throws {Error} errors raised in awaiting results will be thrown
+   */
+  getProp(propName, bindGetters = true, bindTo) {
+    // $FlowFixMe
+    let proto = (0, _getPrototypeOf2.default)(this);
+    let descriptor = (0, _getOwnPropertyDescriptor2.default)(proto, propName);
+    let result;
+
+    if (!descriptor) {
+      return null;
+    }
+
+    if (descriptor) {
+      if (descriptor.initializer || descriptor.get) {
+        let what = descriptor.initializer || descriptor.get;
+
+        if (bindGetters) {
+          result = what.bind(bindTo || this);
+        } else {
+          result = what;
+        }
+      } else if (descriptor.value) {
+        result = descriptor.value;
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * Properties defined for GraphQL types in Lattice can be defined as
+   * a getter, a function or an async function. In the case of standard
+   * functions, if they return a promise they will be handled as though
+   * they were async. In addition to fetching the property, or field
+   * resolver, its resulting function or getter will be invoked.
+   *
+   * Given the variety of things a GraphQL type can actually be, obtaining
+   * its value can annoying. This method tends to lessen that boilerplate.
+   * Errors raised will be thrown.
+   *
+   * @instance
+   * @memberof GQLBase
+   * @method ⌾⠀callProp
+   *
    * @param {string} propName the name of the property in question
    * @param {Array<mixed>} args the arguments array that will be passed
    * to `.apply()` should the property evaluate to a `function`
@@ -416,34 +483,34 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
    *
    * @throws {Error} errors raised in awaiting results will be thrown
    */
-  getProp(propName, ...args) {
+  callProp(propName, ...args) {
     var _this = this;
 
     return (0, _asyncToGenerator3.default)(function* () {
       // $FlowFixMe
-      let prop = _this[propName];
+      let prop = _this.getProp(propName, ...args);
       let result;
 
-      if (!prop) return null;
-
-      if ((0, _types.typeOf)(prop) === 'AsyncFunction') {
+      if (prop && (0, _types.typeOf)(prop) === 'AsyncFunction') {
         try {
           result = yield prop.apply(_this, args);
         } catch (error) {
-          throw error;
+          throw new _AsyncFunctionExecutionError2.default(error, prop, args, result);
         }
-      } else if ((0, _types.typeOf)(prop) === Function.name) {
-        result = prop.apply(_this, args);
+      } else if (prop && (0, _types.typeOf)(prop) === Function.name) {
+        try {
+          result = prop.apply(_this, args);
+        } catch (error) {
+          throw new _FunctionExecutionError2.default(error, prop, args, result);
+        }
 
         if ((0, _types.typeOf)(result) === _promise2.default.name) {
           try {
             result = yield result;
           } catch (error) {
-            throw error;
+            throw new _AwaitingPromiseError2.default(error).setPromise(result);
           }
         }
-      } else {
-        result = prop;
       }
 
       return result;
@@ -470,7 +537,7 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
     var _this2 = this;
 
     return (0, _asyncToGenerator3.default)(function* () {
-      return _this2.constructor.getResolver(resolverName, requestData || _this2.requestData);
+      return yield _this2.constructor.getResolver(resolverName, requestData || _this2.requestData);
     })();
   }
 
@@ -512,6 +579,47 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
 
       return rootObj[resolverName] || null;
     })();
+  }
+
+  /**
+   * The static version of getProp reads into the prototype to find the field
+   * that is desired. If the field is either a getter or a initializer (see
+   * class properties descriptors), then the option to bind that to either the
+   * prototype object or one of your choosing is available.
+   *
+   * @memberof GQLBase
+   * @method ⌾⠀getProp
+   * @static
+   *
+   * @param {string|Symbol} propName a string or Symbol denoting the name of
+   * the property or field you desire
+   * @param {boolean} bindGetters true if a resulting `getter` or `initializer`
+   * should be bound to the prototype or other object
+   * @param {mixed} bindTo the object to which to bind the `getter` or
+   * `initializer` functions to if other than the class prototype.
+   * @return {mixed} a `Function` or other mixed value making up the property
+   * name requested
+   */
+  static getProp(propName, bindGetters = false, bindTo) {
+    let descriptor = (0, _getOwnPropertyDescriptor2.default)(this.prototype, propName);
+
+    if (descriptor) {
+      if (descriptor.get || descriptor.initializer) {
+        let what = descriptor.initializer || descriptor.get;
+
+        if (bindGetters) {
+          bindTo = bindTo || this.prototype;
+
+          return what.bind(bindTo);
+        } else {
+          return what;
+        }
+      } else {
+        return descriptor.value;
+      }
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -1114,10 +1222,25 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
    * @memberof GQLBase
    * @method ⬇︎⠀DOC_MUTATORS
    * @const
+   * @deprecated Use `DOC_MUTATIONS` instead
    *
    * @type {string}
    */
   static get DOC_MUTATORS() {
+    return 'mutators';
+  }
+
+  /**
+   * A constant key used to identify a comment for a mutator description
+   *
+   * @static
+   * @memberof GQLBase
+   * @method ⬇︎⠀DOC_MUTATORS
+   * @const
+   *
+   * @type {string}
+   */
+  static get DOC_MUTATIONS() {
     return 'mutators';
   }
 
@@ -1195,7 +1318,23 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
       };
 
       let convert = function (f) {
-        return { [f.name]: f.bind(Class, requestData) };
+        let isFactoryClass = function (c) {
+          return !!Class[META_KEY][(0, _for2.default)('Factory Class')];
+        };
+
+        if (isFactoryClass(Class)) {
+          return {
+            [f.name]: function (...args) {
+              return f.apply(Class, [Class, requestData, ...args]);
+            }
+          };
+        } else {
+          return {
+            [f.name]: function (...args) {
+              return f.apply(Class, [requestData, ...args]);
+            }
+          };
+        }
       };
       let reduce = function (p, c) {
         return (0, _lodash.merge)(p, c);
