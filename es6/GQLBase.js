@@ -12,6 +12,7 @@ import { GraphQLObjectType, GraphQLEnumType } from 'graphql'
 import { IDLFileHandler } from './IDLFileHandler'
 import { merge } from 'lodash'
 import { LatticeLogs as ll } from './utils'
+import { dedent } from 'ne-tag-fns'
 
 import AsyncFunctionExecutionError from './errors/AsyncFunctionExecutionError'
 import FunctionExecutionError from './errors/FunctionExecutionError'
@@ -178,6 +179,32 @@ export class GQLBase extends EventEmitter {
     super();
 
     const Class = this.constructor;
+    const tree = SyntaxTree.from(Class.SCHEMA);
+    const outline = tree && tree.outline || null;
+
+    if (!outline) {
+      throw new FunctionExecutionError(
+        new Error(dedent`
+          The SDL is unparsable. Please check your SCHEMA and make sure
+          it is valid GraphQL SDL/IDL. Your SCHEMA is defined as:
+
+          ${this.SCHEMA}
+        `)
+      )
+    }
+
+    if (outline && !(Class.name in outline)) {
+      throw new FunctionExecutionError(
+        new Error(dedent`
+          The class name "${Class.name}" does not match any of the types,
+          enums, scalars, unions or interfaces defined in the SCHEMA for
+          this class (${Object.keys(outline)}).
+
+          \x1b[1mIn most clases this is because your class name and SCHEMA
+          type do not match.\x1b[0m
+        `)
+      )
+    }
 
     GQLBase.setupModel(this);
     this.setModel(modelData);

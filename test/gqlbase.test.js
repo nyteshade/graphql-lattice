@@ -176,3 +176,22 @@ describe('Check getResolver usage in instance and static forms', async () => {
   })
 
 })
+
+describe('Check for expected thrown errors in GQLBase', async () => {
+  it('should fail if the class has no schema', async() => {
+    class ContrivedType extends GQLBase { }
+
+    expect(() => {
+      const type = new ContrivedType()
+    }).toThrow()
+  })
+
+  it('should fail if the class name does not match a type', async() => {
+    @Schema('type VeryContrivedType { name: String }')
+    class ContrivedType extends GQLBase { }
+
+    expect(() => {
+      const type = new ContrivedType()
+    }).toThrow()
+  })
+})

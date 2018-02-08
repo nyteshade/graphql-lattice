@@ -172,7 +172,6 @@ function hasChecklist(Class, ...items) {
  * extended class. All items are installed and set to false.
  *
  * @param {Function} Class a reference to the GQLBase class to set
- * @return {[type]}        [description]
  */
 function newChecklist(Class) {
   if (Class) {
@@ -229,7 +228,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
    * pass muster. The exception can be prevented from throwing if hide is set
    * to true
    *
-   * @param {*} template an object to be parsed for construction via the
+   * @param {Object} template an object to be parsed for construction via the
    * Lattice Factory
    * @param {boolean} hide if true, an invalid template will NOT throw errors
    * @return {ValidationResults} a `ValidationResults` object containing the

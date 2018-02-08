@@ -67,7 +67,7 @@ describe('@Getters', () => {
   const instance = new Sample({test, fun}, null, {autoProps: false})
   const employee = new Employee({firstName, job}, null, {autoProps: false})
   const person = new Person({_emp: {firstName, job}}, null, {autoProps: false})
-  const invalid = new InvalidGQLBase({broken}, null, {autoProps: false})
+
 
   it('should have a getter for "test"', () => {
     expect(instance.test).toEqual(test)
@@ -89,6 +89,7 @@ describe('@Getters', () => {
 
   it('should throw an error due to a missing SCHEMA', () => {
     expect(() => {
+      const invalid = new InvalidGQLBase({broken}, null, {autoProps: false})
       invalid.broken
     }).toThrow()
   })
@@ -189,7 +190,6 @@ describe('@Properties', () => {
   const broken = 'It is just broke'
   const instance = new Sample({test, fun}, null, {autoProps: false})
   const employee = new Employee({firstName, job}, null, {autoProps: false})
-  const invalid = new InvalidGQLBase({broken}, null, {autoProps: false})
 
   it('should have a setter for "test"', () => {
     expect(instance.test).toEqual(test)
@@ -213,6 +213,7 @@ describe('@Properties', () => {
 
   it('should throw due to a missing SCHEMA', () => {
     expect(() => {
+      const invalid = new InvalidGQLBase({broken}, null, {autoProps: false})
       invalid.broken
     }).toThrow()
   })

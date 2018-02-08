@@ -65,6 +65,8 @@ var _IDLFileHandler = require('./IDLFileHandler');
 
 var _lodash = require('lodash');
 
+var _neTagFns = require('ne-tag-fns');
+
 var _AsyncFunctionExecutionError = require('./errors/AsyncFunctionExecutionError');
 
 var _AsyncFunctionExecutionError2 = _interopRequireDefault(_AsyncFunctionExecutionError);
@@ -85,10 +87,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* Internal implementation to detect the existence of proxies. When present
  * additional functionality is enabled. Proxies are native in Node >= 6 */
-/** @namespace GQLBaseEnv */
 const hasProxy = typeof global.Proxy !== 'undefined';
 
 /* Internal Symbol referring to real accessor to GQLBase model object */
+/** @namespace GQLBaseEnv */
+
+
 const _MODEL_KEY = (0, _for2.default)('data-model-contents-value');
 
 /* Internal Symbol referring to the static object containing a proxy handler */
@@ -231,6 +235,28 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
     super();
 
     const Class = this.constructor;
+    const tree = _SyntaxTree.SyntaxTree.from(Class.SCHEMA);
+    const outline = tree && tree.outline || null;
+
+    if (!outline) {
+      throw new _FunctionExecutionError2.default(new Error(_neTagFns.dedent`
+          The SDL is unparsable. Please check your SCHEMA and make sure
+          it is valid GraphQL SDL/IDL. Your SCHEMA is defined as:
+
+          ${this.SCHEMA}
+        `));
+    }
+
+    if (outline && !(Class.name in outline)) {
+      throw new _FunctionExecutionError2.default(new Error(_neTagFns.dedent`
+          The class name "${Class.name}" does not match any of the types,
+          enums, scalars, unions or interfaces defined in the SCHEMA for
+          this class (${(0, _keys2.default)(outline)}).
+
+          \x1b[1mIn most clases this is because your class name and SCHEMA
+          type do not match.\x1b[0m
+        `));
+    }
 
     GQLBase.setupModel(this);
     this.setModel(modelData);

@@ -34,6 +34,7 @@
     "graphql-server-express": "^1.2.0",
     "graphql-tools": "^2.6.1",
     "lodash": "^4.17.4",
+    "marked": "^0.3.12",
     "ne-tag-fns": "^0.3.0",
     "read-pkg-up": "^3.0.0"
   },
