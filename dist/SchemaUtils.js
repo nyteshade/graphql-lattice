@@ -27,7 +27,7 @@ var _GQLInterface = require('./GQLInterface');
 
 var _GQLScalar = require('./GQLScalar');
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
 var _utils = require('./utils');
 
@@ -252,7 +252,7 @@ let SchemaUtils = exports.SchemaUtils = class SchemaUtils extends _events2.defau
     for (let Class of Classes) {
       let classSchema = Class.SCHEMA;
 
-      if ((0, _types.typeOf)(classSchema) === 'Symbol') {
+      if ((0, _neTypes.typeOf)(classSchema) === 'Symbol') {
         let handler = Class.handler;
         let filename = _path2.default.basename(Class.handler.path);
 

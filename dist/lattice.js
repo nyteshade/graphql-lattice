@@ -39,9 +39,9 @@ var _SchemaUtils = require('./SchemaUtils');
 
 var _SyntaxTree = require('./SyntaxTree');
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
-var types = _interopRequireWildcard(_types);
+var types = _interopRequireWildcard(_neTypes);
 
 var _neTagFns = require('ne-tag-fns');
 

@@ -5,7 +5,7 @@ import Path from 'path'
 import fs from 'fs'
 
 import { Deferred, joinLines } from './utils'
-import { typeOf } from './types'
+import { typeOf } from 'ne-types'
 import { SyntaxTree } from './SyntaxTree'
 import { Properties } from './decorators/ModelProperties'
 import { GraphQLObjectType, GraphQLEnumType } from 'graphql'

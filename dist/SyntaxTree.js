@@ -25,7 +25,7 @@ var _for = require('babel-runtime/core-js/symbol/for');
 
 var _for2 = _interopRequireDefault(_for);
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
 var _graphql = require('graphql');
 
@@ -119,7 +119,7 @@ let SyntaxTree = exports.SyntaxTree = class SyntaxTree {
     // $ComputedType
     this[AST_KEY] = {};
 
-    const type = (0, _types.typeOf)(schemaOrASTOrST);
+    const type = (0, _neTypes.typeOf)(schemaOrASTOrST);
     let ast;
     let st;
 
@@ -167,7 +167,7 @@ let SyntaxTree = exports.SyntaxTree = class SyntaxTree {
    * @return {SyntaxTree} this for inlining.
    */
   updateAST(ast) {
-    if ((0, _types.typeOf)(ast) === Object.name) {
+    if ((0, _neTypes.typeOf)(ast) === Object.name) {
       let newAST = (0, _lodash.merge)({}, this.ast, ast);
 
       try {
@@ -278,7 +278,7 @@ let SyntaxTree = exports.SyntaxTree = class SyntaxTree {
       return this;
     }
 
-    const tree = (0, _types.typeOf)(SyntaxTree) === SyntaxTree.name ? astOrSyntaxTree : SyntaxTree.from(astOrSyntaxTree);
+    const tree = (0, _neTypes.typeOf)(SyntaxTree) === SyntaxTree.name ? astOrSyntaxTree : SyntaxTree.from(astOrSyntaxTree);
     let left = this.find(definitionType);
     let right = tree && tree.find(definitionType) || null;
 
@@ -548,7 +548,7 @@ let SyntaxTree = exports.SyntaxTree = class SyntaxTree {
     let schema;
     let ast;
 
-    switch ((0, _types.typeOf)(mixed)) {
+    switch ((0, _neTypes.typeOf)(mixed)) {
       case String.name:
         schema = mixed;
         try {
@@ -734,7 +734,7 @@ let SyntaxTree = exports.SyntaxTree = class SyntaxTree {
    * @return {Object|null} the AST leaf if one matches or null otherwise.
    */
   static findInASTArrayByNameValue(array, name) {
-    const isRegExp = /RegExp/.test((0, _types.typeOf)(name));
+    const isRegExp = /RegExp/.test((0, _neTypes.typeOf)(name));
     const regex = !isRegExp
     // $FlowFixMe
     ? new RegExp((0, _escape2.default)(name.toString()))

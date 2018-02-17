@@ -1,7 +1,7 @@
 // @flow
 // @module SyntaxTree
 
-import { typeOf } from './types'
+import { typeOf } from 'ne-types'
 import { print, parse } from 'graphql'
 import { merge } from 'lodash'
 import { LatticeLogs as ll } from './utils'

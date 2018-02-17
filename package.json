@@ -36,6 +36,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.12",
     "ne-tag-fns": "^0.3.0",
+    "ne-types": "^1.0.0",
     "read-pkg-up": "^3.0.0"
   },
   "devDependencies": {

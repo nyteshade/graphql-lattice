@@ -32,7 +32,7 @@ var _util = require('util');
 
 var _util2 = _interopRequireDefault(_util);
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
 var _readPkgUp = require('read-pkg-up');
 
@@ -168,7 +168,7 @@ let Deferred = exports.Deferred = class Deferred {
   static TimedDeferred(timeOut, proxyPromise) {
     const deferred = new Deferred();
 
-    if (proxyPromise && (0, _types.typeOf)(proxyPromise) === _promise2.default.name) {
+    if (proxyPromise && (0, _neTypes.typeOf)(proxyPromise) === _promise2.default.name) {
       proxyPromise.then((...args) => deferred.resolve(...args));
       proxyPromise.catch(reason => deferred.reject(reason));
     }
@@ -312,7 +312,7 @@ const LatticeLogs = exports.LatticeLogs = {
    * @param {Array<mixed>} array the array containing this element
    */
   argMapper(arg, index, array) {
-    let isError = (0, _types.typeOf)(arg) === Error.name;
+    let isError = (0, _neTypes.typeOf)(arg) === Error.name;
     let showStack = /\bSTACK\b/i.test(process.env.LATTICE_ERRORS || '');
 
     // $FlowFixMe

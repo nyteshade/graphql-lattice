@@ -3,7 +3,7 @@
 
 import fs from 'fs'
 import util from 'util'
-import { typeOf } from './types'
+import { typeOf } from 'ne-types'
 import { sync as readPkg } from 'read-pkg-up'
 import { merge } from 'lodash'
 

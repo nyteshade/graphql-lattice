@@ -3,7 +3,7 @@
 import {
   GQLBase, MODEL_KEY, META_KEY, GETTERS, SETTERS, PROPS, AUTO_PROPS
 } from '../GQLBase'
-import { isArray, extendsFrom } from '../types'
+import { isArray, extendsFrom } from 'ne-types'
 import { inspect } from 'util'
 import { GraphQLEnumType, parse } from 'graphql'
 import { SyntaxTree } from '../SyntaxTree'

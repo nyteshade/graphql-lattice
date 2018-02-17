@@ -53,7 +53,7 @@ var _fs2 = _interopRequireDefault(_fs);
 
 var _utils = require('./utils');
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
 var _SyntaxTree = require('./SyntaxTree');
 
@@ -517,20 +517,20 @@ let GQLBase = exports.GQLBase = class GQLBase extends _events2.default {
       let prop = _this.getProp(propName, ...args);
       let result;
 
-      if (prop && (0, _types.typeOf)(prop) === 'AsyncFunction') {
+      if (prop && (0, _neTypes.typeOf)(prop) === 'AsyncFunction') {
         try {
           result = yield prop.apply(_this, args);
         } catch (error) {
           throw new _AsyncFunctionExecutionError2.default(error, prop, args, result);
         }
-      } else if (prop && (0, _types.typeOf)(prop) === Function.name) {
+      } else if (prop && (0, _neTypes.typeOf)(prop) === Function.name) {
         try {
           result = prop.apply(_this, args);
         } catch (error) {
           throw new _FunctionExecutionError2.default(error, prop, args, result);
         }
 
-        if ((0, _types.typeOf)(result) === _promise2.default.name) {
+        if ((0, _neTypes.typeOf)(result) === _promise2.default.name) {
           try {
             result = yield result;
           } catch (error) {

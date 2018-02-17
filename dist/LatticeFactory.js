@@ -50,7 +50,7 @@ var _SyntaxTree = require('./SyntaxTree');
 
 var _neTagFns = require('ne-tag-fns');
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
 var _util = require('util');
 
@@ -248,7 +248,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
       `));
     }
 
-    if (!(0, _types.extendsFrom)(template.name, String)) {
+    if (!(0, _neTypes.extendsFrom)(template.name, String)) {
       results.errors.push(new Error((0, _neTagFns.customDedent)({ dropLowest: true })`
         The \`template.name\` field must be a string.
 
@@ -267,7 +267,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
       `));
     }
 
-    if (!(0, _types.extendsFrom)(template.schema, String)) {
+    if (!(0, _neTypes.extendsFrom)(template.schema, String)) {
       results.errors.push(new Error((0, _neTagFns.customDedent)({ dropLowest: true })`
         The \`template.schema\` field must be a string of GraphQL SDL/IDL
 
@@ -276,7 +276,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
       `));
     }
 
-    if (!(0, _types.extendsFrom)(template.resolvers, Object) // Supports 95% of objects
+    if (!(0, _neTypes.extendsFrom)(template.resolvers, Object) // Supports 95% of objects
     || typeof template.resolvers !== 'object' // Supports Object.create(null)
     ) {
         results.errors.push(new Error((0, _neTagFns.customDedent)({ dropLowest: true })`\x1b[91;1m
@@ -323,7 +323,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
       `));
     }
 
-    if (!(0, _types.extendsFrom)(template.docs, Object) // Supports 95% of objects
+    if (!(0, _neTypes.extendsFrom)(template.docs, Object) // Supports 95% of objects
     || typeof template.docs !== 'object' // Supports Object.create(null)
     ) {
         let dr = '\x1b[31m',
@@ -733,7 +733,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
    */
   static brandClass(Class) {
     if (Class) {
-      if ((0, _types.extendsFrom)(Class, _GQLBase.GQLBase)) {
+      if ((0, _neTypes.extendsFrom)(Class, _GQLBase.GQLBase)) {
         Class[_GQLBase.META_KEY][this.FACTORY_CLASS] = true;
       } else {
         Class[this.FACTORY_CLASS] = true;
@@ -759,7 +759,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
    */
   static isFactoryClass(Class) {
     if (Class) {
-      return (0, _types.extendsFrom)(Class, _GQLBase.GQLBase) ? !!Class[_GQLBase.META_KEY][this.FACTORY_CLASS] : !!Class[this.FACTORY_CLASS];
+      return (0, _neTypes.extendsFrom)(Class, _GQLBase.GQLBase) ? !!Class[_GQLBase.META_KEY][this.FACTORY_CLASS] : !!Class[this.FACTORY_CLASS];
     }
 
     return false;
@@ -780,7 +780,7 @@ let LatticeFactory = exports.LatticeFactory = class LatticeFactory {
    */
   static removeClassBrand(Class) {
     if (Class) {
-      if ((0, _types.extendsFrom)(Class, _GQLBase.GQLBase)) {
+      if ((0, _neTypes.extendsFrom)(Class, _GQLBase.GQLBase)) {
         delete Class[_GQLBase.META_KEY][this.FACTORY_CLASS];
       } else {
         delete Class[this.FACTORY_CLASS];

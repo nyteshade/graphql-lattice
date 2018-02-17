@@ -25,7 +25,7 @@ exports.Properties = Properties;
 
 var _GQLBase = require('../GQLBase');
 
-var _types = require('../types');
+var _neTypes = require('ne-types');
 
 var _util = require('util');
 
@@ -85,7 +85,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * ```
  */
 function extractBits(property) {
-  let array = (0, _types.isArray)(property) ? property : [property, property, null];
+  let array = (0, _neTypes.isArray)(property) ? property : [property, property, null];
   let reply;
 
   if (!property) {
@@ -139,7 +139,7 @@ function extractBits(property) {
       const model = this[_GQLBase.MODEL_KEY] || null;
       let val;
 
-      if (!(0, _types.extendsFrom)(thisClass, _GQLBase.GQLBase)) {
+      if (!(0, _neTypes.extendsFrom)(thisClass, _GQLBase.GQLBase)) {
         console.error(`${thisClass.name} is not derived from GQLBase`);
         return undefined;
       }
@@ -156,7 +156,7 @@ function extractBits(property) {
         // If the value of the model is already the type of class we expect
         // we do not need to do any processing and we can just grab it and
         // go.
-        if (model[modelName] && (0, _types.extendsFrom)(model[modelName], typeClass)) {
+        if (model[modelName] && (0, _neTypes.extendsFrom)(model[modelName], typeClass)) {
           val = model[modelName];
         }
 

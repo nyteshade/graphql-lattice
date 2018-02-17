@@ -15,7 +15,7 @@ import { ModuleParser, walkSync } from './ModuleParser'
 import { Schema } from './decorators/Schema'
 import { SchemaUtils } from './SchemaUtils'
 import { SyntaxTree } from './SyntaxTree'
-import * as types from './types'
+import * as types from 'ne-types'
 import { customDedent } from 'ne-tag-fns'
 
 const { typeOf } = types;

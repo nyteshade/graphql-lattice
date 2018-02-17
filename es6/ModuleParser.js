@@ -2,7 +2,7 @@
 
 import fs, { readdirSync, statSync } from 'fs'
 import path from 'path'
-import * as types from './types'
+import * as types from 'ne-types'
 import { GQLBase } from './GQLBase'
 import { GQLJSON } from './types/GQLJSON'
 import { merge } from 'lodash'

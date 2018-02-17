@@ -33,9 +33,9 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _types = require('./types');
+var _neTypes = require('ne-types');
 
-var types = _interopRequireWildcard(_types);
+var types = _interopRequireWildcard(_neTypes);
 
 var _GQLBase = require('./GQLBase');
 
