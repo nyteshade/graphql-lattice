@@ -71,10 +71,10 @@ GraphQL Lattice version map
 ||✅|**Additional unit tests**|
 ||✅|**`getProp` in GQLBase to fetch property resolver regardless of type**|
 ||✅|**`getResolver` in GQLBase to fetch a resolver from class or instance**|
-|2.13.1|✅|**Fix overzealous auto-prop creation**
+|2.13.1|✅|**Fix overzealous auto-prop creation**|
 ||✅|&emsp;• AutoProps were being created when they shouldn't due to how existing property existence was being tested|
 ||✅|&emsp;• Fixed the usage of `target[key]` to `descriptor.value` for @resolver/@mutator/@subscriptor usage|
-|2.13.6|✅||**Refactor `types.js` into its own repo `ne-types`**|
+|2.13.6|✅|**Refactor `types.js` into its own repo `ne-types`**|
 
 ## _Example projects_
 
