@@ -74,8 +74,7 @@ GraphQL Lattice version map
 |2.13.1|✅|**Fix overzealous auto-prop creation**
 ||✅|&emsp;• AutoProps were being created when they shouldn't due to how existing property existence was being tested|
 ||✅|&emsp;• Fixed the usage of `target[key]` to `descriptor.value` for @resolver/@mutator/@subscriptor usage|
-|2.14.0|🔜|**ModuleParser module import support**|
-||🔜|&emsp;• *Given `'gql-users'` as a module name, `ModuleParser` should be able to find this module in your `node_modules` directory and import the files from that location for you so you do not have to worry about things like your current working directory and so on.*|
+|2.13.6|✅||**Refactor `types.js` into its own repo `ne-types`|
 
 ## _Example projects_
 
