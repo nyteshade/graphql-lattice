@@ -10,22 +10,24 @@
   },
   "plugins": [
     "plugins/markdown",
-    "node_modules/jsdoc-babel"        
-  ],    
+    "node_modules/jsdoc-babel"
+  ],
   "babel": {
     "extensions": ["js", "es6", "jsx"],
     "presets": [
-      "stage-1",
-      "flow",
-      ["env", {
+      "@babel/preset-flow",
+      ["@babel/preset-env", {
         "targets": { "node": "current" },
         "modules": "commonjs",
-        "useBuiltIns": true,
+        "useBuiltIns": "usage",
         "debug": false
       }]
     ],
-    "plugins": ["transform-runtime", "transform-decorators-legacy"]
-  },    
+    "plugins": [
+      ["@babel/plugin-proposal-class-properties", { "spec": true }],
+      ["@babel/plugin-proposal-decorators", { "legacy": true }]
+    ]
+  },
   "markdown": {
 		"parser": "gfm",
 		"hardwrap": true,

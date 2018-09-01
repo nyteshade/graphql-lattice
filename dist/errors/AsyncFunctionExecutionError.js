@@ -1,17 +1,20 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AsyncFunctionExecutionError = undefined;
+exports.default = exports.AsyncFunctionExecutionError = void 0;
 
-var _FunctionExecutionError = require('./FunctionExecutionError');
+var _FunctionExecutionError = require("./FunctionExecutionError");
 
 /**
  * Denotes more sepecifically that the evaluation of the function invoked
  * occurred when running a known asynchronous function rather than a standard
  * synchronous version.
  */
-let AsyncFunctionExecutionError = exports.AsyncFunctionExecutionError = class AsyncFunctionExecutionError extends _FunctionExecutionError.FunctionExecutionError {};
-exports.default = AsyncFunctionExecutionError;
-//# sourceMappingURL=AsyncFunctionExecutionError.js.map
+class AsyncFunctionExecutionError extends _FunctionExecutionError.FunctionExecutionError {}
+
+exports.AsyncFunctionExecutionError = AsyncFunctionExecutionError;
+var _default = AsyncFunctionExecutionError;
+exports.default = _default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2VzNi9lcnJvcnMvQXN5bmNGdW5jdGlvbkV4ZWN1dGlvbkVycm9yLmpzIl0sIm5hbWVzIjpbIkFzeW5jRnVuY3Rpb25FeGVjdXRpb25FcnJvciIsIkZ1bmN0aW9uRXhlY3V0aW9uRXJyb3IiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFFQTs7Ozs7QUFLTyxNQUFNQSwyQkFBTixTQUEwQ0MsOENBQTFDLENBQWlFOzs7ZUFFekRELDJCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgRnVuY3Rpb25FeGVjdXRpb25FcnJvciB9IGZyb20gJy4vRnVuY3Rpb25FeGVjdXRpb25FcnJvcidcblxuLyoqXG4gKiBEZW5vdGVzIG1vcmUgc2VwZWNpZmljYWxseSB0aGF0IHRoZSBldmFsdWF0aW9uIG9mIHRoZSBmdW5jdGlvbiBpbnZva2VkXG4gKiBvY2N1cnJlZCB3aGVuIHJ1bm5pbmcgYSBrbm93biBhc3luY2hyb25vdXMgZnVuY3Rpb24gcmF0aGVyIHRoYW4gYSBzdGFuZGFyZFxuICogc3luY2hyb25vdXMgdmVyc2lvbi5cbiAqL1xuZXhwb3J0IGNsYXNzIEFzeW5jRnVuY3Rpb25FeGVjdXRpb25FcnJvciBleHRlbmRzIEZ1bmN0aW9uRXhlY3V0aW9uRXJyb3IgeyB9XG5cbmV4cG9ydCBkZWZhdWx0IEFzeW5jRnVuY3Rpb25FeGVjdXRpb25FcnJvciJdfQ==

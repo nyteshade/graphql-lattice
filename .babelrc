@@ -1,18 +1,16 @@
 {
   "presets": [
-    "stage-1",
-    "flow",
-    ["env", {
+    "@babel/preset-flow",
+    ["@babel/preset-env", {
       "targets": { "node": "current" },
       "modules": "commonjs",
-      "useBuiltIns": true,
+      "useBuiltIns": "usage",
       "debug": false
     }]
   ],
   "plugins": [
-    ["transform-class-properties", { "spec": true }],
-    "transform-runtime",
-    "transform-decorators-legacy"
+    ["@babel/plugin-proposal-class-properties", { "spec": true }],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }]
   ],
   "sourceMaps": "inline"
 }
