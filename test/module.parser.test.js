@@ -54,7 +54,7 @@ describe('ModuleParser Tests', () => {
       parser.parseSync();
     }).not.toThrow();
 
-    classes = parser.classes.map(Class => Class.name && Class.name : null)
+    classes = parser.classes.map(Class => (Class.name && Class.name) || null)
     classes = classes.filter(Class => !!Class)
     expect(classes).toEqual(expect.arrayContaining([
       'Yarp', 'YabbaDabbaDo'

@@ -1,11 +1,23 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GQLInterface = void 0;
 
-var _GQLBase = require("./GQLBase");
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _GQLBase2 = require("./GQLBase");
 
 var _graphql = require("graphql");
 
@@ -19,46 +31,56 @@ var _graphql = require("graphql");
  *
  * @class GQLInterface
  */
-class GQLInterface extends _GQLBase.GQLBase {
-  /**
-   * This needs to be able to, depending on your implementors, identify
-   * which on the data actually is given the model to work with.
-   *
-   * @memberof GQLInterface
-   * @method ⌾⠀resolveType
-   * @static
-   *
-   * @param {mixed} model the data you can use to instantiate the type of
-   * object in question.
-   * @return {string} a string matching the name of a defined GraphQL type
-   * found elsewhere in your schema
-   */
-  static resolveType(model) {
-    throw new Error(`
-      You must override "resolveType(model)" in your GQLInterface instance
-      and determine the implementor type by the contents of the supplied
-      model. Returning "null" when nothing matches.
-    `);
-  }
-  /**
-   * Denotes that this GQLBase descendent is describing a graphql
-   * interface type.
-   *
-   * @memberof GQLInterface
-   * @method ⬇︎⠀GQL_TYPE
-   * @static
-   * @const
-   *
-   * @return {Function} a type, such as `GraphQLObjectType` or
-   * `GraphQLInterfaceType`
-   */
+var GQLInterface =
+/*#__PURE__*/
+function (_GQLBase) {
+  (0, _inherits2.default)(GQLInterface, _GQLBase);
 
-
-  static get GQL_TYPE() {
-    return _graphql.GraphQLInterfaceType;
+  function GQLInterface() {
+    (0, _classCallCheck2.default)(this, GQLInterface);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(GQLInterface).apply(this, arguments));
   }
 
-}
+  (0, _createClass2.default)(GQLInterface, null, [{
+    key: "resolveType",
+
+    /**
+     * This needs to be able to, depending on your implementors, identify
+     * which on the data actually is given the model to work with.
+     *
+     * @memberof GQLInterface
+     * @method ⌾⠀resolveType
+     * @static
+     *
+     * @param {mixed} model the data you can use to instantiate the type of
+     * object in question.
+     * @return {string} a string matching the name of a defined GraphQL type
+     * found elsewhere in your schema
+     */
+    value: function resolveType(model) {
+      throw new Error("\n      You must override \"resolveType(model)\" in your GQLInterface instance\n      and determine the implementor type by the contents of the supplied\n      model. Returning \"null\" when nothing matches.\n    ");
+    }
+    /**
+     * Denotes that this GQLBase descendent is describing a graphql
+     * interface type.
+     *
+     * @memberof GQLInterface
+     * @method ⬇︎⠀GQL_TYPE
+     * @static
+     * @const
+     *
+     * @return {Function} a type, such as `GraphQLObjectType` or
+     * `GraphQLInterfaceType`
+     */
+
+  }, {
+    key: "GQL_TYPE",
+    get: function get() {
+      return _graphql.GraphQLInterfaceType;
+    }
+  }]);
+  return GQLInterface;
+}(_GQLBase2.GQLBase);
 
 exports.GQLInterface = GQLInterface;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2VzNi9HUUxJbnRlcmZhY2UuanMiXSwibmFtZXMiOlsiR1FMSW50ZXJmYWNlIiwiR1FMQmFzZSIsInJlc29sdmVUeXBlIiwibW9kZWwiLCJFcnJvciIsIkdRTF9UWVBFIiwiR3JhcGhRTEludGVyZmFjZVR5cGUiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFLQTs7QUFDQTs7QUFOQTs7Ozs7QUFRQTs7Ozs7QUFLTyxNQUFNQSxZQUFOLFNBQTJCQyxnQkFBM0IsQ0FBbUM7QUFFeEM7Ozs7Ozs7Ozs7Ozs7QUFhQSxTQUFPQyxXQUFQLENBQW1CQyxLQUFuQixFQUF5QztBQUN2QyxVQUFNLElBQUlDLEtBQUosQ0FBVzs7OztLQUFYLENBQU47QUFLRDtBQUVEOzs7Ozs7Ozs7Ozs7OztBQVlBLGFBQVdDLFFBQVgsR0FBZ0M7QUFDOUIsV0FBT0MsNkJBQVA7QUFDRDs7QUFyQ3VDIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gQG5hbWVzcGFjZSBHUUxJbnRlcmZhY2VcbiBAZmxvd1xuICovXG5cbmltcG9ydCB7IEdRTEJhc2UgfSBmcm9tICcuL0dRTEJhc2UnXG5pbXBvcnQgeyBHcmFwaFFMSW50ZXJmYWNlVHlwZSB9IGZyb20gJ2dyYXBocWwnXG5cbi8qKlxuICogVXNlZCBieSBMYXR0aWNlIHRvIGltcGxlbWVudCBpbnRlcmZhY2UgdHlwZXMgaW4gdGhlIHNjaGVtYSB3aGVuIG5lY2Vzc2FyeVxuICpcbiAqIEBjbGFzcyBHUUxJbnRlcmZhY2VcbiAqL1xuZXhwb3J0IGNsYXNzIEdRTEludGVyZmFjZSBleHRlbmRzIEdRTEJhc2Uge1xuXG4gIC8qKlxuICAgKiBUaGlzIG5lZWRzIHRvIGJlIGFibGUgdG8sIGRlcGVuZGluZyBvbiB5b3VyIGltcGxlbWVudG9ycywgaWRlbnRpZnlcbiAgICogd2hpY2ggb24gdGhlIGRhdGEgYWN0dWFsbHkgaXMgZ2l2ZW4gdGhlIG1vZGVsIHRvIHdvcmsgd2l0aC5cbiAgICpcbiAgICogQG1lbWJlcm9mIEdRTEludGVyZmFjZVxuICAgKiBAbWV0aG9kIOKMvuKggHJlc29sdmVUeXBlXG4gICAqIEBzdGF0aWNcbiAgICpcbiAgICogQHBhcmFtIHttaXhlZH0gbW9kZWwgdGhlIGRhdGEgeW91IGNhbiB1c2UgdG8gaW5zdGFudGlhdGUgdGhlIHR5cGUgb2ZcbiAgICogb2JqZWN0IGluIHF1ZXN0aW9uLlxuICAgKiBAcmV0dXJuIHtzdHJpbmd9IGEgc3RyaW5nIG1hdGNoaW5nIHRoZSBuYW1lIG9mIGEgZGVmaW5lZCBHcmFwaFFMIHR5cGVcbiAgICogZm91bmQgZWxzZXdoZXJlIGluIHlvdXIgc2NoZW1hXG4gICAqL1xuICBzdGF0aWMgcmVzb2x2ZVR5cGUobW9kZWw6IG1peGVkKTogc3RyaW5nIHtcbiAgICB0aHJvdyBuZXcgRXJyb3IoYFxuICAgICAgWW91IG11c3Qgb3ZlcnJpZGUgXCJyZXNvbHZlVHlwZShtb2RlbClcIiBpbiB5b3VyIEdRTEludGVyZmFjZSBpbnN0YW5jZVxuICAgICAgYW5kIGRldGVybWluZSB0aGUgaW1wbGVtZW50b3IgdHlwZSBieSB0aGUgY29udGVudHMgb2YgdGhlIHN1cHBsaWVkXG4gICAgICBtb2RlbC4gUmV0dXJuaW5nIFwibnVsbFwiIHdoZW4gbm90aGluZyBtYXRjaGVzLlxuICAgIGApO1xuICB9XG5cbiAgLyoqXG4gICAqIERlbm90ZXMgdGhhdCB0aGlzIEdRTEJhc2UgZGVzY2VuZGVudCBpcyBkZXNjcmliaW5nIGEgZ3JhcGhxbFxuICAgKiBpbnRlcmZhY2UgdHlwZS5cbiAgICpcbiAgICogQG1lbWJlcm9mIEdRTEludGVyZmFjZVxuICAgKiBAbWV0aG9kIOKsh++4juKggEdRTF9UWVBFXG4gICAqIEBzdGF0aWNcbiAgICogQGNvbnN0XG4gICAqXG4gICAqIEByZXR1cm4ge0Z1bmN0aW9ufSBhIHR5cGUsIHN1Y2ggYXMgYEdyYXBoUUxPYmplY3RUeXBlYCBvclxuICAgKiBgR3JhcGhRTEludGVyZmFjZVR5cGVgXG4gICAqL1xuICBzdGF0aWMgZ2V0IEdRTF9UWVBFKCk6IEZ1bmN0aW9uIHtcbiAgICByZXR1cm4gR3JhcGhRTEludGVyZmFjZVR5cGU7XG4gIH1cbn1cbiJdfQ==
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2VzNi9HUUxJbnRlcmZhY2UuanMiXSwibmFtZXMiOlsiR1FMSW50ZXJmYWNlIiwibW9kZWwiLCJFcnJvciIsIkdyYXBoUUxJbnRlcmZhY2VUeXBlIiwiR1FMQmFzZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUtBOztBQUNBOztBQU5BOzs7OztBQVFBOzs7OztJQUthQSxZOzs7Ozs7Ozs7Ozs7O0FBRVg7Ozs7Ozs7Ozs7Ozs7Z0NBYW1CQyxLLEVBQXNCO0FBQ3ZDLFlBQU0sSUFBSUMsS0FBSix5TkFBTjtBQUtEO0FBRUQ7Ozs7Ozs7Ozs7Ozs7Ozt3QkFZZ0M7QUFDOUIsYUFBT0MsNkJBQVA7QUFDRDs7O0VBckMrQkMsaUIiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiBAbmFtZXNwYWNlIEdRTEludGVyZmFjZVxuIEBmbG93XG4gKi9cblxuaW1wb3J0IHsgR1FMQmFzZSB9IGZyb20gJy4vR1FMQmFzZSdcbmltcG9ydCB7IEdyYXBoUUxJbnRlcmZhY2VUeXBlIH0gZnJvbSAnZ3JhcGhxbCdcblxuLyoqXG4gKiBVc2VkIGJ5IExhdHRpY2UgdG8gaW1wbGVtZW50IGludGVyZmFjZSB0eXBlcyBpbiB0aGUgc2NoZW1hIHdoZW4gbmVjZXNzYXJ5XG4gKlxuICogQGNsYXNzIEdRTEludGVyZmFjZVxuICovXG5leHBvcnQgY2xhc3MgR1FMSW50ZXJmYWNlIGV4dGVuZHMgR1FMQmFzZSB7XG5cbiAgLyoqXG4gICAqIFRoaXMgbmVlZHMgdG8gYmUgYWJsZSB0bywgZGVwZW5kaW5nIG9uIHlvdXIgaW1wbGVtZW50b3JzLCBpZGVudGlmeVxuICAgKiB3aGljaCBvbiB0aGUgZGF0YSBhY3R1YWxseSBpcyBnaXZlbiB0aGUgbW9kZWwgdG8gd29yayB3aXRoLlxuICAgKlxuICAgKiBAbWVtYmVyb2YgR1FMSW50ZXJmYWNlXG4gICAqIEBtZXRob2Qg4oy+4qCAcmVzb2x2ZVR5cGVcbiAgICogQHN0YXRpY1xuICAgKlxuICAgKiBAcGFyYW0ge21peGVkfSBtb2RlbCB0aGUgZGF0YSB5b3UgY2FuIHVzZSB0byBpbnN0YW50aWF0ZSB0aGUgdHlwZSBvZlxuICAgKiBvYmplY3QgaW4gcXVlc3Rpb24uXG4gICAqIEByZXR1cm4ge3N0cmluZ30gYSBzdHJpbmcgbWF0Y2hpbmcgdGhlIG5hbWUgb2YgYSBkZWZpbmVkIEdyYXBoUUwgdHlwZVxuICAgKiBmb3VuZCBlbHNld2hlcmUgaW4geW91ciBzY2hlbWFcbiAgICovXG4gIHN0YXRpYyByZXNvbHZlVHlwZShtb2RlbDogbWl4ZWQpOiBzdHJpbmcge1xuICAgIHRocm93IG5ldyBFcnJvcihgXG4gICAgICBZb3UgbXVzdCBvdmVycmlkZSBcInJlc29sdmVUeXBlKG1vZGVsKVwiIGluIHlvdXIgR1FMSW50ZXJmYWNlIGluc3RhbmNlXG4gICAgICBhbmQgZGV0ZXJtaW5lIHRoZSBpbXBsZW1lbnRvciB0eXBlIGJ5IHRoZSBjb250ZW50cyBvZiB0aGUgc3VwcGxpZWRcbiAgICAgIG1vZGVsLiBSZXR1cm5pbmcgXCJudWxsXCIgd2hlbiBub3RoaW5nIG1hdGNoZXMuXG4gICAgYCk7XG4gIH1cblxuICAvKipcbiAgICogRGVub3RlcyB0aGF0IHRoaXMgR1FMQmFzZSBkZXNjZW5kZW50IGlzIGRlc2NyaWJpbmcgYSBncmFwaHFsXG4gICAqIGludGVyZmFjZSB0eXBlLlxuICAgKlxuICAgKiBAbWVtYmVyb2YgR1FMSW50ZXJmYWNlXG4gICAqIEBtZXRob2Qg4qyH77iO4qCAR1FMX1RZUEVcbiAgICogQHN0YXRpY1xuICAgKiBAY29uc3RcbiAgICpcbiAgICogQHJldHVybiB7RnVuY3Rpb259IGEgdHlwZSwgc3VjaCBhcyBgR3JhcGhRTE9iamVjdFR5cGVgIG9yXG4gICAqIGBHcmFwaFFMSW50ZXJmYWNlVHlwZWBcbiAgICovXG4gIHN0YXRpYyBnZXQgR1FMX1RZUEUoKTogRnVuY3Rpb24ge1xuICAgIHJldHVybiBHcmFwaFFMSW50ZXJmYWNlVHlwZTtcbiAgfVxufVxuIl19

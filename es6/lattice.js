@@ -1,3 +1,10 @@
+// TODO Remove any reliance on RegExp.escape()
+if(!RegExp.escape){
+    RegExp.escape = function(s){
+      return String(s).replace(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+    };
+}
+
 import { AdjacentSchema } from './decorators/AdjacentSchema'
 import { Deferred, joinLines, promisify, getLatticePrefs, LatticeLogs } from './utils'
 import { FileSchema } from './decorators/FileSchema'
