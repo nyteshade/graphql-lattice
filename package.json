@@ -34,7 +34,7 @@
     "graphql-tools": "^4",
     "lodash": "^4.17.11",
     "marked": "^0.5",
-    "ne-tag-fns": "^0.6.7",
+    "ne-tag-fns": "^0.6.8",
     "ne-types": "^1.0.3",
     "read-pkg-up": "^4.0.0"
   },
