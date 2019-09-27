@@ -36,7 +36,7 @@
     "marked": "^0.6.0",
     "ne-tag-fns": "^0.6.8",
     "ne-types": "^1.0.3",
-    "read-pkg-up": "^5.0.0"
+    "read-pkg-up": "^7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
