@@ -33,7 +33,7 @@
     "graphql-server-express": "^1.4.0",
     "graphql-tools": "^4",
     "lodash": "^4.17.11",
-    "marked": "^0.8.0",
+    "marked": "^1.0.0",
     "ne-tag-fns": "^0.6.8",
     "ne-types": "^1.0.3",
     "read-pkg-up": "^7.0.0"
