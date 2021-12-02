@@ -63,7 +63,8 @@
 
 
 <div class="description">
-    <p>The SchemaUtils is used by tools such as GQLExpressMiddleware in order to<br>apply GraphQL Lattice specifics to the build schema.</p>
+    <p>The SchemaUtils is used by tools such as GQLExpressMiddleware in order to<br>
+apply GraphQL Lattice specifics to the build schema.</p>
 </div>
 
 
@@ -164,7 +165,8 @@
 
 
 <div class="description">
-    <p>Calls all the Lattice post-schema creation routines on a given Schema<br>using data from a supplied array of classes.</p>
+    <p>Calls all the Lattice post-schema creation routines on a given Schema<br>
+using data from a supplied array of classes.</p>
 </div>
 
 
@@ -287,7 +289,8 @@
             
 
             <td class="description last">
-                <p>the Classes from which to drive post<br>processing data from</p>
+                <p>the Classes from which to drive post<br>
+processing data from</p>
                 
             </td>
         </tr>
@@ -325,7 +328,9 @@
 
 
 <div class="description">
-    <p>An asynchronous function used to parse the supplied classes for each<br>ones resolvers and mutators. These are all combined into a single root<br>object passed to express-graphql.</p>
+    <p>An asynchronous function used to parse the supplied classes for each<br>
+ones resolvers and mutators. These are all combined into a single root<br>
+object passed to express-graphql.</p>
 </div>
 
 
@@ -422,7 +427,8 @@
             
 
             <td class="description last">
-                <p>the GQLBase extended class objects or<br>functions from which to merge the RESOLVERS and MUTATORS functions.</p>
+                <p>the GQLBase extended class objects or<br>
+functions from which to merge the RESOLVERS and MUTATORS functions.</p>
                 
             </td>
         </tr>
@@ -448,7 +454,9 @@
             
 
             <td class="description last">
-                <p>for Express apss, this will be an object<br>containing { req, res, gql } where those are the Express request and<br>response object as well as the GraphQL parameters for the request.</p>
+                <p>for Express apss, this will be an object<br>
+containing { req, res, gql } where those are the Express request and<br>
+response object as well as the GraphQL parameters for the request.</p>
                 
             </td>
         </tr>
@@ -489,7 +497,8 @@
 
 
 <div class="param-desc">
-    <p>a Promise resolving to an Object containing all<br>the functions described in both Query and Mutation types.</p>
+    <p>a Promise resolving to an Object containing all<br>
+the functions described in both Query and Mutation types.</p>
 </div>
 
     
@@ -511,8 +520,14 @@
 
 
 <div class="description">
-    <p>Until such time as I can get the reference Facebook GraphQL AST parser to<br>read and apply descriptions or until such time as I employ the Apollo<br>AST parser, providing a <code>static get apiDocs()</code> getter is the way to get<br>your descriptions into the proper fields, post schema creation.</p>
-<p>This method walks the types in the registered classes and the supplied<br>schema type. It then injects the written comments such that they can<br>be exposed in graphiql and to applications or code that read the meta<br>fields of a built schema</p>
+    <p>Until such time as I can get the reference Facebook GraphQL AST parser to<br>
+read and apply descriptions or until such time as I employ the Apollo<br>
+AST parser, providing a <code>static get apiDocs()</code> getter is the way to get<br>
+your descriptions into the proper fields, post schema creation.</p>
+<p>This method walks the types in the registered classes and the supplied<br>
+schema type. It then injects the written comments such that they can<br>
+be exposed in graphiql and to applications or code that read the meta<br>
+fields of a built schema</p>
 </div>
 
 
@@ -612,7 +627,8 @@
             
 
             <td class="description last">
-                <p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p>
+                <p>a built GraphQLSchema object created via buildSchema<br>
+or some other alternative but compatible manner</p>
                 
             </td>
         </tr>
@@ -638,7 +654,8 @@
             
 
             <td class="description last">
-                <p>these are GQLBase extended classes used to<br>manipulate the schema with.</p>
+                <p>these are GQLBase extended classes used to<br>
+manipulate the schema with.</p>
                 
             </td>
         </tr>
@@ -676,7 +693,10 @@
 
 
 <div class="description">
-    <p>Somewhat like <code>injectComments</code> and other similar methods, the<br><code>injectInterfaceResolvers</code> method walks the registered classes and<br>finds <code>GQLInterface</code> types and applies their <code>resolveType()</code><br>implementations.</p>
+    <p>Somewhat like <code>injectComments</code> and other similar methods, the<br>
+<code>injectInterfaceResolvers</code> method walks the registered classes and<br>
+finds <code>GQLInterface</code> types and applies their <code>resolveType()</code><br>
+implementations.</p>
 </div>
 
 
@@ -773,7 +793,8 @@
             
 
             <td class="description last">
-                <p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p>
+                <p>a built GraphQLSchema object created via buildSchema<br>
+or some other alternative but compatible manner</p>
                 
             </td>
         </tr>
@@ -799,7 +820,8 @@
             
 
             <td class="description last">
-                <p>these are GQLBase extended classes used to<br>manipulate the schema with.</p>
+                <p>these are GQLBase extended classes used to<br>
+manipulate the schema with.</p>
                 
             </td>
         </tr>
@@ -837,7 +859,10 @@
 
 
 <div class="description">
-    <p>Somewhat like <code>injectComments</code> and other similar methods, the<br><code>injectInterfaceResolvers</code> method walks the registered classes and<br>finds <code>GQLInterface</code> types and applies their <code>resolveType()</code><br>implementations.</p>
+    <p>Somewhat like <code>injectComments</code> and other similar methods, the<br>
+<code>injectInterfaceResolvers</code> method walks the registered classes and<br>
+finds <code>GQLInterface</code> types and applies their <code>resolveType()</code><br>
+implementations.</p>
 </div>
 
 
@@ -934,7 +959,8 @@
             
 
             <td class="description last">
-                <p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p>
+                <p>a built GraphQLSchema object created via buildSchema<br>
+or some other alternative but compatible manner</p>
                 
             </td>
         </tr>
@@ -960,7 +986,8 @@
             
 
             <td class="description last">
-                <p>these are GQLBase extended classes used to<br>manipulate the schema with.</p>
+                <p>these are GQLBase extended classes used to<br>
+manipulate the schema with.</p>
                 
             </td>
         </tr>
@@ -998,8 +1025,11 @@
 
 
 <div class="description">
-    <p>GQLScalar types must define three methods to have a valid implementation.<br>They are serialize, parseValue and parseLiteral. See their docs for more<br>info on how to do so.</p>
-<p>This code finds each scalar and adds their implementation details to the<br>generated schema type config.</p>
+    <p>GQLScalar types must define three methods to have a valid implementation.<br>
+They are serialize, parseValue and parseLiteral. See their docs for more<br>
+info on how to do so.</p>
+<p>This code finds each scalar and adds their implementation details to the<br>
+generated schema type config.</p>
 </div>
 
 
@@ -1096,7 +1126,8 @@
             
 
             <td class="description last">
-                <p>a built GraphQLSchema object created via buildSchema<br>or some other alternative but compatible manner</p>
+                <p>a built GraphQLSchema object created via buildSchema<br>
+or some other alternative but compatible manner</p>
                 
             </td>
         </tr>
@@ -1122,7 +1153,8 @@
             
 
             <td class="description last">
-                <p>these are GQLBase extended classes used to<br>manipulate the schema with.</p>
+                <p>these are GQLBase extended classes used to<br>
+manipulate the schema with.</p>
                 
             </td>
         </tr>
@@ -1165,7 +1197,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

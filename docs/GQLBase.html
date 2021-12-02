@@ -63,7 +63,9 @@
 
 
 <div class="description">
-    <p>All GraphQL Type objects used in this system are assumed to have extended<br>from this class. An instance of this class can be used to wrap an existing<br>structure if you have one.</p>
+    <p>All GraphQL Type objects used in this system are assumed to have extended<br>
+from this class. An instance of this class can be used to wrap an existing<br>
+structure if you have one.</p>
 </div>
 
 
@@ -165,7 +167,8 @@
 
 
 <div class="description">
-    <p>An object used to store data used by decorators and other internal<br>proccesses.</p>
+    <p>An object used to store data used by decorators and other internal<br>
+proccesses.</p>
 </div>
 
 
@@ -229,7 +232,11 @@
 
 
 <div class="description">
-    <p>If ES6 Proxies are supported in your execution environment, all GQLBase<br>extended classes are also proxies. By default the internal proxy handler<br>provides backwards compatibility with the removal of the default getters<br>and setters for the 'model' property as long as you do not define a<br>top level 'model' property of your own.</p>
+    <p>If ES6 Proxies are supported in your execution environment, all GQLBase<br>
+extended classes are also proxies. By default the internal proxy handler<br>
+provides backwards compatibility with the removal of the default getters<br>
+and setters for the 'model' property as long as you do not define a<br>
+top level 'model' property of your own.</p>
 </div>
 
 
@@ -521,7 +528,8 @@
 
 
 <div class="description">
-    <p>A constant key used to identify a comment for the top level mutation<br>description</p>
+    <p>A constant key used to identify a comment for the top level mutation<br>
+description</p>
 </div>
 
 
@@ -619,6 +627,8 @@
     
 
     
+        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use `DOC_MUTATIONS` instead</li></ul></dd>
+    
 
     
 
@@ -631,7 +641,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line1190">line 1190</a>
+        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line1177">line 1177</a>
     </li></ul></dd>
     
 
@@ -693,8 +703,6 @@
     
 
     
-        <dt class="important tag-deprecated">Deprecated:</dt><dd><ul class="dummy"><li>Use `DOC_MUTATIONS` instead</li></ul></dd>
-    
 
     
 
@@ -707,7 +715,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line1177">line 1177</a>
+        <a href="GQLBase.js.html">GQLBase.js</a>, <a href="GQLBase.js.html#line1190">line 1190</a>
     </li></ul></dd>
     
 
@@ -819,7 +827,8 @@
 
 
 <div class="description">
-    <p>A constant key used to identify a comment for the top level query<br>description</p>
+    <p>A constant key used to identify a comment for the top level query<br>
+description</p>
 </div>
 
 
@@ -893,7 +902,8 @@
 
 
 <div class="description">
-    <p>A constant key used to identify a comment for the top level subscription<br>description</p>
+    <p>A constant key used to identify a comment for the top level subscription<br>
+description</p>
 </div>
 
 
@@ -1041,7 +1051,9 @@
 
 
 <div class="description">
-    <p>A constant used to register an event listener for when the internal<br>model object is assigned a new value. This event fires after the model<br>is set.</p>
+    <p>A constant used to register an event listener for when the internal<br>
+model object is assigned a new value. This event fires after the model<br>
+is set.</p>
 </div>
 
 
@@ -1115,7 +1127,8 @@
 
 
 <div class="description">
-    <p>A constant used to register an event listener for when a property of the<br>internal model object is set to a new or intial value.</p>
+    <p>A constant used to register an event listener for when a property of the<br>
+internal model object is set to a new or intial value.</p>
 </div>
 
 
@@ -1189,7 +1202,9 @@
 
 
 <div class="description">
-    <p>A constant used to register an event listener for when a property of the<br>internal model object has been deleted. This event fires after the value<br>has been deleted.</p>
+    <p>A constant used to register an event listener for when a property of the<br>
+internal model object has been deleted. This event fires after the value<br>
+has been deleted.</p>
 </div>
 
 
@@ -1263,7 +1278,10 @@
 
 
 <div class="description">
-    <p>A constant used to register an event listener for when the internal<br>model object is assigned a new value. This event fires before the model<br>is set. Changes to the model value at this point will affect the contents<br>before the value assignment takes place.</p>
+    <p>A constant used to register an event listener for when the internal<br>
+model object is assigned a new value. This event fires before the model<br>
+is set. Changes to the model value at this point will affect the contents<br>
+before the value assignment takes place.</p>
 </div>
 
 
@@ -1337,7 +1355,8 @@
 
 
 <div class="description">
-    <p>Determines the default type targeted by this GQLBase class. Any<br>type will technically be valid but only will trigger special behavior</p>
+    <p>Determines the default type targeted by this GQLBase class. Any<br>
+type will technically be valid but only will trigger special behavior</p>
 </div>
 
 
@@ -1401,7 +1420,8 @@
 
 
 <div class="description">
-    <p>A shortcut to the utils/joinLines function to make it easier to get<br>the tools to write docs for your types in a friendly fashion.</p>
+    <p>A shortcut to the utils/joinLines function to make it easier to get<br>
+the tools to write docs for your types in a friendly fashion.</p>
 </div>
 
 
@@ -1475,7 +1495,9 @@
 
 
 <div class="description">
-    <p>Returns the module object where your class is created. This needs to be<br>defined on your class, as a static getter, in the FILE where you are<br>defining your Class definition.</p>
+    <p>Returns the module object where your class is created. This needs to be<br>
+defined on your class, as a static getter, in the FILE where you are<br>
+defining your Class definition.</p>
 </div>
 
 
@@ -1556,8 +1578,12 @@
 
 
 <div class="description">
-    <p>Until such time as the reference implementation of Facebook's GraphQL<br>SDL AST parser supports comments, or until we take advantage of Apollo's<br>AST parser, this is how comments will be applied to a built schema.</p>
-<p>Several constants are defined on the GQLBase object itself, and thereby<br>all its subclasses. They pertain to how to define description fields<br>for various parts of your GQL implementation.</p>
+    <p>Until such time as the reference implementation of Facebook's GraphQL<br>
+SDL AST parser supports comments, or until we take advantage of Apollo's<br>
+AST parser, this is how comments will be applied to a built schema.</p>
+<p>Several constants are defined on the GQLBase object itself, and thereby<br>
+all its subclasses. They pertain to how to define description fields<br>
+for various parts of your GQL implementation.</p>
 <pre class="prettyprint source"><code>// To define a description on the top level class
 [this.DOC_CLASS]: string
 
@@ -1569,7 +1595,11 @@
 // To define a description on a query, mutation or subscription field
 [this.DOC_QUERIES || this.DOC_MUTATORS || this.DOC_SUBSCRIPTIONS]: {
   fieldName: string
-}</code></pre><p>To make writing code easier, the <code>joinLines()</code> template function is<br>available so your source code can look nice and neat and your descriptions<br>won't get annoying line breaks and spaces as part of that process.</p>
+}
+</code></pre>
+<p>To make writing code easier, the <code>joinLines()</code> template function is<br>
+available so your source code can look nice and neat and your descriptions<br>
+won't get annoying line breaks and spaces as part of that process.</p>
 </div>
 
 
@@ -1655,7 +1685,8 @@
 
 
 <div class="param-desc">
-    <p>an object with various keys and values denoting<br>description fields that should be applied to the final schema object</p>
+    <p>an object with various keys and values denoting<br>
+description fields that should be applied to the final schema object</p>
 </div>
 
     
@@ -1774,7 +1805,9 @@
             
 
             <td class="description last">
-                <p>an object containing the request data such as<br>request, response or graphql context info that should be passed along to<br>each of the resolver creators</p>
+                <p>an object containing the request data such as<br>
+request, response or graphql context info that should be passed along to<br>
+each of the resolver creators</p>
                 
             </td>
         </tr>
@@ -1815,7 +1848,8 @@
 
 
 <div class="param-desc">
-    <p>the merged root object with all the query, mutation and<br>subscription resolvers defined and created within.</p>
+    <p>the merged root object with all the query, mutation and<br>
+subscription resolvers defined and created within.</p>
 </div>
 
     
@@ -1837,7 +1871,10 @@
 
 
 <div class="description">
-    <p>The static version of getProp reads into the prototype to find the field<br>that is desired. If the field is either a getter or a initializer (see<br>class properties descriptors), then the option to bind that to either the<br>prototype object or one of your choosing is available.</p>
+    <p>The static version of getProp reads into the prototype to find the field<br>
+that is desired. If the field is either a getter or a initializer (see<br>
+class properties descriptors), then the option to bind that to either the<br>
+prototype object or one of your choosing is available.</p>
 </div>
 
 
@@ -1937,7 +1974,8 @@
             
 
             <td class="description last">
-                <p>a string or Symbol denoting the name of<br>the property or field you desire</p>
+                <p>a string or Symbol denoting the name of<br>
+the property or field you desire</p>
                 
             </td>
         </tr>
@@ -1963,7 +2001,8 @@
             
 
             <td class="description last">
-                <p>true if a resulting <code>getter</code> or <code>initializer</code><br>should be bound to the prototype or other object</p>
+                <p>true if a resulting <code>getter</code> or <code>initializer</code><br>
+should be bound to the prototype or other object</p>
                 
             </td>
         </tr>
@@ -1989,7 +2028,8 @@
             
 
             <td class="description last">
-                <p>the object to which to bind the <code>getter</code> or<br><code>initializer</code> functions to if other than the class prototype.</p>
+                <p>the object to which to bind the <code>getter</code> or<br>
+<code>initializer</code> functions to if other than the class prototype.</p>
                 
             </td>
         </tr>
@@ -2030,7 +2070,8 @@
 
 
 <div class="param-desc">
-    <p>a <code>Function</code> or other mixed value making up the property<br>name requested</p>
+    <p>a <code>Function</code> or other mixed value making up the property<br>
+name requested</p>
 </div>
 
     
@@ -2052,9 +2093,20 @@
 
 
 <div class="description">
-    <p>Resolvers are created in a number of different ways. OOP design<br>dictates that instances of a created class will handle field<br>resolvers, but query, mutation and subscription resolvers are<br>typically what creates these instances.</p>
-<p>Since a resolver can be created using <code>@mutator/@subscriptor/@resolver</code><br>or via method on a object returned from <code>RESOLVERS()</code>, <code>MUTATORS()</code> or<br><code>SUBSCRIPTIONS()</code>, there should be an easy to use way to fetch a<br>resolver by name; if for nothing else, code reuse.</p>
-<p>Pass the name of the resolver to the function and optionally pass a<br>requestData object. The <code>getMergedRoot()</code> method will build an object<br>containing all the root resolvers for the type, bound to the supplied<br><code>requestData</code> object. It is from this object that <code>resolverName</code> will<br>be used to fetch the function in question. If one exists, it will be<br>returned, ready for use. Otherwise, null will be your answer.</p>
+    <p>Resolvers are created in a number of different ways. OOP design<br>
+dictates that instances of a created class will handle field<br>
+resolvers, but query, mutation and subscription resolvers are<br>
+typically what creates these instances.</p>
+<p>Since a resolver can be created using <code>@mutator/@subscriptor/@resolver</code><br>
+or via method on a object returned from <code>RESOLVERS()</code>, <code>MUTATORS()</code> or<br>
+<code>SUBSCRIPTIONS()</code>, there should be an easy to use way to fetch a<br>
+resolver by name; if for nothing else, code reuse.</p>
+<p>Pass the name of the resolver to the function and optionally pass a<br>
+requestData object. The <code>getMergedRoot()</code> method will build an object<br>
+containing all the root resolvers for the type, bound to the supplied<br>
+<code>requestData</code> object. It is from this object that <code>resolverName</code> will<br>
+be used to fetch the function in question. If one exists, it will be<br>
+returned, ready for use. Otherwise, null will be your answer.</p>
 </div>
 
 
@@ -2177,7 +2229,8 @@
             
 
             <td class="description last">
-                <p>the requestData used to build the<br>resolver methods from which to choose</p>
+                <p>the requestData used to build the<br>
+resolver methods from which to choose</p>
                 
             </td>
         </tr>
@@ -2218,7 +2271,8 @@
 
 
 <div class="param-desc">
-    <p>returns either a <code>function</code> representing the<br>resolver requested or null if there wasn't one to be found</p>
+    <p>returns either a <code>function</code> representing the<br>
+resolver requested or null if there wasn't one to be found</p>
 </div>
 
     
@@ -2240,7 +2294,8 @@
 
 
 <div class="description">
-    <p>Creates an appropriate Symbol crafted with the right data for use by<br>the IDLFileHandler class below.</p>
+    <p>Creates an appropriate Symbol crafted with the right data for use by<br>
+the IDLFileHandler class below.</p>
 </div>
 
 
@@ -2402,7 +2457,9 @@
             
 
             <td class="description last">
-                <p>an extension, including the<br>prefixed period, that will be added to the supplied path should it not<br>already exist.</p>
+                <p>an extension, including the<br>
+prefixed period, that will be added to the supplied path should it not<br>
+already exist.</p>
                 
             </td>
         </tr>
@@ -2453,7 +2510,9 @@
 
 
 <div class="description">
-    <p>This method should return a promise that resolves to an object of<br>functions matching the names of the mutation operations. These are to be<br>injected into the root object when used by <code>GQLExpressMiddleware</code>.</p>
+    <p>This method should return a promise that resolves to an object of<br>
+functions matching the names of the mutation operations. These are to be<br>
+injected into the root object when used by <code>GQLExpressMiddleware</code>.</p>
 </div>
 
 
@@ -2550,7 +2609,8 @@
             
 
             <td class="description last">
-                <p>typically an object containing three<br>properties; {req, res, gql}</p>
+                <p>typically an object containing three<br>
+properties; {req, res, gql}</p>
                 
             </td>
         </tr>
@@ -2591,7 +2651,8 @@
 
 
 <div class="param-desc">
-    <p>a promise that resolves to an object; see above for more<br>information.</p>
+    <p>a promise that resolves to an object; see above for more<br>
+information.</p>
 </div>
 
     
@@ -2613,7 +2674,9 @@
 
 
 <div class="description">
-    <p>This method should return a promise that resolves to an object of<br>functions matching the names of the query operations. These are to be<br>injected into the root object when used by <code>GQLExpressMiddleware</code>.</p>
+    <p>This method should return a promise that resolves to an object of<br>
+functions matching the names of the query operations. These are to be<br>
+injected into the root object when used by <code>GQLExpressMiddleware</code>.</p>
 </div>
 
 
@@ -2710,7 +2773,8 @@
             
 
             <td class="description last">
-                <p>typically an object containing three<br>properties; {req, res, gql}</p>
+                <p>typically an object containing three<br>
+properties; {req, res, gql}</p>
                 
             </td>
         </tr>
@@ -2751,7 +2815,8 @@
 
 
 <div class="param-desc">
-    <p>a promise that resolves to an object; see above for more<br>information.</p>
+    <p>a promise that resolves to an object; see above for more<br>
+information.</p>
 </div>
 
     
@@ -2773,23 +2838,34 @@
 
 
 <div class="description">
-    <p>The internal data model has some custom <code>EventEmitter</code> code wrapped<br>it here. When the data model is set via <code>setModel</code> or by accessing it<br>via <code>instance[MODEL_KEY]</code>, an event <code>EVENT_MODEL_SET</code> is emitted. Any<br>listener listening for this event receives an object with two keys</p>
+    <p>The internal data model has some custom <code>EventEmitter</code> code wrapped<br>
+it here. When the data model is set via <code>setModel</code> or by accessing it<br>
+via <code>instance[MODEL_KEY]</code>, an event <code>EVENT_MODEL_SET</code> is emitted. Any<br>
+listener listening for this event receives an object with two keys</p>
 <pre class="prettyprint source"><code>{
   model: The actual model being set; changes are persisted
   instance: The GQLBase instance the model is associated with
-}</code></pre><p>Subsequently, the events <code>EVENT_MODEL_PROP_CHANGE</code> and<br><code>EVENT_MODEL_PROP_DELETE</code> can be listened to if your version of node<br>supports Proxy objects. They allow you to be notified whenever your<br>model has a property changed or deleted, respectively.</p>
+}
+</code></pre>
+<p>Subsequently, the events <code>EVENT_MODEL_PROP_CHANGE</code> and<br>
+<code>EVENT_MODEL_PROP_DELETE</code> can be listened to if your version of node<br>
+supports Proxy objects. They allow you to be notified whenever your<br>
+model has a property changed or deleted, respectively.</p>
 <p>The callback for <code>change</code> receives an object with four properties</p>
 <pre class="prettyprint source"><code>{
   model: The model object the value is being changed on
   old: The old value being replaced; undefined if it is the first time
   key: The property key for the value being changed
   value: The new value being set
-}</code></pre><p>The callback for <code>delete</code> receives an object with four properties</p>
+}
+</code></pre>
+<p>The callback for <code>delete</code> receives an object with four properties</p>
 <pre class="prettyprint source"><code>{
   model: The model object the value is deleted from
   key: The property key for the deleted value
   deleted: The deleted value
-}</code></pre>
+}
+</code></pre>
 </div>
 
 
@@ -2886,7 +2962,8 @@
             
 
             <td class="description last">
-                <p>typically <code>this</code> as passed in from a call in<br>the constructor</p>
+                <p>typically <code>this</code> as passed in from a call in<br>
+the constructor</p>
                 
             </td>
         </tr>
@@ -2924,7 +3001,9 @@
 
 
 <div class="description">
-    <p>A file handler for fetching the IDL schema string from the file system<br>for those <code>GQLBase</code> extended classes that have indicated to do so by<br>returning a <code>Symbol</code> for their <code>SCHEMA</code> property.</p>
+    <p>A file handler for fetching the IDL schema string from the file system<br>
+for those <code>GQLBase</code> extended classes that have indicated to do so by<br>
+returning a <code>Symbol</code> for their <code>SCHEMA</code> property.</p>
 </div>
 
 
@@ -3010,7 +3089,8 @@
 
 
 <div class="param-desc">
-    <p>instance of IDLFileHandler, created if one does<br>not already exist, for fetching the contents from disk.</p>
+    <p>instance of IDLFileHandler, created if one does<br>
+not already exist, for fetching the contents from disk.</p>
 </div>
 
     
@@ -3032,17 +3112,31 @@
 
 
 <div class="description">
-    <p>Defined in a base class, this getter should return either a String<br>detailing the full IDL schema of a GraphQL handler or one of two<br>types of Symbols.</p>
-<p>The first Symbol type is the constant <code>ADJACENT_FILE</code>. If this Symbol is<br>returned, the system assumes that next to the source file in question is<br>a file of the same name with a .graphql extension. This file should be<br>made of the GraphQL IDL schema definitions for the object types being<br>created.</p>
+    <p>Defined in a base class, this getter should return either a String<br>
+detailing the full IDL schema of a GraphQL handler or one of two<br>
+types of Symbols.</p>
+<p>The first Symbol type is the constant <code>ADJACENT_FILE</code>. If this Symbol is<br>
+returned, the system assumes that next to the source file in question is<br>
+a file of the same name with a .graphql extension. This file should be<br>
+made of the GraphQL IDL schema definitions for the object types being<br>
+created.</p>
 <p>Example:</p>
 <pre class="prettyprint source lang-js"><code>  static get SCHEMA(): string | Symbol {
     return GQLBase.ADJACENT_FILE
-  }</code></pre><p>The primary advantage of this approach is allowing an outside editor that<br>provides syntax highlighting rather than returning a string from the<br>SCHEMA getter.</p>
-<p>Alternatively, the static method IDLFilePath can be used to point to an<br>alternate location where the GraphQL IDL file resides. The extension can<br>also be changed from .graphql to something else if need be using this<br>method.</p>
+  }
+</code></pre>
+<p>The primary advantage of this approach is allowing an outside editor that<br>
+provides syntax highlighting rather than returning a string from the<br>
+SCHEMA getter.</p>
+<p>Alternatively, the static method IDLFilePath can be used to point to an<br>
+alternate location where the GraphQL IDL file resides. The extension can<br>
+also be changed from .graphql to something else if need be using this<br>
+method.</p>
 <p>Example:</p>
 <pre class="prettyprint source lang-js"><code>  static get SCHEMA(): string | Symbol {
     return GQLBase.IDLFilePath('/path/to/file', '.idl')
-  }</code></pre>
+  }
+</code></pre>
 </div>
 
 
@@ -3140,7 +3234,8 @@
 
 
 <div class="param-desc">
-    <p>a valid IDL string or one of the Symbols<br>described above.</p>
+    <p>a valid IDL string or one of the Symbols<br>
+described above.</p>
 </div>
 
     
@@ -3162,7 +3257,9 @@
 
 
 <div class="description">
-    <p>Since reading the Schema for a given GraphQL Lattice type or<br>interface is simple enough, we should be able to automatically<br>apply one to one GraphQL:Model properties.</p>
+    <p>Since reading the Schema for a given GraphQL Lattice type or<br>
+interface is simple enough, we should be able to automatically<br>
+apply one to one GraphQL:Model properties.</p>
 </div>
 
 
@@ -3245,8 +3342,14 @@
 
 
 <div class="description">
-    <p>Properties defined for GraphQL types in Lattice can be defined as<br>a getter, a function or an async function. In the case of standard<br>functions, if they return a promise they will be handled as though<br>they were async. In addition to fetching the property, or field<br>resolver, its resulting function or getter will be invoked.</p>
-<p>Given the variety of things a GraphQL type can actually be, obtaining<br>its value can annoying. This method tends to lessen that boilerplate.<br>Errors raised will be thrown.</p>
+    <p>Properties defined for GraphQL types in Lattice can be defined as<br>
+a getter, a function or an async function. In the case of standard<br>
+functions, if they return a promise they will be handled as though<br>
+they were async. In addition to fetching the property, or field<br>
+resolver, its resulting function or getter will be invoked.</p>
+<p>Given the variety of things a GraphQL type can actually be, obtaining<br>
+its value can annoying. This method tends to lessen that boilerplate.<br>
+Errors raised will be thrown.</p>
 </div>
 
 
@@ -3369,7 +3472,8 @@
             
 
             <td class="description last">
-                <p>the arguments array that will be passed<br>to <code>.apply()</code> should the property evaluate to a <code>function</code></p>
+                <p>the arguments array that will be passed<br>
+to <code>.apply()</code> should the property evaluate to a <code>function</code></p>
                 
             </td>
         </tr>
@@ -3442,7 +3546,9 @@
 
 
 <div class="param-desc">
-    <p>the return value of any resulting function or<br>value returned by a getter; wrapped in a promise as all async<br>functions do.</p>
+    <p>the return value of any resulting function or<br>
+value returned by a getter; wrapped in a promise as all async<br>
+functions do.</p>
 </div>
 
     
@@ -3464,7 +3570,9 @@
 
 
 <div class="description">
-    <p>Uses <code>_.merge()</code> to modify the internal backing data store for the<br>object instance. This is a shortcut for<br><code>_.merge()(instance[MODEL_KEY], ...extensions)</code></p>
+    <p>Uses <code>_.merge()</code> to modify the internal backing data store for the<br>
+object instance. This is a shortcut for<br>
+<code>_.merge()(instance[MODEL_KEY], ...extensions)</code></p>
 </div>
 
 
@@ -3627,7 +3735,9 @@
 
 
 <div class="description">
-    <p>Getter for the internally stored model data. The contents of this<br>object are abstracted away behind a <code>Symbol</code> key to prevent collision<br>between the underlying model and any GraphQL Object Definition properties.</p>
+    <p>Getter for the internally stored model data. The contents of this<br>
+object are abstracted away behind a <code>Symbol</code> key to prevent collision<br>
+between the underlying model and any GraphQL Object Definition properties.</p>
 </div>
 
 
@@ -3765,8 +3875,13 @@
 
 
 <div class="description">
-    <p>Properties defined for GraphQL types in Lattice can be defined as<br>a getter, a function or an async function. In the case of standard<br>functions, if they return a promise they will be handled as though<br>they were async</p>
-<p>Given the variety of things a GraphQL type can actually be, obtaining<br>its value can annoying. This method tends to lessen that boilerplate.<br>Errors raised will be thrown.</p>
+    <p>Properties defined for GraphQL types in Lattice can be defined as<br>
+a getter, a function or an async function. In the case of standard<br>
+functions, if they return a promise they will be handled as though<br>
+they were async</p>
+<p>Given the variety of things a GraphQL type can actually be, obtaining<br>
+its value can annoying. This method tends to lessen that boilerplate.<br>
+Errors raised will be thrown.</p>
 </div>
 
 
@@ -3892,7 +4007,9 @@
             
 
             <td class="description last">
-                <p>true, by default, if the <code>get</code> or<br><code>initializer</code> descriptor values should be bound to the current instance<br>or an object of the programmers choice before returning</p>
+                <p>true, by default, if the <code>get</code> or<br>
+<code>initializer</code> descriptor values should be bound to the current instance<br>
+or an object of the programmers choice before returning</p>
                 
             </td>
         </tr>
@@ -3918,7 +4035,8 @@
             
 
             <td class="description last">
-                <p>the <code>this</code> object to use for binding when<br><code>bindGetters</code> is set to true.</p>
+                <p>the <code>this</code> object to use for binding when<br>
+<code>bindGetters</code> is set to true.</p>
                 
             </td>
         </tr>
@@ -3991,7 +4109,8 @@
 
 
 <div class="param-desc">
-    <p>the value of the <code>propName</code> as a Function or something<br>else when the requested property name exists</p>
+    <p>the value of the <code>propName</code> as a Function or something<br>
+else when the requested property name exists</p>
 </div>
 
     
@@ -4013,7 +4132,10 @@
 
 
 <div class="description">
-    <p>A pass-thru method to the static function of the same name. The<br>difference being that if <code>requestData</code> is not specified, the<br><code>requestData</code> object from this instance will be used to build the<br>resolvers in question.</p>
+    <p>A pass-thru method to the static function of the same name. The<br>
+difference being that if <code>requestData</code> is not specified, the<br>
+<code>requestData</code> object from this instance will be used to build the<br>
+resolvers in question.</p>
 </div>
 
 
@@ -4136,7 +4258,8 @@
             
 
             <td class="description last">
-                <p>the requestData used to build the<br>resolver methods from which to choose</p>
+                <p>the requestData used to build the<br>
+resolver methods from which to choose</p>
                 
             </td>
         </tr>
@@ -4177,7 +4300,8 @@
 
 
 <div class="param-desc">
-    <p>returns either a <code>function</code> representing the<br>resolver requested or null if there wasn't one to be found</p>
+    <p>returns either a <code>function</code> representing the<br>
+resolver requested or null if there wasn't one to be found</p>
 </div>
 
     
@@ -4199,7 +4323,9 @@
 
 
 <div class="description">
-    <p>Setter for the internally stored model data. The contents of this<br>object are abstracted away behind a <code>Symbol</code> key to prevent collision<br>between the underlying model and any GraphQL Object Definition properties.</p>
+    <p>Setter for the internally stored model data. The contents of this<br>
+object are abstracted away behind a <code>Symbol</code> key to prevent collision<br>
+between the underlying model and any GraphQL Object Definition properties.</p>
 </div>
 
 
@@ -4337,7 +4463,8 @@
 
 
 <div class="description">
-    <p>A setter that assigns a value to the inner request data object. When<br>used with GQLExpressMiddleware, this is an object matching {req, res, gql}.</p>
+    <p>A setter that assigns a value to the inner request data object. When<br>
+used with GQLExpressMiddleware, this is an object matching {req, res, gql}.</p>
 </div>
 
 
@@ -4472,7 +4599,8 @@
 
 
 <div class="description">
-    <p>A getter that retrieves the inner request data object. When used with<br>GQLExpressMiddleware, this is an object matching {req, res, gql}.</p>
+    <p>A getter that retrieves the inner request data object. When used with<br>
+GQLExpressMiddleware, this is an object matching {req, res, gql}.</p>
 </div>
 
 
@@ -4580,7 +4708,8 @@
 
 
 <div class="description">
-    <p>Proxy deleteProperty() handler. This is where the delete property<br>events are fired from</p>
+    <p>Proxy deleteProperty() handler. This is where the delete property<br>
+events are fired from</p>
 </div>
 
 
@@ -4933,7 +5062,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

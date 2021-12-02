@@ -63,7 +63,8 @@
 
 
 <div class="description">
-    <p>A parser and processor of GraphQL IDL Abstract Syntax Trees. Used to combine<br>a set of <a href="GQLBase.html"><code>GQLBase</code></a> class instances.</p>
+    <p>A parser and processor of GraphQL IDL Abstract Syntax Trees. Used to combine<br>
+a set of <a href="GQLBase.html"><code>GQLBase</code></a> class instances.</p>
 </div>
 
 
@@ -380,7 +381,8 @@
 
 
 <div class="description">
-    <p>Getter that builds a small outline object denoting the schema being<br>processed. If you have a schema that looks like the following:</p>
+    <p>Getter that builds a small outline object denoting the schema being<br>
+processed. If you have a schema that looks like the following:</p>
 <pre class="prettyprint source lang-javascript"><code>let st = SyntaxTree.from(`
   type Contrived {
     name: String
@@ -391,11 +393,17 @@
     getContrived: Contrived
   }
 `)
-let outline = st.outline</code></pre><p>You will end up with an object that looks like the following:</p>
+let outline = st.outline
+</code></pre>
+<p>You will end up with an object that looks like the following:</p>
 <pre class="prettyprint source lang-javascript"><code>{
   Contrived: { name: 'String', age: 'Int' },
   Query: { getContrived: 'Contrived' }
-}</code></pre><p>As may be evidenced by the example above, the name of the type is<br>represented by an object where the name of each field (sans arguments)<br>is mapped to a string denoting the type.</p>
+}
+</code></pre>
+<p>As may be evidenced by the example above, the name of the type is<br>
+represented by an object where the name of each field (sans arguments)<br>
+is mapped to a string denoting the type.</p>
 </div>
 
 
@@ -572,7 +580,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>any valid type taken by<br>SyntaxTree.from() used to further populate the new empty document</p>
+                <p>any valid type taken by<br>
+SyntaxTree.from() used to further populate the new empty document</p>
                 
             </td>
         </tr>
@@ -613,7 +622,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>an instance of SyntaxTree with no definitions and a<br>kind set to 'Document'</p>
+    <p>an instance of SyntaxTree with no definitions and a<br>
+kind set to 'Document'</p>
 </div>
 
     
@@ -635,7 +645,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Mutation types in GraphQL are an ObjectTypeDefinition of importance for<br>placement on the root object. There is utility in creating an empty<br>one that can be injected with the fields of other GraphQL object mutation<br>entries.</p>
+    <p>Mutation types in GraphQL are an ObjectTypeDefinition of importance for<br>
+placement on the root object. There is utility in creating an empty<br>
+one that can be injected with the fields of other GraphQL object mutation<br>
+entries.</p>
 </div>
 
 
@@ -721,7 +734,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>an instance of SyntaxTree with a base AST generated<br>by parsing the graph query, &quot;type Mutation {}&quot;</p>
+    <p>an instance of SyntaxTree with a base AST generated<br>
+by parsing the graph query, &quot;type Mutation {}&quot;</p>
 </div>
 
     
@@ -743,7 +757,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Query types in GraphQL are an ObjectTypeDefinition of importance for<br>placement on the root object. There is utility in creating an empty<br>one that can be injected with the fields of other GraphQL object query<br>entries.</p>
+    <p>Query types in GraphQL are an ObjectTypeDefinition of importance for<br>
+placement on the root object. There is utility in creating an empty<br>
+one that can be injected with the fields of other GraphQL object query<br>
+entries.</p>
 </div>
 
 
@@ -829,7 +846,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>an instance of SyntaxTree with a base AST generated<br>by parsing the graph query, &quot;type Query {}&quot;</p>
+    <p>an instance of SyntaxTree with a base AST generated<br>
+by parsing the graph query, &quot;type Query {}&quot;</p>
 </div>
 
     
@@ -851,7 +869,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Iterate through the definitions of the AST if there are any. For each<br>definition the name property's value field is compared to the supplied<br>definitionName. The definitionName can be a string or a regular<br>expression if finer granularity is desired.</p>
+    <p>Iterate through the definitions of the AST if there are any. For each<br>
+definition the name property's value field is compared to the supplied<br>
+definitionName. The definitionName can be a string or a regular<br>
+expression if finer granularity is desired.</p>
 </div>
 
 
@@ -977,7 +998,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression used<br>to match against the definition name field in a given AST.</p>
+                <p>a string or regular expression used<br>
+to match against the definition name field in a given AST.</p>
                 
             </td>
         </tr>
@@ -1021,7 +1043,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>a reference to the internal definition field or<br>null if one with a matching name could not be found.</p>
+    <p>a reference to the internal definition field or<br>
+null if one with a matching name could not be found.</p>
 </div>
 
     
@@ -1043,8 +1066,13 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Iterate through the fields of a definition AST if there are any. For each<br>field, the name property's value field is compared to the supplied<br>fieldName. The fieldName can be a string or a regular expression if<br>finer granularity is desired.</p>
-<p>Before iterating over the fields, however, the definition is found using<br><code>SyntaxTree#findDefinition</code>. If either the field or definition are not<br>found, null is returned.</p>
+    <p>Iterate through the fields of a definition AST if there are any. For each<br>
+field, the name property's value field is compared to the supplied<br>
+fieldName. The fieldName can be a string or a regular expression if<br>
+finer granularity is desired.</p>
+<p>Before iterating over the fields, however, the definition is found using<br>
+<code>SyntaxTree#findDefinition</code>. If either the field or definition are not<br>
+found, null is returned.</p>
 </div>
 
 
@@ -1173,7 +1201,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression used<br>to match against the definition name field in a given AST.</p>
+                <p>a string or regular expression used<br>
+to match against the definition name field in a given AST.</p>
                 
             </td>
         </tr>
@@ -1202,7 +1231,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression used<br>to match against the field name field in a given AST.</p>
+                <p>a string or regular expression used<br>
+to match against the field name field in a given AST.</p>
                 
             </td>
         </tr>
@@ -1246,7 +1276,12 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>an object containing two keys, the first being<br><code>field</code> which points to the requested AST definition field. The second<br>being <code>meta</code> which contains three commonly requested bits of data; <code>name</code>,<br><code>type</code> and <code>nullable</code>. Non-nullable fields have their actual type wrapped<br>in a <code>NonNullType</code> GraphQL construct. The actual field type is contained<br>within. The meta object surfaces those values for easy use.</p>
+    <p>an object containing two keys, the first being<br>
+<code>field</code> which points to the requested AST definition field. The second<br>
+being <code>meta</code> which contains three commonly requested bits of data; <code>name</code>,<br>
+<code>type</code> and <code>nullable</code>. Non-nullable fields have their actual type wrapped<br>
+in a <code>NonNullType</code> GraphQL construct. The actual field type is contained<br>
+within. The meta object surfaces those values for easy use.</p>
 </div>
 
     
@@ -1268,7 +1303,11 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>A lot of searching in ASTs is filtering through arrays and matching on<br>subobject properties on each iteration. A common theme is find something<br>by its <code>.name.value</code>. This method simplifies that by taking an array of<br>AST nodes and searching them for a <code>.name.value</code> property that exists<br>within.</p>
+    <p>A lot of searching in ASTs is filtering through arrays and matching on<br>
+subobject properties on each iteration. A common theme is find something<br>
+by its <code>.name.value</code>. This method simplifies that by taking an array of<br>
+AST nodes and searching them for a <code>.name.value</code> property that exists<br>
+within.</p>
 </div>
 
 
@@ -1397,7 +1436,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression used<br>to match against the node name value</p>
+                <p>a string or regular expression used<br>
+to match against the node name value</p>
                 
             </td>
         </tr>
@@ -1463,7 +1503,9 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Given one of, a valid GraphQL IDL schema string, a valid GraphQL AST or<br>an instance of SyntaxTree, the static from() method will create a new<br>instance of the SyntaxTree with the values you provide.</p>
+    <p>Given one of, a valid GraphQL IDL schema string, a valid GraphQL AST or<br>
+an instance of SyntaxTree, the static from() method will create a new<br>
+instance of the SyntaxTree with the values you provide.</p>
 </div>
 
 
@@ -1566,7 +1608,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>an instance of one of the valid<br>types specified above. Everything else will result in a null value.</p>
+                <p>an instance of one of the valid<br>
+types specified above. Everything else will result in a null value.</p>
                 
             </td>
         </tr>
@@ -1607,7 +1650,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>a newly created and populated instance of SyntaxTree<br>or null if an invalid type was supplied for mixed.</p>
+    <p>a newly created and populated instance of SyntaxTree<br>
+or null if an invalid type was supplied for mixed.</p>
 </div>
 
     
@@ -1629,7 +1673,9 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL<br>schema. This method does not perform try/catch validation and if an<br>invalid GraphQL schema is supplied an error will be thrown.</p>
+    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL<br>
+schema. This method does not perform try/catch validation and if an<br>
+invalid GraphQL schema is supplied an error will be thrown.</p>
 </div>
 
 
@@ -1767,7 +1813,9 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>a new instance of SyntaxTree initialized with a<br>supplied abstract syntax tree generated by require('graphql').parse() or<br>other compatible method.</p>
+    <p>a new instance of SyntaxTree initialized with a<br>
+supplied abstract syntax tree generated by require('graphql').parse() or<br>
+other compatible method.</p>
 </div>
 
     
@@ -1789,7 +1837,9 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL<br>schema. This method does not perform try/catch validation and if an<br>invalid GraphQL schema is supplied an error will be thrown.</p>
+    <p>Generates a new instance of SyntaxTree from the supplied, valid, GraphQL<br>
+schema. This method does not perform try/catch validation and if an<br>
+invalid GraphQL schema is supplied an error will be thrown.</p>
 </div>
 
 
@@ -1927,7 +1977,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>a new instance of SyntaxTree initialized with a<br>parsed response from require('graphql').parse().</p>
+    <p>a new instance of SyntaxTree initialized with a<br>
+parsed response from require('graphql').parse().</p>
 </div>
 
     
@@ -1949,7 +2000,9 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Constructs a new <code>SyntaxTree</code> object. If a string schema is supplied or<br>an already parsed AST object, either of which is valid GraphQL IDL, then<br>its parsed AST will be the internals of this object.</p>
+    <p>Constructs a new <code>SyntaxTree</code> object. If a string schema is supplied or<br>
+an already parsed AST object, either of which is valid GraphQL IDL, then<br>
+its parsed AST will be the internals of this object.</p>
 </div>
 
 
@@ -2052,7 +2105,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>if supplied the tree<br>will be constructed with the contents of the data. If a string of IDL is<br>given, it will be parsed. If an AST is given, it will be verified. If a<br>SyntaxTree is supplied, it will be copied.</p>
+                <p>if supplied the tree<br>
+will be constructed with the contents of the data. If a string of IDL is<br>
+given, it will be parsed. If an AST is given, it will be verified. If a<br>
+SyntaxTree is supplied, it will be copied.</p>
                 
             </td>
         </tr>
@@ -2090,8 +2146,14 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Appends all definitions from another AST to this one. The method will<br>actually create a copy using SyntaxTree.from() so the input types can<br>be any one of a valid GraphQL IDL schema string, a GraphQL IDL AST or<br>another SyntaxTree object instance.</p>
-<p>Definitions of the same name but different kinds will be replaced by the<br>new copy. Those of the same kind and name will be merged (TODO handle more<br>than ObjectTypeDefinition kinds when merging; currently other types are<br>overwritten).</p>
+    <p>Appends all definitions from another AST to this one. The method will<br>
+actually create a copy using SyntaxTree.from() so the input types can<br>
+be any one of a valid GraphQL IDL schema string, a GraphQL IDL AST or<br>
+another SyntaxTree object instance.</p>
+<p>Definitions of the same name but different kinds will be replaced by the<br>
+new copy. Those of the same kind and name will be merged (TODO handle more<br>
+than ObjectTypeDefinition kinds when merging; currently other types are<br>
+overwritten).</p>
 </div>
 
 
@@ -2194,7 +2256,9 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>an instance of one of<br>the valid types for SyntaxTree.from() that can be used to create or<br>duplicate the source from which to copy definitions.</p>
+                <p>an instance of one of<br>
+the valid types for SyntaxTree.from() that can be used to create or<br>
+duplicate the source from which to copy definitions.</p>
                 
             </td>
         </tr>
@@ -2257,8 +2321,13 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>This method finds the Query type definitions in the supplied AST or<br>SyntaxTree objects, takes its defined fields and adds it to the current<br>instances. If this instance does not have a Query type defined but the<br>supplied object does, then the supplied one is moved over. If neither<br>has a query handler, then nothing happens.</p>
-<p>NOTE this <em>removes</em> the Query type definition from the supplied AST or<br>SyntaxTree object.</p>
+    <p>This method finds the Query type definitions in the supplied AST or<br>
+SyntaxTree objects, takes its defined fields and adds it to the current<br>
+instances. If this instance does not have a Query type defined but the<br>
+supplied object does, then the supplied one is moved over. If neither<br>
+has a query handler, then nothing happens.</p>
+<p>NOTE this <em>removes</em> the Query type definition from the supplied AST or<br>
+SyntaxTree object.</p>
 </div>
 
 
@@ -2358,7 +2427,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a valid GraphQL IDL AST or<br>an instance of SyntaxTree that represents one.</p>
+                <p>a valid GraphQL IDL AST or<br>
+an instance of SyntaxTree that represents one.</p>
                 
             </td>
         </tr>
@@ -2387,7 +2457,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a valid search input as would be<br>accepted for the #find() method of this object.</p>
+                <p>a valid search input as would be<br>
+accepted for the #find() method of this object.</p>
                 
             </td>
         </tr>
@@ -2450,7 +2521,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Iterate through the definitions of the AST if there are any. For each<br>definition the name property's value field is compared to the supplied<br>definitionName. The definitionName can be a string or a regular<br>expression if finer granularity is desired.</p>
+    <p>Iterate through the definitions of the AST if there are any. For each<br>
+definition the name property's value field is compared to the supplied<br>
+definitionName. The definitionName can be a string or a regular<br>
+expression if finer granularity is desired.</p>
 </div>
 
 
@@ -2550,7 +2624,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression used<br>to match against the definition name field in a given AST.</p>
+                <p>a string or regular expression used<br>
+to match against the definition name field in a given AST.</p>
                 
             </td>
         </tr>
@@ -2594,7 +2669,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="param-desc">
-    <p>a reference to the internal definition field or<br>null if one with a matching name could not be found.</p>
+    <p>a reference to the internal definition field or<br>
+null if one with a matching name could not be found.</p>
 </div>
 
     
@@ -2616,7 +2692,11 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Enum AST definitions operate differently than object type definitions<br>do. Namely, they do not have a <code>fields</code> array but instead have a <code>values</code><br>array. This wrapper method, first finds the enum definition in the ast<br>and then searches the values for the named node desired and returns that<br>or null, if one could not be found.</p>
+    <p>Enum AST definitions operate differently than object type definitions<br>
+do. Namely, they do not have a <code>fields</code> array but instead have a <code>values</code><br>
+array. This wrapper method, first finds the enum definition in the ast<br>
+and then searches the values for the named node desired and returns that<br>
+or null, if one could not be found.</p>
 </div>
 
 
@@ -2745,7 +2825,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression<br>used to locate the enum definition in the AST.</p>
+                <p>a string or regular expression<br>
+used to locate the enum definition in the AST.</p>
                 
             </td>
         </tr>
@@ -2774,7 +2855,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a string or regular expression used<br>to locate the value by name in the values of the enum definition.</p>
+                <p>a string or regular expression used<br>
+to locate the value by name in the values of the enum definition.</p>
                 
             </td>
         </tr>
@@ -2840,7 +2922,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Sets the underlying AST object with either schema which will be parsed<br>into a valid AST or an existing AST. Previous ast values will be erased.</p>
+    <p>Sets the underlying AST object with either schema which will be parsed<br>
+into a valid AST or an existing AST. Previous ast values will be erased.</p>
 </div>
 
 
@@ -2940,7 +3023,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a valid GraphQL IDL schema or a<br>previosuly parsed or compatible GraphQL IDL AST object.</p>
+                <p>a valid GraphQL IDL schema or a<br>
+previosuly parsed or compatible GraphQL IDL AST object.</p>
                 
             </td>
         </tr>
@@ -3003,7 +3087,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>SyntaxTree instances that are toString()'ed will have the graphql method<br>print() called on them to convert their internal structures back to a<br>GraphQL IDL schema syntax. If the object is in an invalid state, it WILL<br>throw an error.</p>
+    <p>SyntaxTree instances that are toString()'ed will have the graphql method<br>
+print() called on them to convert their internal structures back to a<br>
+GraphQL IDL schema syntax. If the object is in an invalid state, it WILL<br>
+throw an error.</p>
 </div>
 
 
@@ -3111,7 +3198,10 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>As passthru update method that works on the internal AST object. If<br>an error occurs, the update is skipped. An error can occur if adding the<br>changes would make the AST invalid. In such a case, the error is logged<br>to the error console.</p>
+    <p>As passthru update method that works on the internal AST object. If<br>
+an error occurs, the update is skipped. An error can occur if adding the<br>
+changes would make the AST invalid. In such a case, the error is logged<br>
+to the error console.</p>
 </div>
 
 
@@ -3208,7 +3298,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>an existing GraphQL IDL AST object that will be<br>merged on top of the existing tree using _.merge()</p>
+                <p>an existing GraphQL IDL AST object that will be<br>
+merged on top of the existing tree using _.merge()</p>
                 
             </td>
         </tr>
@@ -3271,7 +3362,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Setter that assigns the abstract syntax tree, typically created by<br><code>graphql.parse</code> when given a valid string of IDL.</p>
+    <p>Setter that assigns the abstract syntax tree, typically created by<br>
+<code>graphql.parse</code> when given a valid string of IDL.</p>
 </div>
 
 
@@ -3368,7 +3460,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
             
 
             <td class="description last">
-                <p>a valid AST object. Other operations will act<br>in an undefined manner should this object not be a valid AST</p>
+                <p>a valid AST object. Other operations will act<br>
+in an undefined manner should this object not be a valid AST</p>
                 
             </td>
         </tr>
@@ -3406,7 +3499,8 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 
 
 <div class="description">
-    <p>Getter that retrieves the abstract syntax tree created by <code>graphql.parse</code><br>when it is presented with a valid string of IDL.</p>
+    <p>Getter that retrieves the abstract syntax tree created by <code>graphql.parse</code><br>
+when it is presented with a valid string of IDL.</p>
 </div>
 
 
@@ -3519,7 +3613,7 @@ let outline = st.outline</code></pre><p>You will end up with an object that look
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

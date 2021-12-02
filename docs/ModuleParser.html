@@ -63,7 +63,9 @@
 
 
 <div class="description">
-    <p>The ModuleParser is a utility class designed to loop through and iterate<br>on a directory and pull out of each .js file found, any classes or exports<br>that extend from GQLBase or a child of GQLBase.</p>
+    <p>The ModuleParser is a utility class designed to loop through and iterate<br>
+on a directory and pull out of each .js file found, any classes or exports<br>
+that extend from GQLBase or a child of GQLBase.</p>
 </div>
 
 
@@ -167,8 +169,13 @@
 
 
 <div class="description">
-    <p>The ModuleParser should only parse files that match the default or<br>supplied file extensions. The default list contains .js, .jsx, .ts<br>and .tsx; so JavaScript or TypeScript files and their JSX React<br>counterparts</p>
-<p>Since the list is customizable for a usage, however, it makes sense<br>to have a function that will match what is supplied rather than<br>creating a constant expression to use instead.</p>
+    <p>The ModuleParser should only parse files that match the default or<br>
+supplied file extensions. The default list contains .js, .jsx, .ts<br>
+and .tsx; so JavaScript or TypeScript files and their JSX React<br>
+counterparts</p>
+<p>Since the list is customizable for a usage, however, it makes sense<br>
+to have a function that will match what is supplied rather than<br>
+creating a constant expression to use instead.</p>
 </div>
 
 
@@ -268,7 +275,8 @@
             
 
             <td class="description last">
-                <p>an array of extensions to<br>convert to a regular expression that would pass for each</p>
+                <p>an array of extensions to<br>
+convert to a regular expression that would pass for each</p>
                 
             </td>
         </tr>
@@ -294,7 +302,8 @@
             
 
             <td class="description last">
-                <p>the value passed to a new RegExp denoting the<br>flags used in the pattern; defaults to 'i' for case insensitivity</p>
+                <p>the value passed to a new RegExp denoting the<br>
+flags used in the pattern; defaults to 'i' for case insensitivity</p>
                 
             </td>
         </tr>
@@ -335,7 +344,9 @@
 
 
 <div class="param-desc">
-    <p>a regular expression object matching the contents<br>of the array of extensions or the default extensions and that will<br>also match those values in a case insensitive manner</p>
+    <p>a regular expression object matching the contents<br>
+of the array of extensions or the default extensions and that will<br>
+also match those values in a case insensitive manner</p>
 </div>
 
     
@@ -357,9 +368,9 @@
 
 
 <div class="description">
-    <p>Using the module <code>read-pkg-up</code>, finds the nearest package.json file<br>and checks to see if it has a <code>.lattice.moduleParser.extensions'
-preference. If so, if the value is an array, that value is used,
-otherwise the value is wrapped in an array. If the optional parameter</code>toString<code>is</code>true<code>then</code>.toString()` will be invoked on any non<br>Array values found; this behavior is the default</p>
+    <p>Using the module <code>read-pkg-up</code>, finds the nearest package.json file<br>
+and checks to see if it has a <code>.lattice.moduleParser.extensions' preference. If so, if the value is an array, that value is used, otherwise the value is wrapped in an array. If the optional parameter </code>toString<code>is</code>true<code>then</code>.toString()` will be invoked on any non<br>
+Array values found; this behavior is the default</p>
 </div>
 
 
@@ -459,7 +470,9 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
             
 
             <td class="description last">
-                <p>true if any non-array values should have<br>their <code>.toString()</code> method invoked before being wrapped in an Array;<br>defaults to true</p>
+                <p>true if any non-array values should have<br>
+their <code>.toString()</code> method invoked before being wrapped in an Array;<br>
+defaults to true</p>
                 
             </td>
         </tr>
@@ -500,7 +513,10 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>null if no value is set for the property<br><code>lattice.ModuleParser.extensions</code> in <code>package.json</code> or the value<br>of the setting if it is an array. Finally if the value is set but is<br>not an array, the specified value wrapped in an array is returned</p>
+    <p>null if no value is set for the property<br>
+<code>lattice.ModuleParser.extensions</code> in <code>package.json</code> or the value<br>
+of the setting if it is an array. Finally if the value is set but is<br>
+not an array, the specified value wrapped in an array is returned</p>
 </div>
 
     
@@ -522,7 +538,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>Prints the list of skipped files, their stack traces, and the errors<br>denoting the reasons the files were skipped.</p>
+    <p>Prints the list of skipped files, their stack traces, and the errors<br>
+denoting the reasons the files were skipped.</p>
 </div>
 
 
@@ -605,7 +622,10 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>Given an object, typically the result of a <code>require()</code> or <code>import</code><br>command, iterate over its contents and find any <code>GQLBase</code> derived<br>exports. Continually, and recursively, build this list of classes out<br>so that we can add them to a <code>GQLExpressMiddleware</code>.</p>
+    <p>Given an object, typically the result of a <code>require()</code> or <code>import</code><br>
+command, iterate over its contents and find any <code>GQLBase</code> derived<br>
+exports. Continually, and recursively, build this list of classes out<br>
+so that we can add them to a <code>GQLExpressMiddleware</code>.</p>
 </div>
 
 
@@ -705,7 +725,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
             
 
             <td class="description last">
-                <p>the object to parse for properties extending<br>from <code>GQLBase</code></p>
+                <p>the object to parse for properties extending<br>
+from <code>GQLBase</code></p>
                 
             </td>
         </tr>
@@ -731,7 +752,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
             
 
             <td class="description last">
-                <p>the results, allowed as a second<br>parameter during recursion as a means to save state between calls</p>
+                <p>the results, allowed as a second<br>
+parameter during recursion as a means to save state between calls</p>
                 
             </td>
         </tr>
@@ -772,7 +794,9 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>a unique set of values that are currently being<br>iterated over. Passed in as a third parameter to save state between calls<br>during recursion.</p>
+    <p>a unique set of values that are currently being<br>
+iterated over. Passed in as a third parameter to save state between calls<br>
+during recursion.</p>
 </div>
 
     
@@ -794,7 +818,9 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>Given a file path, this method will attempt to import/require the<br>file in question and return the object it exported; whatever that<br>may be.</p>
+    <p>Given a file path, this method will attempt to import/require the<br>
+file in question and return the object it exported; whatever that<br>
+may be.</p>
 </div>
 
 
@@ -935,7 +961,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>the object, or undefined, that was returned when<br>it was <code>require()</code>'ed.</p>
+    <p>the object, or undefined, that was returned when<br>
+it was <code>require()</code>'ed.</p>
 </div>
 
     
@@ -957,7 +984,10 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>This method takes a instance of ModuleParser, initialized with a directory,<br>and walks its contents, importing files as they are found, and sorting<br>any exports that extend from GQLBase into an array of such classes<br>in a resolved promise.</p>
+    <p>This method takes a instance of ModuleParser, initialized with a directory,<br>
+and walks its contents, importing files as they are found, and sorting<br>
+any exports that extend from GQLBase into an array of such classes<br>
+in a resolved promise.</p>
 </div>
 
 
@@ -1046,7 +1076,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>an array GQLBase classes, or an empty<br>array if none could be identified.</p>
+    <p>an array GQLBase classes, or an empty<br>
+array if none could be identified.</p>
 </div>
 
     
@@ -1068,7 +1099,9 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>This method takes a instance of ModuleParser, initialized with a directory,<br>and walks its contents, importing files as they are found, and sorting<br>any exports that extend from GQLBase into an array of such classes</p>
+    <p>This method takes a instance of ModuleParser, initialized with a directory,<br>
+and walks its contents, importing files as they are found, and sorting<br>
+any exports that extend from GQLBase into an array of such classes</p>
 </div>
 
 
@@ -1157,7 +1190,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>an array GQLBase classes, or an empty<br>array if none could be identified.</p>
+    <p>an array GQLBase classes, or an empty<br>
+array if none could be identified.</p>
 </div>
 
     
@@ -1179,7 +1213,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>Recursively walks a directory and returns an array of asbolute file paths<br>to the files under the specified directory.</p>
+    <p>Recursively walks a directory and returns an array of asbolute file paths<br>
+to the files under the specified directory.</p>
 </div>
 
 
@@ -1305,7 +1340,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
             
 
             <td class="description last">
-                <p>an array of existing absolute file paths,<br>or if not parameter is supplied a default empty array will be used.</p>
+                <p>an array of existing absolute file paths,<br>
+or if not parameter is supplied a default empty array will be used.</p>
                 
             </td>
         </tr>
@@ -1346,7 +1382,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>an array of existing absolute file paths<br>found under the supplied <code>dir</code> directory.</p>
+    <p>an array of existing absolute file paths<br>
+found under the supplied <code>dir</code> directory.</p>
 </div>
 
     
@@ -1368,7 +1405,9 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="description">
-    <p>Recursively walks a directory and returns an array of asbolute file paths<br>to the files under the specified directory. This version does this in a<br>synchronous fashion.</p>
+    <p>Recursively walks a directory and returns an array of asbolute file paths<br>
+to the files under the specified directory. This version does this in a<br>
+synchronous fashion.</p>
 </div>
 
 
@@ -1494,7 +1533,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
             
 
             <td class="description last">
-                <p>an array of existing absolute file paths,<br>or if not parameter is supplied a default empty array will be used.</p>
+                <p>an array of existing absolute file paths,<br>
+or if not parameter is supplied a default empty array will be used.</p>
                 
             </td>
         </tr>
@@ -1535,7 +1575,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 
 
 <div class="param-desc">
-    <p>an array of existing absolute file paths found<br>under the supplied <code>dir</code> directory.</p>
+    <p>an array of existing absolute file paths found<br>
+under the supplied <code>dir</code> directory.</p>
 </div>
 
     
@@ -1654,7 +1695,8 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
             
 
             <td class="description last">
-                <p>a string path to a directory containing the<br>various GQLBase extended classes that should be gathered.</p>
+                <p>a string path to a directory containing the<br>
+various GQLBase extended classes that should be gathered.</p>
                 
             </td>
         </tr>
@@ -1697,7 +1739,7 @@ otherwise the value is wrapped in an array. If the optional parameter</code>toSt
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

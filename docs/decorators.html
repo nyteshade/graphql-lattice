@@ -85,7 +85,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line25">line 25</a>
+        <a href="decorators_AdjacentSchema.js.html">decorators/AdjacentSchema.js</a>, <a href="decorators_AdjacentSchema.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -123,8 +123,13 @@
 
 
 <div class="description">
-    <p>A small suite of functions a getter that allows easy manipulation of the<br>the DIRECT_TYPES workaround needed for some types of complex class<br>wrapping allowed by the @Getters and @Properties decorators. Namely the<br>ability to do something like @Getters('name', String) which would wrap the<br>contents of whatever is in the objects model in a String call.</p>
-<p>Direct types are those that need to be called without <code>new</code> in order for the<br>desired behavior to present itself.</p>
+    <p>A small suite of functions a getter that allows easy manipulation of the<br>
+the DIRECT_TYPES workaround needed for some types of complex class<br>
+wrapping allowed by the @Getters and @Properties decorators. Namely the<br>
+ability to do something like @Getters('name', String) which would wrap the<br>
+contents of whatever is in the objects model in a String call.</p>
+<p>Direct types are those that need to be called without <code>new</code> in order for the<br>
+desired behavior to present itself.</p>
 </div>
 
 
@@ -201,7 +206,8 @@
 
 
 <div class="description">
-    <p>An array of proper class names that are used to test for cases where the<br>proper usage of instantiating an instance should preclude the use of <code>new</code></p>
+    <p>An array of proper class names that are used to test for cases where the<br>
+proper usage of instantiating an instance should preclude the use of <code>new</code></p>
 </div>
 
 
@@ -285,10 +291,18 @@
 
 
 <div class="description">
-    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>list of property names used to create the appropriate accessor types. In<br>some cases, however, the instance of GQLBase's data model may have a<br>different name. Finally if the return type for the getter should be wrapped<br>in a another GQLBase class type, we will need a way to specify those things<br>too.</p>
-<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>parses them and converts it into an object, properly sorted, into values that<br>allow the above described behavior.</p>
+    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>
+list of property names used to create the appropriate accessor types. In<br>
+some cases, however, the instance of GQLBase's data model may have a<br>
+different name. Finally if the return type for the getter should be wrapped<br>
+in a another GQLBase class type, we will need a way to specify those things<br>
+too.</p>
+<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>
+parses them and converts it into an object, properly sorted, into values that<br>
+allow the above described behavior.</p>
 <p>Examples:</p>
-<p>```<br>// Create a class with a name and age property that map directly to the<br>// underlying data model</p>
+<pre class="prettyprint source"><code>// Create a class with a name and age property that map directly to the
+// underlying data model</code></pre>
 </div>
 
 
@@ -391,7 +405,8 @@
             
 
             <td class="description last">
-                <p>name of a property, or list<br>of property names and a Class.</p>
+                <p>name of a property, or list<br>
+of property names and a Class.</p>
                 
             </td>
         </tr>
@@ -432,11 +447,13 @@
 
 
 <div class="param-desc">
-    <p>an object with the following format <code>{
-  fieldName: name of root instance property to create
-  modelName: name of its associated internal model property
-  typeClass: an optional class to wrap around the results in a getter
-}</code></p>
+    <p>an object with the following format ```<br>
+{<br>
+fieldName: name of root instance property to create<br>
+modelName: name of its associated internal model property<br>
+typeClass: an optional class to wrap around the results in a getter<br>
+}</p>
+<pre class="prettyprint source"><code></code></pre>
 </div>
 
     
@@ -458,7 +475,12 @@
 
 
 <div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
 </div>
 
 
@@ -584,7 +606,8 @@
             
 
             <td class="description last">
-                <p>the name of the object or property to<br>which the decorator is being applied.</p>
+                <p>the name of the object or property to<br>
+which the decorator is being applied.</p>
                 
             </td>
         </tr>
@@ -610,7 +633,8 @@
             
 
             <td class="description last">
-                <p>a standard Object.defineProperty style<br>descriptor object.</p>
+                <p>a standard Object.defineProperty style<br>
+descriptor object.</p>
                 
             </td>
         </tr>
@@ -648,7 +672,12 @@
 
 
 <div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
 </div>
 
 
@@ -748,7 +777,8 @@
             
 
             <td class="description last">
-                <p>a relative or absolute path to the file containing<br>your GraphQL IDL schema portion for your object type.</p>
+                <p>a relative or absolute path to the file containing<br>
+your GraphQL IDL schema portion for your object type.</p>
                 
             </td>
         </tr>
@@ -774,7 +804,10 @@
             
 
             <td class="description last">
-                <p>the extension of the graphql schema file pointed<br>to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>your path point to a file with a different extension, you should specify<br>that extension here.</p>
+                <p>the extension of the graphql schema file pointed<br>
+to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>
+your path point to a file with a different extension, you should specify<br>
+that extension here.</p>
                 
             </td>
         </tr>
@@ -815,7 +848,8 @@
 
 
 <div class="param-desc">
-    <p>as per all class decorators, <code>FileSchema</code> returns the<br>class object being modified</p>
+    <p>as per all class decorators, <code>FileSchema</code> returns the<br>
+class object being modified</p>
 </div>
 
     
@@ -837,7 +871,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
 </div>
 
 
@@ -934,7 +972,9 @@
             
 
             <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters that surface those properties as GraphQL fields.</p>
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -997,7 +1037,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
 <p>This method creates both getters and setters</p>
 </div>
 
@@ -1098,7 +1142,9 @@
             
 
             <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters and setters that surface those properties as GraphQL fields.</p>
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters and setters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -1161,8 +1207,9 @@
 
 
 <div class="description">
-    <p>This decorator allows you to specify the SCHEMA getter and associated<br>string as a parameter to the decorator itself. So, for example:</p>
-<p><code></p>
+    <p>This decorator allows you to specify the SCHEMA getter and associated<br>
+string as a parameter to the decorator itself. So, for example:</p>
+<code>
 </div>
 
 
@@ -1262,7 +1309,8 @@
             
 
             <td class="description last">
-                <p>a GraphQL IDL compliant string for defining a<br>GraphQL Object Schema.</p>
+                <p>a GraphQL IDL compliant string for defining a<br>
+GraphQL Object Schema.</p>
                 
             </td>
         </tr>
@@ -1300,7 +1348,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the setters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which setters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the setters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which setters should be injected.</p>
 </div>
 
 
@@ -1400,7 +1452,9 @@
             
 
             <td class="description last">
-                <p>if the model has<br>'name' and 'age' as properties, then passing those two strings will<br>result in setters that surface those properties as GraphQL fields.</p>
+                <p>if the model has<br>
+'name' and 'age' as properties, then passing those two strings will<br>
+result in setters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -1560,7 +1614,8 @@
             
 
             <td class="description last">
-                <p>the name of the meta sub key under which to<br>store the modified decorated function.</p>
+                <p>the name of the meta sub key under which to<br>
+store the modified decorated function.</p>
                 
             </td>
         </tr>
@@ -1589,7 +1644,8 @@
             
 
             <td class="description last">
-                <p>either the Class itself, if defined<br>on a static method, or the prototype if defined on an instance method</p>
+                <p>either the Class itself, if defined<br>
+on a static method, or the prototype if defined on an instance method</p>
                 
             </td>
         </tr>
@@ -1641,7 +1697,8 @@
             
 
             <td class="description last">
-                <p>a decorator descriptor; see<br><code>Object.defineProperty</code> for more information on descriptors</p>
+                <p>a decorator descriptor; see<br>
+<code>Object.defineProperty</code> for more information on descriptors</p>
                 
             </td>
         </tr>
@@ -1730,7 +1787,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_FileSchema.js.html">decorators/FileSchema.js</a>, <a href="decorators_FileSchema.js.html#line12">line 12</a>
+        <a href="decorators_FileSchema.js.html">decorators/FileSchema.js</a>, <a href="decorators_FileSchema.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -1768,8 +1825,13 @@
 
 
 <div class="description">
-    <p>A small suite of functions a getter that allows easy manipulation of the<br>the DIRECT_TYPES workaround needed for some types of complex class<br>wrapping allowed by the @Getters and @Properties decorators. Namely the<br>ability to do something like @Getters('name', String) which would wrap the<br>contents of whatever is in the objects model in a String call.</p>
-<p>Direct types are those that need to be called without <code>new</code> in order for the<br>desired behavior to present itself.</p>
+    <p>A small suite of functions a getter that allows easy manipulation of the<br>
+the DIRECT_TYPES workaround needed for some types of complex class<br>
+wrapping allowed by the @Getters and @Properties decorators. Namely the<br>
+ability to do something like @Getters('name', String) which would wrap the<br>
+contents of whatever is in the objects model in a String call.</p>
+<p>Direct types are those that need to be called without <code>new</code> in order for the<br>
+desired behavior to present itself.</p>
 </div>
 
 
@@ -1846,7 +1908,8 @@
 
 
 <div class="description">
-    <p>An array of proper class names that are used to test for cases where the<br>proper usage of instantiating an instance should preclude the use of <code>new</code></p>
+    <p>An array of proper class names that are used to test for cases where the<br>
+proper usage of instantiating an instance should preclude the use of <code>new</code></p>
 </div>
 
 
@@ -1930,10 +1993,18 @@
 
 
 <div class="description">
-    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>list of property names used to create the appropriate accessor types. In<br>some cases, however, the instance of GQLBase's data model may have a<br>different name. Finally if the return type for the getter should be wrapped<br>in a another GQLBase class type, we will need a way to specify those things<br>too.</p>
-<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>parses them and converts it into an object, properly sorted, into values that<br>allow the above described behavior.</p>
+    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>
+list of property names used to create the appropriate accessor types. In<br>
+some cases, however, the instance of GQLBase's data model may have a<br>
+different name. Finally if the return type for the getter should be wrapped<br>
+in a another GQLBase class type, we will need a way to specify those things<br>
+too.</p>
+<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>
+parses them and converts it into an object, properly sorted, into values that<br>
+allow the above described behavior.</p>
 <p>Examples:</p>
-<p>```<br>// Create a class with a name and age property that map directly to the<br>// underlying data model</p>
+<pre class="prettyprint source"><code>// Create a class with a name and age property that map directly to the
+// underlying data model</code></pre>
 </div>
 
 
@@ -2036,7 +2107,8 @@
             
 
             <td class="description last">
-                <p>name of a property, or list<br>of property names and a Class.</p>
+                <p>name of a property, or list<br>
+of property names and a Class.</p>
                 
             </td>
         </tr>
@@ -2077,11 +2149,13 @@
 
 
 <div class="param-desc">
-    <p>an object with the following format <code>{
-  fieldName: name of root instance property to create
-  modelName: name of its associated internal model property
-  typeClass: an optional class to wrap around the results in a getter
-}</code></p>
+    <p>an object with the following format ```<br>
+{<br>
+fieldName: name of root instance property to create<br>
+modelName: name of its associated internal model property<br>
+typeClass: an optional class to wrap around the results in a getter<br>
+}</p>
+<pre class="prettyprint source"><code></code></pre>
 </div>
 
     
@@ -2103,7 +2177,12 @@
 
 
 <div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
 </div>
 
 
@@ -2229,7 +2308,8 @@
             
 
             <td class="description last">
-                <p>the name of the object or property to<br>which the decorator is being applied.</p>
+                <p>the name of the object or property to<br>
+which the decorator is being applied.</p>
                 
             </td>
         </tr>
@@ -2255,7 +2335,8 @@
             
 
             <td class="description last">
-                <p>a standard Object.defineProperty style<br>descriptor object.</p>
+                <p>a standard Object.defineProperty style<br>
+descriptor object.</p>
                 
             </td>
         </tr>
@@ -2293,7 +2374,12 @@
 
 
 <div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
 </div>
 
 
@@ -2393,7 +2479,8 @@
             
 
             <td class="description last">
-                <p>a relative or absolute path to the file containing<br>your GraphQL IDL schema portion for your object type.</p>
+                <p>a relative or absolute path to the file containing<br>
+your GraphQL IDL schema portion for your object type.</p>
                 
             </td>
         </tr>
@@ -2419,7 +2506,10 @@
             
 
             <td class="description last">
-                <p>the extension of the graphql schema file pointed<br>to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>your path point to a file with a different extension, you should specify<br>that extension here.</p>
+                <p>the extension of the graphql schema file pointed<br>
+to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>
+your path point to a file with a different extension, you should specify<br>
+that extension here.</p>
                 
             </td>
         </tr>
@@ -2460,7 +2550,8 @@
 
 
 <div class="param-desc">
-    <p>as per all class decorators, <code>FileSchema</code> returns the<br>class object being modified</p>
+    <p>as per all class decorators, <code>FileSchema</code> returns the<br>
+class object being modified</p>
 </div>
 
     
@@ -2482,7 +2573,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
 </div>
 
 
@@ -2579,7 +2674,9 @@
             
 
             <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters that surface those properties as GraphQL fields.</p>
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -2642,7 +2739,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
 <p>This method creates both getters and setters</p>
 </div>
 
@@ -2743,7 +2844,9 @@
             
 
             <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters and setters that surface those properties as GraphQL fields.</p>
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters and setters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -2806,8 +2909,9 @@
 
 
 <div class="description">
-    <p>This decorator allows you to specify the SCHEMA getter and associated<br>string as a parameter to the decorator itself. So, for example:</p>
-<p><code></p>
+    <p>This decorator allows you to specify the SCHEMA getter and associated<br>
+string as a parameter to the decorator itself. So, for example:</p>
+<code>
 </div>
 
 
@@ -2907,7 +3011,8 @@
             
 
             <td class="description last">
-                <p>a GraphQL IDL compliant string for defining a<br>GraphQL Object Schema.</p>
+                <p>a GraphQL IDL compliant string for defining a<br>
+GraphQL Object Schema.</p>
                 
             </td>
         </tr>
@@ -2945,7 +3050,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the setters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which setters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the setters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which setters should be injected.</p>
 </div>
 
 
@@ -3045,7 +3154,9 @@
             
 
             <td class="description last">
-                <p>if the model has<br>'name' and 'age' as properties, then passing those two strings will<br>result in setters that surface those properties as GraphQL fields.</p>
+                <p>if the model has<br>
+'name' and 'age' as properties, then passing those two strings will<br>
+result in setters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -3205,7 +3316,8 @@
             
 
             <td class="description last">
-                <p>the name of the meta sub key under which to<br>store the modified decorated function.</p>
+                <p>the name of the meta sub key under which to<br>
+store the modified decorated function.</p>
                 
             </td>
         </tr>
@@ -3234,7 +3346,8 @@
             
 
             <td class="description last">
-                <p>either the Class itself, if defined<br>on a static method, or the prototype if defined on an instance method</p>
+                <p>either the Class itself, if defined<br>
+on a static method, or the prototype if defined on an instance method</p>
                 
             </td>
         </tr>
@@ -3286,7 +3399,3412 @@
             
 
             <td class="description last">
-                <p>a decorator descriptor; see<br><code>Object.defineProperty</code> for more information on descriptors</p>
+                <p>a decorator descriptor; see<br>
+<code>Object.defineProperty</code> for more information on descriptors</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        decorators
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".DirectTypeManager"><span class="type-signature">(static, constant) </span>DirectTypeManager<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>A small suite of functions a getter that allows easy manipulation of the<br>
+the DIRECT_TYPES workaround needed for some types of complex class<br>
+wrapping allowed by the @Getters and @Properties decorators. Namely the<br>
+ability to do something like @Getters('name', String) which would wrap the<br>
+contents of whatever is in the objects model in a String call.</p>
+<p>Direct types are those that need to be called without <code>new</code> in order for the<br>
+desired behavior to present itself.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.7.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line214">line 214</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Object</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".extractBits.DIRECT_TYPES"><span class="type-signature">(static) </span>extractBits.DIRECT_TYPES<span class="type-signature"> :Array.&lt;String></span></h4>
+
+
+
+
+<div class="description">
+    <p>An array of proper class names that are used to test for cases where the<br>
+proper usage of instantiating an instance should preclude the use of <code>new</code></p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line203">line 203</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Array.&lt;String></code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80extractBits"><span class="type-signature">(static) </span>⌾⠀extractBits<span class="signature">(property)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>
+list of property names used to create the appropriate accessor types. In<br>
+some cases, however, the instance of GQLBase's data model may have a<br>
+different name. Finally if the return type for the getter should be wrapped<br>
+in a another GQLBase class type, we will need a way to specify those things<br>
+too.</p>
+<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>
+parses them and converts it into an object, properly sorted, into values that<br>
+allow the above described behavior.</p>
+<p>Examples:</p>
+<pre class="prettyprint source"><code>// Create a class with a name and age property that map directly to the
+// underlying data model</code></pre>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.5</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>property</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+|
+
+<span class="param-type"><code>Array.&lt;(String|function())></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>name of a property, or list<br>
+of property names and a Class.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Object</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>an object with the following format ```<br>
+{<br>
+fieldName: name of root instance property to create<br>
+modelName: name of its associated internal model property<br>
+typeClass: an optional class to wrap around the results in a getter<br>
+}</p>
+<pre class="prettyprint source"><code></code></pre>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80AdjacentSchema"><span class="type-signature">(static) </span>.🏷⠀AdjacentSchema<span class="signature">(object, property, descriptor)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_AdjacentSchema.js.html">decorators/AdjacentSchema.js</a>, <a href="decorators_AdjacentSchema.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the object on which to apply the decorator</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>property</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the name of the object or property to<br>
+which the decorator is being applied.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descriptor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a standard Object.defineProperty style<br>
+descriptor object.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80FileSchema"><span class="type-signature">(static) </span>.🏷⠀FileSchema<span class="signature">(path, extension)</span><span class="type-signature"> &rarr; {mixed}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.3.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_FileSchema.js.html">decorators/FileSchema.js</a>, <a href="decorators_FileSchema.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a relative or absolute path to the file containing<br>
+your GraphQL IDL schema portion for your object type.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extension</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the extension of the graphql schema file pointed<br>
+to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>
+your path point to a file with a different extension, you should specify<br>
+that extension here.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>mixed</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>as per all class decorators, <code>FileSchema</code> returns the<br>
+class object being modified</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Getters"><span class="type-signature">(static) </span>.🏷⠀Getters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line337">line 337</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propertyNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters that surface those properties as GraphQL fields.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>function</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>a class decorator method.s</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Properties"><span class="type-signature">(static) </span>.🏷⠀Properties<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
+<p>This method creates both getters and setters</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line426">line 426</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propertyNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters and setters that surface those properties as GraphQL fields.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>function</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>a class decorator method</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Schema"><span class="type-signature">(static) </span>.🏷⠀Schema<span class="signature">(schemaString)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This decorator allows you to specify the SCHEMA getter and associated<br>
+string as a parameter to the decorator itself. So, for example:</p>
+<code>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_Schema.js.html">decorators/Schema.js</a>, <a href="decorators_Schema.js.html#line4">line 4</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schemaString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a GraphQL IDL compliant string for defining a<br>
+GraphQL Object Schema.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Setters"><span class="type-signature">(static) </span>.🏷⠀Setters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the setters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which setters should be injected.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line381">line 381</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propertyNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>if the model has<br>
+'name' and 'age' as properties, then passing those two strings will<br>
+result in setters that surface those properties as GraphQL fields.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>function</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>a class decorator method</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~decorate"><span class="type-signature">(inner) </span>decorate<span class="signature">(metaProperty, target, key, descriptor)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Since the bulk functionality of @subscriptor, @mutator and</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_Resolvers.js.html">decorators/Resolvers.js</a>, <a href="decorators_Resolvers.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>metaProperty</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the name of the meta sub key under which to<br>
+store the modified decorated function.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+|
+
+<span class="param-type"><code>function</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>either the Class itself, if defined<br>
+on a static method, or the prototype if defined on an instance method</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the property name of the function being decorated</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descriptor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a decorator descriptor; see<br>
+<code>Object.defineProperty</code> for more information on descriptors</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        decorators
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_Resolvers.js.html">decorators/Resolvers.js</a>, <a href="decorators_Resolvers.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".DirectTypeManager"><span class="type-signature">(static, constant) </span>DirectTypeManager<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>A small suite of functions a getter that allows easy manipulation of the<br>
+the DIRECT_TYPES workaround needed for some types of complex class<br>
+wrapping allowed by the @Getters and @Properties decorators. Namely the<br>
+ability to do something like @Getters('name', String) which would wrap the<br>
+contents of whatever is in the objects model in a String call.</p>
+<p>Direct types are those that need to be called without <code>new</code> in order for the<br>
+desired behavior to present itself.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.7.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line214">line 214</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Object</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".extractBits.DIRECT_TYPES"><span class="type-signature">(static) </span>extractBits.DIRECT_TYPES<span class="type-signature"> :Array.&lt;String></span></h4>
+
+
+
+
+<div class="description">
+    <p>An array of proper class names that are used to test for cases where the<br>
+proper usage of instantiating an instance should preclude the use of <code>new</code></p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line203">line 203</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Array.&lt;String></code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id=".%E2%8C%BE%E2%A0%80extractBits"><span class="type-signature">(static) </span>⌾⠀extractBits<span class="signature">(property)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>
+list of property names used to create the appropriate accessor types. In<br>
+some cases, however, the instance of GQLBase's data model may have a<br>
+different name. Finally if the return type for the getter should be wrapped<br>
+in a another GQLBase class type, we will need a way to specify those things<br>
+too.</p>
+<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>
+parses them and converts it into an object, properly sorted, into values that<br>
+allow the above described behavior.</p>
+<p>Examples:</p>
+<pre class="prettyprint source"><code>// Create a class with a name and age property that map directly to the
+// underlying data model</code></pre>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.5</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line11">line 11</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>property</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+|
+
+<span class="param-type"><code>Array.&lt;(String|function())></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>name of a property, or list<br>
+of property names and a Class.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Object</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>an object with the following format ```<br>
+{<br>
+fieldName: name of root instance property to create<br>
+modelName: name of its associated internal model property<br>
+typeClass: an optional class to wrap around the results in a getter<br>
+}</p>
+<pre class="prettyprint source"><code></code></pre>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80AdjacentSchema"><span class="type-signature">(static) </span>.🏷⠀AdjacentSchema<span class="signature">(object, property, descriptor)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_AdjacentSchema.js.html">decorators/AdjacentSchema.js</a>, <a href="decorators_AdjacentSchema.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>mixed</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the object on which to apply the decorator</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>property</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the name of the object or property to<br>
+which the decorator is being applied.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descriptor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a standard Object.defineProperty style<br>
+descriptor object.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80FileSchema"><span class="type-signature">(static) </span>.🏷⠀FileSchema<span class="signature">(path, extension)</span><span class="type-signature"> &rarr; {mixed}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.3.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_FileSchema.js.html">decorators/FileSchema.js</a>, <a href="decorators_FileSchema.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a relative or absolute path to the file containing<br>
+your GraphQL IDL schema portion for your object type.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extension</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>String</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the extension of the graphql schema file pointed<br>
+to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>
+your path point to a file with a different extension, you should specify<br>
+that extension here.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>mixed</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>as per all class decorators, <code>FileSchema</code> returns the<br>
+class object being modified</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Getters"><span class="type-signature">(static) </span>.🏷⠀Getters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line337">line 337</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propertyNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters that surface those properties as GraphQL fields.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>function</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>a class decorator method.s</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Properties"><span class="type-signature">(static) </span>.🏷⠀Properties<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
+<p>This method creates both getters and setters</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line426">line 426</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propertyNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters and setters that surface those properties as GraphQL fields.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>function</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>a class decorator method</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Schema"><span class="type-signature">(static) </span>.🏷⠀Schema<span class="signature">(schemaString)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This decorator allows you to specify the SCHEMA getter and associated<br>
+string as a parameter to the decorator itself. So, for example:</p>
+<code>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.2.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_Schema.js.html">decorators/Schema.js</a>, <a href="decorators_Schema.js.html#line4">line 4</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>schemaString</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a GraphQL IDL compliant string for defining a<br>
+GraphQL Object Schema.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Setters"><span class="type-signature">(static) </span>.🏷⠀Setters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the setters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which setters should be injected.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line381">line 381</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propertyNames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>if the model has<br>
+'name' and 'age' as properties, then passing those two strings will<br>
+result in setters that surface those properties as GraphQL fields.</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>function</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>a class decorator method</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~decorate"><span class="type-signature">(inner) </span>decorate<span class="signature">(metaProperty, target, key, descriptor)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Since the bulk functionality of @subscriptor, @mutator and</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="decorators_Resolvers.js.html">decorators/Resolvers.js</a>, <a href="decorators_Resolvers.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>metaProperty</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the name of the meta sub key under which to<br>
+store the modified decorated function.</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>target</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+|
+
+<span class="param-type"><code>function</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>either the Class itself, if defined<br>
+on a static method, or the prototype if defined on an instance method</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the property name of the function being decorated</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>descriptor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>a decorator descriptor; see<br>
+<code>Object.defineProperty</code> for more information on descriptors</p>
                 
             </td>
         </tr>
@@ -3413,8 +6931,13 @@
 
 
 <div class="description">
-    <p>A small suite of functions a getter that allows easy manipulation of the<br>the DIRECT_TYPES workaround needed for some types of complex class<br>wrapping allowed by the @Getters and @Properties decorators. Namely the<br>ability to do something like @Getters('name', String) which would wrap the<br>contents of whatever is in the objects model in a String call.</p>
-<p>Direct types are those that need to be called without <code>new</code> in order for the<br>desired behavior to present itself.</p>
+    <p>A small suite of functions a getter that allows easy manipulation of the<br>
+the DIRECT_TYPES workaround needed for some types of complex class<br>
+wrapping allowed by the @Getters and @Properties decorators. Namely the<br>
+ability to do something like @Getters('name', String) which would wrap the<br>
+contents of whatever is in the objects model in a String call.</p>
+<p>Direct types are those that need to be called without <code>new</code> in order for the<br>
+desired behavior to present itself.</p>
 </div>
 
 
@@ -3491,7 +7014,8 @@
 
 
 <div class="description">
-    <p>An array of proper class names that are used to test for cases where the<br>proper usage of instantiating an instance should preclude the use of <code>new</code></p>
+    <p>An array of proper class names that are used to test for cases where the<br>
+proper usage of instantiating an instance should preclude the use of <code>new</code></p>
 </div>
 
 
@@ -3575,10 +7099,18 @@
 
 
 <div class="description">
-    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>list of property names used to create the appropriate accessor types. In<br>some cases, however, the instance of GQLBase's data model may have a<br>different name. Finally if the return type for the getter should be wrapped<br>in a another GQLBase class type, we will need a way to specify those things<br>too.</p>
-<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>parses them and converts it into an object, properly sorted, into values that<br>allow the above described behavior.</p>
+    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>
+list of property names used to create the appropriate accessor types. In<br>
+some cases, however, the instance of GQLBase's data model may have a<br>
+different name. Finally if the return type for the getter should be wrapped<br>
+in a another GQLBase class type, we will need a way to specify those things<br>
+too.</p>
+<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>
+parses them and converts it into an object, properly sorted, into values that<br>
+allow the above described behavior.</p>
 <p>Examples:</p>
-<p>```<br>// Create a class with a name and age property that map directly to the<br>// underlying data model</p>
+<pre class="prettyprint source"><code>// Create a class with a name and age property that map directly to the
+// underlying data model</code></pre>
 </div>
 
 
@@ -3681,7 +7213,8 @@
             
 
             <td class="description last">
-                <p>name of a property, or list<br>of property names and a Class.</p>
+                <p>name of a property, or list<br>
+of property names and a Class.</p>
                 
             </td>
         </tr>
@@ -3722,11 +7255,13 @@
 
 
 <div class="param-desc">
-    <p>an object with the following format <code>{
-  fieldName: name of root instance property to create
-  modelName: name of its associated internal model property
-  typeClass: an optional class to wrap around the results in a getter
-}</code></p>
+    <p>an object with the following format ```<br>
+{<br>
+fieldName: name of root instance property to create<br>
+modelName: name of its associated internal model property<br>
+typeClass: an optional class to wrap around the results in a getter<br>
+}</p>
+<pre class="prettyprint source"><code></code></pre>
 </div>
 
     
@@ -3748,7 +7283,12 @@
 
 
 <div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
 </div>
 
 
@@ -3874,7 +7414,8 @@
             
 
             <td class="description last">
-                <p>the name of the object or property to<br>which the decorator is being applied.</p>
+                <p>the name of the object or property to<br>
+which the decorator is being applied.</p>
                 
             </td>
         </tr>
@@ -3900,7 +7441,8 @@
             
 
             <td class="description last">
-                <p>a standard Object.defineProperty style<br>descriptor object.</p>
+                <p>a standard Object.defineProperty style<br>
+descriptor object.</p>
                 
             </td>
         </tr>
@@ -3938,7 +7480,12 @@
 
 
 <div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
+    <p>A decorator that does three things. First it defines the<br>
+module() static method that is required when using adjacent<br>
+schema files. Secondly, it defines a SCHEMA getter that<br>
+returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>
+getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>
+can determine whether or not the decorator was used.</p>
 </div>
 
 
@@ -4038,7 +7585,8 @@
             
 
             <td class="description last">
-                <p>a relative or absolute path to the file containing<br>your GraphQL IDL schema portion for your object type.</p>
+                <p>a relative or absolute path to the file containing<br>
+your GraphQL IDL schema portion for your object type.</p>
                 
             </td>
         </tr>
@@ -4064,7 +7612,10 @@
             
 
             <td class="description last">
-                <p>the extension of the graphql schema file pointed<br>to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>your path point to a file with a different extension, you should specify<br>that extension here.</p>
+                <p>the extension of the graphql schema file pointed<br>
+to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>
+your path point to a file with a different extension, you should specify<br>
+that extension here.</p>
                 
             </td>
         </tr>
@@ -4105,7 +7656,8 @@
 
 
 <div class="param-desc">
-    <p>as per all class decorators, <code>FileSchema</code> returns the<br>class object being modified</p>
+    <p>as per all class decorators, <code>FileSchema</code> returns the<br>
+class object being modified</p>
 </div>
 
     
@@ -4127,7 +7679,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
 </div>
 
 
@@ -4224,7 +7780,9 @@
             
 
             <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters that surface those properties as GraphQL fields.</p>
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -4287,7 +7845,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the getters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which getters should be injected.</p>
 <p>This method creates both getters and setters</p>
 </div>
 
@@ -4388,7 +7950,9 @@
             
 
             <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters and setters that surface those properties as GraphQL fields.</p>
+                <p>if the model has 'name'<br>
+and 'age' as properties, then passing those two strings will result<br>
+in getters and setters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -4451,8 +8015,9 @@
 
 
 <div class="description">
-    <p>This decorator allows you to specify the SCHEMA getter and associated<br>string as a parameter to the decorator itself. So, for example:</p>
-<p><code></p>
+    <p>This decorator allows you to specify the SCHEMA getter and associated<br>
+string as a parameter to the decorator itself. So, for example:</p>
+<code>
 </div>
 
 
@@ -4552,7 +8117,8 @@
             
 
             <td class="description last">
-                <p>a GraphQL IDL compliant string for defining a<br>GraphQL Object Schema.</p>
+                <p>a GraphQL IDL compliant string for defining a<br>
+GraphQL Object Schema.</p>
                 
             </td>
         </tr>
@@ -4590,7 +8156,11 @@
 
 
 <div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the setters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which setters should be injected.</p>
+    <p>When working with <code>GQLBase</code> instances that expose properties<br>
+that have a 1:1 mapping to their own model property of the<br>
+same name, adding the setters manually can be annoying. This<br>
+takes an indeterminate amount of strings representing the<br>
+properties for which setters should be injected.</p>
 </div>
 
 
@@ -4690,7 +8260,9 @@
             
 
             <td class="description last">
-                <p>if the model has<br>'name' and 'age' as properties, then passing those two strings will<br>result in setters that surface those properties as GraphQL fields.</p>
+                <p>if the model has<br>
+'name' and 'age' as properties, then passing those two strings will<br>
+result in setters that surface those properties as GraphQL fields.</p>
                 
             </td>
         </tr>
@@ -4850,7 +8422,8 @@
             
 
             <td class="description last">
-                <p>the name of the meta sub key under which to<br>store the modified decorated function.</p>
+                <p>the name of the meta sub key under which to<br>
+store the modified decorated function.</p>
                 
             </td>
         </tr>
@@ -4879,7 +8452,8 @@
             
 
             <td class="description last">
-                <p>either the Class itself, if defined<br>on a static method, or the prototype if defined on an instance method</p>
+                <p>either the Class itself, if defined<br>
+on a static method, or the prototype if defined on an instance method</p>
                 
             </td>
         </tr>
@@ -4931,3297 +8505,8 @@
             
 
             <td class="description last">
-                <p>a decorator descriptor; see<br><code>Object.defineProperty</code> for more information on descriptors</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        decorators
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_Resolvers.js.html">decorators/Resolvers.js</a>, <a href="decorators_Resolvers.js.html#line16">line 16</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id=".DirectTypeManager"><span class="type-signature">(static, constant) </span>DirectTypeManager<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    <p>A small suite of functions a getter that allows easy manipulation of the<br>the DIRECT_TYPES workaround needed for some types of complex class<br>wrapping allowed by the @Getters and @Properties decorators. Namely the<br>ability to do something like @Getters('name', String) which would wrap the<br>contents of whatever is in the objects model in a String call.</p>
-<p>Direct types are those that need to be called without <code>new</code> in order for the<br>desired behavior to present itself.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.7.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line214">line 214</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><code>Object</code></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</div>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id=".extractBits.DIRECT_TYPES"><span class="type-signature">(static) </span>extractBits.DIRECT_TYPES<span class="type-signature"> :Array.&lt;String></span></h4>
-
-
-
-
-<div class="description">
-    <p>An array of proper class names that are used to test for cases where the<br>proper usage of instantiating an instance should preclude the use of <code>new</code></p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line203">line 203</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><code>Array.&lt;String></code></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</div>
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".%E2%8C%BE%E2%A0%80extractBits"><span class="type-signature">(static) </span>⌾⠀extractBits<span class="signature">(property)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>list of property names used to create the appropriate accessor types. In<br>some cases, however, the instance of GQLBase's data model may have a<br>different name. Finally if the return type for the getter should be wrapped<br>in a another GQLBase class type, we will need a way to specify those things<br>too.</p>
-<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>parses them and converts it into an object, properly sorted, into values that<br>allow the above described behavior.</p>
-<p>Examples:</p>
-<p>```<br>// Create a class with a name and age property that map directly to the<br>// underlying data model</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.5</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line11">line 11</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>property</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-|
-
-<span class="param-type"><code>Array.&lt;(String|function())></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>name of a property, or list<br>of property names and a Class.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Object</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>an object with the following format <code>{
-  fieldName: name of root instance property to create
-  modelName: name of its associated internal model property
-  typeClass: an optional class to wrap around the results in a getter
-}</code></p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80AdjacentSchema"><span class="type-signature">(static) </span>.🏷⠀AdjacentSchema<span class="signature">(object, property, descriptor)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_AdjacentSchema.js.html">decorators/AdjacentSchema.js</a>, <a href="decorators_AdjacentSchema.js.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>object</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>mixed</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the object on which to apply the decorator</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>property</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the name of the object or property to<br>which the decorator is being applied.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>descriptor</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a standard Object.defineProperty style<br>descriptor object.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80FileSchema"><span class="type-signature">(static) </span>.🏷⠀FileSchema<span class="signature">(path, extension)</span><span class="type-signature"> &rarr; {mixed}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.3.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_FileSchema.js.html">decorators/FileSchema.js</a>, <a href="decorators_FileSchema.js.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>path</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a relative or absolute path to the file containing<br>your GraphQL IDL schema portion for your object type.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extension</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the extension of the graphql schema file pointed<br>to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>your path point to a file with a different extension, you should specify<br>that extension here.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>mixed</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>as per all class decorators, <code>FileSchema</code> returns the<br>class object being modified</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Getters"><span class="type-signature">(static) </span>.🏷⠀Getters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line337">line 337</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propertyNames</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters that surface those properties as GraphQL fields.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>function</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a class decorator method.s</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Properties"><span class="type-signature">(static) </span>.🏷⠀Properties<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
-<p>This method creates both getters and setters</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line426">line 426</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propertyNames</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters and setters that surface those properties as GraphQL fields.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>function</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a class decorator method</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Schema"><span class="type-signature">(static) </span>.🏷⠀Schema<span class="signature">(schemaString)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>This decorator allows you to specify the SCHEMA getter and associated<br>string as a parameter to the decorator itself. So, for example:</p>
-<p><code></p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.2.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_Schema.js.html">decorators/Schema.js</a>, <a href="decorators_Schema.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>schemaString</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a GraphQL IDL compliant string for defining a<br>GraphQL Object Schema.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Setters"><span class="type-signature">(static) </span>.🏷⠀Setters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the setters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which setters should be injected.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line381">line 381</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propertyNames</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>if the model has<br>'name' and 'age' as properties, then passing those two strings will<br>result in setters that surface those properties as GraphQL fields.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>function</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a class decorator method</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="~decorate"><span class="type-signature">(inner) </span>decorate<span class="signature">(metaProperty, target, key, descriptor)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Since the bulk functionality of @subscriptor, @mutator and</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_Resolvers.js.html">decorators/Resolvers.js</a>, <a href="decorators_Resolvers.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>metaProperty</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the name of the meta sub key under which to<br>store the modified decorated function.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>target</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-|
-
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>either the Class itself, if defined<br>on a static method, or the prototype if defined on an instance method</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the property name of the function being decorated</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>descriptor</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a decorator descriptor; see<br><code>Object.defineProperty</code> for more information on descriptors</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        decorators
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_AdjacentSchema.js.html">decorators/AdjacentSchema.js</a>, <a href="decorators_AdjacentSchema.js.html#line12">line 12</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id=".DirectTypeManager"><span class="type-signature">(static, constant) </span>DirectTypeManager<span class="type-signature"> :Object</span></h4>
-
-
-
-
-<div class="description">
-    <p>A small suite of functions a getter that allows easy manipulation of the<br>the DIRECT_TYPES workaround needed for some types of complex class<br>wrapping allowed by the @Getters and @Properties decorators. Namely the<br>ability to do something like @Getters('name', String) which would wrap the<br>contents of whatever is in the objects model in a String call.</p>
-<p>Direct types are those that need to be called without <code>new</code> in order for the<br>desired behavior to present itself.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.7.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line214">line 214</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><code>Object</code></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</div>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id=".extractBits.DIRECT_TYPES"><span class="type-signature">(static) </span>extractBits.DIRECT_TYPES<span class="type-signature"> :Array.&lt;String></span></h4>
-
-
-
-
-<div class="description">
-    <p>An array of proper class names that are used to test for cases where the<br>proper usage of instantiating an instance should preclude the use of <code>new</code></p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line203">line 203</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><code>Array.&lt;String></code></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</div>
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".%E2%8C%BE%E2%A0%80extractBits"><span class="type-signature">(static) </span>⌾⠀extractBits<span class="signature">(property)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>For each of the decorators, Getters, Setters, and Properties, we take a<br>list of property names used to create the appropriate accessor types. In<br>some cases, however, the instance of GQLBase's data model may have a<br>different name. Finally if the return type for the getter should be wrapped<br>in a another GQLBase class type, we will need a way to specify those things<br>too.</p>
-<p>The <code>extractBits()</code> takes a single argument value from the decorator as it<br>parses them and converts it into an object, properly sorted, into values that<br>allow the above described behavior.</p>
-<p>Examples:</p>
-<p>```<br>// Create a class with a name and age property that map directly to the<br>// underlying data model</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.5</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line11">line 11</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>property</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-|
-
-<span class="param-type"><code>Array.&lt;(String|function())></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>name of a property, or list<br>of property names and a Class.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Object</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>an object with the following format <code>{
-  fieldName: name of root instance property to create
-  modelName: name of its associated internal model property
-  typeClass: an optional class to wrap around the results in a getter
-}</code></p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80AdjacentSchema"><span class="type-signature">(static) </span>.🏷⠀AdjacentSchema<span class="signature">(object, property, descriptor)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_AdjacentSchema.js.html">decorators/AdjacentSchema.js</a>, <a href="decorators_AdjacentSchema.js.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>object</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>mixed</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the object on which to apply the decorator</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>property</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the name of the object or property to<br>which the decorator is being applied.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>descriptor</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a standard Object.defineProperty style<br>descriptor object.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80FileSchema"><span class="type-signature">(static) </span>.🏷⠀FileSchema<span class="signature">(path, extension)</span><span class="type-signature"> &rarr; {mixed}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>A decorator that does three things. First it defines the<br>module() static method that is required when using adjacent<br>schema files. Secondly, it defines a SCHEMA getter that<br>returns <code>GQLBase.ADJACENT_FILE</code>. Finally it sets a static<br>getter with the <code>Symbol</code>, <code>@adjacentSchema</code> so that other<br>can determine whether or not the decorator was used.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.3.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_FileSchema.js.html">decorators/FileSchema.js</a>, <a href="decorators_FileSchema.js.html#line6">line 6</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>path</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a relative or absolute path to the file containing<br>your GraphQL IDL schema portion for your object type.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extension</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the extension of the graphql schema file pointed<br>to in the previous parameter. By default these are <code>&quot;.graphql&quot;</code> but should<br>your path point to a file with a different extension, you should specify<br>that extension here.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>mixed</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>as per all class decorators, <code>FileSchema</code> returns the<br>class object being modified</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Getters"><span class="type-signature">(static) </span>.🏷⠀Getters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line337">line 337</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propertyNames</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters that surface those properties as GraphQL fields.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>function</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a class decorator method.s</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Properties"><span class="type-signature">(static) </span>.🏷⠀Properties<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the getters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which getters should be injected.</p>
-<p>This method creates both getters and setters</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line426">line 426</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propertyNames</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>if the model has 'name'<br>and 'age' as properties, then passing those two strings will result<br>in getters and setters that surface those properties as GraphQL fields.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>function</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a class decorator method</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Schema"><span class="type-signature">(static) </span>.🏷⠀Schema<span class="signature">(schemaString)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>This decorator allows you to specify the SCHEMA getter and associated<br>string as a parameter to the decorator itself. So, for example:</p>
-<p><code></p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.2.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_Schema.js.html">decorators/Schema.js</a>, <a href="decorators_Schema.js.html#line4">line 4</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>schemaString</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a GraphQL IDL compliant string for defining a<br>GraphQL Object Schema.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="..%F0%9F%8F%B7%E2%A0%80Setters"><span class="type-signature">(static) </span>.🏷⠀Setters<span class="signature">(propertyNames)</span><span class="type-signature"> &rarr; {function}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>When working with <code>GQLBase</code> instances that expose properties<br>that have a 1:1 mapping to their own model property of the<br>same name, adding the setters manually can be annoying. This<br>takes an indeterminate amount of strings representing the<br>properties for which setters should be injected.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>2.1.0</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_ModelProperties.js.html">decorators/ModelProperties.js</a>, <a href="decorators_ModelProperties.js.html#line381">line 381</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>propertyNames</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;(String|Array.&lt;String>)></code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>if the model has<br>'name' and 'age' as properties, then passing those two strings will<br>result in setters that surface those properties as GraphQL fields.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>function</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>a class decorator method</p>
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="~decorate"><span class="type-signature">(inner) </span>decorate<span class="signature">(metaProperty, target, key, descriptor)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Since the bulk functionality of @subscriptor, @mutator and</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="decorators_Resolvers.js.html">decorators/Resolvers.js</a>, <a href="decorators_Resolvers.js.html#line7">line 7</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>metaProperty</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the name of the meta sub key under which to<br>store the modified decorated function.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>target</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-|
-
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>either the Class itself, if defined<br>on a static method, or the prototype if defined on an instance method</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>the property name of the function being decorated</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>descriptor</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>a decorator descriptor; see<br><code>Object.defineProperty</code> for more information on descriptors</p>
+                <p>a decorator descriptor; see<br>
+<code>Object.defineProperty</code> for more information on descriptors</p>
                 
             </td>
         </tr>
@@ -8264,7 +8549,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

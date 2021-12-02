@@ -63,8 +63,11 @@
 
 
 <div class="description">
-    <p>GQLScalars are how one might construct their own types for use within<br>GraphQL with Lattice. The descriptions below should be sufficient to get<br>you started with your own types. The SDL for a Scalar looks like this:</p>
-<pre class="prettyprint source"><code>scalar MyType</code></pre>
+    <p>GQLScalars are how one might construct their own types for use within<br>
+GraphQL with Lattice. The descriptions below should be sufficient to get<br>
+you started with your own types. The SDL for a Scalar looks like this:</p>
+<pre class="prettyprint source"><code>scalar MyType
+</code></pre>
 </div>
 
 
@@ -159,7 +162,8 @@
 
 
 <div class="description">
-    <p>Determines the default type targeted by this GQLBase class. Any<br>type will technically be valid but only will trigger special behavior</p>
+    <p>Determines the default type targeted by this GQLBase class. Any<br>
+type will technically be valid but only will trigger special behavior</p>
 </div>
 
 
@@ -233,7 +237,10 @@
 
 
 <div class="description">
-    <p>Similar to <code>parseValue</code>, but rather than receiving the input values from<br>a query or from a query variable, the data comes in the form of a parsed<br>abstract syntax/source tree (AST). It is the job of <code>parseLiteral</code> to<br>convert from an AST type to the desired output value. </p>
+    <p>Similar to <code>parseValue</code>, but rather than receiving the input values from<br>
+a query or from a query variable, the data comes in the form of a parsed<br>
+abstract syntax/source tree (AST). It is the job of <code>parseLiteral</code> to<br>
+convert from an AST type to the desired output value.</p>
 <p>An example that converts all Strings to Numbers and vice versa</p>
 <pre class="prettyprint source lang-javascript"><code>static parseLiteral(ast) {
   const { Kind } = require('graphql/language')
@@ -247,7 +254,8 @@
     default:
       return null;
   }
-}</code></pre>
+}
+</code></pre>
 </div>
 
 
@@ -344,7 +352,9 @@
             
 
             <td class="description last">
-                <p>the parse value of the type given some literal SDL<br>syntax. Presumably this is where you can choose to take a String, for<br>example, and convert it to an integer when Kind.STRING is supplied.</p>
+                <p>the parse value of the type given some literal SDL<br>
+syntax. Presumably this is where you can choose to take a String, for<br>
+example, and convert it to an integer when Kind.STRING is supplied.</p>
                 
             </td>
         </tr>
@@ -407,15 +417,24 @@
 
 
 <div class="description">
-    <p>Parse value handles input from the client. In this form, the value is<br>taken directly from the sent query. The type of the value can be nearly<br>anything, but the <code>parseValue</code> function's job is to interpret the<br>input and return the understood value.</p>
-<p>You could have a ColorBlind scalar type that took in a hexadecimal<br>color string and converted it to a color scheme as seen by those with<br>some form of color blindness. The value supplied to <code>parseValue</code> would<br>be the input color. The modified color would be the output value.</p>
+    <p>Parse value handles input from the client. In this form, the value is<br>
+taken directly from the sent query. The type of the value can be nearly<br>
+anything, but the <code>parseValue</code> function's job is to interpret the<br>
+input and return the understood value.</p>
+<p>You could have a ColorBlind scalar type that took in a hexadecimal<br>
+color string and converted it to a color scheme as seen by those with<br>
+some form of color blindness. The value supplied to <code>parseValue</code> would<br>
+be the input color. The modified color would be the output value.</p>
 <pre class="prettyprint source"><code>query {
   showMe(colorBlind: '#ff0000') {
     color 
   }
 }
 
-// this might convert to #c65100</code></pre><p>This can also cover input sent in the form of variables. The variable<br>can be of any valid JSON type.</p>
+// this might convert to #c65100
+</code></pre>
+<p>This can also cover input sent in the form of variables. The variable<br>
+can be of any valid JSON type.</p>
 </div>
 
 
@@ -512,7 +531,8 @@
             
 
             <td class="description last">
-                <p>the input sent from a query that needs to be<br>converted to an internal value for GraphQL to proceed</p>
+                <p>the input sent from a query that needs to be<br>
+converted to an internal value for GraphQL to proceed</p>
                 
             </td>
         </tr>
@@ -553,7 +573,8 @@
 
 
 <div class="param-desc">
-    <p>the converted output given the input; this will be purely<br>how you want your scalars to function.</p>
+    <p>the converted output given the input; this will be purely<br>
+how you want your scalars to function.</p>
 </div>
 
     
@@ -575,7 +596,10 @@
 
 
 <div class="description">
-    <p>The <code>serialize</code> method is called by GraphQL when the type is going to<br>be sent to the client. Since values on the client are in the form of<br>JSON, the return value of <code>serialize</code> can be any valid JSON value;<br>String, Number, Array, Object, etc...</p>
+    <p>The <code>serialize</code> method is called by GraphQL when the type is going to<br>
+be sent to the client. Since values on the client are in the form of<br>
+JSON, the return value of <code>serialize</code> can be any valid JSON value;<br>
+String, Number, Array, Object, etc...</p>
 </div>
 
 
@@ -672,7 +696,8 @@
             
 
             <td class="description last">
-                <p>the value that needs to be converted for the<br>downstream JSON client side result.</p>
+                <p>the value that needs to be converted for the<br>
+downstream JSON client side result.</p>
                 
             </td>
         </tr>
@@ -740,7 +765,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

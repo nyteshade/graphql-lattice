@@ -63,9 +63,11 @@
 
 
 <div class="description">
-    <p>A handler that exposes an express middleware function that mounts a<br>GraphQL I/O endpoint. Typical usage follows:</p>
+    <p>A handler that exposes an express middleware function that mounts a<br>
+GraphQL I/O endpoint. Typical usage follows:</p>
 <pre class="prettyprint source lang-js"><code>const app = express();
-app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
+app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);
+</code></pre>
 </div>
 
 
@@ -167,7 +169,10 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>The schema property returns the textual Schema as it is generated based<br>on the various Lattice types, interfaces and enums defined in your<br>project. The ast property returns the JavaScript AST represenatation of<br>that schema with all injected modificiations detailed in your classes.</p>
+    <p>The schema property returns the textual Schema as it is generated based<br>
+on the various Lattice types, interfaces and enums defined in your<br>
+project. The ast property returns the JavaScript AST represenatation of<br>
+that schema with all injected modificiations detailed in your classes.</p>
 </div>
 
 
@@ -241,7 +246,10 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>The Schema String and Schema AST/GraphQLSchema JavaScript objects are<br>cached after being processed once. If there is a runtime need to rebuild<br>these objects, calling <code>clearCache()</code> will allow their next usage to<br>rebuild them dynamically.</p>
+    <p>The Schema String and Schema AST/GraphQLSchema JavaScript objects are<br>
+cached after being processed once. If there is a runtime need to rebuild<br>
+these objects, calling <code>clearCache()</code> will allow their next usage to<br>
+rebuild them dynamically.</p>
 </div>
 
 
@@ -327,7 +335,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="param-desc">
-    <p>returns this so that it can be inlined; ala<br><code>gqlExpressMiddleware.clearCache().ast</code>, for example</p>
+    <p>returns this so that it can be inlined; ala<br>
+<code>gqlExpressMiddleware.clearCache().ast</code>, for example</p>
 </div>
 
     
@@ -349,7 +358,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>A function that combines the IDL schemas of all the supplied classes and<br>returns that value to the middleware getter.</p>
+    <p>A function that combines the IDL schemas of all the supplied classes and<br>
+returns that value to the middleware getter.</p>
 </div>
 
 
@@ -457,7 +467,9 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>An optional express middleware function that can be mounted to return<br>the JSON AST representation of the schema string being used by<br>GQLExpressMiddleware.</p>
+    <p>An optional express middleware function that can be mounted to return<br>
+the JSON AST representation of the schema string being used by<br>
+GQLExpressMiddleware.</p>
 </div>
 
 
@@ -561,10 +573,19 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>In order to ensure that Lattice functions receive the request data,<br>it is important to use the options function feature of both<br><code>express-graphql</code> and <code>apollo-server-express</code>. This function will create<br>an options function that reflects that schema and Lattice types defined<br>in your project.</p>
-<p>Should you need to tailor the response before it is sent out, you may<br>supply a function as a second parameter that takes two parameters and<br>returns an options object. The patchFn callback signature looks like this</p>
+    <p>In order to ensure that Lattice functions receive the request data,<br>
+it is important to use the options function feature of both<br>
+<code>express-graphql</code> and <code>apollo-server-express</code>. This function will create<br>
+an options function that reflects that schema and Lattice types defined<br>
+in your project.</p>
+<p>Should you need to tailor the response before it is sent out, you may<br>
+supply a function as a second parameter that takes two parameters and<br>
+returns an options object. The patchFn callback signature looks like this</p>
 <p><code>patchFn(options, {req, res, next|gql})</code></p>
-<p>When using the reference implementation, additional graphql request info<br>can be obtained in lieu of the <code>next()</code> function so typically found in<br>Express middleware. Apollo Server simply provides the next function in<br>this location.</p>
+<p>When using the reference implementation, additional graphql request info<br>
+can be obtained in lieu of the <code>next()</code> function so typically found in<br>
+Express middleware. Apollo Server simply provides the next function in<br>
+this location.</p>
 </div>
 
 
@@ -667,7 +688,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
             
 
             <td class="description last">
-                <p>any options, to either engine, that make the most<br>sense</p>
+                <p>any options, to either engine, that make the most<br>
+sense</p>
                 
             </td>
         </tr>
@@ -737,10 +759,19 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>In order to ensure that Lattice functions receive the request data,<br>it is important to use the options function feature of both<br><code>express-graphql</code> and <code>apollo-server-express</code>. This function will create<br>an options function that reflects that schema and Lattice types defined<br>in your project.</p>
-<p>Should you need to tailor the response before it is sent out, you may<br>supply a function as a second parameter that takes two parameters and<br>returns an options object. The patchFn callback signature looks like this</p>
+    <p>In order to ensure that Lattice functions receive the request data,<br>
+it is important to use the options function feature of both<br>
+<code>express-graphql</code> and <code>apollo-server-express</code>. This function will create<br>
+an options function that reflects that schema and Lattice types defined<br>
+in your project.</p>
+<p>Should you need to tailor the response before it is sent out, you may<br>
+supply a function as a second parameter that takes two parameters and<br>
+returns an options object. The patchFn callback signature looks like this</p>
 <p><code>patchFn(options, {req, res, next|gql})</code></p>
-<p>When using the reference implementation, additional graphql request info<br>can be obtained in lieu of the <code>next()</code> function so typically found in<br>Express middleware. Apollo Server simply provides the next function in<br>this location.</p>
+<p>When using the reference implementation, additional graphql request info<br>
+can be obtained in lieu of the <code>next()</code> function so typically found in<br>
+Express middleware. Apollo Server simply provides the next function in<br>
+this location.</p>
 </div>
 
 
@@ -843,7 +874,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
             
 
             <td class="description last">
-                <p>any options, to either engine, that make the most<br>sense</p>
+                <p>any options, to either engine, that make the most<br>
+sense</p>
                 
             </td>
         </tr>
@@ -913,7 +945,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>An optional express middleware function that can be mounted to return<br>a copy of the generated schema string being used by GQLExpressMiddleware.</p>
+    <p>An optional express middleware function that can be mounted to return<br>
+a copy of the generated schema string being used by GQLExpressMiddleware.</p>
 </div>
 
 
@@ -1017,9 +1050,19 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>If your needs require you to specify different values to <code>graphqlHTTP</code>,<br>part of the <code>express-graphql</code> package, you can use the <code>customMiddleware</code><br>function to do so.</p>
-<p>The first parameter is an object that should contain valid <code>graphqlHTTP</code><br>options. See https://github.com/graphql/express-graphql#options for more<br>details. Validation is NOT performed.</p>
-<p>The second parameter is a function that will be called after any options<br>have been applied from the first parameter and the rest of the middleware<br>has been performed. This, if not modified, will be the final options<br>passed into <code>graphqlHTTP</code>. In your callback, it is expected that the<br>supplied object is to be modified and THEN RETURNED. Whatever is returned<br>will be used or passed on. If nothing is returned, the options supplied<br>to the function will be used instead.</p>
+    <p>If your needs require you to specify different values to <code>graphqlHTTP</code>,<br>
+part of the <code>express-graphql</code> package, you can use the <code>customMiddleware</code><br>
+function to do so.</p>
+<p>The first parameter is an object that should contain valid <code>graphqlHTTP</code><br>
+options. See https://github.com/graphql/express-graphql#options for more<br>
+details. Validation is NOT performed.</p>
+<p>The second parameter is a function that will be called after any options<br>
+have been applied from the first parameter and the rest of the middleware<br>
+has been performed. This, if not modified, will be the final options<br>
+passed into <code>graphqlHTTP</code>. In your callback, it is expected that the<br>
+supplied object is to be modified and THEN RETURNED. Whatever is returned<br>
+will be used or passed on. If nothing is returned, the options supplied<br>
+to the function will be used instead.</p>
 </div>
 
 
@@ -1055,7 +1098,7 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="GQLExpressMiddleware.js.html">GQLExpressMiddleware.js</a>, <a href="GQLExpressMiddleware.js.html#line307">line 307</a>
+        <a href="GQLExpressMiddleware.js.html">GQLExpressMiddleware.js</a>, <a href="GQLExpressMiddleware.js.html#line309">line 309</a>
     </li></ul></dd>
     
 
@@ -1136,7 +1179,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
             
 
             <td class="description last">
-                <p>standard set of<br><code>express-graphql</code> options. See above.</p>
+                <p>standard set of<br>
+<code>express-graphql</code> options. See above.</p>
                 
             </td>
         </tr>
@@ -1237,7 +1281,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>Using the express-graphql module, it returns an Express 4.x middleware<br>function.</p>
+    <p>Using the express-graphql module, it returns an Express 4.x middleware<br>
+function.</p>
 </div>
 
 
@@ -1323,7 +1368,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="param-desc">
-    <p>a function that expects request, response and next<br>parameters as all Express middleware functions.</p>
+    <p>a function that expects request, response and next<br>
+parameters as all Express middleware functions.</p>
 </div>
 
     
@@ -1345,7 +1391,9 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>Using the express-graphql module, it returns an Express 4.x middleware<br>function. This version however, has graphiql disabled. Otherwise it is<br>identical to the <code>middleware</code> property</p>
+    <p>Using the express-graphql module, it returns an Express 4.x middleware<br>
+function. This version however, has graphiql disabled. Otherwise it is<br>
+identical to the <code>middleware</code> property</p>
 </div>
 
 
@@ -1431,7 +1479,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="param-desc">
-    <p>a function that expects request, response and next<br>parameters as all Express middleware functions.</p>
+    <p>a function that expects request, response and next<br>
+parameters as all Express middleware functions.</p>
 </div>
 
     
@@ -1453,7 +1502,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="description">
-    <p>Generates the textual schema based on the registered <code>GQLBase</code> handlers<br>this instance represents.</p>
+    <p>Generates the textual schema based on the registered <code>GQLBase</code> handlers<br>
+this instance represents.</p>
 </div>
 
 
@@ -1542,7 +1592,8 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 
 
 <div class="param-desc">
-    <p>a generated schema string based on the handlers that<br>are registered with this <code>GQLExpressMiddleware</code> instance.</p>
+    <p>a generated schema string based on the handlers that<br>
+are registered with this <code>GQLExpressMiddleware</code> instance.</p>
 </div>
 
     
@@ -1569,7 +1620,7 @@ app.use(/.../, new GQLExpressMiddleware([...classes]).middleware);</code></pre>
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

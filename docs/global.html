@@ -118,7 +118,8 @@
 
 
 <div class="description">
-    <p>Peeks into the metadata storage area of a given GQLBase extended<br>class and fetches the factory checklist if one exists.</p>
+    <p>Peeks into the metadata storage area of a given GQLBase extended<br>
+class and fetches the factory checklist if one exists.</p>
 </div>
 
 
@@ -182,7 +183,10 @@
 
 
 <div class="description">
-    <p>The CHECK_API_DOCS Symbol is part of the CHECKLIST for a constructed<br>GQLBase extended class. It denotes that the class has had its api docs<br>defined, processed and setup on the class in a way that it will be<br>picked up in the build lifecycle.</p>
+    <p>The CHECK_API_DOCS Symbol is part of the CHECKLIST for a constructed<br>
+GQLBase extended class. It denotes that the class has had its api docs<br>
+defined, processed and setup on the class in a way that it will be<br>
+picked up in the build lifecycle.</p>
 </div>
 
 
@@ -256,7 +260,10 @@
 
 
 <div class="description">
-    <p>The CHECK_RESOLVERS Symbol is part of the CHECKLIST for a constructed<br>GQLBase extended class. It denotes that the class has had its instance<br>field resolvers as well as its static Query, Mutation and Subscription<br>resolvers injected and defined.</p>
+    <p>The CHECK_RESOLVERS Symbol is part of the CHECKLIST for a constructed<br>
+GQLBase extended class. It denotes that the class has had its instance<br>
+field resolvers as well as its static Query, Mutation and Subscription<br>
+resolvers injected and defined.</p>
 </div>
 
 
@@ -324,87 +331,16 @@
         
             
 <div class="section-members">
-<h4 class="name" id="CHECKLIST"><span class="type-signature"></span>CHECKLIST<span class="type-signature"> :Symbol</span></h4>
-
-
-
-
-<div class="description">
-    <p>The CHECK_SCHEMA Symbol is part of the CHECKLIST for a constructed<br>GQLBase extended class. It denotes that the class has had its SCHEMA<br>getter defined.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="LatticeFactory.js.html">LatticeFactory.js</a>, <a href="LatticeFactory.js.html#line29">line 29</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><code>Symbol</code></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-</div>
-
-        
-            
-<div class="section-members">
 <h4 class="name" id="CHECKLIST"><span class="type-signature">(constant) </span>CHECKLIST<span class="type-signature"> :Symbol</span></h4>
 
 
 
 
 <div class="description">
-    <p>The CHECKLIST Symbol is used as a storage key in the metadata staging<br>area for each of the GQLBase extended classes. In the LatticeFactory<br>it is used to determine where in the flow of construction the class<br>currently is.</p>
+    <p>The CHECKLIST Symbol is used as a storage key in the metadata staging<br>
+area for each of the GQLBase extended classes. In the LatticeFactory<br>
+it is used to determine where in the flow of construction the class<br>
+currently is.</p>
 </div>
 
 
@@ -472,13 +408,94 @@
         
             
 <div class="section-members">
+<h4 class="name" id="CHECKLIST"><span class="type-signature"></span>CHECKLIST<span class="type-signature"> :Symbol</span></h4>
+
+
+
+
+<div class="description">
+    <p>The CHECK_SCHEMA Symbol is part of the CHECKLIST for a constructed<br>
+GQLBase extended class. It denotes that the class has had its SCHEMA<br>
+getter defined.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="LatticeFactory.js.html">LatticeFactory.js</a>, <a href="LatticeFactory.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Symbol</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
 <h4 class="name" id="isFactoryClass"><span class="type-signature"></span>isFactoryClass<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    <p>var { LatticeFactory, getChecklist, hasChecklist, CHECKLIST, CHECK_SCHEMA, CHECK_RESOLVERS } = require('./dist/LatticeFactory'); var { GQLBase, META_KEY, joinLines, SyntaxTree, typeOf } = require('./dist/lattice'); var gql = joinLines, LF = LatticeFactory, TYPE = LF.TYPE;<br>var PersonDef = { name: 'Person', schema: gql<code>enum StatType { PHYSICAL, MENTAL } type Person { name: String stats(type:StatType): Stat } type Query { findPerson(id: ID): Person }</code>, resolvers: { Query: { findPerson({req, res, next}, {id}) { console.log('find person') } }, Person: { stats({type}) { let { req, res, next} = this.requestData } } }, docs: { StatType: { [TYPE]: <code>A type of statistic associated with people</code>, PHYSICAL: <code>Physical attributes</code>, MENTAL: <code>Mental attributes</code> }, Person: { [TYPE]: <code>Represents a person</code>, personId: <code>Unique id of the person in question</code>, name: <code>The name of the person</code>, stats: <code>Allows you to query the stats of a person based on type</code> }, Query: { [TYPE]: 'Top level query desc.', findPerson: <code>Searches the system for the specified user</code> } } };<br>var Person = LF.build(PersonDef), p = new Person({name: 'Brielle'})<br>Person.getProp('stats',true,{requestData:{req:1,res:2,next:3}})<br>var Broke = LF.build({name: 'Broke', schema: gql<code>type Broke {name: String}</code>, resolvers:{}, docs:{}})<br>var t = LF.validateTemplate({name: '',  type: GQLBase, resolvers: {}, docs: {}, schema: ''});</p>
+    <p>var { LatticeFactory, getChecklist, hasChecklist, CHECKLIST, CHECK_SCHEMA, CHECK_RESOLVERS } = require('./dist/LatticeFactory'); var { GQLBase, META_KEY, joinLines, SyntaxTree, typeOf } = require('./dist/lattice'); var gql = joinLines, LF = LatticeFactory, TYPE = LF.TYPE;<br>
+var PersonDef = { name: 'Person', schema: gql<code>enum StatType { PHYSICAL, MENTAL } type Person { name: String stats(type:StatType): Stat } type Query { findPerson(id: ID): Person }</code>, resolvers: { Query: { findPerson({req, res, next}, {id}) { console.log('find person') } }, Person: { stats({type}) { let { req, res, next} = this.requestData } } }, docs: { StatType: { [TYPE]: <code>A type of statistic associated with people</code>, PHYSICAL: <code>Physical attributes</code>, MENTAL: <code>Mental attributes</code> }, Person: { [TYPE]: <code>Represents a person</code>, personId: <code>Unique id of the person in question</code>, name: <code>The name of the person</code>, stats: <code>Allows you to query the stats of a person based on type</code> }, Query: { [TYPE]: 'Top level query desc.', findPerson: <code>Searches the system for the specified user</code> } } };<br>
+var Person = LF.build(PersonDef), p = new Person({name: 'Brielle'})<br>
+Person.getProp('stats',true,{requestData:{req:1,res:2,next:3}})<br>
+var Broke = LF.build({name: 'Broke', schema: gql<code>type Broke {name: String}</code>, resolvers:{}, docs:{}})<br>
+var t = LF.validateTemplate({name: '',  type: GQLBase, resolvers: {}, docs: {}, schema: ''});</p>
 </div>
 
 
@@ -626,8 +643,12 @@
 
 
 <div class="description">
-    <p>When applying multiple property getters and setters, knowing some info<br>about what was applied elsewhere can be important. &quot;Tags&quot; can be applied<br>that store the fieldName and descriptor applied via one of these decorators.</p>
-<p>Multiple &quot;tags&quot; are supported to allow for detecting the difference between<br>decorators applied by the developer using lattice and something auto<br>generated such as auto-props.</p>
+    <p>When applying multiple property getters and setters, knowing some info<br>
+about what was applied elsewhere can be important. &quot;Tags&quot; can be applied<br>
+that store the fieldName and descriptor applied via one of these decorators.</p>
+<p>Multiple &quot;tags&quot; are supported to allow for detecting the difference between<br>
+decorators applied by the developer using lattice and something auto<br>
+generated such as auto-props.</p>
 </div>
 
 
@@ -750,7 +771,8 @@
             
 
             <td class="description last">
-                <p>an array of Symbols or strings to be<br>wrapped in Symbols that will be used as tag keys</p>
+                <p>an array of Symbols or strings to be<br>
+wrapped in Symbols that will be used as tag keys</p>
                 
             </td>
         </tr>
@@ -802,7 +824,8 @@
             
 
             <td class="description last">
-                <p>the JavaScript descriptor object to associate<br>with this tagged field.</p>
+                <p>the JavaScript descriptor object to associate<br>
+with this tagged field.</p>
                 
             </td>
         </tr>
@@ -840,7 +863,10 @@
 
 
 <div class="description">
-    <p>This function, when invoked with only a class will return true if the<br>Class has a defined checklist. If one ore more CHECKLIST symbols are<br>passed, the function will only return true if all the supplied symbols<br>are set to truthy values.</p>
+    <p>This function, when invoked with only a class will return true if the<br>
+Class has a defined checklist. If one ore more CHECKLIST symbols are<br>
+passed, the function will only return true if all the supplied symbols<br>
+are set to truthy values.</p>
 </div>
 
 
@@ -983,7 +1009,8 @@
             
 
             <td class="description last">
-                <p>any of CHECK_SCHEMA, CHECK_RESOLVERS, or<br>CHECK_API_DOCS</p>
+                <p>any of CHECK_SCHEMA, CHECK_RESOLVERS, or<br>
+CHECK_API_DOCS</p>
                 
             </td>
         </tr>
@@ -1024,7 +1051,8 @@
 
 
 <div class="param-desc">
-    <p>true if the checklist and/or all items are true and<br>present.</p>
+    <p>true if the checklist and/or all items are true and<br>
+present.</p>
 </div>
 
     
@@ -1046,7 +1074,8 @@
 
 
 <div class="description">
-    <p>Injects and creates a new CHECKLIST object on the supplied GQLBase<br>extended class. All items are installed and set to false.</p>
+    <p>Injects and creates a new CHECKLIST object on the supplied GQLBase<br>
+extended class. All items are installed and set to false.</p>
 </div>
 
 
@@ -1181,7 +1210,9 @@
 
 
 <div class="description">
-    <p>Obtains the checklist from the supplied GQLBase extended class. If the<br>class has a checklist, its checklist item is set to true or the boolean<br>value specified.</p>
+    <p>Obtains the checklist from the supplied GQLBase extended class. If the<br>
+class has a checklist, its checklist item is set to true or the boolean<br>
+value specified.</p>
 </div>
 
 
@@ -1314,7 +1345,8 @@
             
 
             <td class="description last">
-                <p>one of CHECK_SCHEMA, CHECK_RESOLVERS, or<br>CHECK_API_DOCS</p>
+                <p>one of CHECK_SCHEMA, CHECK_RESOLVERS, or<br>
+CHECK_API_DOCS</p>
                 
             </td>
         </tr>
@@ -1389,7 +1421,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

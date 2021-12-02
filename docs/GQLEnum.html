@@ -63,8 +63,16 @@
 
 
 <div class="description">
-    <p>GraphQL Enum types can be a bit picky when it comes to how scalar types<br>equate to enum values. Lattice makes this easier by allowing you to specify<br>a value or the key when your enum has a value other than the key; GraphQL<br>does not allow this by default.</p>
-<p>Further more, when instantiating a GQLEnum type, you can pass a string or<br>value matching the enum key or value or you can pass an object with key of<br>value and the value being either the enum key or value. If any of those<br>things match, then your <code>instance.value</code> will equate to the enum's key. If,<br>on the other hand, your supplied values do not match then <code>instance.value</code><br>will be <code>null</code>.</p>
+    <p>GraphQL Enum types can be a bit picky when it comes to how scalar types<br>
+equate to enum values. Lattice makes this easier by allowing you to specify<br>
+a value or the key when your enum has a value other than the key; GraphQL<br>
+does not allow this by default.</p>
+<p>Further more, when instantiating a GQLEnum type, you can pass a string or<br>
+value matching the enum key or value or you can pass an object with key of<br>
+value and the value being either the enum key or value. If any of those<br>
+things match, then your <code>instance.value</code> will equate to the enum's key. If,<br>
+on the other hand, your supplied values do not match then <code>instance.value</code><br>
+will be <code>null</code>.</p>
 </div>
 
 
@@ -159,7 +167,8 @@
 
 
 <div class="description">
-    <p>Determines the default type targeted by this GQLBase class. Any<br>type will technically be valid but only will trigger special behavior</p>
+    <p>Determines the default type targeted by this GQLBase class. Any<br>
+type will technically be valid but only will trigger special behavior</p>
 </div>
 
 
@@ -606,7 +615,9 @@
 
 
 <div class="description">
-    <p>Shorthand method to generate a GraphQLEnumValueDefinition implementation<br>object. Use this for building and customizing your <code>values</code> key/value<br>object in your child classes.</p>
+    <p>Shorthand method to generate a GraphQLEnumValueDefinition implementation<br>
+object. Use this for building and customizing your <code>values</code> key/value<br>
+object in your child classes.</p>
 </div>
 
 
@@ -796,7 +807,8 @@
 
 
 <div class="param-desc">
-    <p>an object that conforms to the GraphQLEnumValueDefinition<br>defined here http://graphql.org/graphql-js/type/#graphqlenumtype</p>
+    <p>an object that conforms to the GraphQLEnumValueDefinition<br>
+defined here http://graphql.org/graphql-js/type/#graphqlenumtype</p>
 </div>
 
     
@@ -818,7 +830,10 @@
 
 
 <div class="description">
-    <p>For easier use within JavaScript, the static enums method provides a<br>Symbol backed solution for each of the enums defined. Each <code>Symbol</code><br>instance is wrapped in Object so as to allow some additional properties<br>to be written to it.</p>
+    <p>For easier use within JavaScript, the static enums method provides a<br>
+Symbol backed solution for each of the enums defined. Each <code>Symbol</code><br>
+instance is wrapped in Object so as to allow some additional properties<br>
+to be written to it.</p>
 </div>
 
 
@@ -904,7 +919,8 @@
 
 
 <div class="param-desc">
-    <p>an array of modified Symbols for each enum<br>variation defined.</p>
+    <p>an array of modified Symbols for each enum<br>
+variation defined.</p>
 </div>
 
     
@@ -926,11 +942,17 @@
 
 
 <div class="description">
-    <p>Retrieves the actual symbol stored name property from the internal<br>model object for this enum instance. That is a mouthfull, but it<br>basically means that if your enum is something like:</p>
-<pre class="prettyprint source"><code>enum Person { TALL, SHORT }</code></pre><p>and you create an instance using any of the following</p>
+    <p>Retrieves the actual symbol stored name property from the internal<br>
+model object for this enum instance. That is a mouthfull, but it<br>
+basically means that if your enum is something like:</p>
+<pre class="prettyprint source"><code>enum Person { TALL, SHORT }
+</code></pre>
+<p>and you create an instance using any of the following</p>
 <pre class="prettyprint source"><code>p = new Person('TALL')
 p = new Person(valueFor('TALL'))
-p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.name</code> will equate to <code>TALL</code>.</p>
+p = new Person({value: 'TALL'})
+</code></pre>
+<p>that your response to <code>p.name</code> will equate to <code>TALL</code>.</p>
 </div>
 
 
@@ -1038,8 +1060,13 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
 
 
 <div class="description">
-    <p>Much like the <code>.name</code> getter, the <code>.value</code> getter will typically<br>retreive the name of the enum key you are requesting. In rare cases<br>where you have defined values that differ from the name, the <code>.value</code><br>getter will retrieve that custom value from the <code>.value</code> property on<br>the symbol in question.</p>
-<p>This should do the right thing even if you instantiated the instance<br>using the name.</p>
+    <p>Much like the <code>.name</code> getter, the <code>.value</code> getter will typically<br>
+retreive the name of the enum key you are requesting. In rare cases<br>
+where you have defined values that differ from the name, the <code>.value</code><br>
+getter will retrieve that custom value from the <code>.value</code> property on<br>
+the symbol in question.</p>
+<p>This should do the right thing even if you instantiated the instance<br>
+using the name.</p>
 </div>
 
 
@@ -1125,7 +1152,8 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
 
 
 <div class="param-desc">
-    <p>the value of the enum type; this in all likihood should<br>be a String or potentially an object</p>
+    <p>the value of the enum type; this in all likihood should<br>
+be a String or potentially an object</p>
 </div>
 
     
@@ -1147,7 +1175,9 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
 
 
 <div class="description">
-    <p>Each instance of GQLEnum must specify a map of keys and values. If this<br>method returns null or is not defined, the value of the enum will match<br>the name of the enum as per the reference implementation.</p>
+    <p>Each instance of GQLEnum must specify a map of keys and values. If this<br>
+method returns null or is not defined, the value of the enum will match<br>
+the name of the enum as per the reference implementation.</p>
 <p>Example:</p>
 <pre class="prettyprint source"><code>  static get values(): ?Object {
     const { valueOf } = this;
@@ -1155,7 +1185,8 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
     return {
       NAME: valueOf(value)
     }
-  }</code></pre>
+  }
+</code></pre>
 </div>
 
 
@@ -1244,7 +1275,8 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
 
 
 <div class="param-desc">
-    <p>an object mapping with each key mapping to an object<br>possessing at least a value field, which in turn maps to the desired value</p>
+    <p>an object mapping with each key mapping to an object<br>
+possessing at least a value field, which in turn maps to the desired value</p>
 </div>
 
     
@@ -1266,7 +1298,9 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
 
 
 <div class="description">
-    <p>Due to the complexity of being able to access both the keys and values<br>properly for an enum type, a Map is used as the backing store. The handler<br>returned by this method is to be passed to a Proxy.</p>
+    <p>Due to the complexity of being able to access both the keys and values<br>
+properly for an enum type, a Map is used as the backing store. The handler<br>
+returned by this method is to be passed to a Proxy.</p>
 </div>
 
 
@@ -1363,7 +1397,8 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
             
 
             <td class="description last">
-                <p>the map containing the key&lt;-&gt;value and<br>value&lt;-&gt;key mappings; the true storage backing the array in question.</p>
+                <p>the map containing the key&lt;-&gt;value and<br>
+value&lt;-&gt;key mappings; the true storage backing the array in question.</p>
                 
             </td>
         </tr>
@@ -1427,7 +1462,7 @@ p = new Person({value: 'TALL'})</code></pre><p>that your response to <code>p.nam
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 07 2018 16:26:37 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 02 2021 16:35:36 GMT-0700 (Mountain Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

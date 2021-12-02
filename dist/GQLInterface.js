@@ -11,39 +11,38 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
 var _GQLBase2 = require("./GQLBase");
 
 var _graphql = require("graphql");
 
-/**
- @namespace GQLInterface
- 
- */
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2["default"])(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * Used by Lattice to implement interface types in the schema when necessary
  *
  * @class GQLInterface
  */
-var GQLInterface =
-/*#__PURE__*/
-function (_GQLBase) {
-  (0, _inherits2.default)(GQLInterface, _GQLBase);
+var GQLInterface = /*#__PURE__*/function (_GQLBase) {
+  (0, _inherits2["default"])(GQLInterface, _GQLBase);
+
+  var _super = _createSuper(GQLInterface);
 
   function GQLInterface() {
-    (0, _classCallCheck2.default)(this, GQLInterface);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(GQLInterface).apply(this, arguments));
+    (0, _classCallCheck2["default"])(this, GQLInterface);
+    return _super.apply(this, arguments);
   }
 
-  (0, _createClass2.default)(GQLInterface, null, [{
+  (0, _createClass2["default"])(GQLInterface, null, [{
     key: "resolveType",
-
+    value:
     /**
      * This needs to be able to, depending on your implementors, identify
      * which on the data actually is given the model to work with.
@@ -57,7 +56,7 @@ function (_GQLBase) {
      * @return {string} a string matching the name of a defined GraphQL type
      * found elsewhere in your schema
      */
-    value: function resolveType(model) {
+    function resolveType(model) {
       throw new Error("\n      You must override \"resolveType(model)\" in your GQLInterface instance\n      and determine the implementor type by the contents of the supplied\n      model. Returning \"null\" when nothing matches.\n    ");
     }
     /**
@@ -83,4 +82,4 @@ function (_GQLBase) {
 }(_GQLBase2.GQLBase);
 
 exports.GQLInterface = GQLInterface;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2VzNi9HUUxJbnRlcmZhY2UuanMiXSwibmFtZXMiOlsiR1FMSW50ZXJmYWNlIiwibW9kZWwiLCJFcnJvciIsIkdyYXBoUUxJbnRlcmZhY2VUeXBlIiwiR1FMQmFzZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUtBOztBQUNBOztBQU5BOzs7OztBQVFBOzs7OztJQUthQSxZOzs7Ozs7Ozs7Ozs7O0FBRVg7Ozs7Ozs7Ozs7Ozs7Z0NBYW1CQyxLLEVBQXNCO0FBQ3ZDLFlBQU0sSUFBSUMsS0FBSix5TkFBTjtBQUtEO0FBRUQ7Ozs7Ozs7Ozs7Ozs7Ozt3QkFZZ0M7QUFDOUIsYUFBT0MsNkJBQVA7QUFDRDs7O0VBckMrQkMsaUIiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiBAbmFtZXNwYWNlIEdRTEludGVyZmFjZVxuIEBmbG93XG4gKi9cblxuaW1wb3J0IHsgR1FMQmFzZSB9IGZyb20gJy4vR1FMQmFzZSdcbmltcG9ydCB7IEdyYXBoUUxJbnRlcmZhY2VUeXBlIH0gZnJvbSAnZ3JhcGhxbCdcblxuLyoqXG4gKiBVc2VkIGJ5IExhdHRpY2UgdG8gaW1wbGVtZW50IGludGVyZmFjZSB0eXBlcyBpbiB0aGUgc2NoZW1hIHdoZW4gbmVjZXNzYXJ5XG4gKlxuICogQGNsYXNzIEdRTEludGVyZmFjZVxuICovXG5leHBvcnQgY2xhc3MgR1FMSW50ZXJmYWNlIGV4dGVuZHMgR1FMQmFzZSB7XG5cbiAgLyoqXG4gICAqIFRoaXMgbmVlZHMgdG8gYmUgYWJsZSB0bywgZGVwZW5kaW5nIG9uIHlvdXIgaW1wbGVtZW50b3JzLCBpZGVudGlmeVxuICAgKiB3aGljaCBvbiB0aGUgZGF0YSBhY3R1YWxseSBpcyBnaXZlbiB0aGUgbW9kZWwgdG8gd29yayB3aXRoLlxuICAgKlxuICAgKiBAbWVtYmVyb2YgR1FMSW50ZXJmYWNlXG4gICAqIEBtZXRob2Qg4oy+4qCAcmVzb2x2ZVR5cGVcbiAgICogQHN0YXRpY1xuICAgKlxuICAgKiBAcGFyYW0ge21peGVkfSBtb2RlbCB0aGUgZGF0YSB5b3UgY2FuIHVzZSB0byBpbnN0YW50aWF0ZSB0aGUgdHlwZSBvZlxuICAgKiBvYmplY3QgaW4gcXVlc3Rpb24uXG4gICAqIEByZXR1cm4ge3N0cmluZ30gYSBzdHJpbmcgbWF0Y2hpbmcgdGhlIG5hbWUgb2YgYSBkZWZpbmVkIEdyYXBoUUwgdHlwZVxuICAgKiBmb3VuZCBlbHNld2hlcmUgaW4geW91ciBzY2hlbWFcbiAgICovXG4gIHN0YXRpYyByZXNvbHZlVHlwZShtb2RlbDogbWl4ZWQpOiBzdHJpbmcge1xuICAgIHRocm93IG5ldyBFcnJvcihgXG4gICAgICBZb3UgbXVzdCBvdmVycmlkZSBcInJlc29sdmVUeXBlKG1vZGVsKVwiIGluIHlvdXIgR1FMSW50ZXJmYWNlIGluc3RhbmNlXG4gICAgICBhbmQgZGV0ZXJtaW5lIHRoZSBpbXBsZW1lbnRvciB0eXBlIGJ5IHRoZSBjb250ZW50cyBvZiB0aGUgc3VwcGxpZWRcbiAgICAgIG1vZGVsLiBSZXR1cm5pbmcgXCJudWxsXCIgd2hlbiBub3RoaW5nIG1hdGNoZXMuXG4gICAgYCk7XG4gIH1cblxuICAvKipcbiAgICogRGVub3RlcyB0aGF0IHRoaXMgR1FMQmFzZSBkZXNjZW5kZW50IGlzIGRlc2NyaWJpbmcgYSBncmFwaHFsXG4gICAqIGludGVyZmFjZSB0eXBlLlxuICAgKlxuICAgKiBAbWVtYmVyb2YgR1FMSW50ZXJmYWNlXG4gICAqIEBtZXRob2Qg4qyH77iO4qCAR1FMX1RZUEVcbiAgICogQHN0YXRpY1xuICAgKiBAY29uc3RcbiAgICpcbiAgICogQHJldHVybiB7RnVuY3Rpb259IGEgdHlwZSwgc3VjaCBhcyBgR3JhcGhRTE9iamVjdFR5cGVgIG9yXG4gICAqIGBHcmFwaFFMSW50ZXJmYWNlVHlwZWBcbiAgICovXG4gIHN0YXRpYyBnZXQgR1FMX1RZUEUoKTogRnVuY3Rpb24ge1xuICAgIHJldHVybiBHcmFwaFFMSW50ZXJmYWNlVHlwZTtcbiAgfVxufVxuIl19
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL2VzNi9HUUxJbnRlcmZhY2UuanMiXSwibmFtZXMiOlsiR1FMSW50ZXJmYWNlIiwibW9kZWwiLCJFcnJvciIsIkdyYXBoUUxJbnRlcmZhY2VUeXBlIiwiR1FMQmFzZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUtBOztBQUNBOzs7Ozs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0lBQ2FBLFk7Ozs7Ozs7Ozs7Ozs7QUFFWDtBQUNGO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNFLHlCQUFtQkMsS0FBbkIsRUFBeUM7QUFDdkMsWUFBTSxJQUFJQyxLQUFKLHlOQUFOO0FBS0Q7QUFFRDtBQUNGO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Ozs7U0FDRSxlQUFnQztBQUM5QixhQUFPQyw2QkFBUDtBQUNEOzs7RUFyQytCQyxpQiIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuIEBuYW1lc3BhY2UgR1FMSW50ZXJmYWNlXG4gQGZsb3dcbiAqL1xuXG5pbXBvcnQgeyBHUUxCYXNlIH0gZnJvbSAnLi9HUUxCYXNlJ1xuaW1wb3J0IHsgR3JhcGhRTEludGVyZmFjZVR5cGUgfSBmcm9tICdncmFwaHFsJ1xuXG4vKipcbiAqIFVzZWQgYnkgTGF0dGljZSB0byBpbXBsZW1lbnQgaW50ZXJmYWNlIHR5cGVzIGluIHRoZSBzY2hlbWEgd2hlbiBuZWNlc3NhcnlcbiAqXG4gKiBAY2xhc3MgR1FMSW50ZXJmYWNlXG4gKi9cbmV4cG9ydCBjbGFzcyBHUUxJbnRlcmZhY2UgZXh0ZW5kcyBHUUxCYXNlIHtcblxuICAvKipcbiAgICogVGhpcyBuZWVkcyB0byBiZSBhYmxlIHRvLCBkZXBlbmRpbmcgb24geW91ciBpbXBsZW1lbnRvcnMsIGlkZW50aWZ5XG4gICAqIHdoaWNoIG9uIHRoZSBkYXRhIGFjdHVhbGx5IGlzIGdpdmVuIHRoZSBtb2RlbCB0byB3b3JrIHdpdGguXG4gICAqXG4gICAqIEBtZW1iZXJvZiBHUUxJbnRlcmZhY2VcbiAgICogQG1ldGhvZCDijL7ioIByZXNvbHZlVHlwZVxuICAgKiBAc3RhdGljXG4gICAqXG4gICAqIEBwYXJhbSB7bWl4ZWR9IG1vZGVsIHRoZSBkYXRhIHlvdSBjYW4gdXNlIHRvIGluc3RhbnRpYXRlIHRoZSB0eXBlIG9mXG4gICAqIG9iamVjdCBpbiBxdWVzdGlvbi5cbiAgICogQHJldHVybiB7c3RyaW5nfSBhIHN0cmluZyBtYXRjaGluZyB0aGUgbmFtZSBvZiBhIGRlZmluZWQgR3JhcGhRTCB0eXBlXG4gICAqIGZvdW5kIGVsc2V3aGVyZSBpbiB5b3VyIHNjaGVtYVxuICAgKi9cbiAgc3RhdGljIHJlc29sdmVUeXBlKG1vZGVsOiBtaXhlZCk6IHN0cmluZyB7XG4gICAgdGhyb3cgbmV3IEVycm9yKGBcbiAgICAgIFlvdSBtdXN0IG92ZXJyaWRlIFwicmVzb2x2ZVR5cGUobW9kZWwpXCIgaW4geW91ciBHUUxJbnRlcmZhY2UgaW5zdGFuY2VcbiAgICAgIGFuZCBkZXRlcm1pbmUgdGhlIGltcGxlbWVudG9yIHR5cGUgYnkgdGhlIGNvbnRlbnRzIG9mIHRoZSBzdXBwbGllZFxuICAgICAgbW9kZWwuIFJldHVybmluZyBcIm51bGxcIiB3aGVuIG5vdGhpbmcgbWF0Y2hlcy5cbiAgICBgKTtcbiAgfVxuXG4gIC8qKlxuICAgKiBEZW5vdGVzIHRoYXQgdGhpcyBHUUxCYXNlIGRlc2NlbmRlbnQgaXMgZGVzY3JpYmluZyBhIGdyYXBocWxcbiAgICogaW50ZXJmYWNlIHR5cGUuXG4gICAqXG4gICAqIEBtZW1iZXJvZiBHUUxJbnRlcmZhY2VcbiAgICogQG1ldGhvZCDirIfvuI7ioIBHUUxfVFlQRVxuICAgKiBAc3RhdGljXG4gICAqIEBjb25zdFxuICAgKlxuICAgKiBAcmV0dXJuIHtGdW5jdGlvbn0gYSB0eXBlLCBzdWNoIGFzIGBHcmFwaFFMT2JqZWN0VHlwZWAgb3JcbiAgICogYEdyYXBoUUxJbnRlcmZhY2VUeXBlYFxuICAgKi9cbiAgc3RhdGljIGdldCBHUUxfVFlQRSgpOiBGdW5jdGlvbiB7XG4gICAgcmV0dXJuIEdyYXBoUUxJbnRlcmZhY2VUeXBlO1xuICB9XG59XG4iXX0=
